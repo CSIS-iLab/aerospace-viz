@@ -10,7 +10,7 @@ Highcharts.setOptions({
 });
 
 Highcharts.theme = {
-    colors: ['#ed392a', '#58a897', '#83badc', '#3b75bb', '#a483a8', '#f7890e', '#69518d', '#f7d768', '#8cb561', '#728c99'],
+    colors: ['#196c95', '#5db6d0', '#f9bc65', '#d66e42', '#4f9793', '#3e7a82', '#4b5255'],
     chart: {
         backgroundColor: '#FFF',
         border: 'none',
@@ -21,7 +21,7 @@ Highcharts.theme = {
     title: {
         style: {
             color: '#000',
-            font: '25px "Roboto", Arial, sans-serif',
+            font: '25px "Abel", Arial, sans-serif',
             fontWeight: '400'
         },
         widthAdjust: -60
@@ -29,20 +29,20 @@ Highcharts.theme = {
     subtitle: {
         style: {
             fontSize: '12px',
-            fontFamily: "'Hind', 'Arial', sans-serif",
+            fontFamily: "'Source Sans Pro', 'Arial', sans-serif",
             color: '#808080'
         }
     },
     credits: {
         style: {
             cursor: "default",
-            fontFamily: "'Hind', 'Arial', sans-serif"
+            fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
         }
     },
     tooltip: {
         style: {
             fontSize: '13px',
-            fontFamily: "'Hind', 'Arial', sans-serif"
+            fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
         },
         headerFormat: '<span style="font-size: 13px;text-align:center;margin-bottom: 5px;font-weight: bold;font-family: \'Roboto\', arial, sans-serif;">{point.key}</span><br/>'
     },
@@ -51,14 +51,14 @@ Highcharts.theme = {
             style: {
                 color: '#666',
                 fontSize: '12px',
-                fontFamily: "'Hind', 'Arial', sans-serif"
+                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
             },
         },
         title: {
             style: {
                 color: '#666',
                 fontSize: '13px',
-                fontFamily: "'Hind', 'Arial', sans-serif"
+                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
 
             }
         },
@@ -71,7 +71,7 @@ Highcharts.theme = {
             style: {
                 color: '#666',
                 fontSize: '12px',
-                fontFamily: "'Hind', 'Arial', sans-serif"
+                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
             },
             x: -3
         },
@@ -79,7 +79,7 @@ Highcharts.theme = {
             style: {
                 color: '#666',
                 fontSize: '13px',
-                fontFamily: "'Hind', 'Arial', sans-serif"
+                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
             },
             margin: 20
         },
@@ -97,7 +97,7 @@ Highcharts.theme = {
         itemStyle: {
             color: '#000',
             fontSize: '14px',
-            fontFamily: "'Hind', 'Arial', sans-serif",
+            fontFamily: "'Source Sans Pro', 'Arial', sans-serif",
             textOverflow: null
 
         },
