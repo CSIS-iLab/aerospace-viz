@@ -36,7 +36,8 @@ Highcharts.theme = {
     credits: {
         style: {
             cursor: "default",
-            fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
+            fontFamily: "'Source Sans Pro', 'Arial', sans-serif",
+            fontSize: '10px'
         }
     },
     tooltip: {
