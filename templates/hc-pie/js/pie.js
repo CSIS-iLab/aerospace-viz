@@ -11,8 +11,6 @@ $(function() {
       type: 'pie',
       width: 700
     },
-    // Colors
-    colors: ['#c42d17', '#83badc', '#3b75bb', '#0e6c6b', '#58a897', '#8cb561', '#f7d768', '#a483a8', '#69518d', '#845339', '#f58220', '#e18256', '#cbb097', '#808081'],
     // Chart Title and Subtitle
     title: {
       text: "Title"

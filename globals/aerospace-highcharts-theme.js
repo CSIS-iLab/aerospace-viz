@@ -107,6 +107,14 @@ Highcharts.theme = {
             color: '#5db6d0'
         },
         margin: 30
+    },
+    drilldown: {
+        activeAxisLabelStyle: {
+            color: '#5db6d0'
+        },
+        activeDataLabelStyle: {
+            color: '#5db6d0'
+        }
     }
 };
 

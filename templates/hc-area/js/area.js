@@ -10,7 +10,6 @@ $(function() {
       zoomType: 'x',
       type: 'area'
     },
-    // colors: ['#4D6E79', '#303D43', '#907561', '#781F30', '#EC382A', '#61884D', '#C9AC4D', '#52496D', '#5AA992', '#887295', '#2576CE', '#aa266a'],
     // Chart Title and Subtitle
     title: {
       text: "Interactive Title"
