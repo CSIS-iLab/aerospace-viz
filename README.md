@@ -1,13 +1,6 @@
 # aerospace-viz
 Data visualizations for the Aerospace Security website. Basic charts such as line and bar graphs are created using [Highcharts](http://www.highcharts.com/), while others are custom built solutions using visualization libraries such as [d3.js](https://d3js.org/).
 
-## Default Templates
-Default templates that can be used as the basis for creating new Highcharts interactives can be found in the `_templates` folder.
-- [Line Chart](https://github.com/CSIS-iLab/cpower-viz/tree/master/_templates/hc-line)
-- [Bar Chart](https://github.com/CSIS-iLab/cpower-viz/tree/master/_templates/hc-bar)
-- [Spline Chart](https://github.com/CSIS-iLab/cpower-viz/tree/master/_templates/hc-spline)
-- [Area Chart](https://github.com/CSIS-iLab/cpower-viz/tree/master/_templates/hc-area)
-
 ## Style Guide
 Default Highcharts styles are defined in `globals/aerospace-highcharts-theme.js`. These styles incorporate the default color range and font styles, but can be overridden in individual project files when necessary.
 
