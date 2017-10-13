@@ -29,7 +29,7 @@ Highcharts.theme = {
     subtitle: {
         style: {
             fontSize: '12px',
-            fontFamily: "'Source Sans Pro', 'Arial', sans-serif",
+            fontFamily: "'Abel', 'Arial', sans-serif",
             color: '#808080'
         }
     },
@@ -52,14 +52,14 @@ Highcharts.theme = {
             style: {
                 color: '#666',
                 fontSize: '12px',
-                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
+                fontFamily: "'Abel', 'Arial', sans-serif"
             },
         },
         title: {
             style: {
                 color: '#666',
-                fontSize: '13px',
-                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
+                fontSize: '14px',
+                fontFamily: "'Abel', 'Arial', sans-serif"
 
             }
         },
@@ -72,15 +72,15 @@ Highcharts.theme = {
             style: {
                 color: '#666',
                 fontSize: '12px',
-                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
+                fontFamily: "'Abel', 'Arial', sans-serif"
             },
             x: -3
         },
         title: {
             style: {
                 color: '#666',
-                fontSize: '13px',
-                fontFamily: "'Source Sans Pro', 'Arial', sans-serif"
+                fontSize: '14px',
+                fontFamily: "'Abel', 'Arial', sans-serif"
             },
             margin: 20
         },
@@ -88,8 +88,9 @@ Highcharts.theme = {
     },
     legend: {
         title: {
+            text: null,
             style: {
-                fontFamily: "'Roboto', 'Arial', sans-serif",
+                fontFamily: "'Abel', 'Arial', sans-serif",
                 fontSize: "15px",
                 color: '#000',
                 fontStyle: 'normal'
@@ -103,8 +104,9 @@ Highcharts.theme = {
 
         },
         itemHoverStyle: {
-            color: '#ed392a'
-        }
+            color: '#5db6d0'
+        },
+        margin: 30
     }
 };
 
