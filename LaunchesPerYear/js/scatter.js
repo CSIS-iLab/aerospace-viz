@@ -9,11 +9,10 @@ $(function() {
     // General Chart Options
     chart: {
       type: 'scatter',
-      zoomType: 'xy'
     },
     // Chart Title and Subtitle
     title: {
-      text: "Number of Launches per Year"
+      text: "Launches Per Year"
     },
     /*
     subtitle: {
