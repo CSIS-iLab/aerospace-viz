@@ -19,6 +19,8 @@ $(function() {
     subtitle: {
       text: "Click and drag to zoom in"
     },*/
+    //Custom Colors
+    colors: ['#3e7a82', '#f9bc65', '#d66e42', '#b5bdc1'],
     // Credits
     credits: {
       enabled: true,
@@ -44,8 +46,7 @@ $(function() {
       }
     },
     // Additional Plot Options
-    plotOptions:
-    {
+    plotOptions: {
       scatter: {
         marker: {
           enabled: true,
