@@ -10,7 +10,6 @@ $(function() {
       googleSpreadsheetWorksheet: 1,
       switchRowsAndColumns: true,
       parsed: function(columns) {
-          console.log(columns);
         $.each(columns, function (i, code) {
           if ( i == 0 ) {
             return
@@ -54,9 +53,6 @@ $(function() {
           });
           seriesData.push(series)
         })
-
-
-        console.log(data);
 
 
         renderChart(seriesData[0]);
@@ -114,7 +110,6 @@ $(function() {
         // Additional Plot Options
         tooltip: {
             formatter: function () {
-                console.log(this);
                 var info = ''
                 if (this.point.info == null) {
                     info = '';
