@@ -1,58 +1,143 @@
-
 $(function() {
-  $('#hcContainer').highcharts({
-    // Load Data in from Google Sheets
-    data: {
+
+    var data = {}
+    var datasets
+    var seriesData = []
+
+  Highcharts.data({
+      // Load Data in from Google Sheets
       googleSpreadsheetKey: '1p22ea2G3K8ikFoowmSOMK4KCLSdstAFir3qbgxawJCw',
-      googleSpreadsheetWorksheet: 1
-    },
-    // General Chart Options
-    chart: {
-      type: 'scatter',
-    },
-    // Chart Title and Subtitle
-    title: {
-      text: "Launches Per Year"
-    },
-    /*
-    subtitle: {
-      text: "Click and drag to zoom in"
-    },*/
-    //Custom Colors
-    colors: ['#3e7a82', '#f9bc65', '#d66e42', '#b5bdc1'],
-    // Credits
-    credits: {
-      enabled: true,
-      href: false,
-      text: "CSIS Aerospace Security | Source: NAME"
-    },
-    // Chart Legend
-    legend: {
-      align: 'center',
-      verticalAlign: 'bottom',
-      layout: 'horizontal'
-    },
-    // X Axis
-    xAxis: {
-      title: {
-        text: "Year"
-      }
-    },
-    // Y Axis
-    yAxis: {
-      title: {
-        text: "Number of Launches"
-      }
-    },
-    // Additional Plot Options
-    plotOptions: {
-      scatter: {
-        marker: {
+      googleSpreadsheetWorksheet: 1,
+      switchRowsAndColumns: true,
+      parsed: function(columns) {
+          console.log(columns);
+        $.each(columns, function (i, code) {
+          if ( i == 0 ) {
+            return
+          }
+
+
+          data[code[0]] = data[code[0]] || {}
+          data[code[0]][code[1]] = data[code[0]][code[1]] || {
+            name: code[1],
+            data: []
+          }
+
+
+          data[code[0]][code[1]].data.push({
+            name: code[0],
+            x: code[2],
+            y: code[3],
+            label: code[1],
+            date: code[4],
+            info: code[5]
+          })
+
+        })
+
+        /*
+        console.log(data);
+        */
+
+
+        datasets = Object.keys(data)
+
+        // Convert object to array - we no longer need the keys
+        var dataArray = $.map(data, function(value, index) {
+            return [value];
+        });
+
+        // Convert each series into an array
+        dataArray.forEach(function(value) {
+          var series = $.map(value, function(value2, index2) {
+              return [value2];
+          });
+          seriesData.push(series)
+        })
+
+
+        console.log(data);
+
+
+        renderChart(seriesData[0]);
+        /*
+
+        console.log(data);
+        */
+
+
+     }
+  })
+
+  function renderChart(data) {
+      $('#hcContainer').highcharts({
+        //Data
+        series: data,
+        // General Chart Options
+        chart: {
+          type: 'scatter',
+        },
+        // Chart Title and Subtitle
+        title: {
+          text: "Launch History of the SpaceX Falcon 9"
+        },
+        /*
+        subtitle: {
+          text: "Click and drag to zoom in"
+        },*/
+        //Custom Colors
+        colors: ['#3e7a82', '#f9bc65', '#d66e42', '#b5bdc1'],
+        // Credits
+        credits: {
           enabled: true,
-          symbol: "circle",
-          radius: 5
+          href: false,
+          text: "CSIS Aerospace Security | Source: Gunther's Space Page"
+        },
+        // Chart Legend
+        legend: {
+          align: 'center',
+          verticalAlign: 'bottom',
+          layout: 'horizontal'
+        },
+        // X Axis
+        xAxis: {
+          title: {
+            text: "Year"
+          }
+        },
+        // Y Axis
+        yAxis: {
+          title: {
+            text: "Number of Launches"
+          }
+        },
+        // Additional Plot Options
+        tooltip: {
+            formatter: function () {
+                console.log(this);
+                var info = ''
+                if (this.point.info == null) {
+                    info = '';
+                } else {
+                    info = '<br><b><i>' + this.point.info + '</i></b>';
+                }
+                if (this.point.date == null) {
+                    date = '';
+                } else {
+                    date = '<br>' + this.point.date;
+                }
+                return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.label + '</b><br>' + date + '<br>Number of launches: <b>' + this.y + '</b>' + info;
+            }
+        },
+        plotOptions: {
+          scatter: {
+            marker: {
+              enabled: true,
+              symbol: "circle",
+              radius: 5
+            }
+          }
         }
-      }
-    }
-  });
+      });
+  }
 });
