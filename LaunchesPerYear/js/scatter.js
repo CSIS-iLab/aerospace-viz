@@ -128,7 +128,15 @@ $(function() {
               symbol: "circle",
               radius: 5
             }
-          }
+          },
+          series: {
+              events: {
+                  legendItemClick: function () {
+                      return false;
+                  }
+              }
+          },
+          allowPointSelect: false,
         }
       });
   }
