@@ -34,9 +34,6 @@ $(function() {
 
         })
 
-        /*
-        console.log(data);
-        */
 
 
         datasets = Object.keys(data)
@@ -121,7 +118,7 @@ $(function() {
                 } else {
                     date = '<br>' + this.point.date;
                 }
-                return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.label + '</b><br>' + date + '<br>Number of launches: <b>' + this.y + '</b>' + info;
+                return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.label + '</b><br>' + date + '</b>' + info;
             }
         },
         plotOptions: {
