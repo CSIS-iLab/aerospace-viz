@@ -107,18 +107,22 @@ $(function() {
         // Additional Plot Options
         tooltip: {
             formatter: function () {
-                var info = ''
                 if (this.point.info == null) {
                     info = '';
                 } else {
-                    info = '<br><b><i>' + this.point.info + '</i></b>';
+                    info = '<br><i>' + this.point.info + '</i>';
                 }
                 if (this.point.date == null) {
                     date = '';
                 } else {
-                    date = '<br>' + this.point.date;
+                    date = '<b>' + this.point.date + '</b>';
                 }
-                return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.label + '</b><br>' + date + '</b>' + info;
+                if (this.point.label == 'Planned') {
+                    category = '<b>' + this.point.label + '</b>';
+                } else {
+                    category = '<br><b>' + this.point.label + '</b>';
+                }
+                return '<span style="color:' + this.series.color + '">● </span>' + date + info + category;
             }
         },
         plotOptions: {
