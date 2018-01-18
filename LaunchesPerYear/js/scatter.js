@@ -62,8 +62,10 @@ $(function() {
      }
   })
 
+
   function renderChart(data) {
-      $('#hcContainer').highcharts({
+
+        $('#hcContainer').highcharts({
         //Data
         series: data,
         // General Chart Options
@@ -90,7 +92,11 @@ $(function() {
         legend: {
           align: 'center',
           verticalAlign: 'bottom',
-          layout: 'horizontal'
+          layout: 'horizontal',
+          itemStyle: {
+              'cursor': 'default',
+              'pointer-events': 'none'
+          }
         },
         // X Axis
         xAxis: {
@@ -137,11 +143,11 @@ $(function() {
               events: {
                   legendItemClick: function () {
                       return false;
-                  }
+                  },
               }
           },
           allowPointSelect: false,
         }
       });
-  }
+   };
 });
