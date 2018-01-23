@@ -12,10 +12,10 @@ $(function() {
     },
     // Chart Title and Subtitle
     title: {
-      text: "Astronaut Women by Country"
+      text: "Astronauts Launched by Year"
     },
     subtitle: {
-      text: "Click the legend to compare with the number of male astronauts by country"
+      text: "Click the legend to view astronauts launched by gender"
     },
     // Credits
     credits: {
@@ -32,21 +32,19 @@ $(function() {
     // Y Axis
     yAxis: {
       title: { 
-        text: "Number of Astronauts"
-      }
+        text: "Number of Astronauts Launched Per Year"
+      },
     },
     // Additional Plot Options
     plotOptions:
-    {series: {
-          visible: false
-        },
+    {
       column: {
-        stacking: null, // Normal bar graph
+        stacking: "normal", // Normal bar graph
         // stacking: "normal", // Stacked bar graph
         dataLabels: {
-            enabled: false
+            enabled: false,
         }
       }
-    }}, function(chart) {chart.series[1].show()});
-    });
-
+    }
+  });
+});
