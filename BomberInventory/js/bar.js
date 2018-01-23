@@ -46,21 +46,34 @@ $(function() {
 
         populateSelect()
         renderChart(seriesData[0])
-
       }
   })
 
+
   function populateSelect() {
+
     var options = '';
     $.each(datasets, function(i, dataset) {
       options += '<option value="'+ i + '">' + dataset + '</option>';
     })
     $('.datasets').append(options);
-
     // Destroy & redraw chart so we get smooth animation when switching datasets.
     $('.datasets').on('change', function() {
       var chart = $('#hcContainer').highcharts()
       chart.destroy()
+      // Correct color index for individual bomber chart
+      if (seriesData[this.value].length <= 1) {
+
+          var colorIndex = this.value-1;
+          var modColorIndex;
+
+          modColorIndex = colorIndex%7;
+
+          $.each(seriesData[this.value], function(i, data){
+              data._colorIndex = modColorIndex;
+          })
+      }
+
       renderChart(seriesData[this.value])
     })
   }
@@ -70,7 +83,7 @@ $(function() {
       // General Chart Options
       chart: {
         zoomType: 'x',
-        type: 'area'
+        type: 'column'
       },
       // Chart Title and Subtitle
       title: {
@@ -105,7 +118,7 @@ $(function() {
       // Additional Plot Options
       plotOptions:
       {
-        area: {
+        column: {
           stacking: "normal",
           marker: {
             enabled: false,
