@@ -113,6 +113,7 @@ $(function() {
         title: {
           text: "Y Axis Title"
         },
+        minTickInterval: 1,
       },
       series: data,
       // Additional Plot Options
