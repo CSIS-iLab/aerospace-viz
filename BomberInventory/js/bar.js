@@ -106,17 +106,25 @@ $(function() {
       },
       // X Axis
       xAxis: {
+        title: {
+          text: "Year"
+        },
         allowDecimals: false
       },
       // Y Axis
       yAxis: {
         title: {
-          text: "Y Axis Title"
+          text: "Total Count"
         },
         minTickInterval: 1,
       },
       series: data,
       // Additional Plot Options
+      tooltip: {
+          formatter: function () {
+              return 'Year: ' + this.point.x + '<br><span style="color:' + this.series.color + '">● </span><b>' + this.point.label + ': </b>' + this.point.y;
+          }
+      },
       plotOptions:
       {
         column: {
