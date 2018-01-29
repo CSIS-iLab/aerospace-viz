@@ -2,7 +2,7 @@ $(function() {
   $('#hcContainer').highcharts({
     // Load Data in from Google Sheets
     data: {
-      googleSpreadsheetKey: '1GmrmO4QJyLE6II0OUtGy1OxqZ8VbJq-SXSawRrde1qM',
+      googleSpreadsheetKey: '184mzMvc6ZBzuWoQuDpfigcrQug0rcRSBNDJ8KwKkExs',
       googleSpreadsheetWorksheet: 1
     },
     // General Chart Options
@@ -12,16 +12,16 @@ $(function() {
     },
     // Chart Title and Subtitle
     title: {
-      text: "Interactive Title"
+      text: "Astronauts Launched by Year"
     },
     subtitle: {
-      text: "Click and drag to zoom in"
+      text: "Click the legend to view astronauts launched by gender"
     },
     // Credits
     credits: {
       enabled: true,
       href: false,
-      text: "CSIS Aerospace Security | Source: NAME"
+      text: "CSIS Aerospace Security"
     },
     // Chart Legend
     legend: {
@@ -31,22 +31,15 @@ $(function() {
     },
     // Y Axis
     yAxis: {
-      title: {
-        text: "Y Axis Title"
+      title: { 
+        text: "Number of Astronauts Launched Per Year"
       },
     },
-    // Tooltip
-    /*
-    tooltip: {
-        formatter: function () {
-            return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.series.name + '</b><br> x: ' + this.x + ' y: ' + this.y + '<br><i>x: ' + this.x + ' y: ' + this.y + '</i><br><b>x: ' + this.x + ' y: ' + this.y + '</b>';
-        }
-    },    */
     // Additional Plot Options
     plotOptions:
     {
       column: {
-        stacking: null, // Normal bar graph
+        stacking: "normal", // Normal bar graph
         // stacking: "normal", // Stacked bar graph
         dataLabels: {
             enabled: false,
