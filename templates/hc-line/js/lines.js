@@ -36,6 +36,13 @@ $(function() {
         text: "Y Axis Title"
       }
     },
+    // Tooltip
+    /*
+    tooltip: {
+        formatter: function () {
+            return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.series.name + '</b><br> x: ' + this.x + ' y: ' + this.y + '<br><i>x: ' + this.x + ' y: ' + this.y + '</i><br><b>x: ' + this.x + ' y: ' + this.y + '</b>';
+        }
+    },    */
     // Additional Plot Options
     plotOptions:
     {
