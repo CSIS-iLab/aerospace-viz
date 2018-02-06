@@ -17,6 +17,11 @@ $(function() {
     subtitle: {
       text: "FY 2018 Request and FY 2019 Estimates of Selected Programs"
     },
+    tooltip: {
+        formatter: function () {
+            return '$' + this.y + 'M';
+        }
+    },
     // Credits
     credits: {
       enabled: true,
@@ -34,6 +39,11 @@ $(function() {
       title: {
         text: "Then Year Dollars, in Millions"
       },
+      labels: {
+        formatter: function() {
+            return this.value;
+        }
+    }
     },
     // Tooltip
     /*
