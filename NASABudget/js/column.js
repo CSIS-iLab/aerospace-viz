@@ -116,16 +116,16 @@ $(function() {
         },
         // Chart Title and Subtitle
         title: {
-          text: "Interactive Title"
+          text: "NASA Budget History"
         },
         subtitle: {
-          text: "Click and drag to zoom in"
+          text: "Click a column for a budget breakdown"
         },
         // Credits
         credits: {
           enabled: true,
           href: false,
-          text: "CSIS Aerospace Security | Source: NAME"
+          text: "CSIS Aerospace Security | Source: NASA, OMB"
         },
         // Chart Legend
         legend: {
@@ -142,7 +142,7 @@ $(function() {
         // Y Axis
         yAxis: {
           title: {
-            text: "Y Axis Title"
+            text: "Then-Year Dollars, in Millions"
           },
         },
         // Tooltip
