@@ -144,10 +144,15 @@ $(function() {
           title: {
             text: "Then-Year Dollars, in Millions"
           },
+          labels: {
+              format: '{value:,.0f}'
+          }
         },
         // Tooltip
         tooltip: {
-          valueDecimals: 2
+          valueDecimals: 2,
+          valuePrefix: '$',
+          valueSuffix: 'M'
         },
         series: data,
         drilldown: {
