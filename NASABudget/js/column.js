@@ -55,6 +55,11 @@ $(function() {
           drilldownData[type][year].data.push(
             [category, value]
           )
+          drilldownData[type][year].data.sort(function(a, b) {
+            if (b[1] < a[1]) return -1;
+            if (b[1] > a[1]) return 1;
+            return 0;
+          })
         })
 
         datasets = Object.keys(data)
