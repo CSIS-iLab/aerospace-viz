@@ -6,6 +6,7 @@ $(function() {
 
   var drilldownData = {}
   var seriesDrilldown = []
+  var yTitle = ''
 
   Highcharts.data({
     googleSpreadsheetKey: '1GKIk9j34dFOIkPj-7Ao-tz0d1sFpre5FbczUl4vGusM',
@@ -87,7 +88,7 @@ $(function() {
             seriesDrilldown.push(series)
         })
         populateSelect()
-        renderChart(seriesData[0], seriesDrilldown[0])
+        renderChart(seriesData[0], seriesDrilldown[0],datasets[0])
       }
   })
 
@@ -102,12 +103,12 @@ $(function() {
     $('.datasets').on('change', function() {
       var chart = $('#hcContainer').highcharts()
       chart.destroy()
-      renderChart(seriesData[this.value], seriesDrilldown[this.value])
+      renderChart(seriesData[this.value], seriesDrilldown[this.value],datasets[this.value])
     })
   }
 
 
-  function renderChart(data, drilldown) {
+  function renderChart(data, drilldown, dataset) {
       var chartCont = {
         // General Chart Options
         chart: {
@@ -142,10 +143,13 @@ $(function() {
         // Y Axis
         yAxis: {
           title: {
-            text: "Then-Year Dollars, in Millions"
+            text: "Budget Authority, in Billions (" + dataset + " Dollars)"
           },
           labels: {
-              format: '{value:,.0f}'
+              formatter: function () {
+                  var label = "$" + this.value/1000 +"B";
+                  return label;
+              }
           }
         },
         // Tooltip
