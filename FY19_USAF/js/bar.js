@@ -17,10 +17,16 @@ $(function() {
     subtitle: {
       text: "FY 2018 Request and FY 2019 Estimates of Selected Programs"
     },
+   // tooltip: {
+   //     formatter: function () {
+   //         return '$' + this.y + 'M';
+    //    }
+  //  },
+   // Tooltip
     tooltip: {
-        formatter: function () {
-            return '$' + this.y + 'M';
-        }
+      valueDecimals: 2,
+      valuePrefix: '$',
+      valueSuffix: 'M'
     },
     // Credits
     credits: {
