@@ -5,7 +5,7 @@ $(function() {
   var seriesData = []
 
   Highcharts.data({
-    googleSpreadsheetKey: '1GKIk9j34dFOIkPj-7Ao-tz0d1sFpre5FbczUl4vGusM',
+    googleSpreadsheetKey: '1ngNfu7yzEBIit317w-cUiSamXA8XbP7g-t8ujgeZmqM',
       googleSpreadsheetWorksheet: 1,
       switchRowsAndColumns: true,
       parsed: function(columns) {
@@ -61,6 +61,20 @@ $(function() {
     $('.datasets').on('change', function() {
       var chart = $('#hcContainer').highcharts()
       chart.destroy()
+
+      // Correct color index for individual bomber chart
+      if (seriesData[this.value].length <= 1) {
+
+          var colorIndex = this.value-1;
+          var modColorIndex;
+
+          modColorIndex = colorIndex%7;
+
+          $.each(seriesData[this.value], function(i, data){
+              data._colorIndex = modColorIndex;
+          })
+      }
+      
       renderChart(seriesData[this.value])
     })
   }
@@ -97,7 +111,7 @@ $(function() {
       },
       // Y Axis
       yAxis: {
-        title: { 
+        title: {
           text: "Y Axis Title"
         },
       },
