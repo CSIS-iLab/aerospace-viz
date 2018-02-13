@@ -43,7 +43,7 @@ $(function() {
     // Y Axis
     yAxis: {
       title: {
-        text: "Then Year Dollars, in Millions"
+        text: "FY 2018 Dollars, in Millions"
       },
       labels: {
         formatter: function() {
