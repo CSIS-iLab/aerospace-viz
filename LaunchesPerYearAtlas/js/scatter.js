@@ -81,7 +81,7 @@ $(function() {
           text: "Click and drag to zoom in"
         },*/
         //Custom Colors
-        colors: ['#3e7a82', '#f9bc65', '#d66e42', '#b5bdc1'],
+        colors: ['#3e7a82', '#f9bc65', '#b5bdc1'],
         // Credits
         credits: {
           enabled: true,
