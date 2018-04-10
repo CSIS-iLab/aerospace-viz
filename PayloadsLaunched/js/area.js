@@ -15,7 +15,7 @@ $(function() {
       text: "Payloads Launched by Country"
     },
     subtitle: {
-      text: "Total Paylaods Launched from China, Russia, and the United States from 1957 to 2017"
+      text: "Total Payloads Launched from the United States, China, and Russia from 1957 to 2017"
     },
     // Credits
     credits: {
