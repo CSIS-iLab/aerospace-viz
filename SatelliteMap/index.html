@@ -1,7 +1,7 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Single layer | CARTO</title>
+    <title>Aerospace Security | Satellite Coverage</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <!-- Include Leaflet -->
@@ -9,134 +9,49 @@
     <link href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" rel="stylesheet">
     <!-- Include CARTO.js -->
     <script src="https://cartodb-libs.global.ssl.fastly.net/carto.js/v4.0.2/carto.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="https://carto.com/developers/carto-js/examples/maps/public/style.css" rel="stylesheet">
+    <!-- <link href="https://csis-ilab.github.io/aerospace-viz/globals/styles.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../globals/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <base target="_blank">
   </head>
   <body>
     <div id="map">
     </div>
     <!-- Description -->
     <aside class="toolbox">
-      <div class="box">
-        <section>
-          <div id="filterWidget" class="widget">
-            <h1>Array Size</h1>
-            <select class="js-size">
-              <option value="98">Small (98 Satellites)</option>
-              <option value="496" selected>Medium (496 Satellites)</option>
-              <option value="1012">Large (1,012 Satellites)</option>
-              <option value="1484">Extra Large (1,484 Satellites)</option>
-              <option value="2013">Mega (2,013 Satellites)</option>
-            </select>
-            <h1>Inclinations</h1>
-            <select class="js-inclinations">
-              <option value="30">30</option>
-              <option value="45" selected>45</option>
-              <option value="60">60</option>
-              <option value="90">90</option>
-            </select>
-          </div>
-        </section>
-        <footer class="js-footer"></footer>
+      <h1 class="title">Satellite Coverage</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore <span class="value-changed">eu fugiat</span> nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div id="filterWidget" class="widget">
+        <label for="size" class="filter-label">Array Size</label>
+        <label for="inclination" class="filter-label">Inclination</label>
+        <select name="size" id="size" class="js-size selection">
+          <option value="98">Small (98 Satellites)</option>
+          <option value="496" selected>Medium (496 Satellites)</option>
+          <option value="1012">Large (1,012 Satellites)</option>
+          <option value="1484">Extra Large (1,484 Satellites)</option>
+          <option value="2013">Mega (2,013 Satellites)</option>
+        </select>
+        <select name="inclination" id="inclination" class="js-inclinations selection">
+          <option value="30">30</option>
+          <option value="45" selected>45</option>
+          <option value="60">60</option>
+          <option value="90">90</option>
+        </select>
       </div>
+      <section id="legend">
+        <span class="filter-label">Range of Satellite Coverage</span>
+        <div class="legend-bar-container">
+          <span id="legend-min" class="legend-label"></span>
+          <span id="legend-max" class="legend-label"></span>
+        </div>
+        <div id="legend-bar"></div>
+        <p id="noCoverage" class="is-hidden">There is no satellite coverage with the selected options.</p>
     </aside>
-
-    <script>
-      const map = L.map('map').setView([30, 0], 3);
-      map.scrollWheelZoom.disable();
-
-      L.tileLayer('https://cartocdn_{s}.global.ssl.fastly.net/base-eco/{z}/{x}/{y}.png', {
-        maxZoom: 20
-      }).addTo(map);
-
-      const client = new carto.Client({
-        apiKey: 'xoBRIFsE4v11J2L1cc4ROw',
-        username: 'csis'
-      });
-
-      let currentInclination = 45
-      let currentSatellitesNum = 496
-      const widgetDom = document.querySelector('#filterWidget');
-
-      const satelliteData = new carto.source.SQL(`
-        SELECT *
-            FROM aerospace_satellite_map_data
-            WHERE number_satellites='${currentSatellitesNum}' AND inclination='${currentInclination}'
-      `);
-
-      const style = new carto.style.CartoCSS(`
-        #layer {
-          polygon-fill: ramp([coverage], (#fde0c5, #facba6, #f8b58b, #f59e72, #f2855d, #ef6a4c, #eb4a40), quantiles);
-          polygon-opacity: 0.82;
-        }
-        #layer::outline {
-          line-width: 0;
-          line-color: #FFFFFF;
-          line-opacity: 0.5;
-        }
-      `);
-      const layer = new carto.layer.Layer(satelliteData, style, {
-        featureOverColumns: ['size', 'coverage']
-      });
-
-      client.addLayer(layer);
-      client.getLeafletLayer().addTo(map);
-
-      const popup = L.popup({ closeButton: false });
-      layer.on(carto.layer.events.FEATURE_OVER, featureEvent => {
-        const coverage = featureEvent.data.coverage.toString()
-        popup.setLatLng(featureEvent.latLng);
-          popup.setContent(`Number of satellites at this latitude: ${coverage}`);
-        if (!popup.isOpen()) {
-          popup.openOn(map);
-        }
-      });
-
-      layer.on(carto.layer.events.FEATURE_OUT, featureEvent => {
-        popup.removeFrom(map);
-      });
-
-      /*----------  Inclination Widget  ----------*/
-      const inclinationDataview = new carto.dataview.Category(satelliteData, 'inclination', {
-        limit: 100
-      });
-
-      inclinationDataview.on('dataChanged', data => {
-        const inclinationsDom = filterWidget.querySelector('.js-inclinations');
-
-        inclinationsDom.onchange = event => {
-          currentInclination = event.target.value;
-          filterByInclinationAndSatelliteNum(currentInclination, currentSatellitesNum);
-        };
-      });
-
-      /*----------  Sizes Widget  ----------*/
-      const sizeDataview = new carto.dataview.Category(satelliteData, 'number_satellites', {
-        limit: 100
-      });
-
-      sizeDataview.on('dataChanged', data => {
-        const sizesDom = filterWidget.querySelector('.js-size');
-
-        sizesDom.onchange = event => {
-          currentSatellitesNum = event.target.value;
-          filterByInclinationAndSatelliteNum(currentInclination, currentSatellitesNum);
-        };
-      });
-
-      function filterByInclinationAndSatelliteNum(inclination, satellitesNum) {
-        let query = `
-          SELECT *
-            FROM aerospace_satellite_map_data
-            WHERE number_satellites='${satellitesNum}' AND inclination='${inclination}'
-        `;
-        console.log(query)
-        satelliteData.setQuery(query);
-      }
-
-      client.addDataviews([sizeDataview, inclinationDataview]);
-
-    </script>
+    <script src="js/app.js"></script>
   </body>
 </html>
