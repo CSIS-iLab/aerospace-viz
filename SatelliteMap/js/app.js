@@ -5,14 +5,14 @@ const map = L.map('map').setView([15, 25], 2.5);
 // map.scrollWheelZoom.disable();
 map.zoomControl.setPosition('topright')
 
-L.tileLayer('https://api.mapbox.com/styles/v1/ilabmedia/cjhs1kai005bc2sk8vgh79d8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw', {
+L.tileLayer('https://api.mapbox.com/styles/v1/ilabmedia/cjhux052501oe2slrii14wz3j/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw', {
   maxZoom: 18
 }).addTo(map);
 
 map.attributionControl.addAttribution('<a href="https://aerospace.csis.org">CSIS Aerospace Security</a>')
 
 const client = new carto.Client({
-  apiKey: 'f4h1J9IvkITd1phg6vEXuA',
+  apiKey: 'oo0wpDLkK1uBpLY-dpQ3uA',
   username: 'csis'
 });
 
@@ -32,24 +32,10 @@ const satelliteStyle = new carto.style.CartoCSS(`
   }
   `);
 const satelliteLayer = new carto.layer.Layer(satelliteData, satelliteStyle, {
-  featureOverColumns: ['size', 'coverage']
+  featureOverColumns: ['coverage']
 });
 
-// const threatCountriesData = new carto.source.SQL(`
-//   SELECT *
-//   FROM world_borders
-//   WHERE iso3 IN ('RUS', 'IRN', 'CHN', 'PRK')
-//   `);
-// const threatCountriesStyle = new carto.style.CartoCSS(`
-//   #layer::outline {
-//     line-width: 1;
-//     line-opacity: 0.6;
-//   }
-//   `);
-// const threatCountries = new carto.layer.Layer(threatCountriesData, threatCountriesStyle)
-// client.addLayers([threatCountries,satelliteLayer]);
-
-client.addLayers([satelliteLayer]);
+client.addLayer(satelliteLayer);
 client.getLeafletLayer().addTo(map);
 
 const popup = L.popup({ closeButton: false });
@@ -57,7 +43,7 @@ satelliteLayer.on(carto.layer.events.FEATURE_OVER, featureEvent => {
   const coverage = featureEvent.data.coverage.toString()
   popup.setLatLng(featureEvent.latLng);
   popup.setContent(`
-    Latitude: <strong>${featureEvent.latLng.lat}</strong><br />
+    Latitude: <strong>${round(featureEvent.latLng.lat, 1)}&deg</strong><br />
     Number of Interceptors Within Range at All Times: <strong>${coverage}</strong>`);
   if (!popup.isOpen()) {
     popup.openOn(map);
@@ -80,9 +66,11 @@ function renderLegend(metadata) {
   document.getElementById('legend-max').innerHTML = metadata.getMax();
   if ( metadata.getMin() ) {
     document.getElementById('legend-bar').classList.remove('is-hidden')
+    document.getElementById('constellation-details').classList.remove('is-hidden')
     document.getElementById('noCoverage').classList.add('is-hidden')
   } else {
     document.getElementById('legend-bar').classList.add('is-hidden')
+    document.getElementById('constellation-details').classList.add('is-hidden')
     document.getElementById('noCoverage').classList.remove('is-hidden')
   }
 }
@@ -126,3 +114,17 @@ function filterByInclinationAndSatelliteNum(inclination, satellitesNum) {
 }
 
 client.addDataviews([sizeDataview, inclinationDataview]);
+
+/*----------  More Information  ----------*/
+let buttons = document.querySelectorAll('.toggle-panels')
+buttons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    document.getElementById('panel-primary').classList.toggle('is-hidden')
+    document.getElementById('panel-secondary').classList.toggle('is-hidden')
+  })
+})
+
+function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}

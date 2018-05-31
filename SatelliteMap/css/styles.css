@@ -50,6 +50,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  margin-bottom: 0.5rem;
 }
 
 .filter-label,
@@ -90,12 +91,26 @@ p {
   margin-bottom: 0.5rem;
 }
 
-.constellation-details {
+#constellation-details,
+#noCoverage {
   font-size: 12px;
 }
 
 .is-hidden {
   display: none;
+}
+
+.toggle-panels {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background: transparent;
+  -webkit-appearance: none;
+  font-family: "Abel", Arial, sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #d66e42;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
