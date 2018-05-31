@@ -19,15 +19,10 @@
     </div>
     <!-- Description -->
     <aside class="toolbox">
-      <h1 class="title">Satellite Coverage</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore <span class="value-changed">eu fugiat</span> nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h1 class="title">Space-Based Missile Defense: How Much is Enough?</h1>
+      <p>Use the dropdown menus below to build a constellation of space-based missile interceptors. Hover over the interactive map to learn more about the effective boost phase missile defense created by each constellation.</p>
       <div id="filterWidget" class="widget">
-        <label for="size" class="filter-label">Array Size</label>
+        <label for="size" class="filter-label">Constellation Size</label>
         <label for="inclination" class="filter-label">Inclination</label>
         <select name="size" id="size" class="js-size selection">
           <option value="98">Small (98 Satellites)</option>
@@ -37,20 +32,21 @@
           <option value="2013">Mega (2,013 Satellites)</option>
         </select>
         <select name="inclination" id="inclination" class="js-inclinations selection">
-          <option value="30">30</option>
-          <option value="45" selected>45</option>
-          <option value="60">60</option>
-          <option value="90">90</option>
+          <option value="30">30&deg;</option>
+          <option value="45" selected>45&deg;</option>
+          <option value="60">60&deg;</option>
+          <option value="90">90&deg;</option>
         </select>
       </div>
       <section id="legend">
-        <span class="filter-label">Range of Satellite Coverage</span>
+        <span class="filter-label">Interceptors Within Range</span>
         <div class="legend-bar-container">
           <span id="legend-min" class="legend-label"></span>
           <span id="legend-max" class="legend-label"></span>
         </div>
         <div id="legend-bar"></div>
-        <p id="noCoverage" class="is-hidden">There is no satellite coverage with the selected options.</p>
+        <p id="noCoverage" class="is-hidden">The selected constellation could not guarantee boost phase missile defense for any region on Earth.</p>
+        <p class="constellation-details">With this constellation, a minimum of <span class="value-changed">[X]</span> to <span class="value-changed">[X]</span> interceptors would always be within range of North Korea, Iran would be covered by <span class="value-changed">[X]</span> to <span class="value-changed">[X]</span> interceptors, China by <span class="value-changed">[X]</span> to <span class="value-changed">[X]</span>, and Russia by <span class="value-changed">[X]</span> to <span class="value-changed">[X]</span>.</p>
     </aside>
     <script src="js/app.js"></script>
   </body>

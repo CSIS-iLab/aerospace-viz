@@ -16,13 +16,13 @@ body {
 
 aside.toolbox {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 10px;
+  left: 10px;
   width: 33%;
   z-index: 2;
   background: #FFFFFF;
   padding: 16px;
-  margin: 0 0 24px;
+  margin: 0 0 10px;
   box-shadow: 0 0px 16px rgba(0, 0, 0, 0.24);
 }
 
@@ -87,6 +87,11 @@ p {
   border-radius: 5px;
   background: rgb(253,224,197);
   background: linear-gradient(90deg, rgba(253,224,197,1) 0%, rgba(250,203,166,1) 14%, rgba(248,181,139,1) 28%, rgba(245,158,114,1) 42%, rgba(242,133,93,1) 56%, rgba(239,106,76,1) 70%, rgba(235,74,64,1) 84%);
+  margin-bottom: 0.5rem;
+}
+
+.constellation-details {
+  font-size: 12px;
 }
 
 .is-hidden {

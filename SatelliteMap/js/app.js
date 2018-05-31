@@ -1,8 +1,9 @@
 const widgetDom = document.querySelector('#filterWidget');
 let currentInclination = 45
 let currentSatellitesNum = 496
-const map = L.map('map').setView([15, 28], 2.5);
+const map = L.map('map').setView([15, 25], 2.5);
 // map.scrollWheelZoom.disable();
+map.zoomControl.setPosition('topright')
 
 L.tileLayer('https://api.mapbox.com/styles/v1/ilabmedia/cjhs1kai005bc2sk8vgh79d8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw', {
   maxZoom: 18
@@ -34,27 +35,30 @@ const satelliteLayer = new carto.layer.Layer(satelliteData, satelliteStyle, {
   featureOverColumns: ['size', 'coverage']
 });
 
-const threatCountriesData = new carto.source.SQL(`
-  SELECT *
-  FROM world_borders
-  WHERE iso3 IN ('RUS', 'IRN', 'CHN', 'PRK')
-  `);
-const threatCountriesStyle = new carto.style.CartoCSS(`
-  #layer::outline {
-    line-width: 1;
-    line-opacity: 0.6;
-  }
-  `);
-const threatCountries = new carto.layer.Layer(threatCountriesData, threatCountriesStyle)
+// const threatCountriesData = new carto.source.SQL(`
+//   SELECT *
+//   FROM world_borders
+//   WHERE iso3 IN ('RUS', 'IRN', 'CHN', 'PRK')
+//   `);
+// const threatCountriesStyle = new carto.style.CartoCSS(`
+//   #layer::outline {
+//     line-width: 1;
+//     line-opacity: 0.6;
+//   }
+//   `);
+// const threatCountries = new carto.layer.Layer(threatCountriesData, threatCountriesStyle)
+// client.addLayers([threatCountries,satelliteLayer]);
 
-client.addLayers([threatCountries, satelliteLayer]);
+client.addLayers([satelliteLayer]);
 client.getLeafletLayer().addTo(map);
 
 const popup = L.popup({ closeButton: false });
 satelliteLayer.on(carto.layer.events.FEATURE_OVER, featureEvent => {
   const coverage = featureEvent.data.coverage.toString()
   popup.setLatLng(featureEvent.latLng);
-  popup.setContent(`Number of satellites at this latitude: ${coverage}`);
+  popup.setContent(`
+    Latitude: <strong>${featureEvent.latLng.lat}</strong><br />
+    Number of Interceptors Within Range at All Times: <strong>${coverage}</strong>`);
   if (!popup.isOpen()) {
     popup.openOn(map);
   }
