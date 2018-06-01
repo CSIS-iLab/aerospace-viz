@@ -81,14 +81,14 @@
       },
       "90": {
          "inclination": 90,
-         "china_min": null,
-         "china_max": null,
-         "north_korea_min": null,
-         "north_korea_max": null,
-         "russia_min": null,
-         "russia_max": null,
-         "iran_min": null,
-         "iran_max": null
+         "china_min": 0,
+         "china_max": 0,
+         "north_korea_min": 0,
+         "north_korea_max": 0,
+         "russia_min": 0,
+         "russia_max": 7,
+         "iran_min": 0,
+         "iran_max": 0
       }
    },
    "1012": {
@@ -208,14 +208,14 @@
       },
       "60": {
          "inclination": 60,
-         "china_min": null,
-         "china_max": null,
-         "north_korea_min": null,
-         "north_korea_max": null,
-         "russia_min": null,
-         "russia_max": null,
-         "iran_min": null,
-         "iran_max": null
+         "china_min": 4,
+         "china_max": 7,
+         "north_korea_min": 5,
+         "north_korea_max": 5,
+         "russia_min": 5,
+         "russia_max": 33,
+         "iran_min": 4,
+         "iran_max": 5
       },
       "90": {
          "inclination": 90,
