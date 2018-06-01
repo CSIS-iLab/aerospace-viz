@@ -1,3 +1,4 @@
+const threat_countries = {"98": {"30": {"inclination": 30, "china_min": 0, "china_max": 0, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 0 }, "45": {"inclination": 45, "china_min": 0, "china_max": 0, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 0 }, "60": {"inclination": 60, "china_min": 0, "china_max": 0, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 0 }, "90": {"inclination": 90, "china_min": 0, "china_max": 0, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 0 } }, "496": {"30": {"inclination": 30, "china_min": 0, "china_max": 4, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 4 }, "45": {"inclination": 45, "china_min": 0, "china_max": 4, "north_korea_min": 3, "north_korea_max": 4, "russia_min": 0, "russia_max": 4, "iran_min": 1, "iran_max": 3 }, "60": {"inclination": 60, "china_min": 0, "china_max": 2, "north_korea_min": 1, "north_korea_max": 1, "russia_min": 0, "russia_max": 4, "iran_min": 0, "iran_max": 1 }, "90": {"inclination": 90, "china_min": null, "china_max": null, "north_korea_min": null, "north_korea_max": null, "russia_min": null, "russia_max": null, "iran_min": null, "iran_max": null } }, "1012": {"30": {"inclination": 30, "china_min": 0, "china_max": 9, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 9 }, "45": {"inclination": 45, "china_min": 0, "china_max": 8, "north_korea_min": 7, "north_korea_max": 8, "russia_min": 0, "russia_max": 8, "iran_min": 2, "iran_max": 8 }, "60": {"inclination": 60, "china_min": 2, "china_max": 7, "north_korea_min": 2, "north_korea_max": 3, "russia_min": 0, "russia_max": 7, "iran_min": 2, "iran_max": 3 }, "90": {"inclination": 90, "china_min": 2, "china_max": 3, "north_korea_min": 2, "north_korea_max": 2, "russia_min": 2, "russia_max": 17, "iran_min": 2, "iran_max": 2 } }, "1484": {"30": {"inclination": 30, "china_min": 0, "china_max": 14, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 13 }, "45": {"inclination": 45, "china_min": 0, "china_max": 13, "north_korea_min": 9, "north_korea_max": 13, "russia_min": 0, "russia_max": 12, "iran_min": 5, "iran_max": 13 }, "60": {"inclination": 60, "china_min": 3, "china_max": 12, "north_korea_min": 4, "north_korea_max": 4, "russia_min": 0, "russia_max": 13, "iran_min": 4, "iran_max": 5 }, "90": {"inclination": 90, "china_min": 2, "china_max": 4, "north_korea_min": 2, "north_korea_max": 3, "russia_min": 3, "russia_max": 25, "iran_min": 2, "iran_max": 3 } }, "2013": {"30": {"inclination": 30, "china_min": 0, "china_max": 19, "north_korea_min": 0, "north_korea_max": 0, "russia_min": 0, "russia_max": 0, "iran_min": 0, "iran_max": 19 }, "45": {"inclination": 45, "china_min": 0, "china_max": 18, "north_korea_min": 14, "north_korea_max": 18, "russia_min": 0, "russia_max": 18, "iran_min": 7, "iran_max": 16 }, "60": {"inclination": 60, "china_min": null, "china_max": null, "north_korea_min": null, "north_korea_max": null, "russia_min": null, "russia_max": null, "iran_min": null, "iran_max": null }, "90": {"inclination": 90, "china_min": 4, "china_max": 7, "north_korea_min": 5, "north_korea_max": 5, "russia_min": 5, "russia_max": 33, "iran_min": 4, "iran_max": 5 } } }
 const widgetDom = document.querySelector('#filterWidget');
 let currentInclination = 45
 let currentSatellitesNum = 496
@@ -5,9 +6,13 @@ const map = L.map('map').setView([15, 25], 2.5);
 // map.scrollWheelZoom.disable();
 map.zoomControl.setPosition('topright')
 
-L.tileLayer('https://api.mapbox.com/styles/v1/ilabmedia/cjhux052501oe2slrii14wz3j/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw', {
-  maxZoom: 18
-}).addTo(map);
+// Carto
+//https://api.mapbox.com/styles/v1/ilabmedia/cjhux052501oe2slrii14wz3j/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw
+
+// Leaflet
+//https://api.mapbox.com/styles/v1/ilabmedia/cjhux052501oe2slrii14wz3j/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw
+
+L.tileLayer('https://api.mapbox.com/styles/v1/ilabmedia/cjhw4r6kx0sia2spem2u2o8fu/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw').addTo(map);
 
 map.attributionControl.addAttribution('<a href="https://aerospace.csis.org">CSIS Aerospace Security</a>')
 
@@ -87,6 +92,7 @@ inclinationDataview.on('dataChanged', data => {
   inclinationsDom.onchange = event => {
     currentInclination = event.target.value;
     filterByInclinationAndSatelliteNum(currentInclination, currentSatellitesNum);
+    updateThreatCountries(currentInclination, currentSatellitesNum);
   };
 });
 
@@ -101,6 +107,7 @@ sizeDataview.on('dataChanged', data => {
   sizesDom.onchange = event => {
     currentSatellitesNum = event.target.value;
     filterByInclinationAndSatelliteNum(currentInclination, currentSatellitesNum);
+    updateThreatCountries(currentInclination, currentSatellitesNum);
   };
 });
 
@@ -115,8 +122,18 @@ function filterByInclinationAndSatelliteNum(inclination, satellitesNum) {
 
 client.addDataviews([sizeDataview, inclinationDataview]);
 
+updateThreatCountries(currentInclination, currentSatellitesNum) // Call once on initial load
+function updateThreatCountries(inclination, satellitesNum) {
+  let threat_countries_current_coverage = threat_countries[satellitesNum][inclination]
+  const valueElements = document.querySelectorAll('.value-changed')
+  valueElements.forEach(function(el) {
+    let value = el.dataset.country
+    el.innerHTML = threat_countries_current_coverage[value]
+  })
+}
+
 /*----------  More Information  ----------*/
-let buttons = document.querySelectorAll('.toggle-panels')
+const buttons = document.querySelectorAll('.toggle-panels')
 buttons.forEach(function(button) {
   button.addEventListener("click", function() {
     document.getElementById('panel-primary').classList.toggle('is-hidden')
