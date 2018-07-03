@@ -148,7 +148,7 @@ $(function() {
         // Y Axis
         yAxis: {
           title: {
-            text: "Budget Authority, in Billions (" + dataset + " Dollars)"
+            text: "Budget Authority, in Billions (" + dataset + ")"
           },
           labels: {
               formatter: function () {
