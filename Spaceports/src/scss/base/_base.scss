@@ -1,0 +1,29 @@
+// General
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  // font-family: $font-hind;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+  --breakpoint: 'xsmall';
+
+  @include breakpoint('small') {
+    --breakpoint: 'small';
+  }
+
+  @include breakpoint('medium') {
+    --breakpoint: 'medium';
+  }
+
+  @include breakpoint('large') {
+    --breakpoint: 'large';
+  }
+}
+
+a {
+}
