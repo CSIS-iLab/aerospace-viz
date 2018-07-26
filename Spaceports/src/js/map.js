@@ -6,9 +6,13 @@ const chart = visual()
 const transitionDuration = 600
 const t = d3.transition().duration(transitionDuration)
 const format = d3.format(',.3s')
+const colors = ['#d66e42', '#4b5255']
 
 let windowWidth = window.innerWidth
 let el
+let categories
+let maxTotal
+let minTotal
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth)
@@ -36,9 +40,8 @@ function visual() {
 
   const path = d3.geoPath().projection(projection)
 
-  let size = d3.scaleQuantile()
   let circleSize = d3.scaleSqrt()
-  let colorScale = d3.scaleQuantile()
+  let colorScale = d3.scaleOrdinal()
 
   function enter({ container, data }) {
     const svg = container.selectAll('.svg-map').data([data])
@@ -55,14 +58,8 @@ function visual() {
   function exit({ container, data }) {}
 
   function updateScales({ data }) {
-    // let sortedValues = data.values.map(d => d.value).sort()
-    // sortedValues.sort((a, b) => a - b)
-    // circleSize.domain(d3.extent(Object.values(data.totals))).range([2, maxR])
-    // size.domain(sortedValues).range([1, 2, 3, 4, 5])
-    // colorScale
-    //   .domain(sortedValues)
-    //   .range(['#a483a8', '#3b75bb', '#83badc', '#58a897', '#8cb561'])
-    // panel.colorScale = colorScale
+    circleSize.domain([minTotal, maxTotal]).range([2, maxR])
+    colorScale.domain(categories).range(colors)
   }
 
   function updateDom({ container, data }) {
@@ -89,10 +86,9 @@ function visual() {
     const world = WORLD_JSON.features
 
     drawCountries({ container, world })
+    drawSpaceports({ container, data })
     // zoomBtns()
   }
-
-  function updateLegend({ container, data }) {}
 
   function drawCountries({ container, world }) {
     container
@@ -122,6 +118,44 @@ function visual() {
     // .on('click', resetZoom)
   }
 
+  function drawSpaceports({ container, data }) {
+    const plot = container.select('.g-plot')
+
+    const spaceports = plot.selectAll('.spaceport').data(data, d => d.id)
+
+    spaceports.exit().remove()
+
+    spaceports
+      .enter()
+      .append('circle')
+      .attr('class', 'spaceport')
+      .attr('data-id', d => d.id)
+      .attr('cx', d => projection([d.longitude, d.latitude])[0])
+      .attr('cy', d => projection([d.longitude, d.latitude])[1])
+      .merge(spaceports)
+      .classed(
+        'human-launched',
+        d => d.human_launch_year != null && d.human_launch_year <= d.year
+      )
+      .transition(t)
+      .attr('r', d => circleSize(d.ytd_total))
+      .attr('fill', d => colorScale(d.status))
+      .attr('stroke', d => colorScale(d.status))
+
+    // const label = plot.selectAll('.label').data(data)
+    // label
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', 'label')
+    //   .attr('fill', 'black')
+    //   .attr('font-size', '9px')
+    //   .attr('x', d => projection([d.longitude, d.latitude])[0])
+    //   .attr('y', d => projection([d.longitude, d.latitude])[1] - 5)
+    //   .text(d => d.name)
+  }
+
+  function updateLegend({ container, data }) {}
+
   function chart(container) {
     const data = container.datum()
 
@@ -149,6 +183,9 @@ function visual() {
 function init(args) {
   el = d3.select(args.container)
   el.datum(args.data)
+  categories = args.categories
+  minTotal = args.minTotal
+  maxTotal = args.maxTotal
   resize(args)
 }
 
