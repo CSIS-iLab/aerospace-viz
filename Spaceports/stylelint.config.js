@@ -9,7 +9,12 @@ module.exports = {
         'selector-pseudo-class-no-unknown': true,
         'selector-pseudo-element-no-unknown': true,
         'media-feature-name-no-unknown': true,
-        'at-rule-no-unknown': false,
+        'at-rule-no-unknown': [
+            true,
+            {
+                ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin']
+            }
+        ],
         'comment-no-empty': true,
         'no-duplicate-at-import-rules': true,
         'no-extra-semicolons': true,

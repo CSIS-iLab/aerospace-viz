@@ -19,6 +19,10 @@ const parseData = {
         .filter(datum => datum.id == d.id && datum.year <= d.year)
         .map(datum => datum.total)
         .reduce((total, num) => total + num, 0)
+      d.overall_total = data
+        .filter(datum => datum.id == d.id)
+        .map(datum => datum.total)
+        .reduce((total, num) => total + num, 0)
 
       // meta[d.id].launches.push(d)
       // return d
@@ -29,8 +33,10 @@ const parseData = {
     years.forEach(year => {
       launchesByYear[year] = data
         .filter(d => d.year == year && d.year_added_to_map <= year)
-        .sort((a, b) => a.id.localeCompare(b.id))
+        .sort((a, b) => b.overall_total - a.overall_total)
     })
+
+    console.log(launchesByYear)
 
     const categories = Array.from(new Set([...data.map(d => d.status)])).sort()
 

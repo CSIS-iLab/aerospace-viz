@@ -1,22 +1,30 @@
 import * as d3 from 'd3'
 
-const zoom = {
+const MapZoom = {
+	zoom: null,
+	s: 1,
+	width: null,
+	height: null,
 	setupBtns: function() {
 		d3.select('.zoomBtns').classed('is-visible', true)
 
 		d3.select('#zoom-in').on('click', function() {
-			zoom.scaleBy(d3.select('.chart .svg-map'), 1.5)
+			MapZoom.zoom.scaleBy(d3.select('.svg-map'), 1.5)
 		})
 
 		d3.select('#zoom-out').on('click', function() {
-			zoom.scaleBy(d3.select('.chart .svg-map'), 0.5)
+			MapZoom.zoom.scaleBy(d3.select('.svg-map'), 0.5)
 		})
 
 		d3.select('#zoom-reset').on('click', function() {
-			resetZoom()
+			MapZoom.resetZoom()
 		})
 	},
 	zoomed: function() {
+		let s = MapZoom.s
+		let width = MapZoom.width
+		let height = MapZoom.height
+
 		var t = [d3.event.transform.x, d3.event.transform.y]
 		s = d3.event.transform.k
 		var h = 0
@@ -34,10 +42,10 @@ const zoom = {
 		// group.attr('transform', 'translate(' + t + ')scale(' + s + ')')
 
 		d3.selectAll('.countries').style('stroke-width', 1 / s)
-		group.attr('transform', d3.event.transform)
+		d3.select('.g-container').attr('transform', d3.event.transform)
 	},
 	zoomIn: function(item, d) {
-		if (activeNode.node() === item.node()) return resetZoom()
+		// if (activeNode.node() === item.node()) return MapZoom.resetZoom()
 		activeNode = item
 		hideNewElements = true
 
@@ -54,7 +62,7 @@ const zoom = {
 
 		if (navigator.userAgent.indexOf('Firefox') !== -1) {
 			d3.select('.svg-map').call(
-				zoom.transform,
+				MapZoom.zoom.transform,
 				d3.zoomIdentity
 					.translate(translate[0], translate[1])
 					.scale(scale)
@@ -64,7 +72,7 @@ const zoom = {
 				.transition()
 				.duration(750)
 				.call(
-					zoom.transform,
+					MapZoom.zoom.transform,
 					d3.zoomIdentity
 						.translate(translate[0], translate[1])
 						.scale(scale)
@@ -73,18 +81,17 @@ const zoom = {
 	},
 	resetZoom: function() {
 		d3.selectAll('.nodes.is-active').classed('is-active', false)
-		activeNode = d3.select(null)
-		hideNewElements = true
+		// activeNode = d3.select(null)
 
 		if (navigator.userAgent.indexOf('Firefox') !== -1) {
-			d3.select('.svg-map').call(zoom.transform, d3.zoomIdentity)
+			d3.select('.svg-map').call(MapZoom.zoom.transform, d3.zoomIdentity)
 		} else {
 			d3.select('.svg-map')
 				.transition()
 				.duration(750)
-				.call(zoom.transform, d3.zoomIdentity)
+				.call(MapZoom.zoom.transform, d3.zoomIdentity)
 		}
 	}
 }
 
-export default zoom
+export default MapZoom

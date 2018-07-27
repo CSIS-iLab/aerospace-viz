@@ -3,6 +3,10 @@
 ===========================*/
 
 .map-container {
+	.svg-map {
+		background-color: $map-water;
+	}
+
 	.map-background {
 		fill: $map-water;
 	}

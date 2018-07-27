@@ -1,5 +1,6 @@
 import * as d3 from 'd3'
 import breakpoints from './breakpoints'
+import MapZoom from './map-zoom'
 const WORLD_JSON = require('../data/world.json')
 
 const chart = visual()
@@ -33,10 +34,11 @@ function visual() {
   let mouse // need to store this because on zoom end, using mousewheel, mouse position is NAN
 
   let projection = d3.geoMercator()
-  // let zoom = d3
-  //   .zoom()
-  //   .scaleExtent([1, 8])
-  //   .on('zoom', zoomed)
+  let zoom = d3
+    .zoom()
+    .scaleExtent([1, 8])
+    .on('zoom', MapZoom.zoomed)
+  MapZoom.zoom = zoom
 
   const path = d3.geoPath().projection(projection)
 
@@ -63,10 +65,12 @@ function visual() {
   }
 
   function updateDom({ container, data }) {
+    MapZoom.width = width
+    MapZoom.height = height
     projection
-      .scale([width / (1.9 * Math.PI)])
+      .scale([width / (2.3 * Math.PI)])
       .rotate([rotated, 0])
-      .translate([width / 2, height / 1.65])
+      .translate([width / 1.8, height / 1.65])
 
     // Set SVG attributes, add items
     let svg = container
@@ -79,15 +83,15 @@ function visual() {
           (height + margin.top + margin.bottom)
       )
       .attr('preserveAspectRatio', 'xMinYMin')
-    // .on('click', stopped, true)
-    // .call(zoom)
+      .on('click', stopped, true)
+      .call(MapZoom.zoom)
     // .on('wheel.zoom', null)
 
     const world = WORLD_JSON.features
 
     drawCountries({ container, world })
     drawSpaceports({ container, data })
-    // zoomBtns()
+    MapZoom.setupBtns()
   }
 
   function drawCountries({ container, world }) {
@@ -173,7 +177,7 @@ function visual() {
   chart.width = function(...args) {
     if (!args.length) return width
     width = args[0]
-    height = width / 2
+    height = width / 1.75
     return chart
   }
 
