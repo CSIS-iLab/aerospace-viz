@@ -25,8 +25,10 @@ const maxTotal = calcMaxTotal(mapData.launchesByYear[endYear])
 let currentYear = startYear
 
 function init() {
-	timeline.setYear(currentYear)
+	// timeline.setYear(currentYear)
 	timeline.setupTimeline({
+		startYear: startYear,
+		endYear: endYear,
 		onChange: function() {
 			console.log('test')
 			drawChart()
@@ -43,6 +45,9 @@ function hideLoading() {
 
 function drawChart() {
 	currentYear = timeline.getCurrentYear()
+
+	console.log(currentYear)
+
 	let dataset = launchData[currentYear]
 
 	console.log(dataset)
