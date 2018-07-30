@@ -68,9 +68,9 @@ function visual() {
     MapZoom.width = width
     MapZoom.height = height
     projection
-      .scale([width / (2.3 * Math.PI)])
+      .scale([width / (1.9 * Math.PI)])
       .rotate([rotated, 0])
-      .translate([width / 1.8, height / 1.65])
+      .translate([width / 2, height / 1.65])
 
     // Set SVG attributes, add items
     let svg = container
