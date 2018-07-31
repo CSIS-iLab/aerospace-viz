@@ -2,14 +2,17 @@
 import * as noUiSlider from 'nouislider'
 
 const timeline = {
-  currentYearEl: document.querySelector('.timeline-current-year'),
-  el: document.querySelector('.timeline-controls'),
+  el: document.querySelector('.timeline-bar'),
   btnControls: document.querySelector('.timeline-btn'),
+  currentYearEl: document.querySelector('.timeline-current-year'),
+  currentLaunchesEl: document.querySelector('.timeline-num-launches'),
   playing: false,
   timer: null,
-  setYear(year) {
-    this.currentYearEl.setAttribute('data-year', year)
+  updateCurrentYear(year) {
     this.currentYearEl.innerHTML = year
+  },
+  updateCurrentLaunches(launches) {
+    this.currentLaunchesEl.innerHTML = launches
   },
   getCurrentYear() {
     return this.el.noUiSlider.get()
@@ -56,22 +59,6 @@ const timeline = {
       this.classList.add('pause-btn')
 
       timeline.playing = true
-
-      // if (timeline.playing == false) {
-      //   timeline.timer = setInterval(function() {
-      //     let currentYear = timeline.getCurrentYear()
-      //     let newYear = currentYear + 1
-      //     timeline.el.noUiSlider.set(newYear)
-      //   }, 600)
-
-      //   // d3.select(this)
-      //   //   .classed('active', true)
-      //   //   .select('span')
-      //   //   .attr('class', 'pause-icon')
-      //   timeline.playing = true
-      // } else {
-      //   timeline.stopTimeline()
-      // }
     })
   },
   stopTimeline() {

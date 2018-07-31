@@ -15,12 +15,15 @@ const mapData = parseData.launches({
 })
 
 const launchData = mapData.launchesByYear
+const totalPerYear = mapData.totalPerYear
 const years = mapData.years
 const startYear = years[0]
 const endYear = years[years.length - 1]
 const categories = mapData.categories
 const minTotal = calcMinTotal(mapData.launchesByYear[endYear])
 const maxTotal = calcMaxTotal(mapData.launchesByYear[endYear])
+
+console.log(mapData)
 
 let currentYear = startYear
 
@@ -30,6 +33,8 @@ function init() {
 		endYear: endYear,
 		onChange: function() {
 			drawChart()
+			timeline.updateCurrentYear(currentYear)
+			timeline.updateCurrentLaunches(totalPerYear[currentYear])
 			if (currentYear == endYear) {
 				timeline.stopTimeline()
 			}

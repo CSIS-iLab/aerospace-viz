@@ -4,11 +4,82 @@
 
 .legend {
 	position: absolute;
-	bottom: 4rem;
+	bottom: calc(1rem + 80px);
 	left: 1rem;
-	width: 20%;
-	// background: $white;
-	// padding: 16px;
-	// margin: 0 0 10px;
-	// box-shadow: 0 0px 16px rgba(0, 0, 0, 0.24);
+	z-index: 10;
+	width: fit-content;
+	max-width: 23%;
+	background: $legend-background;
+	padding: 0.5rem 1rem 1rem;
+	font-family: $font__source;
+	@include fontSize(14px);
+
+	h2 {
+		margin: 0 0 0.25rem 0;
+		font-size: 1rem;
+		font-family: $font__abel;
+		font-weight: 400;
+		text-transform: uppercase;
+		color: $black;
+	}
+
+	.legend-colors {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		li {
+			margin-bottom: 0.25rem;
+
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				margin-right: 0.5rem;
+				border-radius: 50%;
+			}
+		}
+
+		@each $category, $color in $categories {
+			&-#{$category}::before {
+				background-color: $color;
+			}
+		}
+
+		&-human::before {
+			border: 2px solid $blue;
+		}
+	}
+
+	.legend-size {
+		display: relative;
+
+		&-max {
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				margin-right: 0.5rem;
+				border: 1px solid $black;
+				border-radius: 50%;
+			}
+		}
+
+		&-min {
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				margin-right: 0.5rem;
+				border: 1px solid $black;
+				border-radius: 50%;
+			}
+		}
+	}
 }

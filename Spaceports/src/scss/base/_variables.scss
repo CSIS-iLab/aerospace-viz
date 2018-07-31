@@ -11,10 +11,18 @@ $green: #4f9793;
 $dark-green: #3e7a82;
 $dark-gray: #4b5255;
 $gray: #b5bdc1;
+$light-gray: #dedede;
 
 $map-water: #b7c7d1;
 $map-land: #f2f1ee;
 $map-land-borders: #c3c3c3;
+
+$legend-background: rgba($white, 0.7);
+
+$categories: (
+	active: $orange,
+	inactive: $dark-gray
+);
 
 /* ----------  Fonts  ---------- */
 $font__abel: 'Abel', 'Arial', sans-serif;

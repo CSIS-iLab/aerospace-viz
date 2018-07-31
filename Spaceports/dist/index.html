@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Aerospace - History of Spaceports</title>
 	<link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="style.829d325acea2f273e22f.css?27b13dd0468bdabcf5b4">
+	<link rel="stylesheet" href="style.485cd09aa5f6af0c932c.css?fc2d13364b0ebc7da069">
 </head>
 <body>
 	<header class="page-header">
@@ -17,13 +17,27 @@
 	</header>
 	<main class="map-container">
 		<section class="legend">
-			Colors<br />
-			Size
+			<h2>Legend</h2>
+			<ul class="legend-colors">
+				<li class="legend-colors-active">Operating</li>
+				<li class="legend-colors-inactive">No Longer Operating</li>
+				<li class="legend-colors-human">Achieved Vertical Launch of Humans</li>
+			</ul>
+			<!-- <div class="legend-size">
+				<div class="legend-size-max">100</div>
+				<div class="legend-size-min">1</div>
+			</div> -->
 		</section>
 		<section class="timeline">
-			<span class="timeline-current-year"></span>
-			<button class="timeline-btn play-btn"></button>
-			<div class="timeline-controls"></div>
+			<header class="timeline-header">
+				<span class="timeline-num-launches"></span> Launches in <span class="timeline-current-year"></span>
+			</header>
+			<div class="timeline-controls">
+				<button class="timeline-btn play-btn"></button>
+			</div>
+			<div class="timeline-container">
+				<div class="timeline-bar"></div>
+			</div>
 		</section>
 		<div class="zoomBtns">
             <button id="zoom-in" class="zoom zoom-in">+</button>
@@ -32,6 +46,6 @@
         </div>
 	</main>
 
-	<script src="main.27b13dd0468bdabcf5b4.js?27b13dd0468bdabcf5b4"></script>
+	<script src="main.fc2d13364b0ebc7da069.js?fc2d13364b0ebc7da069"></script>
 </body>
 </html>

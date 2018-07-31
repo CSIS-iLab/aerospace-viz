@@ -29,20 +29,23 @@ const parseData = {
     })
 
     let launchesByYear = {}
+    let totalPerYear = {}
     const years = Array.from(new Set([...data.map(d => d.year)])).sort()
     years.forEach(year => {
       launchesByYear[year] = data
         .filter(d => d.year == year && d.year_added_to_map <= year)
         .sort((a, b) => b.overall_total - a.overall_total)
+      totalPerYear[year] = launchesByYear[year]
+        .map(d => d.total)
+        .reduce((total, num) => total + num, 0)
     })
-
-    console.log(launchesByYear)
 
     const categories = Array.from(new Set([...data.map(d => d.status)])).sort()
 
     let dataObj = {
       years,
       launchesByYear,
+      totalPerYear,
       categories
     }
 
