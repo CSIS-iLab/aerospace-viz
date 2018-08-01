@@ -1,0 +1,29 @@
+/*=============================
+=            Panel            =
+=============================*/
+.panel {
+	position: absolute;
+	top: 2rem;
+	right: -27%;
+	bottom: 1rem;
+	width: 25%;
+	background-color: $white;
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px 3px;
+	padding: 1rem;
+	transition: right 750ms ease-in-out;
+	overflow-y: scroll;
+
+	&.is-active {
+		right: 0;
+	}
+
+	.panel-close {
+		position: absolute;
+		top: 0.5rem;
+		right: 0;
+		width: calc(100% - 1rem);
+		padding-right: 1rem;
+		text-align: right;
+		cursor: pointer;
+	}
+}

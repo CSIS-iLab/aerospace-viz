@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
-import breakpoints from './breakpoints'
+import tooltip from './tooltip'
 import MapZoom from './map-zoom'
+import panel from './panel'
 const WORLD_JSON = require('../data/world.json')
 
 const chart = visual()
@@ -32,6 +33,7 @@ function visual() {
   let s = 1
   let rotated = -3
   let mouse // need to store this because on zoom end, using mousewheel, mouse position is NAN
+  let activePort
 
   let projection = d3.geoMercator()
   let zoom = d3
@@ -55,6 +57,14 @@ function visual() {
     group.append('rect').attr('class', 'map-background')
     group.append('g').attr('class', 'g-map')
     group.append('g').attr('class', 'g-plot')
+
+    const legendContainer = d3.select('.legend-size')
+    const svgLegend = legendContainer.selectAll('.svg-size').data([data])
+    const svgLegendEnter = svgLegend
+      .enter()
+      .append('svg')
+      .attr('class', 'svg-size')
+    const groupLegend = svgLegendEnter.append('g')
   }
 
   function exit({ container, data }) {}
@@ -71,6 +81,7 @@ function visual() {
       .scale([width / (1.9 * Math.PI)])
       .rotate([rotated, 0])
       .translate([width / 2, height / 1.65])
+    MapZoom.projection = projection
 
     // Set SVG attributes, add items
     let svg = container
@@ -83,9 +94,8 @@ function visual() {
           (height + margin.top + margin.bottom)
       )
       .attr('preserveAspectRatio', 'xMinYMin')
-      .on('click', stopped, true)
+      .on('click', MapZoom.stopped, true)
       .call(MapZoom.zoom)
-    // .on('wheel.zoom', null)
 
     const world = WORLD_JSON.features
 
@@ -119,7 +129,7 @@ function visual() {
       .attr('width', map.width)
       .attr('height', map.height)
       .attr('transform', 'translate(' + map.x + ', 0)')
-    // .on('click', resetZoom)
+      .on('click', MapZoom.resetZoom)
   }
 
   function drawSpaceports({ container, data }) {
@@ -134,31 +144,83 @@ function visual() {
       .append('circle')
       .attr('class', 'spaceport')
       .attr('data-id', d => d.id)
+      .merge(spaceports)
       .attr('cx', d => projection([d.longitude, d.latitude])[0])
       .attr('cy', d => projection([d.longitude, d.latitude])[1])
-      .merge(spaceports)
       .classed(
         'human-launched',
         d => d.human_launch_year != null && d.human_launch_year <= d.year
       )
+      .on('mouseover', interactions.spaceports.mouseover)
+      .on('mouseleave', interactions.spaceports.mouseleave)
+      .on('click', interactions.spaceports.click)
       .transition(t)
       .attr('r', d => circleSize(d.ytd_total))
       .attr('fill', d => colorScale(d.status))
       .attr('stroke', d => colorScale(d.status))
-
-    // const label = plot.selectAll('.label').data(data)
-    // label
-    //   .enter()
-    //   .append('text')
-    //   .attr('class', 'label')
-    //   .attr('fill', 'black')
-    //   .attr('font-size', '9px')
-    //   .attr('x', d => projection([d.longitude, d.latitude])[0])
-    //   .attr('y', d => projection([d.longitude, d.latitude])[1] - 5)
-    //   .text(d => d.name)
   }
 
-  function updateLegend({ container, data }) {}
+  function updateLegend({ container, data }) {
+    if (
+      !d3
+        .select('.svg-size .g-container')
+        .select('*')
+        .empty()
+    ) {
+      return
+    }
+
+    const legendWidth = 90
+    const marginTop = legendWidth / 2 - 5
+    const legendSVG = d3
+      .select('.svg-size')
+      .attr('width', legendWidth)
+      .attr('height', legendWidth)
+
+    const g = legendSVG
+      .select('g')
+      .attr(
+        'transform',
+        `translate(${circleSize.range()[1] + 1}, ${marginTop})`
+      )
+
+    const midPoint = circleSize.invert(
+      (circleSize.range()[1] + circleSize.range()[0]) / 2
+    )
+    const legendData = [minTotal, midPoint, maxTotal]
+    const circles = g.selectAll('circles').data(legendData)
+    circles
+      .enter()
+      .append('circle')
+      .attr('class', 'legend-size-circles')
+      .merge(circles)
+      .attr('data-value', d => d)
+      .attr('cy', d => marginTop - circleSize(d))
+      .attr('r', d => circleSize(d))
+
+    const lines = g.selectAll('lines').data(legendData)
+    lines
+      .enter()
+      .append('line')
+      .attr('class', 'legend-size-line')
+      .merge(lines)
+      .attr('data-value', d => d)
+      .attr('x1', 0)
+      .attr('x2', d => circleSize.range()[1] + 5)
+      .attr('y1', d => marginTop - circleSize(d) * 2)
+      .attr('y2', d => marginTop - circleSize(d) * 2)
+
+    const labels = g.selectAll('text').data(legendData)
+    labels
+      .enter()
+      .append('text')
+      .attr('class', 'legend-size-label')
+      .merge(labels)
+      .attr('data-value', d => d)
+      .attr('x', d => circleSize.range()[1] + 5)
+      .attr('y', d => marginTop - circleSize(d) * 2 + 3)
+      .text(d => format(d))
+  }
 
   function chart(container) {
     const data = container.datum()
@@ -170,15 +232,41 @@ function visual() {
     updateLegend({ container, data })
   }
 
-  function stopped() {
-    if (d3.event.defaultPrevented) d3.event.stopPropagation()
-  }
-
   chart.width = function(...args) {
     if (!args.length) return width
     width = args[0]
     height = width / 1.75
     return chart
+  }
+
+  const interactions = {
+    spaceports: {
+      mouseover(d) {
+        interactions.spaceports.tooltip(d)
+      },
+      mouseleave(d) {
+        interactions.spaceports.tooltip(d, 'hide')
+      },
+      click(d) {
+        console.log(d)
+        let item = d3.select(this)
+        activePort = d.id
+        panel.toggle()
+        panel.updateInfo(d)
+        MapZoom.zoomIn(item, d)
+      },
+      tooltip(d, action = 'show') {
+        if (action != 'show') {
+          tooltip.hide()
+          return
+        }
+
+        let tooltipContent = `
+        <p class="tooltip-heading">
+          ${d.name}</p>`
+        tooltip.show(tooltipContent)
+      }
+    }
   }
 
   return chart

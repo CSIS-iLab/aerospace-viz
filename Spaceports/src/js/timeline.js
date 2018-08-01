@@ -57,6 +57,7 @@ const timeline = {
 
       this.classList.remove('play-btn')
       this.classList.add('pause-btn')
+      this.innerHTML = 'Pause'
 
       timeline.playing = true
     })
@@ -66,6 +67,7 @@ const timeline = {
     timeline.playing = false
     timeline.btnControls.classList.remove('pause-btn')
     timeline.btnControls.classList.add('play-btn')
+    timeline.btnControls.innerHTML = 'Play'
   }
 }
 

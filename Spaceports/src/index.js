@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
 import map from './js/map'
 import timeline from './js/timeline'
+import panel from './js/panel'
 import parseData from './js/data'
 import spaceportsMetaInfo from './data/20180726-spaceports-meta.csv'
 import spaceportsLaunches from './data/20180726-launches.csv'
@@ -23,8 +24,6 @@ const categories = mapData.categories
 const minTotal = calcMinTotal(mapData.launchesByYear[endYear])
 const maxTotal = calcMaxTotal(mapData.launchesByYear[endYear])
 
-console.log(mapData)
-
 let currentYear = startYear
 
 function init() {
@@ -41,6 +40,8 @@ function init() {
 		}
 	})
 	hideLoading()
+
+	panel.setupClose()
 }
 
 function hideLoading() {
@@ -50,8 +51,6 @@ function hideLoading() {
 
 function drawChart() {
 	currentYear = timeline.getCurrentYear()
-
-	console.log(currentYear)
 
 	let dataset = launchData[currentYear]
 

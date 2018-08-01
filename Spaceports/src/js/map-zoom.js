@@ -5,6 +5,7 @@ const MapZoom = {
 	s: 1,
 	width: null,
 	height: null,
+	projection: null,
 	setupBtns: function() {
 		d3.select('.zoomBtns').classed('is-visible', true)
 
@@ -45,20 +46,13 @@ const MapZoom = {
 		d3.select('.g-container').attr('transform', d3.event.transform)
 	},
 	zoomIn: function(item, d) {
-		// if (activeNode.node() === item.node()) return MapZoom.resetZoom()
-		activeNode = item
-		hideNewElements = true
+		let width = MapZoom.width
+		let height = MapZoom.height
 
-		var bounds = path.bounds(d),
-			dx = bounds[1][0] - bounds[0][0],
-			dy = bounds[1][1] - bounds[0][1],
-			x = (bounds[0][0] + bounds[1][0]) / 2,
-			y = (bounds[0][1] + bounds[1][1]) / 2,
-			scale = Math.max(
-				1,
-				Math.min(8, 0.9 / Math.max(dx / width, dy / height))
-			),
-			translate = [width / 2 - scale * x, height / 2 - scale * y]
+		const x = this.projection([d.longitude, d.latitude])[0]
+		const y = this.projection([d.longitude, d.latitude])[1]
+		const scale = 3
+		const translate = [width / 2 - scale * x, height / 2 - scale * y]
 
 		if (navigator.userAgent.indexOf('Firefox') !== -1) {
 			d3.select('.svg-map').call(
@@ -91,6 +85,9 @@ const MapZoom = {
 				.duration(750)
 				.call(MapZoom.zoom.transform, d3.zoomIdentity)
 		}
+	},
+	stopped: function() {
+		if (d3.event.defaultPrevented) d3.event.stopPropagation()
 	}
 }
 

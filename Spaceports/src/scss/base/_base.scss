@@ -6,8 +6,8 @@
 }
 
 body {
-  // font-family: $font-hind;
-  font-size: 18px;
+  font-family: $font__source;
+  @include fontSize(16px);
   margin: 0;
   padding: 0;
   --breakpoint: 'xsmall';

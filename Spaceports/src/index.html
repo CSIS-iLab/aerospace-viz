@@ -17,34 +17,35 @@
 	</header>
 	<main class="map-container">
 		<section class="legend">
-			<h2>Legend</h2>
+			<section class="timeline">
+				<header class="timeline-header">
+					<span class="timeline-num-launches"></span> Total Launches in <span class="timeline-current-year"></span>
+				</header>
+				<div class="timeline-controls">
+					<button class="timeline-btn play-btn">Play</button>
+				</div>
+				<div class="timeline-container">
+					<div class="timeline-bar"></div>
+				</div>
+			</section>
 			<ul class="legend-colors">
 				<li class="legend-colors-active">Operating</li>
 				<li class="legend-colors-inactive">No Longer Operating</li>
 				<li class="legend-colors-human">Achieved Vertical Launch of Humans</li>
 			</ul>
-			<!-- <div class="legend-size">
-				<div class="legend-size-max">100</div>
-				<div class="legend-size-min">1</div>
-			</div> -->
+			<div class="legend-size"></div>
 		</section>
-		<section class="timeline">
-			<header class="timeline-header">
-				<span class="timeline-num-launches"></span> Launches in <span class="timeline-current-year"></span>
-			</header>
-			<div class="timeline-controls">
-				<button class="timeline-btn play-btn"></button>
-			</div>
-			<div class="timeline-container">
-				<div class="timeline-bar"></div>
-			</div>
-		</section>
-		<div class="zoomBtns">
+		<section class="zoomBtns">
             <button id="zoom-in" class="zoom zoom-in">+</button>
             <button id="zoom-out" class="zoom zoom-out">-</button>
             <button id="zoom-reset" class="zoom zoom-reset">&#8635;</button>
-        </div>
+        </section>
+        <section class="panel">
+        	<span class="panel-close">x</span>
+        	<h2 class="panel-heading"></h2>
+        </section>
 	</main>
+	<div class="tooltip"></div>
 
 	<script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </body>
