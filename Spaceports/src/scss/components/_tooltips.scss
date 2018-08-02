@@ -5,10 +5,12 @@
 	display: block;
 	@include fontSize(13px);
 	line-height: 1.4;
+	font-weight: bold;
 	color: $off-black;
 	position: absolute;
 	z-index: 20;
 	width: fit-content;
+	max-width: 200px;
 	height: auto;
 	margin: 0 15px;
 	padding: 8px 8px 10px;
@@ -24,19 +26,17 @@
 	}
 
 	.tooltip-heading {
+		font-family: $font__abel;
+		@include fontSize(14px);
 		line-height: 1.5;
 		font-weight: bold;
-		margin-bottom: 0.5rem;
-		text-align: center;
-
-		@include breakpoint('medium') {
-			line-height: 1.8;
-		}
+		text-transform: uppercase;
+		margin-bottom: 0.2rem;
 	}
 
 	.tooltip-label {
 		color: $black;
-		text-transform: capitalize;
+		font-weight: normal;
 
 		&.indented {
 			padding-left: 0.75rem;

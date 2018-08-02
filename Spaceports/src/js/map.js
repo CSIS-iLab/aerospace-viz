@@ -15,6 +15,8 @@ let el
 let categories
 let maxTotal
 let minTotal
+let currentYear
+let startYear
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth)
@@ -161,12 +163,7 @@ function visual() {
   }
 
   function updateLegend({ container, data }) {
-    if (
-      !d3
-        .select('.svg-size .g-container')
-        .select('*')
-        .empty()
-    ) {
+    if (!d3.select('.svg-size g *').empty()) {
       return
     }
 
@@ -251,7 +248,7 @@ function visual() {
         console.log(d)
         let item = d3.select(this)
         activePort = d.id
-        panel.toggle()
+        panel.open()
         panel.updateInfo(d)
         MapZoom.zoomIn(item, d)
       },
@@ -261,9 +258,15 @@ function visual() {
           return
         }
 
+        let tooltipBody = [
+          { Operator: d.operator },
+          { ['Launches from ' + startYear + ' to ' + currentYear]: d.ytd_total }
+        ]
+
         let tooltipContent = `
         <p class="tooltip-heading">
-          ${d.name}</p>`
+          ${d.name}</p>
+          ${tooltip.formatContent(tooltipBody)}`
         tooltip.show(tooltipContent)
       }
     }
@@ -278,6 +281,8 @@ function init(args) {
   categories = args.categories
   minTotal = args.minTotal
   maxTotal = args.maxTotal
+  startYear = args.startYear
+  currentYear = args.currentYear
   resize(args)
 }
 

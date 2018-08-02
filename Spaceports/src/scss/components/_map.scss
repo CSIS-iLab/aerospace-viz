@@ -4,6 +4,7 @@
 
 .map-container {
 	position: relative;
+	overflow-x: hidden;
 
 	.svg-map {
 		background-color: $map-water;
@@ -30,38 +31,29 @@
 
 .zoomBtns {
 	position: absolute;
+	top: 1rem;
+	right: 1rem;
 	z-index: 20;
-	right: 1.5rem;
 	cursor: pointer;
-	padding-top: 0.5rem;
 	display: none;
 
 	&.is-visible {
-		display: block;
+		display: flex;
 	}
 
 	.zoom {
 		background-color: $white;
 		display: block;
 		border: 1px solid $dark-blue;
-		font-size: 18px;
-		width: 27px;
+		@include fontSize(16px);
 		border-radius: 0;
 	}
 
-	.zoom-in {
-		border-top-left-radius: 2px;
-		border-top-right-radius: 2px;
-		border-bottom: 1px solid $gray;
-	}
-
 	.zoom-out {
-		border-top: 0;
-		border-bottom-left-radius: 2px;
-		border-bottom-right-radius: 2px;
+		border-left: 0;
 	}
 
 	.zoom-reset {
-		border-radius: 2px;
+		border-left: 0;
 	}
 }

@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Aerospace - History of Spaceports</title>
 	<link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="style.a7ea5d4d57293f662538.css?e5005ffb25d8e7fb2a7e">
+	<link rel="stylesheet" href="style.2b04ed156a00cc6f7074.css?399c345fd0dda4527d74">
 </head>
 <body>
 	<header class="page-header">
@@ -41,12 +41,19 @@
             <button id="zoom-reset" class="zoom zoom-reset">&#8635;</button>
         </section>
         <section class="panel">
-        	<span class="panel-close">x</span>
+        	<button class="panel-close">x</button>
         	<h2 class="panel-heading"></h2>
+        	<ul class="panel-facts">
+        		<li><label>First Launch:</label> <span class="panel-fact-value" data-fact="year_added_to_map"></span></li>
+        		<li><label>Operator:</label> <span class="panel-fact-value" data-fact="operator"></span></li>
+        		<li><label>Current Status:</label> <span class="panel-fact-value" data-fact="status"></span></li>
+        		<li><label>Total Launches (<span id="panel-min-year"></span> to <span id="panel-max-year"></span>):</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
+        		<li><label>Latitude &amp; Longitude:</label> <span class="panel-fact-value" data-fact="latitude"></span>, <span class="panel-fact-value" data-fact="longitude"></span></li>
+        	</ul>
         </section>
 	</main>
 	<div class="tooltip"></div>
 
-	<script src="main.e5005ffb25d8e7fb2a7e.js?e5005ffb25d8e7fb2a7e"></script>
+	<script src="main.399c345fd0dda4527d74.js?399c345fd0dda4527d74"></script>
 </body>
 </html>

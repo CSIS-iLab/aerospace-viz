@@ -41,8 +41,15 @@
             <button id="zoom-reset" class="zoom zoom-reset">&#8635;</button>
         </section>
         <section class="panel">
-        	<span class="panel-close">x</span>
+        	<button class="panel-close">x</button>
         	<h2 class="panel-heading"></h2>
+        	<ul class="panel-facts">
+        		<li><label>First Launch:</label> <span class="panel-fact-value" data-fact="year_added_to_map"></span></li>
+        		<li><label>Operator:</label> <span class="panel-fact-value" data-fact="operator"></span></li>
+        		<li><label>Current Status:</label> <span class="panel-fact-value" data-fact="status"></span></li>
+        		<li><label>Total Launches (<span id="panel-min-year"></span> to <span id="panel-max-year"></span>):</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
+        		<li><label>Latitude &amp; Longitude:</label> <span class="panel-fact-value" data-fact="latitude"></span>, <span class="panel-fact-value" data-fact="longitude"></span></li>
+        	</ul>
         </section>
 	</main>
 	<div class="tooltip"></div>

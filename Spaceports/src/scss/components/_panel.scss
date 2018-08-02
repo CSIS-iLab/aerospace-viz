@@ -3,7 +3,7 @@
 =============================*/
 .panel {
 	position: absolute;
-	top: 2rem;
+	top: 4rem;
 	right: -27%;
 	bottom: 1rem;
 	width: 25%;
@@ -21,9 +21,34 @@
 		position: absolute;
 		top: 0.5rem;
 		right: 0;
-		width: calc(100% - 1rem);
 		padding-right: 1rem;
+		background-color: transparent;
+		border: 0;
 		text-align: right;
 		cursor: pointer;
+	}
+
+	.panel-heading {
+		margin: 0 0.75rem 0.5rem 0;
+		@include fontSize(20px);
+		font-family: $font__abel;
+		font-weight: 400;
+		text-transform: uppercase;
+		color: $black;
+	}
+
+	.panel-facts {
+		margin: 0 0 1rem 1.25rem;
+		padding: 0;
+		@include fontSize(16px);
+		line-height: 1.3;
+
+		li {
+			margin-bottom: 0.25rem;
+		}
+
+		.panel-fact-value {
+			font-weight: bold;
+		}
 	}
 }

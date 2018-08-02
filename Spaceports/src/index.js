@@ -42,6 +42,8 @@ function init() {
 	hideLoading()
 
 	panel.setupClose()
+	panel.getDetailedInfoItems()
+	panel.updateMinAndMaxYears(startYear, endYear)
 }
 
 function hideLoading() {
@@ -59,6 +61,8 @@ function drawChart() {
 		categories: categories,
 		minTotal: minTotal,
 		maxTotal: maxTotal,
+		startYear: startYear,
+		currentYear: currentYear,
 		container: '.map-container'
 	})
 }
