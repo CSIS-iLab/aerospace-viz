@@ -1,6 +1,6 @@
 const parseData = {
   metaInfo({ data }) {
-    data.map(d => (d.launches = []))
+    data.map(d => ((d.launches = []), (d.inclinations = [])))
     const obj = data.reduce(
       (o, spaceport) => ({ ...o, [spaceport.space_track_code]: spaceport }),
       {}
@@ -50,6 +50,28 @@ const parseData = {
     }
 
     return dataObj
+  },
+  inclinations({ data, meta }) {
+    const spaceports = Object.keys(meta)
+    let inclinations = []
+    for (var i = 0; i <= 180; i += 10) {
+      inclinations.push(i)
+    }
+
+    spaceports.forEach(spaceport => {
+      inclinations.forEach(inclination => {
+        let total = data.filter(
+          d =>
+            d.id == spaceport &&
+            d.inclinations >= inclination &&
+            d.inclinations < inclination + 10
+        ).length
+        meta[spaceport].inclinations.push({
+          inclination: inclination,
+          total: total
+        })
+      })
+    })
   }
 }
 

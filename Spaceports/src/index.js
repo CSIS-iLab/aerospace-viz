@@ -5,6 +5,7 @@ import panel from './js/panel'
 import parseData from './js/data'
 import spaceportsMetaInfo from './data/20180726-spaceports-meta.csv'
 import spaceportsLaunches from './data/20180726-launches.csv'
+import spaceportsInclinations from './data/20180803-inclinations.csv'
 import './scss/main.scss'
 
 const spaceports = parseData.metaInfo({
@@ -12,6 +13,10 @@ const spaceports = parseData.metaInfo({
 })
 const mapData = parseData.launches({
 	data: spaceportsLaunches,
+	meta: spaceports
+})
+const incliationsData = parseData.inclinations({
+	data: spaceportsInclinations,
 	meta: spaceports
 })
 

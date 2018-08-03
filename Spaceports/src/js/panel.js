@@ -1,5 +1,6 @@
 import MapZoom from './map-zoom'
 import BarChart from './bar-chart'
+import Histogram from './histogram'
 
 const panel = {
   el: document.querySelector('.panel'),
@@ -24,6 +25,7 @@ const panel = {
       this.el.querySelector('span[data-fact="' + item + '"]').innerHTML = value
     })
     this.drawBarChart(this.spaceportsMeta[data.id].launches)
+    this.drawHistogram(this.spaceportsMeta[data.id].inclinations)
   },
   setupClose() {
     this.closeBtn.addEventListener('click', function() {
@@ -44,6 +46,12 @@ const panel = {
     BarChart.init({
       data: dataset,
       container: '.barchart'
+    })
+  },
+  drawHistogram(dataset) {
+    Histogram.init({
+      data: dataset,
+      container: '.histogram'
     })
   }
 }

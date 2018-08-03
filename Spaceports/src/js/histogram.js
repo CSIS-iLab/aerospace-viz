@@ -1,19 +1,21 @@
 import * as d3 from 'd3'
 import tooltip from './tooltip'
+import scaleRadial from './scale-radial'
 
 const chart = drawChart()
 const transitionDuration = 600
 const t = d3.transition().duration(transitionDuration)
 const format = d3.format(',.3s')
-const formatPercentage = d3.format(',.2%')
 
 let windowWidth = window.innerWidth
 let el
-const categories = ['LEO', 'MEO', 'GEO', 'other', 'missing']
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth, window.innerHeight)
-  chart.width(sz).height()
+  chart
+    .width(sz)
+    .height()
+    .outerRadius()
   el.call(chart)
 }
 
@@ -21,15 +23,16 @@ function drawChart() {
   const margin = { top: 10, right: 10, bottom: 30, left: 30 }
   let width = 0
   let height = 0
-  let years
+  let inclinations
+  const innerRadius = 125
+  let outerRadius
 
   let x = d3
     .scaleBand()
-    .paddingOuter(0)
-    .paddingInner(0.2)
-    .align(0.5)
+    .range([0, Math.PI])
+    .align(0)
 
-  let y = d3.scaleLinear()
+  let y = scaleRadial()
 
   function enter({ container, data }) {
     const svg = container.selectAll('svg').data([data])
@@ -38,19 +41,16 @@ function drawChart() {
     gEnter.append('g').attr('class', 'g-plot')
     gEnter.append('g').attr('class', 'axis axis--x')
     gEnter.append('g').attr('class', 'axis axis--y')
-    gEnter.append('g').attr('class', 'legend')
   }
 
   function exit({ container, data }) {}
 
   function updateScales({ data }) {
-    years = data.map(d => d.year)
+    inclinations = data.map(d => d.inclination)
 
-    x.domain(years).rangeRound([0, width])
+    x.domain(inclinations)
 
-    y.domain(d3.extent(data.map(d => d.total)))
-      .nice()
-      .rangeRound([height, 0])
+    y.domain(d3.extent(data.map(d => d.total))).range([0, innerRadius])
   }
 
   function updateDom({ container, data }) {
@@ -66,87 +66,71 @@ function drawChart() {
 
     let g = svg
       .select('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
     let plot = g.select('.g-plot')
 
-    let stack = d3.stack().keys(categories)
+    const arc = d3
+      .arc()
+      .padAngle(0.01)
+      .padRadius(innerRadius)
 
-    categories.forEach(function(key, key_index) {
-      var bar = plot
-        .selectAll('.bar-' + key)
-        .data(stack(data)[key_index], d => d.data.year + '-' + key)
+    const columns = plot.selectAll('.column').data(data)
 
-      bar.exit().remove()
+    columns.exit().remove()
 
-      bar
-        .enter()
-        .append('rect')
-        .attr('class', d => 'bar bar-' + key)
-        .attr('data-year', d => d.data.year)
-        .attr('x', d => x(d.data.year))
-        .attr('y', height)
-        .on('mouseover', interactions.mouseover)
-        .on('mouseleave', interactions.mouseleave)
-        .merge(bar)
-        .transition()
-        .attr('x', d => x(d.data.year))
-        .attr('y', d => y(d[1]))
-        .attr('height', d => y(d[0]) - y(d[1]))
-        .attr('width', x.bandwidth())
-    })
+    columns
+      .enter()
+      .append('path')
+      .attr('class', 'column')
+      .merge(columns)
+      .each(d => {
+        d.innerRadius = 0
+        d.outerRadius = y(d.total)
+        d.startAngle = x(d.inclination)
+        d.endAngle = x(d.inclination) + x.bandwidth()
+      })
+      .attr('data-inclination', d => d.inclination)
+      .attr('data-total', d => d.total)
+      .attr('fill', 'steelblue')
+      .attr('d', arc)
   }
 
   function updateAxes({ container, data }) {
-    let ticks = years.filter((y, i) => i % 5 == 0)
-    let axisX = d3
-      .axisBottom(x)
-      .tickValues(ticks)
-      .tickSizeOuter(0)
-    container
-      .select('.axis--x')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(axisX)
-      .selectAll('text')
-      .style('text-anchor', 'end')
-      .attr('dx', '-.8em')
-      .attr('dy', '-.5em')
-      .attr('transform', 'rotate(-90)')
-
-    let yMax = y.domain()[1]
-    let numTicks = 5
-    if (yMax < 5) {
-      numTicks = yMax
-    }
-    let axisY = d3
-      .axisLeft(y)
-      .ticks(numTicks)
-      .tickFormat(d3.format(',.0f'))
-      .tickSizeOuter(0)
-
-    container
-      .select('.axis--y')
-      .call(axisY)
-      .append('text')
-      .attr('x', 2)
-      .attr('y', y(y.ticks().pop()) + 0.5)
-      .attr('dy', '0.32em')
-      .attr('fill', '#000')
-      .attr('font-weight', 'bold')
-      .attr('text-anchor', 'start')
-  }
-
-  function updateLegend({ container, data }) {
-    const legend = d3.select('.barchart-legend')
-
-    const items = legend.selectAll('.legend-item').data(categories)
-
-    items
-      .enter()
-      .append('li')
-      .attr('class', 'legend-item')
-      .attr('data-orbit', d => d)
-      .text(d => d)
+    // let ticks = years.filter((y, i) => i % 5 == 0)
+    // let axisX = d3
+    //   .axisBottom(x)
+    //   .tickValues(ticks)
+    //   .tickSizeOuter(0)
+    // container
+    //   .select('.axis--x')
+    //   .attr('transform', 'translate(0,' + height + ')')
+    //   .call(axisX)
+    //   .selectAll('text')
+    //   .style('text-anchor', 'end')
+    //   .attr('dx', '-.8em')
+    //   .attr('dy', '-.5em')
+    //   .attr('transform', 'rotate(-90)')
+    // let yMax = y.domain()[1]
+    // let numTicks = 5
+    // if (yMax < 5) {
+    //   numTicks = yMax
+    // }
+    // let axisY = d3
+    //   .axisLeft(y)
+    //   .ticks(numTicks)
+    //   .tickFormat(d3.format(',.0f'))
+    //   .tickSizeOuter(0)
+    // container
+    //   .select('.axis--y')
+    //   .call(axisY)
+    //   .append('text')
+    //   .attr('x', 2)
+    //   .attr('y', y(y.ticks().pop()) + 0.5)
+    //   .attr('dy', '0.32em')
+    //   .attr('fill', '#000')
+    //   .attr('font-weight', 'bold')
+    //   .attr('text-anchor', 'start')
   }
 
   function chart(container) {
@@ -157,7 +141,6 @@ function drawChart() {
     updateScales({ container, data })
     updateDom({ container, data })
     updateAxes({ container, data })
-    updateLegend({ container, data })
   }
 
   chart.width = function(...args) {
@@ -167,7 +150,12 @@ function drawChart() {
   }
 
   chart.height = function() {
-    height = width / 2
+    height = width
+    return chart
+  }
+
+  chart.outerRadius = function() {
+    outerRadius = Math.min(width, height) / 2
     return chart
   }
 
