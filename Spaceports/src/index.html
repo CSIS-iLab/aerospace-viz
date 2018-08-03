@@ -15,7 +15,7 @@
 		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 		consequat.</p>
 	</header>
-	<main class="map-container">
+	<main class="interactive-container">
 		<section class="legend">
 			<section class="timeline">
 				<header class="timeline-header">
@@ -50,7 +50,13 @@
         		<li><label>Total Launches (<span id="panel-min-year"></span> to <span id="panel-max-year"></span>):</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
         		<li><label>Latitude &amp; Longitude:</label> <span class="panel-fact-value" data-fact="latitude"></span>, <span class="panel-fact-value" data-fact="longitude"></span></li>
         	</ul>
+        	<div class="barchart-container">
+        		<h3 class="chart-title">Launches per Year</h3>
+        		<div class="barchart"></div>
+        		<div class="barchart-legend"></div>
+        	</div>
         </section>
+        <section class="map-container"></section>
 	</main>
 	<div class="tooltip"></div>
 

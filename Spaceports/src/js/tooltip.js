@@ -29,14 +29,31 @@ export default {
       .duration(500)
       .style('opacity', 0)
   },
-  formatContent: function(component) {
+  formatContent: function(component, isList = false) {
     let content = ''
+    if (isList) {
+      content = '<ul class="tooltip-list">'
+    }
     component.forEach(function(item, index) {
+      let cssClass = null
+      if (item.class) {
+        cssClass = item.class
+      }
+      let prefix = ''
+      let suffix = '<br />'
+      if (isList) {
+        prefix = `<li class="${cssClass}">`
+        suffix = '</li>'
+      }
+
       let label = Object.keys(item)[0]
-      content += `<span class="tooltip-label">${label}:</span> ${
+      content += `${prefix}<span class="tooltip-label">${label}:</span> ${
         item[label]
-      }<br />`
+      }${suffix}`
     })
+    if (isList) {
+      content += '</ul>'
+    }
     return content
   }
 }

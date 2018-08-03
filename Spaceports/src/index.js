@@ -15,6 +15,8 @@ const mapData = parseData.launches({
 	meta: spaceports
 })
 
+console.log(spaceports)
+
 const launchData = mapData.launchesByYear
 const totalPerYear = mapData.totalPerYear
 const years = mapData.years
@@ -27,6 +29,14 @@ const maxTotal = calcMaxTotal(mapData.launchesByYear[endYear])
 let currentYear = startYear
 
 function init() {
+	map.setGlobals({
+		spaceportsMeta: spaceports,
+		categories: categories,
+		minTotal: minTotal,
+		maxTotal: maxTotal,
+		startYear: startYear
+	})
+
 	timeline.setupTimeline({
 		startYear: startYear,
 		endYear: endYear,
@@ -42,6 +52,7 @@ function init() {
 	hideLoading()
 
 	panel.setupClose()
+	panel.spaceportsMeta = spaceports
 	panel.getDetailedInfoItems()
 	panel.updateMinAndMaxYears(startYear, endYear)
 }
@@ -58,10 +69,6 @@ function drawChart() {
 
 	map.init({
 		data: dataset,
-		categories: categories,
-		minTotal: minTotal,
-		maxTotal: maxTotal,
-		startYear: startYear,
 		currentYear: currentYear,
 		container: '.map-container'
 	})

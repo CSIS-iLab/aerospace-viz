@@ -12,6 +12,7 @@ const colors = ['#d66e42', '#4b5255']
 
 let windowWidth = window.innerWidth
 let el
+let spaceportsMeta
 let categories
 let maxTotal
 let minTotal
@@ -245,7 +246,6 @@ function visual() {
         interactions.spaceports.tooltip(d, 'hide')
       },
       click(d) {
-        console.log(d)
         let item = d3.select(this)
         activePort = d.id
         panel.open()
@@ -275,15 +275,19 @@ function visual() {
   return chart
 }
 
-function init(args) {
-  el = d3.select(args.container)
-  el.datum(args.data)
+function setGlobals(args) {
   categories = args.categories
   minTotal = args.minTotal
   maxTotal = args.maxTotal
   startYear = args.startYear
+  spaceportsMeta = args.spaceportsMeta
+}
+
+function init(args) {
+  el = d3.select(args.container)
+  el.datum(args.data)
   currentYear = args.currentYear
   resize(args)
 }
 
-export default { init }
+export default { init, setGlobals }

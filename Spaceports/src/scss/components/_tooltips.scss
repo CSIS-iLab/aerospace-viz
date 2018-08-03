@@ -46,4 +46,21 @@
 	.tooltip-body {
 		line-height: 1.2;
 	}
+
+	.tooltip-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		text-transform: capitalize;
+
+		li {
+			margin-bottom: 0;
+		}
+
+		@each $orbit, $color in $orbits {
+			.#{$orbit} .tooltip-label {
+				color: $color;
+			}
+		}
+	}
 }

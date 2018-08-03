@@ -1,6 +1,6 @@
 const parseData = {
   metaInfo({ data }) {
-    // data.map(d => (d.launches = []))
+    data.map(d => (d.launches = []))
     const obj = data.reduce(
       (o, spaceport) => ({ ...o, [spaceport.space_track_code]: spaceport }),
       {}
@@ -24,8 +24,8 @@ const parseData = {
         .map(datum => datum.total)
         .reduce((total, num) => total + num, 0)
 
-      // meta[d.id].launches.push(d)
-      // return d
+      meta[d.id].launches.push(d)
+      return d
     })
 
     let launchesByYear = {}

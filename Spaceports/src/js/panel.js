@@ -1,8 +1,10 @@
 import MapZoom from './map-zoom'
+import BarChart from './bar-chart'
 
 const panel = {
   el: document.querySelector('.panel'),
   closeBtn: document.querySelector('.panel-close'),
+  spaceportsMeta: null,
   detailedInfoItems: [],
   open() {
     this.el.classList.add('is-active')
@@ -21,6 +23,7 @@ const panel = {
 
       this.el.querySelector('span[data-fact="' + item + '"]').innerHTML = value
     })
+    this.drawBarChart(this.spaceportsMeta[data.id].launches)
   },
   setupClose() {
     this.closeBtn.addEventListener('click', function() {
@@ -36,6 +39,12 @@ const panel = {
   updateMinAndMaxYears(min, max) {
     document.getElementById('panel-min-year').innerHTML = min
     document.getElementById('panel-max-year').innerHTML = max
+  },
+  drawBarChart(dataset) {
+    BarChart.init({
+      data: dataset,
+      container: '.barchart'
+    })
   }
 }
 

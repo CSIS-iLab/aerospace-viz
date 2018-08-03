@@ -17,12 +17,22 @@ $light-gray: #dedede;
 $map-water: #b7c7d1;
 $map-land: #f2f1ee;
 $map-land-borders: #c3c3c3;
+$gridlines: #e6e6e6;
+$axis-labels: #666;
 
 $legend-background: rgba($white, 0.7);
 
 $categories: (
 	active: $orange,
 	inactive: $dark-gray
+);
+
+$orbits: (
+	LEO: $dark-green,
+	MEO: $orange,
+	GEO: $yellow,
+	other: $light-blue,
+	missing: $dark-gray
 );
 
 /* ----------  Fonts  ---------- */
