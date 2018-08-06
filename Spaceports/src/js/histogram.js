@@ -1,6 +1,5 @@
 import * as d3 from 'd3'
 import tooltip from './tooltip'
-import scaleRadial from './scale-radial'
 
 const chart = drawChart()
 const transitionDuration = 600
@@ -12,10 +11,7 @@ let el
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth, window.innerHeight)
-  chart
-    .width(sz)
-    .height()
-    .outerRadius()
+  chart.width(sz).height()
   el.call(chart)
 }
 
@@ -24,33 +20,34 @@ function drawChart() {
   let width = 0
   let height = 0
   let inclinations
-  const innerRadius = 125
-  let outerRadius
 
   let x = d3
     .scaleBand()
-    .range([0, Math.PI])
-    .align(0)
+    .paddingOuter(0)
+    .paddingInner(0.2)
+    .align(0.5)
 
-  let y = scaleRadial()
+  let y = d3.scaleLinear()
 
   function enter({ container, data }) {
     const svg = container.selectAll('svg').data([data])
     const svgEnter = svg.enter().append('svg')
     const gEnter = svgEnter.append('g')
-    gEnter.append('g').attr('class', 'g-plot')
     gEnter.append('g').attr('class', 'axis axis--x')
     gEnter.append('g').attr('class', 'axis axis--y')
+    gEnter.append('g').attr('class', 'g-plot')
   }
 
   function exit({ container, data }) {}
 
   function updateScales({ data }) {
-    inclinations = data.map(d => d.inclination)
+    inclinations = data.map(d => d.inclination).reverse()
 
-    x.domain(inclinations)
+    x.domain(inclinations).rangeRound([0, width])
 
-    y.domain(d3.extent(data.map(d => d.total))).range([0, innerRadius])
+    y.domain(d3.extent(data.map(d => d.total)))
+      .nice()
+      .range([height, 0])
   }
 
   function updateDom({ container, data }) {
@@ -66,14 +63,9 @@ function drawChart() {
 
     let g = svg
       .select('g')
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
     let plot = g.select('.g-plot')
-
-    const arc = d3
-      .arc()
-      .padAngle(0.01)
-      .padRadius(innerRadius)
 
     const columns = plot.selectAll('.column').data(data)
 
@@ -81,56 +73,52 @@ function drawChart() {
 
     columns
       .enter()
-      .append('path')
+      .append('rect')
       .attr('class', 'column')
       .merge(columns)
-      .each(d => {
-        d.innerRadius = 0
-        d.outerRadius = y(d.total)
-        d.startAngle = x(d.inclination)
-        d.endAngle = x(d.inclination) + x.bandwidth()
-      })
       .attr('data-inclination', d => d.inclination)
       .attr('data-total', d => d.total)
-      .attr('fill', 'steelblue')
-      .attr('d', arc)
+      .attr('x', d => x(d.inclination))
+      .attr('y', d => y(d.total))
+      .attr('height', d => height - y(d.total))
+      .attr('width', x.bandwidth())
+      .on('mouseover', interactions.mouseover)
+      .on('mouseleave', interactions.mouseleave)
   }
 
   function updateAxes({ container, data }) {
-    // let ticks = years.filter((y, i) => i % 5 == 0)
-    // let axisX = d3
-    //   .axisBottom(x)
-    //   .tickValues(ticks)
-    //   .tickSizeOuter(0)
-    // container
-    //   .select('.axis--x')
-    //   .attr('transform', 'translate(0,' + height + ')')
-    //   .call(axisX)
-    //   .selectAll('text')
-    //   .style('text-anchor', 'end')
-    //   .attr('dx', '-.8em')
-    //   .attr('dy', '-.5em')
-    //   .attr('transform', 'rotate(-90)')
-    // let yMax = y.domain()[1]
-    // let numTicks = 5
-    // if (yMax < 5) {
-    //   numTicks = yMax
-    // }
-    // let axisY = d3
-    //   .axisLeft(y)
-    //   .ticks(numTicks)
-    //   .tickFormat(d3.format(',.0f'))
-    //   .tickSizeOuter(0)
-    // container
-    //   .select('.axis--y')
-    //   .call(axisY)
-    //   .append('text')
-    //   .attr('x', 2)
-    //   .attr('y', y(y.ticks().pop()) + 0.5)
-    //   .attr('dy', '0.32em')
-    //   .attr('fill', '#000')
-    //   .attr('font-weight', 'bold')
-    //   .attr('text-anchor', 'start')
+    const ticks = inclinations.filter((d, i) => i % 2 == 0)
+    let axisX = d3
+      .axisBottom(x)
+      .tickValues(ticks)
+      .tickFormat(t => t + '°')
+      .tickSizeOuter(0)
+    container
+      .select('.axis--x')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(axisX)
+
+    let yMax = y.domain()[1]
+    let numTicks = 5
+    if (yMax < 5) {
+      numTicks = yMax
+    }
+    let axisY = d3
+      .axisLeft(y)
+      .ticks(numTicks)
+      .tickFormat(d3.format(',.0f'))
+      .tickSize(-width)
+      .tickSizeOuter(0)
+    container
+      .select('.axis--y')
+      .call(axisY)
+      .append('text')
+      .attr('x', 2)
+      .attr('y', y(y.ticks().pop()) + 0.5)
+      .attr('dy', '0.32em')
+      .attr('fill', '#000')
+      .attr('font-weight', 'bold')
+      .attr('text-anchor', 'start')
   }
 
   function chart(container) {
@@ -150,26 +138,21 @@ function drawChart() {
   }
 
   chart.height = function() {
-    height = width
-    return chart
-  }
-
-  chart.outerRadius = function() {
-    outerRadius = Math.min(width, height) / 2
+    height = width / 2
     return chart
   }
 
   const interactions = {
     mouseover(d) {
       interactions.tooltip(d)
-      d3.selectAll('.bar[data-year="' + d.data.year + '"]').classed(
+      d3.selectAll('.column[data-inclination="' + d.inclination + '"]').classed(
         'is-active',
         true
       )
     },
     mouseleave(d) {
       interactions.tooltip(d, 'hide')
-      d3.selectAll('.bar[data-year="' + d.data.year + '"]').classed(
+      d3.selectAll('.column[data-inclination="' + d.inclination + '"]').classed(
         'is-active',
         false
       )
@@ -180,18 +163,12 @@ function drawChart() {
         return
       }
 
-      let tooltipBody = []
-      categories.forEach(category => {
-        tooltipBody.push({
-          [category]: d.data[category],
-          class: [category]
-        })
-      })
-
       let tooltipContent = `
-      <p class="tooltip-heading">
-        ${d.data.year} Total Launches: ${d.data.total}</p>
-        ${tooltip.formatContent(tooltipBody, true)}`
+      <p>
+      ${d.total} <span class="tooltip-label">total launches at</span> ${
+        d.inclination
+      }&deg;
+      </p>`
       tooltip.show(tooltipContent)
     }
   }

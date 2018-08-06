@@ -35,9 +35,9 @@ function drawChart() {
     const svg = container.selectAll('svg').data([data])
     const svgEnter = svg.enter().append('svg')
     const gEnter = svgEnter.append('g')
-    gEnter.append('g').attr('class', 'g-plot')
     gEnter.append('g').attr('class', 'axis axis--x')
     gEnter.append('g').attr('class', 'axis axis--y')
+    gEnter.append('g').attr('class', 'g-plot')
     gEnter.append('g').attr('class', 'legend')
   }
 
@@ -122,6 +122,7 @@ function drawChart() {
       .axisLeft(y)
       .ticks(numTicks)
       .tickFormat(d3.format(',.0f'))
+      .tickSize(-width)
       .tickSizeOuter(0)
 
     container

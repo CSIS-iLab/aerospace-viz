@@ -2,6 +2,8 @@
 =            Bar Chart            =
 =================================*/
 .barchart-container {
+	margin-bottom: 2.5rem;
+
 	@each $orbit, $color in $orbits {
 		.bar-#{$orbit} {
 			fill: $color;

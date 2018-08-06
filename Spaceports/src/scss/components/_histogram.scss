@@ -1,0 +1,28 @@
+/*=================================
+=            Histogram            =
+=================================*/
+.histogram-container {
+	.axis {
+		text {
+			font-family: $font__abel;
+			fill: $axis-labels;
+		}
+
+		path,
+		line {
+			stroke: $gridlines;
+		}
+	}
+
+	.histogram {
+		margin-bottom: 0.5rem;
+	}
+
+	.column {
+		fill: $blue;
+
+		&:hover {
+			fill: darken($blue, 10%);
+		}
+	}
+}
