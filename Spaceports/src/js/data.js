@@ -17,6 +17,8 @@ const parseData = {
       d.human_launch_year = meta[d.id].human_launch_year
       d.first_launch = meta[d.id].first_launch
       d.first_satellite = meta[d.id].first_satellite
+      d.lat_string = meta[d.id].lat_string
+      d.long_string = meta[d.id].long_string
       d.ytd_total = data
         .filter(datum => datum.id == d.id && datum.year <= d.year)
         .map(datum => datum.total)

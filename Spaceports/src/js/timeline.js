@@ -8,6 +8,9 @@ const timeline = {
   currentLaunchesEl: document.querySelector('.timeline-num-launches'),
   playing: false,
   timer: null,
+  transitionDuration: 0,
+  endYear: 0,
+  startYear: 0,
   updateCurrentYear(year) {
     this.currentYearEl.innerHTML = year
   },
@@ -17,9 +20,11 @@ const timeline = {
   getCurrentYear() {
     return this.el.noUiSlider.get()
   },
-  setupTimeline({ startYear, endYear, onChange }) {
+  setupTimeline({ startYear, endYear, currentYear, onChange }) {
+    this.endYear = endYear
+    this.startYear = startYear
     noUiSlider.create(this.el, {
-      start: [startYear],
+      start: [endYear],
       connect: true,
       behaviour: 'tap-drag',
       step: 1,
@@ -37,23 +42,29 @@ const timeline = {
       }
     })
 
+    this.el.noUiSlider.set(endYear)
+
     this.setupBtnControls()
 
     this.el.noUiSlider.on('update', onChange)
   },
   setupBtnControls() {
-    // this.btnControls = document.querySelector('.noUi-handle')
     this.btnControls.addEventListener('click', function() {
+      let currentYear = timeline.getCurrentYear()
+      if (currentYear == timeline.endYear) {
+        timeline.el.noUiSlider.set(timeline.startYear)
+      }
+
       if (timeline.playing == true) {
         timeline.stopTimeline()
         return
       }
 
       timeline.timer = setInterval(function() {
-        let currentYear = timeline.getCurrentYear()
+        currentYear = timeline.getCurrentYear()
         let newYear = currentYear + 1
         timeline.el.noUiSlider.set(newYear)
-      }, 600)
+      }, timeline.transitionDuration)
 
       this.classList.remove('play-btn')
       this.classList.add('pause-btn')

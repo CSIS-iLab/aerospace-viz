@@ -4,15 +4,16 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Aerospace - Spaceports of the World</title>
+	<base target="_blank">
 	<link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="style.310ec52fc2259499ce7c.css?662fcd22ee8692f889a4">
+	<link rel="stylesheet" href="style.45cd672c40f090f2e988.css?1227c6163b85836fc3d1">
 </head>
 <body>
-	<header class="page-header">
-		<h1>Spaceports of the World</h1>
-		<p>Use the play button to discover the history of ground-based space launches around the world. Click a spaceport to learn more about its launch history.</p>
-	</header>
 	<main class="interactive-container">
+		<header class="page-header">
+			<h1>Spaceports of the World</h1>
+			<p>Use the play button to discover the history of ground-based space launches around the world. Click a spaceport to learn more about its launch history.</p>
+		</header>
 		<section class="legend">
 			<section class="timeline">
 				<header class="timeline-header">
@@ -43,11 +44,11 @@
         	<button class="panel-close">x</button>
         	<h2 class="panel-heading"></h2>
         	<ul class="panel-facts">
-        		<li><label>Location:</label> <span class="panel-fact-value" data-fact="latitude"></span>, <span class="panel-fact-value" data-fact="longitude"></span></li>
+        		<li><label>Location:</label> <span class="panel-fact-value" data-fact="lat_string"></span>, <span class="panel-fact-value" data-fact="long_string"></span></li>
         		<li><label>Operator:</label> <span class="panel-fact-value" data-fact="operator"></span></li>
         		<li><label>Current Status:</label> <span class="panel-fact-value" data-fact="status"></span></li>
         		<li><label>First Launch:</label> <span class="panel-fact-value" data-fact="first_launch"></span></li>
-        		<li><label>Launches (<span id="panel-min-year"></span> to <span id="panel-max-year"></span>):</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
+        		<li><label>Launches from <span id="panel-min-year"></span> to <span id="panel-max-year"></span>:</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
         	</ul>
         	<div class="barchart-container">
         		<h3 class="chart-title">Primary Payload Destinations</h3>
@@ -61,10 +62,13 @@
         		<div class="histogram"></div>
         	</div>
         </section>
+        <section class="source">
+        	<p><a href="https://aerospace.csis.org">CSIS Aerospace Security</a> | Space-track.org, Various Sources</p>
+        </section>
         <section class="map-container"></section>
 	</main>
 	<div class="tooltip"></div>
-
-	<script src="main.662fcd22ee8692f889a4.js?662fcd22ee8692f889a4"></script>
+	 <script src="https://csis-ilab.github.io/aerospace-viz/globals/iframeSizer.contentWindow.min.js"></script>
+	<script src="main.1227c6163b85836fc3d1.js?1227c6163b85836fc3d1"></script>
 </body>
 </html>

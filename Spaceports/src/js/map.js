@@ -5,8 +5,6 @@ import panel from './panel'
 const WORLD_JSON = require('../data/world.json')
 
 const chart = visual()
-const transitionDuration = 600
-const t = d3.transition().duration(transitionDuration)
 const format = d3.format(',.3s')
 const colors = ['#d66e42', '#4b5255']
 
@@ -18,6 +16,9 @@ let maxTotal
 let minTotal
 let currentYear
 let startYear
+let transitionDuration
+
+const t = d3.transition().duration(transitionDuration)
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth)
@@ -78,6 +79,7 @@ function visual() {
   }
 
   function updateDom({ container, data }) {
+    // console.log(width)
     MapZoom.width = width
     MapZoom.height = height
     projection
@@ -284,6 +286,7 @@ function setGlobals(args) {
   maxTotal = args.maxTotal
   startYear = args.startYear
   spaceportsMeta = args.spaceportsMeta
+  transitionDuration = args.transitionDuration
 }
 
 function init(args) {

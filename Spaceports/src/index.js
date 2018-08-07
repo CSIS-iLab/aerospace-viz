@@ -3,7 +3,7 @@ import map from './js/map'
 import timeline from './js/timeline'
 import panel from './js/panel'
 import parseData from './js/data'
-import spaceportsMetaInfo from './data/20180806-spaceports-meta.csv'
+import spaceportsMetaInfo from './data/20180807-spaceports-meta.csv'
 import spaceportsLaunches from './data/20180726-launches.csv'
 import spaceportsInclinations from './data/20180803-inclinations.csv'
 import './scss/main.scss'
@@ -20,8 +20,6 @@ const incliationsData = parseData.inclinations({
 	meta: spaceports
 })
 
-console.log(spaceports)
-
 const launchData = mapData.launchesByYear
 const totalPerYear = mapData.totalPerYear
 const years = mapData.years
@@ -31,7 +29,9 @@ const categories = mapData.categories
 const minTotal = calcMinTotal(mapData.launchesByYear[endYear])
 const maxTotal = calcMaxTotal(mapData.launchesByYear[endYear])
 
-let currentYear = startYear
+const transitionDuration = 400
+
+let currentYear = endYear
 
 function init() {
 	map.setGlobals({
@@ -39,12 +39,17 @@ function init() {
 		categories: categories,
 		minTotal: minTotal,
 		maxTotal: maxTotal,
-		startYear: startYear
+		startYear: startYear,
+		transitionDuration: transitionDuration
 	})
+
+	timeline.transitionDuration = transitionDuration
 
 	timeline.setupTimeline({
 		startYear: startYear,
 		endYear: endYear,
+		currentYear: currentYear,
+		transitionDuration: transitionDuration,
 		onChange: function() {
 			drawChart()
 			timeline.updateCurrentYear(currentYear)
@@ -68,6 +73,7 @@ function hideLoading() {
 }
 
 function drawChart() {
+	// console.log('drawchart')
 	currentYear = timeline.getCurrentYear()
 
 	let dataset = launchData[currentYear]
@@ -87,4 +93,9 @@ function calcMinTotal(data) {
 	return Math.min(...data.map(d => d.ytd_total))
 }
 
-init()
+function resizeChart() {
+	drawChart()
+}
+
+window.addEventListener('DOMContentLoaded', init)
+// window.addEventListener('resize', resizeChart)
