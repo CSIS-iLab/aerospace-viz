@@ -1,4 +1,3 @@
-import * as d3 from 'd3'
 import map from './js/map'
 import timeline from './js/timeline'
 import panel from './js/panel'
@@ -68,8 +67,10 @@ function init() {
 }
 
 function hideLoading() {
-	d3.select('.loading-container').style('display', 'none')
-	d3.selectAll('.hide-on-load').classed('hide-on-load', false)
+	document.querySelector('.loading-container').style.display = 'block'
+	document
+		.querySelectorAll('.hide-on-load')
+		.forEach(el => el.classList.remove('hide-on-load'))
 }
 
 function drawChart() {
