@@ -1,3 +1,4 @@
+import breakpoints from './js/breakpoints'
 import map from './js/map'
 import timeline from './js/timeline'
 import panel from './js/panel'
@@ -31,8 +32,16 @@ const maxTotal = calcMaxTotal(mapData.launchesByYear[endYear])
 const transitionDuration = 400
 
 let currentYear = endYear
+let breakpoint = breakpoints.calculate()
 
 function init() {
+	if (breakpoints.isMobile()) {
+		return
+	}
+
+	document.querySelector('.title-startYear').innerHTML = startYear
+	document.querySelector('.title-endYear').innerHTML = endYear
+
 	map.setGlobals({
 		spaceportsMeta: spaceports,
 		categories: categories,
@@ -74,7 +83,9 @@ function hideLoading() {
 }
 
 function drawChart() {
-	// console.log('drawchart')
+	if (breakpoints.isMobile()) {
+		return
+	}
 	currentYear = timeline.getCurrentYear()
 
 	let dataset = launchData[currentYear]
@@ -95,7 +106,11 @@ function calcMinTotal(data) {
 }
 
 function resizeChart() {
-	drawChart()
+	let newBreakpoint = breakpoints.calculate()
+	if (breakpoint != newBreakpoint) {
+		breakpoint = newBreakpoint
+		drawChart()
+	}
 }
 
 window.addEventListener('DOMContentLoaded', init)

@@ -5,6 +5,11 @@
 .interactive-container {
 	position: relative;
 	overflow-x: hidden;
+	display: none;
+
+	@include breakpoint('medium') {
+		display: block;
+	}
 
 	.svg-map {
 		background-color: $map-water;

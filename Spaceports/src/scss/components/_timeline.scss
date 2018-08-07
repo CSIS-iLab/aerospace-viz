@@ -13,11 +13,15 @@
 	.timeline-header {
 		flex: 1 1 auto;
 		margin-bottom: 0.75rem;
-		font-size: 1rem;
+		@include fontSize(14px);
 		font-family: $font__abel;
 		font-weight: 400;
 		text-transform: uppercase;
 		color: $black;
+
+		@include breakpoint('large') {
+			@include fontSize(16px);
+		}
 
 		span {
 			font-weight: bold;

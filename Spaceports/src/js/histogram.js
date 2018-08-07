@@ -42,6 +42,11 @@ function drawChart() {
 
   function updateScales({ data }) {
     inclinations = data.map(d => d.inclination)
+    const spaceportInclinations = data.filter(d => d.total > 0)
+    const inclinationsMin = spaceportInclinations[0].inclination
+    const inclinationsMax =
+      spaceportInclinations[spaceportInclinations.length - 1].inclination
+    inclinations = d3.range(inclinationsMin, inclinationsMax + 10, 10)
 
     x.domain(inclinations).rangeRound([0, width])
 
@@ -87,10 +92,10 @@ function drawChart() {
   }
 
   function updateAxes({ container, data }) {
-    const ticks = inclinations.filter((d, i) => i % 2 == 0)
+    // const ticks = inclinations.filter((d, i) => i % 2 == 0)
     let axisX = d3
       .axisBottom(x)
-      .tickValues(ticks)
+      // .tickValues(ticks)
       .tickFormat(t => t + '°')
       .tickSizeOuter(0)
     container

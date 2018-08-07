@@ -1,0 +1,9 @@
+/*===============================
+=            Disclaimer         =
+===============================*/
+
+.disclaimer {
+	@include breakpoint('medium') {
+		display: none;
+	}
+}

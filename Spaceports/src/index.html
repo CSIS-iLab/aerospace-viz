@@ -14,7 +14,7 @@
     </div>
 	<main class="interactive-container">
 		<header class="page-header">
-			<h1>Spaceports of the World</h1>
+			<h1>Spaceports of the World (<span class="title-startYear"></span>&ndash;<span class="title-endYear"></span>)</h1>
 			<p>Use the play button to discover the history of ground-based space launches around the world. Click a spaceport to learn more about its launch history.</p>
 		</header>
 		<section class="legend">
@@ -35,7 +35,7 @@
 				<li class="legend-colors-human">Human Launch</li>
 			</ul>
 			<div class="legend-size">
-				<div class="legend-size-label">Total Orbital Launches</div>
+				<div class="legend-size-label">Cumulative Launches</div>
 			</div>
 		</section>
 		<section class="zoomBtns">
@@ -70,6 +70,9 @@
         </section>
         <section class="map-container"></section>
 	</main>
+	<div class="disclaimer">
+		To view and interact with our full dataset, please use a desktop computer.
+	</div>
 	<div class="tooltip"></div>
 	 <script src="https://csis-ilab.github.io/aerospace-viz/globals/iframeSizer.contentWindow.min.js"></script>
 	<script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
