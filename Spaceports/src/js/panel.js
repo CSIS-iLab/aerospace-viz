@@ -15,6 +15,10 @@ const panel = {
   },
   updateInfo(data) {
     this.el.querySelector('.panel-heading').innerHTML = data.name
+    this.el
+      .querySelectorAll('.panel-spaceport-name')
+      .forEach(el => (el.innerHTML = data.name))
+
     this.detailedInfoItems.forEach(item => {
       let value = data[item]
 

@@ -266,7 +266,10 @@ function visual() {
         let tooltipContent = `
         <p class="tooltip-heading">
           ${d.name}</p>
-          ${tooltip.formatContent(tooltipBody)}`
+          <span class="tooltip-label">Operator:</span> <span class="tooltip-value">${
+            d.operator
+          }</span><br />
+          <span class="tooltip-label">Launches from ${startYear} to ${currentYear}:</span> <span class="tooltip-value">${d.ytd_total.toLocaleString()}</span>`
         tooltip.show(tooltipContent)
       }
     }

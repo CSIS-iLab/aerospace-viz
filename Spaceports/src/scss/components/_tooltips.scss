@@ -63,4 +63,10 @@
 			}
 		}
 	}
+
+	.tooltip-value {
+		font-weight: normal;
+		color: $orange;
+		box-shadow: inset 0 -2px 0 0 $dark-blue;
+	}
 }

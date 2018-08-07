@@ -3,23 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Aerospace - History of Spaceports</title>
+	<title>Aerospace - Spaceports of the World</title>
 	<link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet">
 	<link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
 </head>
 <body>
 	<header class="page-header">
-		<h1>History of Spaceports</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat.</p>
+		<h1>Spaceports of the World</h1>
+		<p>Use the play button to discover the history of ground-based space launches around the world. Click a spaceport to learn more about its launch history.</p>
 	</header>
 	<main class="interactive-container">
 		<section class="legend">
 			<section class="timeline">
 				<header class="timeline-header">
-					<span class="timeline-num-launches"></span> Total Launches in <span class="timeline-current-year"></span>
+					<span class="timeline-num-launches"></span> Orbital Launches in <span class="timeline-current-year"></span>
 				</header>
 				<div class="timeline-controls">
 					<button class="timeline-btn play-btn">Play</button>
@@ -29,11 +26,13 @@
 				</div>
 			</section>
 			<ul class="legend-colors">
-				<li class="legend-colors-active">Operating</li>
-				<li class="legend-colors-inactive">No Longer Operating</li>
-				<li class="legend-colors-human">Achieved Vertical Launch of Humans</li>
+				<li class="legend-colors-active">Active</li>
+				<li class="legend-colors-inactive">Inactive</li>
+				<li class="legend-colors-human">Human Launch</li>
 			</ul>
-			<div class="legend-size"></div>
+			<div class="legend-size">
+				<div class="legend-size-label">Total Orbital Launches</div>
+			</div>
 		</section>
 		<section class="zoomBtns">
             <button id="zoom-in" class="zoom zoom-in">+</button>
@@ -44,19 +43,21 @@
         	<button class="panel-close">x</button>
         	<h2 class="panel-heading"></h2>
         	<ul class="panel-facts">
-        		<li><label>First Launch:</label> <span class="panel-fact-value" data-fact="first_satellite"></span> on <span class="panel-fact-value" data-fact="first_launch"></span></li>
+        		<li><label>Location:</label> <span class="panel-fact-value" data-fact="latitude"></span>, <span class="panel-fact-value" data-fact="longitude"></span></li>
         		<li><label>Operator:</label> <span class="panel-fact-value" data-fact="operator"></span></li>
         		<li><label>Current Status:</label> <span class="panel-fact-value" data-fact="status"></span></li>
-        		<li><label>Total Launches (<span id="panel-min-year"></span> to <span id="panel-max-year"></span>):</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
-        		<li><label>Latitude &amp; Longitude:</label> <span class="panel-fact-value" data-fact="latitude"></span>, <span class="panel-fact-value" data-fact="longitude"></span></li>
+        		<li><label>First Launch:</label> <span class="panel-fact-value" data-fact="first_launch"></span></li>
+        		<li><label>Launches (<span id="panel-min-year"></span> to <span id="panel-max-year"></span>):</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
         	</ul>
         	<div class="barchart-container">
-        		<h3 class="chart-title">Launches per Year</h3>
+        		<h3 class="chart-title">Primary Payload Destinations</h3>
+        		<p class="panel-subtitle">This stacked bar chart describes the orbital regimes of each primary payload launched from <span class="panel-spaceport-name"></span>.</p>
         		<div class="barchart"></div>
         		<div class="barchart-legend"></div>
         	</div>
         	<div class="histogram-container">
-        		<h3 class="chart-title">Frequency of Inclinations</h3>
+        		<h3 class="chart-title">Primary Payload Inclinations</h3>
+        		<p class="panel-subtitle">This histogram describes the inclination of each primary payload launched from <span class="panel-spaceport-name"></span>. Launches with missing Space-Track elements are not included.</p>
         		<div class="histogram"></div>
         	</div>
         </section>

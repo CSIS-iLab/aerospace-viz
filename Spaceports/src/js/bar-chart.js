@@ -38,7 +38,6 @@ function drawChart() {
     gEnter.append('g').attr('class', 'axis axis--x')
     gEnter.append('g').attr('class', 'axis axis--y')
     gEnter.append('g').attr('class', 'g-plot')
-    gEnter.append('g').attr('class', 'legend')
   }
 
   function exit({ container, data }) {}
@@ -203,7 +202,7 @@ function drawChart() {
 
       let tooltipContent = `
       <p class="tooltip-heading">
-        ${d.data.year} Total Launches: ${d.data.total}</p>
+        ${d.data.total} Orbital Launches in ${d.data.year}</p>
         ${tooltip.formatContent(tooltipBody, true)}`
       tooltip.show(tooltipContent)
     }

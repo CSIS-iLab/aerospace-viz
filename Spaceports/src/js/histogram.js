@@ -41,7 +41,7 @@ function drawChart() {
   function exit({ container, data }) {}
 
   function updateScales({ data }) {
-    inclinations = data.map(d => d.inclination).reverse()
+    inclinations = data.map(d => d.inclination)
 
     x.domain(inclinations).rangeRound([0, width])
 
@@ -165,9 +165,9 @@ function drawChart() {
 
       let tooltipContent = `
       <p>
-      ${d.total} <span class="tooltip-label">total launches at</span> ${
+      ${d.total} <span class="tooltip-label">primary payloads between</span> ${
         d.inclination
-      }&deg;
+      }&deg; <span class="tooltip-label">and</span> ${d.inclination + 10}&deg;
       </p>`
       tooltip.show(tooltipContent)
     }
