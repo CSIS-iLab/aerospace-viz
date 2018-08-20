@@ -3,7 +3,15 @@
 ===============================*/
 
 .disclaimer {
+  margin: 1rem;
+  max-width: 100%;
+
 	@include breakpoint('medium') {
 		display: none;
 	}
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 }

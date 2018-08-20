@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "d3": "^5.5.0",
+    "file-loader": "^1.1.11",
     "nouislider": "^11.1.0"
   }
 }

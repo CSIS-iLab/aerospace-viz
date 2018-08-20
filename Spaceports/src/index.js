@@ -7,6 +7,7 @@ import spaceportsMetaInfo from './data/20180820-spaceports-meta.csv'
 import spaceportsLaunches from './data/20180820-launches.csv'
 import spaceportsInclinations from './data/20180820-inclinations.csv'
 import './scss/main.scss'
+import MobileGif from './img/Spaceports_ClickAround.gif'
 
 const spaceports = parseData.metaInfo({
 	data: spaceportsMetaInfo
@@ -36,6 +37,7 @@ let breakpoint = breakpoints.calculate()
 
 function init() {
 	if (breakpoints.isMobile()) {
+		document.querySelector('.mobile-gif').src = MobileGif
 		return
 	}
 
