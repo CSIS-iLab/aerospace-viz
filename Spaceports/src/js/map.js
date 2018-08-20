@@ -79,7 +79,6 @@ function visual() {
   }
 
   function updateDom({ container, data }) {
-    // console.log(width)
     MapZoom.width = width
     MapZoom.height = height
     projection
@@ -87,10 +86,6 @@ function visual() {
       .rotate([rotated, 0])
       .translate([width / 2, height / 1.65])
     MapZoom.projection = projection
-
-    // console.log(width)
-    // console.log(MapZoom.width)
-    // console.log(projection([data[0].longitude, data[0].latitude]))
 
     // Set SVG attributes, add items
     let svg = container

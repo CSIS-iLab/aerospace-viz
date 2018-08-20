@@ -86,6 +86,7 @@ function drawChart() {
 	if (breakpoints.isMobile()) {
 		return
 	}
+
 	currentYear = timeline.getCurrentYear()
 
 	let dataset = launchData[currentYear]
@@ -105,13 +106,4 @@ function calcMinTotal(data) {
 	return Math.min(...data.map(d => d.ytd_total))
 }
 
-function resizeChart() {
-	let newBreakpoint = breakpoints.calculate()
-	if (breakpoint != newBreakpoint) {
-		breakpoint = newBreakpoint
-		drawChart()
-	}
-}
-
 window.addEventListener('DOMContentLoaded', init)
-// window.addEventListener('resize', resizeChart)
