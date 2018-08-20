@@ -3,9 +3,9 @@ import map from './js/map'
 import timeline from './js/timeline'
 import panel from './js/panel'
 import parseData from './js/data'
-import spaceportsMetaInfo from './data/20180807-spaceports-meta.csv'
-import spaceportsLaunches from './data/20180726-launches.csv'
-import spaceportsInclinations from './data/20180803-inclinations.csv'
+import spaceportsMetaInfo from './data/20180820-spaceports-meta.csv'
+import spaceportsLaunches from './data/20180820-launches.csv'
+import spaceportsInclinations from './data/20180820-inclinations.csv'
 import './scss/main.scss'
 
 const spaceports = parseData.metaInfo({

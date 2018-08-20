@@ -1,0 +1,30 @@
+space_track_code,name,latitude,longitude,operator,year_added_to_map,human_launch_year,first_launch,first_satellite,lat_string,long_string
+AFWTR,Vandenberg Air Force Base,34.58,-120.63,United States,1959,,"February 28, 1959",DISCOVERER 1,34.6°N,120.6°W
+AFETR,Cape Canaveral / Kennedy Space Center,28.61,-80.60,United States,1958,1961,"February 1, 1958",EXPLORER 1,28.6°N,80.6°W
+FRGUI,Guiana Space Centre,5.24,-52.77,France,1970,,"March 10, 1970",WIKA (DIAL),5.2°N,52.8°W
+HGSTR,Hammaguir Test Centre,31.1,-2.84,France,1965,,"November 26, 1965",A-1 (ASTERIX),31.1°N,2.8°W
+JSC,Jiuquan Satellite Launch Center,40.97,100.28,China,1970,2003,"April 24, 1970",DFH-1,41°N,100.3°E
+KODAK,Pacific Spaceport Complex – Alaska,57.44,-152.34,United States,2010,,"November 20, 2010",STPSAT 2 (USA 217),57.4°N,152.3°W
+KSCUT,Uchinoura Space Center,31.25,131.08,Japan,1970,,"February 11, 1970",OSUMI (LAMBDA-4S),31.3°N,131.1°E
+KWAJL,Ronald Reagan Ballistic Missile Defense Test Site,9.05,167.74,United States,2000,,"October 9, 2000",HETE 2,9.1°N,167.7°E
+KYMTR,Kapustin Yar Cosmodrome,48.59,45.72,Russia,1962,,"March 16, 1962",COSMOS 1 (SPUTNIK 11),48.6°N,45.7°E
+ALCAN,"Alcantara, Brazil",-2.37,-44.4,Brazil,2018,,,,2.4°S,44.4°W
+MUSUD,"Musudan-ri, DPRK",40.85,129.67,North Korea,2018,,,,40.9°N,129.7°E
+NSC,Naro Space Center,34.43,127.54,South Korea,2013,,"January 30, 2013",STSAT 2C,34.4°N,127.5°E
+OREN,Yasny Launch Base,51.09,59.84,Russia,2006,,"August 12, 2006",GENESIS 1,51.1°N,59.8°E
+PKMTR,Plesetsk Cosmodrome,62.93,40.58,Russia,1966,,"March 17, 1966",COSMOS 112,62.9°N,40.6°E
+RLLC,Rocket Lab Launch Complex,-39.26,177.87,Rocket Lab,2018,,,,39.3°S,177.9°E
+SEM,Imam Khomeini Space Center,35.24,53.95,Iran,2009,,"February 2, 2009",OMID,35.2°N,54°E
+SNMLP,Broglio Space Centre,-2.94,40.21,Italy,1967,,"April 26, 1967",SAN MARCO 2,2.9°S,40.2°E
+SRI,Satish Dhawan Space Centre,13.72,80.23,India,1980,,"August 18, 1980",ROHINI 1,13.7°N,80.2°E
+SVOB,Svobodny Cosmodrome,51.7,128,Russia,1997,,"March 4, 1997",ZEYA,51.7°N,128°E
+TNSTA,Tanegashima Space Center,30.37,130.96,Japan,1975,,"September 9, 1975",KIKU 1 (ETS 1),30.4°N,131°E
+TSC,Taiyuan Satellite Launch Center,38.85,111.61,China,1988,,"September 6, 1988",FENGYUN 1A,38.9°N,111.6°E
+TTMTR,Baikonur Cosmodrome,45.97,63.31,Russia,1957,1961,"October 4, 1957",SPUTNIK 1,46°N,63.3°E
+VOSTO,Vostochny Cosmodrome,51.88,128.33,Russia,2016,,"April 28, 2016",MVL 300,51.9°N,128.3°E
+WLPIS,Wallops Flight Facility,37.94,-75.47,United States,1961,,"February 16, 1961",EXPLORER 9,37.9°N,75.5°W
+WOMRA,Woomera Test Range,-30.96,136.07,Australia,1967,,"November 29, 1967",WRESAT,31°S,136.1°E
+WSC,Wenchang Satellite Launch Center,19.61,110.95,China,2016,,"November 3, 2016",SJ-17,19.6°N,111°E
+XSC,Xichang Space Center,28.25,102.03,China,1984,,"January 29, 1984",STTW-T1,28.3°N,102°E
+YAVNE,Palmachim Airbase,31.9,34.69,Israel,1988,,"September 19, 1988",OFEQ 1 (HORIZON 1),31.9°N,34.7°E
+YUN,Sohae Satellite Launching Station,39.66,124.71,North Korea,2012,,"December 12, 2012",KMS 3-2,39.7°N,124.7°E
