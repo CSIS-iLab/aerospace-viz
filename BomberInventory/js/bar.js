@@ -5,7 +5,7 @@ $(function() {
   var seriesData = []
 
   Highcharts.data({
-    googleSpreadsheetKey: '1ngNfu7yzEBIit317w-cUiSamXA8XbP7g-t8ujgeZmqM',
+    googleSpreadsheetKey: '1cqkf5r8EOxrtOGvPd1NyICSnbN-pBFn9Sf5jovwYQD8',
       googleSpreadsheetWorksheet: 1,
       switchRowsAndColumns: true,
       parsed: function(columns) {
@@ -46,22 +46,21 @@ $(function() {
 
         populateSelect()
         renderChart(seriesData[0])
-
       }
   })
 
+
   function populateSelect() {
+
     var options = '';
     $.each(datasets, function(i, dataset) {
       options += '<option value="'+ i + '">' + dataset + '</option>';
     })
     $('.datasets').append(options);
-
     // Destroy & redraw chart so we get smooth animation when switching datasets.
     $('.datasets').on('change', function() {
       var chart = $('#hcContainer').highcharts()
       chart.destroy()
-
       // Correct color index for individual bomber chart
       if (seriesData[this.value].length <= 1) {
 
@@ -74,7 +73,7 @@ $(function() {
               data._colorIndex = modColorIndex;
           })
       }
-      
+
       renderChart(seriesData[this.value])
     })
   }
@@ -84,7 +83,7 @@ $(function() {
       // General Chart Options
       chart: {
         zoomType: 'x',
-        type: 'area'
+        type: 'column'
       },
       // Chart Title and Subtitle
       title: {
@@ -107,26 +106,28 @@ $(function() {
       },
       // X Axis
       xAxis: {
+        title: {
+          text: "Year"
+        },
         allowDecimals: false
       },
       // Y Axis
       yAxis: {
         title: {
-          text: "Y Axis Title"
+          text: "Total Count"
         },
+        minTickInterval: 1,
       },
       series: data,
-      // Tooltip
-      /*
+      // Additional Plot Options
       tooltip: {
           formatter: function () {
-              return '<span style="color:' + this.series.color + '">● </span><b>' + this.point.series.name + '</b><br> x: ' + this.x + ' y: ' + this.y + '<br><i>x: ' + this.x + ' y: ' + this.y + '</i><br><b>x: ' + this.x + ' y: ' + this.y + '</b>';
+              return 'Year: ' + this.point.x + '<br><span style="color:' + this.series.color + '">● </span><b>' + this.point.label + ': </b>' + this.point.y;
           }
-      },    */
-      // Additional Plot Options
+      },
       plotOptions:
       {
-        area: {
+        column: {
           stacking: "normal",
           marker: {
             enabled: false,
