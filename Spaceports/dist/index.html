@@ -1,81 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Aerospace - Spaceports of the World</title>
-	<base target="_blank">
-	<link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="style.c07f72ba2cdba68e16e7.css?c6c100226b9646b1708f">
-</head>
-<body>
-	<div class="loading-container">
-    <div class="loading"></div>
-  </div>
-	<main class="interactive-container">
-		<header class="page-header">
-			<h1>Spaceports of the World (<span class="title-startYear"></span>&ndash;<span class="title-endYear"></span>)</h1>
-			<p>Use the play button to discover the history of ground-based space launches around the world. Click a spaceport to learn more about its launch history.</p>
-		</header>
-		<section class="legend">
-			<section class="timeline">
-				<header class="timeline-header">
-					<span class="timeline-num-launches"></span> Orbital Launches in <span class="timeline-current-year"></span>
-				</header>
-				<div class="timeline-controls">
-					<button class="timeline-btn play-btn"></button>
-				</div>
-				<div class="timeline-container">
-					<div class="timeline-bar"></div>
-				</div>
-			</section>
-			<ul class="legend-colors">
-				<li class="legend-colors-active">Active</li>
-				<li class="legend-colors-inactive">Inactive</li>
-				<li class="legend-colors-human">Human Launch</li>
-			</ul>
-			<div class="legend-size">
-				<div class="legend-size-label">Cumulative Launches</div>
-			</div>
-		</section>
-		<section class="zoomBtns">
-            <button id="zoom-in" class="zoom zoom-in">+</button>
-            <button id="zoom-out" class="zoom zoom-out">-</button>
-            <button id="zoom-reset" class="zoom zoom-reset">&#8635;</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aerospace - Spaceports of the World</title>
+    <base target="_blank" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="style.f9364513752755b236f7.css?98188a7dac84a81458c5"
+    />
+  </head>
+  <body>
+    <div class="loading-container">
+      <div class="loading"></div>
+    </div>
+    <main class="interactive-container">
+      <header class="page-header">
+        <h1>
+          Spaceports of the World (<span class="title-startYear"></span
+          >&ndash;<span class="title-endYear"></span>)
+        </h1>
+        <p>
+          Use the play button to discover the history of ground-based space
+          launches around the world. Click a spaceport to learn more about its
+          launch history.
+        </p>
+      </header>
+      <section class="legend">
+        <section class="timeline">
+          <header class="timeline-header">
+            <span class="timeline-num-launches"></span> Orbital Launches in
+            <span class="timeline-current-year"></span>
+          </header>
+          <div class="timeline-controls">
+            <button class="timeline-btn play-btn"></button>
+          </div>
+          <div class="timeline-container">
+            <div class="timeline-bar"></div>
+          </div>
         </section>
-        <section class="panel">
-        	<button class="panel-close">x</button>
-        	<h2 class="panel-heading"></h2>
-        	<ul class="panel-facts">
-        		<li><label>Location:</label> <span class="panel-fact-value" data-fact="lat_string"></span>, <span class="panel-fact-value" data-fact="long_string"></span></li>
-        		<li><label>Operator:</label> <span class="panel-fact-value" data-fact="operator"></span></li>
-        		<li><label>Current Status:</label> <span class="panel-fact-value" data-fact="status"></span></li>
-        		<li><label>First Launch:</label> <span class="panel-fact-value" data-fact="first_launch"></span></li>
-        		<li><label>Launches from <span id="panel-min-year"></span> to <span id="panel-max-year"></span>:</label> <span class="panel-fact-value" data-fact="overall_total"></span></li>
-        	</ul>
-        	<div class="barchart-container">
-        		<h3 class="chart-title">Primary Payload Destinations</h3>
-        		<p class="panel-subtitle">This stacked bar chart describes the orbital regimes of each primary payload launched from <span class="panel-spaceport-name"></span>.</p>
-        		<div class="barchart"></div>
-        		<div class="barchart-legend"></div>
-        	</div>
-        	<div class="histogram-container">
-        		<h3 class="chart-title">Primary Payload Inclinations</h3>
-        		<p class="panel-subtitle">This histogram describes the inclination of each primary payload launched from <span class="panel-spaceport-name"></span>. Launches with missing Space-Track elements are not included.</p>
-        		<div class="histogram"></div>
-        	</div>
-        </section>
-        <section class="source">
-        	<p><a href="https://aerospace.csis.org">CSIS Aerospace Security</a> | Space-track.org, Various Sources</p>
-        </section>
-        <section class="map-container"></section>
-	</main>
-	<div class="disclaimer">
-    <img class="mobile-gif" alt="Spaceports of the World" title="Spaceports of the World" />
-		<p>To view and interact with our full dataset, please use a desktop computer.</p>
-	</div>
-	<div class="tooltip"></div>
-	 <script src="https://csis-ilab.github.io/aerospace-viz/globals/iframeSizer.contentWindow.min.js"></script>
-	<script src="main.c6c100226b9646b1708f.js?c6c100226b9646b1708f"></script>
-</body>
+        <ul class="legend-colors">
+          <li class="legend-colors-active">Active</li>
+          <li class="legend-colors-inactive">Inactive</li>
+          <li class="legend-colors-human">Orbital Human Launch</li>
+        </ul>
+        <div class="legend-size">
+          <div class="legend-size-label">Cumulative Launches</div>
+        </div>
+      </section>
+      <section class="zoomBtns">
+        <button id="zoom-in" class="zoom zoom-in">+</button>
+        <button id="zoom-out" class="zoom zoom-out">-</button>
+        <button id="zoom-reset" class="zoom zoom-reset">&#8635;</button>
+      </section>
+      <section class="panel">
+        <button class="panel-close">x</button>
+        <h2 class="panel-heading"></h2>
+        <ul class="panel-facts">
+          <li>
+            <label>Location:</label>
+            <span class="panel-fact-value" data-fact="lat_string"></span>,
+            <span class="panel-fact-value" data-fact="long_string"></span>
+          </li>
+          <li>
+            <label>Operator:</label>
+            <span class="panel-fact-value" data-fact="operator"></span>
+          </li>
+          <li>
+            <label>Current Status:</label>
+            <span class="panel-fact-value" data-fact="status"></span>
+          </li>
+          <li>
+            <label>First Orbital Launch:</label>
+            <span class="panel-fact-value" data-fact="first_launch"></span>
+          </li>
+          <li>
+            <label
+              >Launches from <span id="panel-min-year"></span> to
+              <span id="panel-max-year"></span>:</label
+            >
+            <span class="panel-fact-value" data-fact="overall_total"></span>
+          </li>
+        </ul>
+        <div class="barchart-container">
+          <h3 class="chart-title">Primary Payload Destinations</h3>
+          <p class="panel-subtitle">
+            This stacked bar chart describes the orbital regimes of each primary
+            payload launched from <span class="panel-spaceport-name"></span>.
+          </p>
+          <div class="barchart"></div>
+          <div class="barchart-legend"></div>
+        </div>
+        <div class="histogram-container">
+          <h3 class="chart-title">Primary Payload Inclinations</h3>
+          <p class="panel-subtitle">
+            This histogram describes the inclination of each primary payload
+            launched from <span class="panel-spaceport-name"></span>. Launches
+            with missing Space-Track elements are not included.
+          </p>
+          <div class="histogram"></div>
+        </div>
+      </section>
+      <section class="source">
+        <p>
+          <a href="https://aerospace.csis.org">CSIS Aerospace Security</a> |
+          Space-track.org, Various Sources
+        </p>
+      </section>
+      <section class="map-container"></section>
+    </main>
+    <div class="disclaimer">
+      <img
+        class="mobile-gif"
+        alt="Spaceports of the World"
+        title="Spaceports of the World"
+      />
+      <p>
+        To view and interact with our full dataset, please use a desktop
+        computer.
+      </p>
+    </div>
+    <div class="tooltip"></div>
+    <script src="https://csis-ilab.github.io/aerospace-viz/globals/iframeSizer.contentWindow.min.js"></script>
+    <script src="main.98188a7dac84a81458c5.js?98188a7dac84a81458c5"></script>
+  </body>
 </html>
