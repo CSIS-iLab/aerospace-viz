@@ -5,8 +5,8 @@ export default {
   show: function(content) {
     let yPos = d3.event.pageY
     let xPos = d3.event.pageX
-    if (xPos + 10 > document.body.clientWidth - 200) {
-      xPos = document.body.clientWidth + 5 - 250
+    if (xPos + 10 > document.body.clientWidth - 300) {
+      xPos = document.body.clientWidth + 5 - 275
     }
 
     tooltipEl
