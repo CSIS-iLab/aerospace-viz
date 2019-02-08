@@ -2,71 +2,71 @@
 =            Tooltip            =
 ===============================*/
 .tooltip {
-	display: block;
-	@include fontSize(13px);
-	line-height: 1.4;
-	font-weight: bold;
-	color: $off-black;
-	position: absolute;
-	z-index: 20;
-	width: fit-content;
-	max-width: 215px;
-	height: auto;
-	margin: 0 15px;
-	padding: 8px 8px 10px;
-	visibility: hidden;
-	opacity: 0;
-	border: 1px solid $dark-blue;
-	border-radius: 3px;
-	background-color: $white;
-	pointer-events: none;
+  display: block;
+  @include fontSize(13px);
+  line-height: 1.4;
+  font-weight: bold;
+  color: $off-black;
+  position: absolute;
+  z-index: 20;
+  width: fit-content;
+  max-width: 250px;
+  height: auto;
+  margin: 0 15px;
+  padding: 8px 8px 10px;
+  visibility: hidden;
+  opacity: 0;
+  border: 1px solid $dark-blue;
+  border-radius: 3px;
+  background-color: $white;
+  pointer-events: none;
 
-	p {
-		margin: 0;
-	}
+  p {
+    margin: 0;
+  }
 
-	.tooltip-heading {
-		font-family: $font__abel;
-		@include fontSize(14px);
-		line-height: 1.5;
-		font-weight: bold;
-		text-transform: uppercase;
-		margin-bottom: 0.2rem;
-	}
+  .tooltip-heading {
+    font-family: $font__abel;
+    @include fontSize(14px);
+    line-height: 1.5;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
 
-	.tooltip-label {
-		color: $black;
-		font-weight: normal;
+  .tooltip-label {
+    color: $black;
+    font-weight: normal;
 
-		&.indented {
-			padding-left: 0.75rem;
-		}
-	}
+    &.indented {
+      padding-left: 0.75rem;
+    }
+  }
 
-	.tooltip-body {
-		line-height: 1.2;
-	}
+  .tooltip-body {
+    line-height: 1.2;
+  }
 
-	.tooltip-list {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		text-transform: capitalize;
+  .tooltip-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-transform: capitalize;
 
-		li {
-			margin-bottom: 0;
-		}
+    li {
+      margin-bottom: 0;
+    }
 
-		@each $orbit, $color in $orbits {
-			.#{$orbit} .tooltip-label {
-				color: $color;
-			}
-		}
-	}
+    @each $orbit, $color in $orbits {
+      .#{$orbit} .tooltip-label {
+        color: $color;
+      }
+    }
+  }
 
-	.tooltip-value {
-		font-weight: normal;
-		color: $orange;
-		border-bottom: 2px solid $dark-blue;
-	}
+  .tooltip-value {
+    font-weight: normal;
+    color: $orange;
+    border-bottom: 2px solid $dark-blue;
+  }
 }

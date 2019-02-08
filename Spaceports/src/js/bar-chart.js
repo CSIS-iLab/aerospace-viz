@@ -48,6 +48,7 @@ function drawChart() {
     x.domain(years).rangeRound([0, width])
 
     y.domain(d3.extent(data.map(d => d.total)))
+      // y.domain([0, 70])
       .nice()
       .rangeRound([height, 0])
   }
