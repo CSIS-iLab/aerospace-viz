@@ -141,7 +141,9 @@ function drawChart() {
           .attr('cx', d => scaleX(d.x_coord))
           .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
-          .attr('data-y', d => d.y_coord),
+          .attr('data-y', d => d.y_coord)
+          .on('mouseover', interactions.mouseover)
+          .on('mouseleave', interactions.mouseleave),
       update =>
         update
           .attr('cx', d => scaleX(d.x_coord))
@@ -157,6 +159,38 @@ function drawChart() {
     enter({ container, data })
     updateScales({ data })
     updateDom({ container, data })
+  }
+
+  const interactions = {
+    mouseover(d) {
+      interactions.showTooltip(d)
+      select(this).classed('is-active', true)
+    },
+    mouseleave() {
+      tooltip.hide()
+      select(this).classed('is-active', false)
+    },
+    showTooltip(d) {
+      let tooltipBody = [
+        { Operator: d.sat_operator },
+        { Date: d.timestamp },
+        { Longitude: d.long_string }
+      ]
+      // categories.forEach(category => {
+      //   tooltipBody.push({
+      //     [category]: d.data[category],
+      //     class: [category]
+      //   })
+      // })
+
+      // ${tooltip.formatContent(tooltipBody, true)}
+
+      let tooltipContent = `
+      <p class="tooltip-heading">
+        ${d.sat_name}</p>
+      ${tooltip.formatContent(tooltipBody, true)}`
+      tooltip.show(tooltipContent)
+    }
   }
 
   chart.width = function(...args) {

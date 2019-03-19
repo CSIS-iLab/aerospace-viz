@@ -21,7 +21,6 @@ function init() {
 
 async function loadData() {
   data = await parseData(satelliteFile, targetsFile)
-  console.log(data)
 
   let dates = Array.from(data.keys())
   startDate = dates[0]

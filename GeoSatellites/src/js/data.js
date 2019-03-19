@@ -28,6 +28,7 @@ async function parseData(satelliteURL, targetsURL) {
       d.x_coord = +d.x_coord
       d.y_coord = +d.y_coord
       d.country = d.sat_operator
+      d.long_string = d.long_string.replace('�', '&#176;')
 
       if (d.country.includes('U.S.')) {
         d.country = 'US'
