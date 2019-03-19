@@ -31,9 +31,9 @@ async function loadData() {
     if (counter === dates.length - 1) {
       clearTimeout(timerId)
     }
-    timerId = setTimeout(tick, 250) // (*)
+    timerId = setTimeout(tick, 25) // (*)
     counter++
-  }, 250)
+  }, 25)
 }
 
 function drawChart() {

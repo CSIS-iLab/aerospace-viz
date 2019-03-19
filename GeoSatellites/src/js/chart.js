@@ -84,40 +84,42 @@ function drawChart() {
     // Earth
     let earth = g.select('.g-earth')
 
-    earth
-      .append('circle')
-      .attr('cx', scaleX(0))
-      .attr('cy', scaleY(0))
-      .attr('r', 68)
-      .attr('fill', 'lightgray')
+    if (earth.select('*').empty()) {
+      earth
+        .append('circle')
+        .attr('cx', scaleX(0))
+        .attr('cy', scaleY(0))
+        .attr('r', 68)
+        .attr('fill', 'lightgray')
 
-    earth
-      .append('circle')
-      .attr('cx', scaleX(defaultCoords.earth.x.min))
-      .attr('cy', scaleY(0))
-      .attr('r', 1)
-      .attr('fill', 'red')
+      earth
+        .append('circle')
+        .attr('cx', scaleX(defaultCoords.earth.x.min))
+        .attr('cy', scaleY(0))
+        .attr('r', 1)
+        .attr('fill', 'red')
 
-    earth
-      .append('circle')
-      .attr('cx', scaleX(defaultCoords.earth.x.max))
-      .attr('cy', scaleY(0))
-      .attr('r', 1)
-      .attr('fill', 'red')
+      earth
+        .append('circle')
+        .attr('cx', scaleX(defaultCoords.earth.x.max))
+        .attr('cy', scaleY(0))
+        .attr('r', 1)
+        .attr('fill', 'red')
 
-    earth
-      .append('circle')
-      .attr('cy', scaleY(defaultCoords.earth.y.min))
-      .attr('cx', scaleX(0))
-      .attr('r', 1)
-      .attr('fill', 'red')
+      earth
+        .append('circle')
+        .attr('cy', scaleY(defaultCoords.earth.y.min))
+        .attr('cx', scaleX(0))
+        .attr('r', 1)
+        .attr('fill', 'red')
 
-    earth
-      .append('circle')
-      .attr('cy', scaleY(defaultCoords.earth.y.max))
-      .attr('cx', scaleX(0))
-      .attr('r', 1)
-      .attr('fill', 'red')
+      earth
+        .append('circle')
+        .attr('cy', scaleY(defaultCoords.earth.y.max))
+        .attr('cx', scaleX(0))
+        .attr('r', 1)
+        .attr('fill', 'red')
+    }
 
     let plot = g.select('.g-plot')
 
