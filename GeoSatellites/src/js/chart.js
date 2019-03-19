@@ -92,7 +92,6 @@ function drawChart() {
       const earthRadius = Math.abs(
         scaleY(defaultCoords.earth.y.max) - scaleY(0)
       )
-      console.log(earthRadius)
       earth
         .append('circle')
         .attr('cx', scaleX(0))

@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 const devMode = process.env.NODE_ENV !== 'production'
 
@@ -52,10 +52,15 @@ module.exports = {
   optimization: {
     usedExports: true,
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true,
-        sourceMap: devMode
+        sourceMap: devMode,
+        terserOptions: {
+          output: {
+            comments: false
+          }
+        }
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessor: require('cssnano'),
