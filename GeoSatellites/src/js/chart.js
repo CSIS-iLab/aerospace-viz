@@ -89,11 +89,15 @@ function drawChart() {
     let earth = g.select('.g-earth')
 
     if (earth.select('*').empty()) {
+      const earthRadius = Math.abs(
+        scaleY(defaultCoords.earth.y.max) - scaleY(0)
+      )
+      console.log(earthRadius)
       earth
         .append('circle')
         .attr('cx', scaleX(0))
         .attr('cy', scaleY(0))
-        .attr('r', 68)
+        .attr('r', earthRadius)
         .attr('fill', 'lightgray')
 
       earth
@@ -176,14 +180,6 @@ function drawChart() {
         { Date: d.timestamp },
         { Longitude: d.long_string }
       ]
-      // categories.forEach(category => {
-      //   tooltipBody.push({
-      //     [category]: d.data[category],
-      //     class: [category]
-      //   })
-      // })
-
-      // ${tooltip.formatContent(tooltipBody, true)}
 
       let tooltipContent = `
       <p class="tooltip-heading">
