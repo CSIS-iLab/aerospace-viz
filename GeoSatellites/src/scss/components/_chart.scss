@@ -1,0 +1,13 @@
+.chart {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+
+  .satellite {
+    transition: fill-opacity 0.2s linear;
+
+    &.is-active {
+      fill-opacity: 1;
+    }
+  }
+}
