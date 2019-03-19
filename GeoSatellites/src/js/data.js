@@ -3,7 +3,7 @@ import * as d3Fetch from 'd3-fetch'
 async function parseData(url, current_year) {
   let data = await d3Fetch
     .csv(url, d => {
-      d.date = new Date(d.timestamp).getTime() / 1000
+      d.date = new Date(d.timestamp).getTime()
       d.include = d.include == 'TRUE' ? true : false
       d.longitude = +d.longitude
       d.x_coord = +d.x_coord
@@ -37,7 +37,7 @@ async function parseData(url, current_year) {
           //   )[0]
           // )
         })
-        dataset.set(new Date(timestamp).getTime() / 1000, entries)
+        dataset.set(new Date(timestamp).getTime(), entries)
       })
       return dataset
     })

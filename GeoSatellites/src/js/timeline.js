@@ -3,45 +3,45 @@ import * as noUiSlider from 'nouislider'
 const timeline = {
   el: document.querySelector('.timeline-bar'),
   btnControls: document.querySelector('.timeline-btn'),
-  currentYearEl: document.querySelector('.timeline-current-year'),
+  currentDateEl: document.querySelector('.timeline-current-date'),
   currentLaunchesEl: document.querySelector('.timeline-num-launches'),
   playing: false,
   timer: null,
   transitionDuration: 0,
-  endYear: 0,
-  startYear: 0,
-  updateCurrentYear(year) {
-    this.currentYearEl.innerHTML = year
+  endDate: 0,
+  startDate: 0,
+  updateCurrentDate(date) {
+    date = new Date(date)
+    this.currentDateEl.innerHTML = `${date.getMonth() +
+      1}/${date.getDate()}/${date.getFullYear()}`
   },
-  updateCurrentLaunches(launches) {
-    this.currentLaunchesEl.innerHTML = launches
-  },
-  getCurrentYear() {
+  getCurrentDate() {
     return this.el.noUiSlider.get()
   },
-  setupTimeline({ startYear, endYear, currentYear, onChange }) {
-    this.endYear = endYear
-    this.startYear = startYear
+  setupTimeline({ startDate, endDate, currentDate, onChange }) {
+    this.endDate = endDate
+    this.startDate = startDate
+
     noUiSlider.create(this.el, {
-      start: [endYear],
+      start: [startDate],
       connect: true,
       behaviour: 'tap-drag',
-      step: 1,
+      step: 24 * 60 * 60 * 1000,
       range: {
-        min: startYear,
-        max: endYear
+        min: startDate,
+        max: endDate
       },
       format: {
         from: v => parseInt(v),
         to: v => parseInt(v)
-      },
-      pips: {
-        mode: 'range',
-        density: 10
       }
+      // pips: {
+      //   mode: 'range',
+      //   density: 10
+      // }
     })
 
-    this.el.noUiSlider.set(endYear)
+    this.el.noUiSlider.set(startDate)
 
     this.setupBtnControls()
 
@@ -49,9 +49,9 @@ const timeline = {
   },
   setupBtnControls() {
     this.btnControls.addEventListener('click', function() {
-      let currentYear = timeline.getCurrentYear()
-      if (currentYear == timeline.endYear) {
-        timeline.el.noUiSlider.set(timeline.startYear)
+      let currentDate = timeline.getCurrentDate()
+      if (currentDate == timeline.endDate) {
+        timeline.el.noUiSlider.set(timeline.startDate)
       }
 
       if (timeline.playing == true) {
@@ -60,14 +60,12 @@ const timeline = {
       }
 
       timeline.timer = setInterval(function() {
-        currentYear = timeline.getCurrentYear()
-        let newYear = currentYear + 1
-        timeline.el.noUiSlider.set(newYear)
+        currentDate = timeline.getCurrentDate()
+        timeline.el.noUiSlider.set(currentDate + 24 * 60 * 60 * 1000)
       }, timeline.transitionDuration)
 
       this.classList.remove('play-btn')
       this.classList.add('pause-btn')
-      // this.innerHTML = 'Pause'
 
       timeline.playing = true
     })
@@ -77,7 +75,6 @@ const timeline = {
     timeline.playing = false
     timeline.btnControls.classList.remove('pause-btn')
     timeline.btnControls.classList.add('play-btn')
-    // timeline.btnControls.innerHTML = 'Play'
   }
 }
 
