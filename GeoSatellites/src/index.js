@@ -5,7 +5,8 @@ import parseData from './js/data'
 import 'nouislider/distribute/nouislider.min.css'
 import './scss/main.scss'
 
-const data_file = './data/20190318-china.csv'
+const satelliteFile = './data/20190318-china.csv'
+const targetsFile = './data/20190318-china-targets.csv'
 
 const transitionDuration = 25
 
@@ -19,9 +20,10 @@ function init() {
 }
 
 async function loadData() {
-  data = await parseData(data_file)
+  data = await parseData(satelliteFile, targetsFile)
+  console.log(data)
 
-  let dates = Array.from(data.keys()).reverse()
+  let dates = Array.from(data.keys())
   startDate = dates[0]
   endDate = dates[dates.length - 1]
   currentDate = startDate

@@ -1,5 +1,6 @@
 import { scaleLinear } from 'd3-scale'
 import { select, selectAll } from 'd3-selection'
+import { LightenDarkenColor } from './helpers'
 import tooltip from './tooltip'
 
 const chart = drawChart()
@@ -36,6 +37,12 @@ function drawChart() {
       }
     }
   }
+  const colors = {
+    China: '#d66e42',
+    Russia: '#196c95',
+    US: '#f9bc65',
+    Other: '#b5bdc1'
+  }
   let width = 0
   let height = 0
 
@@ -47,9 +54,6 @@ function drawChart() {
     defaultCoords.orbit.y.min,
     defaultCoords.orbit.y.max
   ])
-
-  // let scaleX = scaleLinear().domain([-1, 1])
-  // let scaleY = scaleLinear().domain([-1, 1])
 
   function enter({ container, data }) {
     const svg = container.selectAll('svg').data([data])
@@ -67,15 +71,15 @@ function drawChart() {
   function updateDom({ container, data }) {
     let svg = container
       .select('svg')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
-    // .attr(
-    //   'viewBox',
-    //   '0 0 ' +
-    //     (width + margin.left + margin.right) +
-    //     ' ' +
-    //     (height + margin.top + margin.bottom)
-    // )
+      // .attr('width', width + margin.left + margin.right)
+      // .attr('height', height + margin.top + margin.bottom)
+      .attr(
+        'viewBox',
+        '0 0 ' +
+          (width + margin.left + margin.right) +
+          ' ' +
+          (height + margin.top + margin.bottom)
+      )
 
     let g = svg
       .select('g')
@@ -131,6 +135,9 @@ function drawChart() {
           .append('circle')
           .attr('class', 'satellite')
           .attr('r', 5)
+          .attr('fill', d => colors[d.country])
+          .attr('stroke', d => LightenDarkenColor(colors[d.country], -20))
+          .attr('fill-opacity', 0.8)
           .attr('cx', d => scaleX(d.x_coord))
           .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
