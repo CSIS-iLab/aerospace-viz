@@ -1,3 +1,16 @@
+body,
+.leaflet-container {
+  font: 14px/1.5 "Source Sans Pro", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.date {
+  font-family: Abel, Arial, sans-serif;
+}
+
 [class*="animated_icon"] {
   border-radius: 50%;
   opacity: 0.25;
@@ -42,16 +55,6 @@
 }
 .instruction p:last-child {
   font-size: 12px;
-}
-body,
-.leaflet-container {
-  font: 14px/1.5 "Source Sans Pro", Arial, sans-serif;
-}
-h1,
-h2,
-h3,
-.date {
-  font-family: Abel, Arial, sans-serif;
 }
 .noUi-handle,
 .timeline-bar,
