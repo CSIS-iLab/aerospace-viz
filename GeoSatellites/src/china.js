@@ -8,4 +8,3 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init)
-// window.addEventListener('resize', resizeChart)

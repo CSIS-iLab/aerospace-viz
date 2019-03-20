@@ -1,12 +1,15 @@
-import { path as d3Path } from 'd3-path'
+import { geoPath, geoOrthographic } from 'd3-geo'
+import { geoSatellite } from 'd3-geo-projection'
 import { scaleLinear } from 'd3-scale'
 import { select, selectAll } from 'd3-selection'
 import { LightenDarkenColor } from './helpers'
 import tooltip from './tooltip'
+import * as topojson from 'topojson'
 
 const chart = drawChart()
 
 let el
+let world
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth, window.innerHeight)
@@ -45,6 +48,9 @@ function drawChart() {
     Other: '#b5bdc1'
   }
 
+  let projection = geoOrthographic()
+  let globePath = geoPath()
+
   let width = 0
   let height = 0
 
@@ -61,8 +67,25 @@ function drawChart() {
     const svg = container.selectAll('svg').data([data])
     const svgEnter = svg.enter().append('svg')
     const gEnter = svgEnter.append('g')
-    gEnter.append('g').attr('class', 'g-orbit')
-    gEnter.append('g').attr('class', 'g-earth')
+    gEnter
+      .append('g')
+      .attr('class', 'g-orbit')
+      .append('path')
+      .attr('fill', 'none')
+      .attr('stroke', '#000')
+
+    const earth = gEnter.append('g').attr('class', 'g-earth')
+    earth
+      .append('circle')
+      .attr('class', 'water')
+      .attr('fill', '#b7c7d1')
+
+    earth
+      .append('path')
+      .attr('class', 'land')
+      .style('fill', '#f2f1ee')
+      .style('stroke', '#ccc')
+      .style('stroke-width', '0.3px')
     gEnter.append('g').attr('class', 'g-plot')
   }
 
@@ -89,71 +112,41 @@ function drawChart() {
     // Earth
     let earth = g.select('.g-earth')
 
-    if (earth.select('*').empty()) {
-      const earthRadius = Math.abs(
-        scaleY(defaultCoords.earth.y.max) - scaleY(0)
-      )
-      earth
-        .append('circle')
-        .attr('cx', scaleX(0))
-        .attr('cy', scaleY(0))
-        .attr('r', earthRadius)
-        .attr('fill', 'lightgray')
+    const earthRadius = Math.abs(scaleY(defaultCoords.earth.y.max) - scaleY(0))
 
-      earth
-        .append('circle')
-        .attr('cx', scaleX(defaultCoords.earth.x.min))
-        .attr('cy', scaleY(0))
-        .attr('r', 1)
-        .attr('fill', 'red')
+    projection
+      .translate([scaleX(0), scaleY(0)])
+      .scale(earthRadius)
+      .rotate([270, 18])
+    globePath.projection(projection)
 
-      earth
-        .append('circle')
-        .attr('cx', scaleX(defaultCoords.earth.x.max))
-        .attr('cy', scaleY(0))
-        .attr('r', 1)
-        .attr('fill', 'red')
+    earth
+      .select('.water')
+      .attr('cx', scaleX(0))
+      .attr('cy', scaleY(0))
+      .attr('r', projection.scale())
 
-      earth
-        .append('circle')
-        .attr('cy', scaleY(defaultCoords.earth.y.min))
-        .attr('cx', scaleX(0))
-        .attr('r', 1)
-        .attr('fill', 'red')
-
-      earth
-        .append('circle')
-        .attr('cy', scaleY(defaultCoords.earth.y.max))
-        .attr('cx', scaleX(0))
-        .attr('r', 1)
-        .attr('fill', 'red')
-    }
+    earth
+      .select('.land')
+      .datum(topojson.feature(world, world.objects.countries))
+      .attr('d', globePath)
 
     // Orbit
-    let orbit = g.select('.g-orbit')
-    if (orbit.select('*').empty()) {
-      const orbitRadiusX = Math.abs(
-        scaleX(defaultCoords.orbit.x.max) - scaleX(0)
-      )
+    let orbit = g.select('.g-orbit path')
 
-      const orbitRadiusY = Math.abs(
-        scaleY(defaultCoords.orbit.y.max) - scaleY(0)
-      )
+    const orbitRadiusX = Math.abs(scaleX(defaultCoords.orbit.x.max) - scaleX(0))
 
-      orbit
-        .append('path')
-        .attr(
-          'd',
-          drawEllipse({
-            cx: scaleX(0),
-            cy: scaleY(0),
-            rx: orbitRadiusX,
-            ry: orbitRadiusY
-          })
-        )
-        .attr('fill', 'none')
-        .attr('stroke', '#000')
-    }
+    const orbitRadiusY = Math.abs(scaleY(defaultCoords.orbit.y.max) - scaleY(0))
+
+    orbit.attr(
+      'd',
+      drawEllipse({
+        cx: scaleX(0),
+        cy: scaleY(0),
+        rx: orbitRadiusX,
+        ry: orbitRadiusY
+      })
+    )
 
     let plot = g.select('.g-plot')
 
@@ -164,7 +157,7 @@ function drawChart() {
         enter
           .append('circle')
           .attr('class', 'satellite')
-          .attr('r', 5)
+          .attr('r', 10)
           .attr('fill', d => colors[d.country])
           .attr('stroke', d => LightenDarkenColor(colors[d.country], -20))
           .attr('fill-opacity', 0.8)
@@ -176,10 +169,16 @@ function drawChart() {
           .on('mouseleave', interactions.mouseleave),
       update =>
         update
-          .attr('cx', d => scaleX(d.x_coord))
-          .attr('cy', d => scaleY(d.y_coord))
+          // .attr('cx', d => scaleX(d.x_coord))
+          // .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
           .attr('data-y', d => d.y_coord)
+          .call(update =>
+            update
+              .transition(25)
+              .attr('cx', d => scaleX(d.x_coord))
+              .attr('cy', d => scaleY(d.y_coord))
+          )
     )
   }
 
@@ -251,4 +250,8 @@ function init(args) {
   resize(args)
 }
 
-export default { init }
+function setWorld(data) {
+  world = data
+}
+
+export default { init, setWorld }

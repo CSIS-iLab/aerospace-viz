@@ -1,25 +1,30 @@
 import breakpoints from './js/breakpoints'
 import Chart from './js/chart'
 import timeline from './js/timeline'
-import parseData from './js/data'
+import { getData, getWorldData } from './js/data'
 
 const transitionDuration = 25
 
+let breakpoint = breakpoints.calculate()
 let data
+let world
 let currentDate
 let startDate
 let endDate
 
 async function loadData(satelliteFile, targetsFile) {
-  data = await parseData(satelliteFile, targetsFile)
+  data = await getData(satelliteFile, targetsFile)
+
+  world = await getWorldData()
+  Chart.setWorld(world)
 
   let dates = Array.from(data.keys())
   startDate = dates[0]
   endDate = dates[dates.length - 1]
   currentDate = startDate
 
+  // Setting up the timeline will call the first drawChart()
   setupTimeline()
-  drawChart()
   hideLoading()
 }
 
@@ -52,14 +57,14 @@ function setupTimeline() {
   })
 }
 
-// function resizeChart() {
-//   let newBreakpoint = breakpoints.calculate()
+function resizeChart() {
+  let newBreakpoint = breakpoints.calculate()
 
-//   if (breakpoint != newBreakpoint) {
-//     breakpoint = newBreakpoint
-//     drawChart()
-//   }
-// }
+  if (breakpoint != newBreakpoint) {
+    breakpoint = newBreakpoint
+    drawChart()
+  }
+}
 
 function hideLoading() {
   document.querySelector('.loading-container').style.display = 'none'
@@ -67,5 +72,7 @@ function hideLoading() {
     .querySelectorAll('.hide-on-load')
     .forEach(el => el.classList.remove('hide-on-load'))
 }
+
+window.addEventListener('resize', resizeChart)
 
 export default loadData
