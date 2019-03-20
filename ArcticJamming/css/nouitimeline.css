@@ -309,13 +309,17 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   border-bottom: 0.3rem solid transparent;
 }
 .timeline .timeline-btn.pause-btn::after {
-  width: 0.4em;
+  /* border-left: 0.2em solid #4b5255;
+  border-right: 0.2em solid #4b5255; */
+  width: 0.3em;
+
   height: 0.8em;
-  border-left: 0.2em solid #4b5255;
-  border-right: 0.2em solid #4b5255;
+  border-left: 0.2em solid #fff;
+  border-right: 0.2em solid #fff;
 }
 .timeline .timeline-btn.pause-btn {
-  background-color: #f9bc65;
+  /* background-color: #f9bc65; */
+  background-color: #d66e42;
   color: #fff;
 }
 .timeline .timeline-container {
