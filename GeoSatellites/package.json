@@ -54,6 +54,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
     "d3-fetch": "^1.1.2",
+    "d3-path": "^1.0.7",
     "d3-scale": "^3.0.0",
     "d3-selection": "^1.4.0",
     "d3-transition": "^1.2.0",

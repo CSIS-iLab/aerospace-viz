@@ -2,11 +2,6 @@ import breakpoints from './js/breakpoints'
 import Chart from './js/chart'
 import timeline from './js/timeline'
 import parseData from './js/data'
-import 'nouislider/distribute/nouislider.min.css'
-import './scss/main.scss'
-
-const satelliteFile = './data/20190318-china.csv'
-const targetsFile = './data/20190318-china-targets.csv'
 
 const transitionDuration = 25
 
@@ -15,11 +10,7 @@ let currentDate
 let startDate
 let endDate
 
-function init() {
-  loadData()
-}
-
-async function loadData() {
+async function loadData(satelliteFile, targetsFile) {
   data = await parseData(satelliteFile, targetsFile)
 
   let dates = Array.from(data.keys())
@@ -77,5 +68,4 @@ function hideLoading() {
     .forEach(el => el.classList.remove('hide-on-load'))
 }
 
-window.addEventListener('DOMContentLoaded', init)
-// window.addEventListener('resize', resizeChart)
+export default loadData

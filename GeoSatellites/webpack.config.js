@@ -12,7 +12,11 @@ const webpack = require('webpack')
 const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-  entry: { main: './src/index.js' },
+  entry: {
+    china: './src/china.js',
+    russia: './src/russia.js',
+    styles: './src/styles.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: devMode ? '[name].js' : '[name].[hash].js'
@@ -87,10 +91,25 @@ module.exports = {
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: 'body',
       hash: false,
       template: './src/index.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      chunks: ['china', 'styles']
+    }),
+    new HtmlWebpackPlugin({
+      inject: 'body',
+      hash: false,
+      template: './src/index.html',
+      filename: 'china.html',
+      chunks: ['china', 'styles']
+    }),
+    new HtmlWebpackPlugin({
+      inject: 'body',
+      hash: false,
+      template: './src/index.html',
+      filename: 'russia.html',
+      chunks: ['russia', 'styles']
     })
   ]
 }
