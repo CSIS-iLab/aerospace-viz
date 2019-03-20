@@ -1,7 +1,6 @@
 body,
 .leaflet-container {
   font: 14px/1.5 "Source Sans Pro", Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -111,6 +110,10 @@ h3,
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   box-shadow: none;
+}
+.tooltip,
+p {
+  -webkit-font-smoothing: antialiased;
 }
 .tooltip .tooltip-heading {
   font-family: Abel, Arial, sans-serif;
