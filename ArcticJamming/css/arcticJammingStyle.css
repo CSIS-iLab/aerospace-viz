@@ -23,10 +23,10 @@
   align-items: center;
   -ms-flex-align: center;
   width: 100%;
-  font: 14px/1.5 Abel, Arial, sans-serif;
+  font: 16px/1.5 Abel, Arial, sans-serif;
 }
 .colorKey {
-  margin-top: 2.5px;
+  margin-top: 4px;
 }
 .timeline .noUi-marker ~ .noUi-value {
   left: 50% !important;
