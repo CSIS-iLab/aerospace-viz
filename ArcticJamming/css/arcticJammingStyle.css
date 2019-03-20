@@ -10,9 +10,6 @@
   background-color: #d66e42;
 }
 
-[data-start="1542344400000"] {
-  display: block;
-}
 #key {
   display: flex;
   display: -ms-flex;
