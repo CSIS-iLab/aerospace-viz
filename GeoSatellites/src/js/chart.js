@@ -140,17 +140,7 @@ function drawChart() {
         scaleY(defaultCoords.orbit.y.max) - scaleY(0)
       )
 
-      // earth
-      //   .append('ellipse')
-      //   .attr('class', 'orbit')
-      //   .attr('cx', scaleX(0))
-      //   .attr('cy', scaleY(0))
-      //   .attr('rx', orbitRadiusX)
-      //   .attr('ry', orbitRadiusY)
-      //   .attr('stroke', '#000')
-      //   .attr('fill', 'none')
-
-      earth
+      orbit
         .append('path')
         .attr(
           'd',
