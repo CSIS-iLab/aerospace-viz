@@ -1,3 +1,4 @@
+import { path as d3Path } from 'd3-path'
 import { scaleLinear } from 'd3-scale'
 import { select, selectAll } from 'd3-selection'
 import { LightenDarkenColor } from './helpers'
@@ -43,6 +44,7 @@ function drawChart() {
     US: '#f9bc65',
     Other: '#b5bdc1'
   }
+
   let width = 0
   let height = 0
 
@@ -59,6 +61,7 @@ function drawChart() {
     const svg = container.selectAll('svg').data([data])
     const svgEnter = svg.enter().append('svg')
     const gEnter = svgEnter.append('g')
+    gEnter.append('g').attr('class', 'g-orbit')
     gEnter.append('g').attr('class', 'g-earth')
     gEnter.append('g').attr('class', 'g-plot')
   }
@@ -71,8 +74,6 @@ function drawChart() {
   function updateDom({ container, data }) {
     let svg = container
       .select('svg')
-      // .attr('width', width + margin.left + margin.right)
-      // .attr('height', height + margin.top + margin.bottom)
       .attr(
         'viewBox',
         '0 0 ' +
@@ -126,6 +127,42 @@ function drawChart() {
         .attr('cx', scaleX(0))
         .attr('r', 1)
         .attr('fill', 'red')
+    }
+
+    // Orbit
+    let orbit = g.select('.g-orbit')
+    if (orbit.select('*').empty()) {
+      const orbitRadiusX = Math.abs(
+        scaleX(defaultCoords.orbit.x.max) - scaleX(0)
+      )
+
+      const orbitRadiusY = Math.abs(
+        scaleY(defaultCoords.orbit.y.max) - scaleY(0)
+      )
+
+      // earth
+      //   .append('ellipse')
+      //   .attr('class', 'orbit')
+      //   .attr('cx', scaleX(0))
+      //   .attr('cy', scaleY(0))
+      //   .attr('rx', orbitRadiusX)
+      //   .attr('ry', orbitRadiusY)
+      //   .attr('stroke', '#000')
+      //   .attr('fill', 'none')
+
+      earth
+        .append('path')
+        .attr(
+          'd',
+          drawEllipse({
+            cx: scaleX(0),
+            cy: scaleY(0),
+            rx: orbitRadiusX,
+            ry: orbitRadiusY
+          })
+        )
+        .attr('fill', 'none')
+        .attr('stroke', '#000')
     }
 
     let plot = g.select('.g-plot')
@@ -186,6 +223,20 @@ function drawChart() {
       ${tooltip.formatContent(tooltipBody, true)}`
       tooltip.show(tooltipContent)
     }
+  }
+
+  function drawEllipse({ cx, cy, rx, ry }) {
+    cx = parseFloat(cx, 10)
+    cy = parseFloat(cy, 10)
+    rx = parseFloat(rx, 10)
+    ry = parseFloat(ry, 10)
+
+    const output2 = `
+        M${cx - rx}, ${cy}
+        a${rx}, ${ry} 0 1, 0 ${rx * 2}, 0
+        a${rx}, ${ry} 0 1, 0 ${rx * -2}, 0
+        `
+    return output2
   }
 
   chart.width = function(...args) {
