@@ -1,0 +1,375 @@
+section.widget.occupation_status ul {
+  display: grid;
+  display: -ms-grid;
+  grid-column-gap: 2rem;
+  -ms-grid-columns: 1fr 2rem 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  -ms-grid-rows: auto auto;
+  grid-template-rows: auto auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 12px/16px "Open Sans";
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Open Sans Condensed", sans-serif;
+  margin: 6px 0;
+}
+
+h3 {
+  text-transform: uppercase;
+}
+
+p {
+  margin: 0;
+  color: #666666;
+}
+
+#logo {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  padding: 0;
+  background-size: contain;
+  cursor: pointer;
+}
+
+body > section {
+  position: relative;
+  height: 100vh;
+}
+
+.map {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+aside.toolbox {
+  position: absolute;
+  right: 24px;
+  min-width: 300px;
+  max-width: 300px;
+  z-index: 2;
+  display: block;
+  left: calc(100vw - 324px);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.leaflet-tile {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #004165;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+.box {
+  background: #ffffff;
+  z-index: 2;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 24px 0;
+  box-shadow: 0 0px 16px rgba(0, 0, 0, 0.24);
+}
+
+.box header h1 {
+  display: inline-block;
+  color: #2e3c43;
+  width: calc(100% - 67px);
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+header + p {
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+.box section {
+  margin-bottom: 12px;
+}
+
+.box section .separator {
+  min-height: 1px;
+  background-color: rgba(46, 60, 67, 0.08);
+  margin: 16px 0;
+}
+
+/* BOX CONTROLS */
+#controls ul {
+  padding: 0;
+  margin: 0;
+}
+
+#controls li {
+  list-style-type: none;
+  margin: 0 0 8px 0;
+  display: flex;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+}
+
+#controls li input {
+  margin: 0 8px 0 0;
+}
+
+#controls li input[type="checkbox"] {
+  margin: 0 8px 0 0;
+}
+
+#controls li label {
+  display: flex;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+  width: 100%;
+  font: 12px/16px "Open Sans";
+  cursor: pointer;
+}
+
+#controls li label .itemText {
+  max-width: calc(100% - 48px);
+}
+
+#controls li:hover {
+  cursor: pointer;
+}
+
+h1 + #controls,
+#logo + controls,
+p + #controls {
+  margin-top: 12px;
+}
+
+#controls .widget:not(:first-child) {
+  margin-top: 12px;
+}
+#controls .widget:last-child {
+  margin-bottom: 24px;
+}
+
+#controls input[id^="search"] {
+  width: 75%;
+}
+
+.hyperlink {
+  display: flex;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+}
+
+.hyperlink a {
+  white-space: nowrap;
+  color: #0d7f6d;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hyperlink svg {
+  margin-left: 0.3rem;
+  fill: #0d7f6d;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.hyperlink:hover a {
+  color: #17b39a;
+}
+
+.hyperlink:hover svg {
+  fill: #17b39a;
+}
+
+.colorKey,
+.shapeKey,
+.lineKey,
+.iconKey,
+.patternKey {
+  display: inline-block;
+  margin: 0 5px 0 5px;
+  background-size: contain;
+  background-position: center left;
+  background-repeat: no-repeat;
+}
+
+.colorKey,
+.shapeKey,
+.patternKey {
+  width: 12px;
+  height: 12px;
+}
+
+.iconKey {
+  width: 24px;
+  height: 24px;
+}
+
+.lineKey {
+  width: 48px;
+  height: 12px;
+}
+
+.patternKey {
+  background-size: contain;
+  border-radius: 50%;
+}
+
+.separator {
+  min-height: 1px;
+  background-color: rgba(46, 60, 67, 0.08);
+  margin: 8px 0;
+}
+
+.popupTitleStyle {
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.popupHeaderStyle {
+  font-family: "Open Sans Condensed", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.popupEntryStyle {
+  font-weight: bold;
+}
+
+.popupEntryStyle ul {
+  padding-left: 15px;
+  margin: 0;
+}
+
+aside.toolbox .ui {
+  width: 100%;
+  display: block;
+  height: 40px;
+  position: absolute;
+  top: 50px;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 3;
+  -webkit-touch-callout: none;
+}
+
+.hamburger {
+  position: relative;
+  width: calc(100% - 24px - 8px);
+  top: 50px;
+  left: 24px;
+  display: flex;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 0 16px;
+  margin-left: -24px;
+}
+
+.hamburger .menu {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  margin: 0 0 0 12px;
+}
+
+.hamburger span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin: 5px 0;
+  position: relative;
+  background: black;
+  border-radius: 3px;
+  z-index: 2;
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+}
+
+.hamburger span:nth-child(1) {
+  transform-origin: 0% 0%;
+}
+
+.hamburger span:nth-child(3) {
+  transform-origin: 0% 100%;
+}
+
+aside.toolbox .ui:checked ~ .hamburger span:nth-child(1) {
+  opacity: 1;
+  transform: rotate(45deg) translate(-3px, -3px);
+}
+
+aside.toolbox .ui:checked ~ .hamburger span:nth-child(2) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+aside.toolbox .ui:checked ~ .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translate(0, 0px);
+}
+
+/* FOR DISPLAYS ≤ 425px */
+
+.mobile-only {
+  visibility: hidden;
+  height: 0;
+}
+
+@media (max-width: 425px) {
+  .mobile-only {
+    visibility: visible;
+    height: 50px;
+    font: 12px/16px "Open Sans";
+  }
+
+  .mobile-toggle,
+  header,
+  h3,
+  aside.toolbox .ui:not(:checked) ~ .box {
+    display: none;
+  }
+
+  .box {
+    padding: 50px 16px 16px;
+  }
+
+  aside.toolbox {
+    z-index: 1;
+    top: -36px;
+  }
+
+  .leaflet-touch .leaflet-bar {
+    border: none;
+    top: 4px;
+  }
+}

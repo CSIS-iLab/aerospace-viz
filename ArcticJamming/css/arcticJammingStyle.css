@@ -1,0 +1,223 @@
+[class*="animated_icon"] {
+  border-radius: 50%;
+  opacity: 0.25;
+}
+[class*="military-exercise"] {
+  background-color: #196c95;
+}
+[class*="jammed-airspace"] {
+  display: none;
+  background-color: #d66e42;
+}
+
+[data-start="1542344400000"] {
+  display: block;
+}
+#key {
+  display: flex;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+  width: 100%;
+}
+#controls .label {
+  display: flex;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+  width: 100%;
+  font: 14px/1.5 Abel, Arial, sans-serif;
+}
+.colorKey {
+  margin-top: 2.5px;
+}
+.timeline .noUi-marker ~ .noUi-value {
+  left: 50% !important;
+  width: 100%;
+  text-align: left;
+}
+.timeline .noUi-marker ~ .noUi-value:last-of-type {
+  text-align: right;
+}
+.instruction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.instruction p:last-child {
+  font-size: 12px;
+}
+body,
+.leaflet-container {
+  font: 16px/1.5 Abel, Arial, sans-serif;
+}
+h1,
+h2,
+h3 {
+  font-family: Abel, Arial, sans-serif;
+}
+.noUi-handle,
+.timeline-bar,
+.timeline-btn,
+.box section#scenario button:not(.active) {
+  cursor: pointer;
+}
+.box {
+  background: rgba(255, 255, 255, 0.875);
+}
+
+.box section#scenario button.active {
+  background-color: #f9bc65;
+  border: 2px solid #f9bc65;
+  color: #4b5255;
+}
+
+.box section#scenario button:not(.active) {
+  background-color: transparent;
+  border: 2px solid #f9bc65;
+  color: #4b5255;
+}
+
+.box section#scenario button {
+  padding: 3px 6px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: Abel, Arial, sans-serif;
+  border-radius: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.box section#scenario button:not(.active):hover {
+  background-color: #e89554;
+  border: 2px solid #e89554;
+  color: #fff;
+}
+
+.box button:focus {
+  outline: 0;
+}
+
+.box button:not(.active):focus {
+  outline: 2px solid #000;
+}
+
+.hamburger .menu {
+  font-family: Abel, Arial, sans-serif;
+  font-size: 15px;
+}
+
+.tooltip .tooltip-heading {
+  font-family: Abel, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.tooltip .tooltip-label {
+  color: #000;
+  font-weight: 400;
+  margin: 0 0 6px 0;
+}
+
+.tooltip .tooltip-value {
+  border-bottom: 2px solid #44545f;
+  color: #d66e42;
+  font-weight: 400;
+}
+
+.tooltip a {
+  color: #196c94;
+  font-weight: 400;
+  text-decoration: none;
+  background-image: linear-gradient(#fff 50%, #b5bdc1 50%),
+    linear-gradient(
+      to bottom,
+      rgba(214, 110, 66, 0.75) 0,
+      rgba(214, 110, 66, 0.75) 100%
+    );
+  background-position: 0 100%, 0 100%;
+  background-repeat: repeat-x, repeat-x;
+  background-size: 4px 4px, 4px 4px;
+  -moz-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+.tooltip a:hover {
+  /* background-size: 4px 4px, 4px 100%;
+  color: #44545f; */
+
+  background-size: 0 0, 0 0;
+  color: #d66e42;
+}
+.leaflet-container a svg {
+  height: 12px;
+  width: 12px;
+  fill: #196c94;
+}
+.leaflet-container a:hover svg {
+  fill: #d66e42;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: rgba(255, 255, 255, 0.875);
+  border-radius: 0;
+  border: 1px solid #000;
+}
+
+.leaflet-popup-tip {
+  display: none;
+}
+
+aside.toolbox {
+  position: absolute;
+  left: 24px;
+  min-width: 300px;
+  max-width: 300px;
+  z-index: 2;
+  display: block;
+  right: calc(100vw - 324px);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.box,
+.hamburger {
+  border-radius: 0;
+}
+.box .indicator {
+  display: none;
+}
+body > .indicator {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  left: 50%;
+}
+@media (max-width: 425px) {
+  body > .indicator {
+    display: none;
+  }
+  .box .indicator {
+    display: block;
+  }
+}
+/* abel-regular - latin */
+@font-face {
+  font-family: "Abel";
+  font-weight: 400;
+  src: url("../fonts/abel-v9-latin-regular.eot"); /* IE9 Compat Modes */
+  src: local("Abel Regular"), local("Abel-Regular"),
+    url("../fonts/abel-v9-latin-regular.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/abel-v9-latin-regular.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("../fonts/abel-v9-latin-regular.woff")
+      format("woff"),
+    /* Modern Browsers */ url("../fonts/abel-v9-latin-regular.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */ url("../fonts/abel-v9-latin-regular.svg#Abel")
+      format("svg"); /* Legacy iOS */
+}
