@@ -2,14 +2,15 @@
 =            Timeline            =
 ================================*/
 
-// @import '~nouislider/distribute/nouislider.min.css';
-
 .timeline {
   grid-row: 1;
   grid-column: span 2;
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(46, 60, 67, 0.08);
+  border-bottom: 1px solid rgba(46, 60, 67, 0.08);
 
   .timeline-header {
     flex: 1 1 auto;
@@ -45,7 +46,6 @@
     font-family: $font__abel;
     @include fontSize(12px);
     line-height: 1;
-    text-transform: uppercase;
     letter-spacing: 0.6px;
     transition: all 0.3s ease-in-out;
 
@@ -69,12 +69,25 @@
       background-color: $orange;
       color: $white;
     }
+
+    &.control-btn {
+      margin-right: 0.5rem;
+    }
+
+    &.speed-btn {
+      padding: 0.3rem;
+
+      &.is-active {
+        color: $white;
+        background-color: $orange;
+      }
+    }
   }
 
   .timeline-container {
     flex: 1 1 auto;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
   }
 
   .noUi-target {

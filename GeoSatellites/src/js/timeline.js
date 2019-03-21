@@ -3,8 +3,8 @@ import * as noUiSlider from 'nouislider'
 const timeline = {
   el: document.querySelector('.timeline-bar'),
   btnControls: document.querySelector('.timeline-btn'),
+  controlBtn: document.querySelector('.control-btn'),
   currentDateEl: document.querySelector('.timeline-current-date'),
-  currentLaunchesEl: document.querySelector('.timeline-num-launches'),
   playing: false,
   timer: null,
   transitionDuration: 0,
@@ -65,16 +65,21 @@ const timeline = {
         return
       }
 
-      timeline.timer = setInterval(function() {
-        currentDate = timeline.getCurrentDate()
-        timeline.el.noUiSlider.set(currentDate + 24 * 60 * 60 * 1000)
-      }, timeline.transitionDuration)
-
-      this.classList.remove('play-btn')
-      this.classList.add('pause-btn')
-
-      timeline.playing = true
+      timeline.startTimeline()
     })
+  },
+  startTimeline() {
+    console.log(timeline.transitionDuration)
+    timeline.timer = setInterval(function() {
+      console.log(timeline.transitionDuration)
+      let currentDate = timeline.getCurrentDate()
+      timeline.el.noUiSlider.set(currentDate + 24 * 60 * 60 * 1000)
+    }, timeline.transitionDuration)
+
+    timeline.controlBtn.classList.remove('play-btn')
+    timeline.controlBtn.classList.add('pause-btn')
+
+    timeline.playing = true
   },
   stopTimeline() {
     clearInterval(timeline.timer)

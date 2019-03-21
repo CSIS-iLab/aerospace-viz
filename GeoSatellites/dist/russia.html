@@ -20,31 +20,54 @@
     </div>
     <main class="interactive-container">
       <header class="page-header">
-        <h1>
-          Satellites in Geo
-        </h1>
+        <h1>Satellites in Geo: <span class="country-name"></span></h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <p id="description"></p>
-      </header>
-      <section class="chart"></section>
-      <section class="legend">
-        <section class="timeline">
+        <section class="timeline hide-on-load">
           <header class="timeline-header">
-            <span class="timeline-current-date"></span>
+            Positions on <span class="timeline-current-date"></span>
           </header>
           <div class="timeline-controls">
-            <button class="timeline-btn play-btn"></button>
+            <button class="timeline-btn play-btn control-btn"></button>
+            <button
+              class="timeline-btn speed-btn speed-btn--halfx"
+              data-speed="half"
+            >
+              .5x
+            </button>
+            <button
+              class="timeline-btn speed-btn speed-btn--1x is-active"
+              data-speed="1x"
+            >
+              1x
+            </button>
+            <button
+              class="timeline-btn speed-btn speed-btn--2x"
+              data-speed="2x"
+            >
+              2x
+            </button>
           </div>
           <div class="timeline-container">
             <div class="timeline-bar"></div>
           </div>
+          <p class="instructions">
+            Click the play button to see the satellites' positions change over
+            time. Use the controls to change the play speed. Hover on a
+            satellite for more information.
+          </p>
         </section>
-      </section>
+        <ul class="legend-colors hide-on-load">
+          <li class="legend-colors--perp">
+            <span class="country-name"></span>
+          </li>
+          <li class="legend-colors--target">Target Satellites</li>
+        </ul>
+      </header>
+      <section class="chart"></section>
     </main>
     <footer class="source">
       <p>

@@ -1,5 +1,6 @@
 import loadData from './index'
 
+const country = 'China'
 const satelliteFile = './data/20190318-china.csv'
 const targetsFile = './data/20190318-china-targets.csv'
 
@@ -9,8 +10,10 @@ const description = {
   '2017-05-10': 'May event stuff'
 }
 
+const worldProjection = [270, -18]
+
 function init() {
-  loadData(satelliteFile, targetsFile, description)
+  loadData(satelliteFile, targetsFile, description, country, worldProjection)
 }
 
 window.addEventListener('DOMContentLoaded', init)

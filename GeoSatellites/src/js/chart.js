@@ -10,6 +10,7 @@ const chart = drawChart()
 
 let el
 let world
+let worldProjection
 let transitionDuration
 
 function resize() {
@@ -112,7 +113,7 @@ function drawChart() {
     projection
       .translate([scaleX(0), scaleY(0)])
       .scale(earthRadius)
-      .rotate([270, -18])
+      .rotate(worldProjection)
     globePath.projection(projection)
 
     earth
@@ -142,6 +143,8 @@ function drawChart() {
         ry: orbitRadiusY
       })
     )
+
+    console.log(transitionDuration)
 
     // Satellites
     let satellites = g
@@ -269,8 +272,9 @@ function init(args) {
   resize(args)
 }
 
-function setWorld(data) {
+function setWorld(data, projection) {
   world = data
+  worldProjection = projection
 }
 
 export default { init, setWorld }

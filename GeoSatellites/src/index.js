@@ -1,10 +1,17 @@
 import breakpoints from './js/breakpoints'
 import Chart from './js/chart'
+import SpeedControls from './js/speed-controls'
 import TextDescription from './js/text-description'
 import timeline from './js/timeline'
 import { getData, getWorldData } from './js/data'
 
-const transitionDuration = 300
+const baseSpeed = 1000
+
+const speeds = {
+  half: baseSpeed * 2,
+  '1x': baseSpeed,
+  '2x': baseSpeed / 4
+}
 
 let breakpoint = breakpoints.calculate()
 let data
@@ -14,15 +21,18 @@ let world
 let currentDate
 let startDate
 let endDate
+let currentSpeed = '1x'
+let transitionDuration = speeds[currentSpeed]
 
-async function loadData(satelliteFile, targetsFile, text) {
+async function loadData(satelliteFile, targetsFile, text, countryName, worldProjection) {
   description = TextDescription.convertKeys(text)
   descriptionDates = Object.keys(description).map(d => +d)
 
   data = await getData(satelliteFile, targetsFile)
 
   world = await getWorldData()
-  Chart.setWorld(world)
+  Chart.setWorld(world, worldProjection)
+
 
   console.log(data)
 
@@ -31,7 +41,10 @@ async function loadData(satelliteFile, targetsFile, text) {
   endDate = dates[dates.length - 1]
   currentDate = startDate
 
+  updateCountryNames(countryName)
+
   // Setting up the timeline will initiate drawChart()
+  setupSpeedControls()
   setupTimeline()
   hideLoading()
 }
@@ -44,6 +57,23 @@ function drawChart() {
     data: dataset,
     transitionDuration,
     container: '.chart'
+  })
+}
+
+function setupSpeedControls() {
+  SpeedControls.init({
+    currentSpeed,
+    onClick: function(e) {
+      timeline.stopTimeline()
+      Array.from(SpeedControls.btns).forEach(el =>
+        el.classList.remove('is-active')
+      )
+      this.classList.add('is-active')
+      currentSpeed = SpeedControls.getCurrentSpeed()
+      transitionDuration = speeds[currentSpeed]
+      timeline.transitionDuration = transitionDuration
+      timeline.startTimeline()
+    }
   })
 }
 
@@ -75,6 +105,12 @@ function setupTimeline() {
       )
       TextDescription.setDesc(description[closestDescription])
     }
+  })
+}
+
+function updateCountryNames(name) {
+  Array.from(document.querySelectorAll('.country-name')).forEach(el => {
+    el.textContent = name
   })
 }
 
