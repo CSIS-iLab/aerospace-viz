@@ -56,12 +56,6 @@
     li {
       margin-bottom: 0;
     }
-
-    @each $orbit, $color in $orbits {
-      .#{$orbit} .tooltip-label {
-        color: $color;
-      }
-    }
   }
 
   .tooltip-value {

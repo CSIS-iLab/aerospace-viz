@@ -10,12 +10,12 @@ async function getData(satelliteURL, targetsURL) {
     const [satelliteData, targetsData] = res
 
     satelliteData.forEach(d => {
-      d.is_satellite = true
+      d.is_perp = true
       d.is_target = false
     })
 
     targetsData.forEach(d => {
-      d.is_satellite = false
+      d.is_perp = false
       d.is_target = true
     })
 
@@ -29,6 +29,8 @@ async function getData(satelliteURL, targetsURL) {
       d.y_coord = +d.y_coord
       d.country = d.sat_operator
       d.long_string = d.long_string.replace('�', '&#176;')
+      d.degree_diff = 0
+      d.degree_direction = 1
 
       if (d.country.includes('U.S.')) {
         d.country = 'US'
@@ -56,9 +58,27 @@ async function getData(satelliteURL, targetsURL) {
           d => d.timestamp === timestamp && d.sat_name === satellite
         )
 
-        if (result.length) {
-          entries.push(result[0])
+        if (!result.length) {
+          return
         }
+
+        // Lookup next day location
+        if (i > 0) {
+          const next = combinedData.filter(
+            d => d.timestamp === timestamps[i - 1] && d.sat_name === satellite
+          )
+
+          if (next.length) {
+            let diff = next[0].longitude - result[0].longitude
+            result[0].degree_diff = Math.abs(diff / 360)
+
+            if (diff < 0) {
+              result[0].degree_direction = -1
+            }
+          }
+        }
+
+        entries.push(result[0])
       })
       dataset.set(new Date(timestamp).getTime(), entries)
     })

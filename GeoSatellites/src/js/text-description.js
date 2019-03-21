@@ -9,6 +9,9 @@ const TextDescription = {
       modified[new Date(key).getTime()] = obj[key]
     }
     return modified
+  },
+  getClosestDescription(dates, currentDate) {
+    return Math.max.apply(null, dates.filter(d => d <= currentDate))
   }
 }
 

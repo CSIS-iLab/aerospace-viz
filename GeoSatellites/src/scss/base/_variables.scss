@@ -23,16 +23,8 @@ $axis-labels: #666;
 $legend-background: rgba($white, 0.7);
 
 $categories: (
-  active: $orange,
-  inactive: $dark-gray
-);
-
-$orbits: (
-  LEO: $light-blue,
-  MEO: $blue,
-  GEO: $yellow,
-  other: $orange,
-  missing: $gray
+  perp: $orange,
+  target: $gray
 );
 
 /* ----------  Fonts  ---------- */
