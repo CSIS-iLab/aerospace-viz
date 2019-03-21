@@ -10,6 +10,7 @@ const chart = drawChart()
 
 let el
 let world
+let transitionDuration
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth, window.innerHeight)
@@ -40,12 +41,6 @@ function drawChart() {
         max: 0.151
       }
     }
-  }
-  const colors = {
-    China: '#d66e42',
-    Russia: '#196c95',
-    US: '#f9bc65',
-    Other: '#b5bdc1'
   }
 
   let projection = geoOrthographic()
@@ -117,7 +112,7 @@ function drawChart() {
     projection
       .translate([scaleX(0), scaleY(0)])
       .scale(earthRadius)
-      .rotate([270, 18])
+      .rotate([270, -18])
     globePath.projection(projection)
 
     earth
@@ -148,37 +143,43 @@ function drawChart() {
       })
     )
 
-    let plot = g.select('.g-plot')
-
-    let satellites = plot.selectAll('.satellite').data(data, d => d.sat_name)
+    // Satellites
+    let satellites = g
+      .select('.g-plot')
+      .selectAll('.satellite')
+      .data(data, d => d.sat_name)
 
     satellites.join(
       enter =>
         enter
           .append('circle')
           .attr('class', 'satellite')
+          .classed('satellite--perp', d => d.is_perp)
+          .classed('satellite--target', d => d.is_target)
           .attr('r', 10)
-          .attr('fill', d => colors[d.country])
-          .attr('stroke', d => LightenDarkenColor(colors[d.country], -20))
-          .attr('fill-opacity', 0.8)
           .attr('cx', d => scaleX(d.x_coord))
           .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
           .attr('data-y', d => d.y_coord)
+          // .attr(
+          //   'transform',
+          //   d => `translate(${scaleX(d.x_coord)}, ${scaleY(d.y_coord)})`
+          // )
           .on('mouseover', interactions.mouseover)
           .on('mouseleave', interactions.mouseleave),
       update =>
         update
-          // .attr('cx', d => scaleX(d.x_coord))
-          // .attr('cy', d => scaleY(d.y_coord))
+          .attr('cx', d => scaleX(d.x_coord))
+          .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
           .attr('data-y', d => d.y_coord)
-          .call(update =>
-            update
-              .transition(25)
-              .attr('cx', d => scaleX(d.x_coord))
-              .attr('cy', d => scaleY(d.y_coord))
-          )
+      // .call(update =>
+      //   update
+      //     // .transition(transitionDuration)
+      //     // .attrTween('transform', translateAlong(orbit.node()))
+      //     .attr('cx', d => scaleX(d.x_coord))
+      //     .attr('cy', d => scaleY(d.y_coord))
+      // )
     )
   }
 
@@ -228,6 +229,23 @@ function drawChart() {
     return output2
   }
 
+  /**
+   * Returns an attrTween for translating along the specified path element.
+   * Taken from: https://bl.ocks.org/mbostock/1705868
+   *  */
+  function translateAlong(path) {
+    var l = path.getTotalLength()
+    return function(d, i, a) {
+      let direction = d.degree_direction
+      l = l * d.degree_diff
+      return function(t) {
+        let atLength = direction === 1 ? t * l : l - t * l
+        let p = path.getPointAtLength(atLength)
+        return 'translate(' + p.x + ',' + p.y + ')'
+      }
+    }
+  }
+
   chart.width = function(...args) {
     if (!args.length) return width
     width = args[0] - margin.left - margin.right
@@ -247,6 +265,7 @@ function drawChart() {
 function init(args) {
   el = select(args.container)
   el.datum(args.data)
+  transitionDuration = args.transitionDuration
   resize(args)
 }
 

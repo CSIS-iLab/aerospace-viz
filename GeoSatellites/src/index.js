@@ -4,7 +4,7 @@ import TextDescription from './js/text-description'
 import timeline from './js/timeline'
 import { getData, getWorldData } from './js/data'
 
-const transitionDuration = 25
+const transitionDuration = 300
 
 let breakpoint = breakpoints.calculate()
 let data
@@ -42,6 +42,7 @@ function drawChart() {
 
   Chart.init({
     data: dataset,
+    transitionDuration,
     container: '.chart'
   })
 }
