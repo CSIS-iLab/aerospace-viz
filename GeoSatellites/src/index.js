@@ -9,6 +9,7 @@ const transitionDuration = 25
 let breakpoint = breakpoints.calculate()
 let data
 let description
+let descriptionDates
 let world
 let currentDate
 let startDate
@@ -16,6 +17,7 @@ let endDate
 
 async function loadData(satelliteFile, targetsFile, text) {
   description = TextDescription.convertKeys(text)
+  descriptionDates = Object.keys(description).map(d => +d)
 
   data = await getData(satelliteFile, targetsFile)
 
@@ -50,17 +52,27 @@ function setupTimeline() {
   timeline.setupTimeline({
     startDate: startDate,
     endDate: endDate,
-    current: currentDate,
     transitionDuration: transitionDuration,
-    onChange: function() {
-      console.log(currentDate)
+    onUpdate: function() {
       drawChart()
       timeline.updateCurrentDate(currentDate)
       if (currentDate == endDate) {
         timeline.stopTimeline()
       }
-      console.log(description)
-      TextDescription.setDesc(description[currentDate])
+
+      if (description[currentDate]) {
+        TextDescription.setDesc(description[currentDate])
+      }
+    },
+    /**
+     * If the user clicks or drags the timeline, we need to find the closest, previous description to their selected date. Note that onSlide runs before onUpdate, so we need to specifically get the currentDate to ensure we're using the newly selected date.
+     */
+    onSlide: function() {
+      let closestDescription = TextDescription.getClosestDescription(
+        descriptionDates,
+        timeline.getCurrentDate()
+      )
+      TextDescription.setDesc(description[closestDescription])
     }
   })
 }

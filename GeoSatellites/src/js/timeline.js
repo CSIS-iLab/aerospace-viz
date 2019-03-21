@@ -12,13 +12,18 @@ const timeline = {
   startDate: 0,
   updateCurrentDate(date) {
     date = new Date(date)
+    date = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate()
+    )
     this.currentDateEl.innerHTML = `${date.getMonth() +
       1}/${date.getDate()}/${date.getFullYear()}`
   },
   getCurrentDate() {
     return this.el.noUiSlider.get()
   },
-  setupTimeline({ startDate, endDate, currentDate, onChange }) {
+  setupTimeline({ startDate, endDate, onUpdate, onSlide }) {
     this.endDate = endDate
     this.startDate = startDate
 
@@ -45,7 +50,8 @@ const timeline = {
 
     this.setupBtnControls()
 
-    this.el.noUiSlider.on('update', onChange)
+    this.el.noUiSlider.on('update', onUpdate)
+    this.el.noUiSlider.on('slide', onSlide)
   },
   setupBtnControls() {
     this.btnControls.addEventListener('click', function() {
