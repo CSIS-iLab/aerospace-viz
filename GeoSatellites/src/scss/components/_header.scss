@@ -3,15 +3,19 @@
 =============================*/
 
 .page-header {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  max-width: 33%;
-  margin: 0 auto;
-  padding: 1rem;
   z-index: 10;
+  margin: 0 auto 2rem;
+  padding: 1rem;
   background-color: $white;
-  box-shadow: 0 0px 16px rgba(0, 0, 0, 0.24);
+
+  @include breakpoint('medium') {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    max-width: 33%;
+    margin-bottom: 0;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.24);
+  }
 
   h1 {
     margin: 0 0 0.5rem 0;
