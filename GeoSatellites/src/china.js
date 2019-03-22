@@ -10,7 +10,7 @@ const description = {
   '2017-05-10': 'May event stuff'
 }
 
-const worldProjection = [270, -18]
+const worldProjection = [-144, -6]
 
 function init() {
   loadData(satelliteFile, targetsFile, description, country, worldProjection)
