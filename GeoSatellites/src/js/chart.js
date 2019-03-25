@@ -181,29 +181,26 @@ function drawChart() {
           .classed('satellite--perp', d => d.is_perp)
           .classed('satellite--target', d => d.is_target)
           .attr('r', 5)
-          .attr('cx', d => scaleX(d.x_coord))
-          .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
           .attr('data-y', d => d.y_coord)
-          // .attr(
-          //   'transform',
-          //   d => `translate(${scaleX(d.x_coord)}, ${scaleY(d.y_coord)})`
-          // )
+          .attr(
+            'transform',
+            d => `translate(${scaleX(d.x_coord)}, ${scaleY(d.y_coord)})`
+          )
           .on('mouseover', interactions.mouseover)
           .on('mouseleave', interactions.mouseleave),
       update =>
         update
-          .attr('cx', d => scaleX(d.x_coord))
-          .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
           .attr('data-y', d => d.y_coord)
-      // .call(update =>
-      //   update
-      //     // .transition(transitionDuration)
-      //     // .attrTween('transform', translateAlong(orbit.node()))
-      //     .attr('cx', d => scaleX(d.x_coord))
-      //     .attr('cy', d => scaleY(d.y_coord))
-      // )
+          .call(update =>
+            update
+              .transition(transitionDuration)
+              .attr(
+                'transform',
+                d => `translate(${scaleX(d.x_coord)}, ${scaleY(d.y_coord)})`
+              )
+          )
     )
   }
 
