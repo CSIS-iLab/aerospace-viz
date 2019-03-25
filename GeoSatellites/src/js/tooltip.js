@@ -6,8 +6,12 @@ export default {
   show: function(content) {
     let yPos = event.pageY - 100
     let xPos = event.pageX
-    if (xPos + 10 > document.body.clientWidth - 110) {
-      xPos = document.body.clientWidth + 5 - 160
+    if (xPos + 10 > document.body.clientWidth - 115) {
+      xPos = document.body.clientWidth + 5 - 175
+    }
+
+    if (yPos < 25) {
+      yPos = yPos + 85
     }
 
     tooltipEl
