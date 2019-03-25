@@ -23,7 +23,7 @@ const timeline = {
   getCurrentDate() {
     return this.el.noUiSlider.get()
   },
-  setupTimeline({ startDate, endDate, onUpdate, onSlide }) {
+  setupTimeline({ startDate, endDate, onUpdate }) {
     this.endDate = endDate
     this.startDate = startDate
 
@@ -51,7 +51,6 @@ const timeline = {
     this.setupBtnControls()
 
     this.el.noUiSlider.on('update', onUpdate)
-    this.el.noUiSlider.on('slide', onSlide)
   },
   setupBtnControls() {
     this.btnControls.addEventListener('click', function() {
@@ -69,9 +68,7 @@ const timeline = {
     })
   },
   startTimeline() {
-    console.log(timeline.transitionDuration)
     timeline.timer = setInterval(function() {
-      console.log(timeline.transitionDuration)
       let currentDate = timeline.getCurrentDate()
       timeline.el.noUiSlider.set(currentDate + 24 * 60 * 60 * 1000)
     }, timeline.transitionDuration)

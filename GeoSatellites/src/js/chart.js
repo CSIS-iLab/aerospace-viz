@@ -147,7 +147,6 @@ function drawChart() {
     // )
 
     // GeoSatellites
-    console.log(geoSatellitesData)
     let geoSatellites = g
       .select('.g-geoSatellites')
       .selectAll('.satellite')

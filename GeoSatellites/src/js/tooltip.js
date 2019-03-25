@@ -4,10 +4,10 @@ const tooltipEl = select('.tooltip')
 
 export default {
   show: function(content) {
-    let yPos = event.pageY - 110
+    let yPos = event.pageY - 100
     let xPos = event.pageX
-    if (xPos + 10 > document.body.clientWidth - 100) {
-      xPos = document.body.clientWidth + 5 - 150
+    if (xPos + 10 > document.body.clientWidth - 110) {
+      xPos = document.body.clientWidth + 5 - 160
     }
 
     tooltipEl

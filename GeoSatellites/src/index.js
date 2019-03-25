@@ -1,7 +1,6 @@
 import breakpoints from './js/breakpoints'
 import Chart from './js/chart'
 import SpeedControls from './js/speed-controls'
-import TextDescription from './js/text-description'
 import timeline from './js/timeline'
 import { getData, getWorldData } from './js/data'
 
@@ -15,8 +14,6 @@ const speeds = {
 
 let breakpoint = breakpoints.calculate()
 let data
-let description
-let descriptionDates
 let world
 let currentDate
 let startDate
@@ -27,27 +24,21 @@ let transitionDuration = speeds[currentSpeed]
 async function loadData(
   satelliteFile,
   targetsFile,
-  text,
-  countryName,
+  satelliteName,
   worldProjection
 ) {
-  description = TextDescription.convertKeys(text)
-  descriptionDates = Object.keys(description).map(d => +d)
-
   data = await getData(satelliteFile, targetsFile)
   Chart.setGeoSatellites(data.geoSatellites)
 
   world = await getWorldData()
   Chart.setWorld(world, worldProjection)
 
-  console.log(data)
-
   let dates = Array.from(data.perp.keys())
   startDate = dates[0]
   endDate = dates[dates.length - 1]
   currentDate = startDate
 
-  updateCountryNames(countryName)
+  updateSatelliteNames(satelliteName)
 
   // Setting up the timeline will initiate drawChart()
   setupSpeedControls()
@@ -96,26 +87,12 @@ function setupTimeline() {
       if (currentDate == endDate) {
         timeline.stopTimeline()
       }
-
-      if (description[currentDate]) {
-        TextDescription.setDesc(description[currentDate])
-      }
-    },
-    /**
-     * If the user clicks or drags the timeline, we need to find the closest, previous description to their selected date. Note that onSlide runs before onUpdate, so we need to specifically get the currentDate to ensure we're using the newly selected date.
-     */
-    onSlide: function() {
-      let closestDescription = TextDescription.getClosestDescription(
-        descriptionDates,
-        timeline.getCurrentDate()
-      )
-      TextDescription.setDesc(description[closestDescription])
     }
   })
 }
 
-function updateCountryNames(name) {
-  Array.from(document.querySelectorAll('.country-name')).forEach(el => {
+function updateSatelliteNames(name) {
+  Array.from(document.querySelectorAll('.satellite-name')).forEach(el => {
     el.textContent = name
   })
 }

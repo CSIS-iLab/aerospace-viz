@@ -19,14 +19,9 @@ async function getData(satelliteURL, geoSatellitesURL) {
       formatSatelliteData(d, false)
     })
 
-    console.log(filteredSatellites)
-    console.log(filteredGeoSatellites)
-
     const timestamps = Array.from(
       new Set([...filteredSatellites.map(d => d.timestamp)])
     )
-
-    console.log(timestamps)
 
     const satellites = Array.from(
       new Set([...filteredSatellites.map(d => d.sat_name)])
@@ -57,8 +52,6 @@ async function getData(satelliteURL, geoSatellitesURL) {
 
     return dataset
   })
-
-  console.log(data)
 
   return data
 }
