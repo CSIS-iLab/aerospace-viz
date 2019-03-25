@@ -5,6 +5,8 @@
   text-align: center;
 
   .satellite {
+    fill-opacity: 0.8;
+    stroke-width: 0.5;
     transition: fill 0.2s linear;
 
     @each $category, $color in $categories {
@@ -14,8 +16,13 @@
 
         &.is-active {
           fill: lighten($color, 10%);
+          fill-opacity: 1;
         }
       }
+    }
+
+    &.satellite--geo {
+      fill-opacity: 0.6;
     }
   }
 }

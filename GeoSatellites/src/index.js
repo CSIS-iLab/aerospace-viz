@@ -24,19 +24,25 @@ let endDate
 let currentSpeed = '1x'
 let transitionDuration = speeds[currentSpeed]
 
-async function loadData(satelliteFile, targetsFile, text, countryName, worldProjection) {
+async function loadData(
+  satelliteFile,
+  targetsFile,
+  text,
+  countryName,
+  worldProjection
+) {
   description = TextDescription.convertKeys(text)
   descriptionDates = Object.keys(description).map(d => +d)
 
   data = await getData(satelliteFile, targetsFile)
+  Chart.setGeoSatellites(data.geoSatellites)
 
   world = await getWorldData()
   Chart.setWorld(world, worldProjection)
 
-
   console.log(data)
 
-  let dates = Array.from(data.keys())
+  let dates = Array.from(data.perp.keys())
   startDate = dates[0]
   endDate = dates[dates.length - 1]
   currentDate = startDate
@@ -51,7 +57,7 @@ async function loadData(satelliteFile, targetsFile, text, countryName, worldProj
 
 function drawChart() {
   currentDate = timeline.getCurrentDate()
-  let dataset = data.get(currentDate)
+  let dataset = data.perp.get(currentDate)
 
   Chart.init({
     data: dataset,

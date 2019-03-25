@@ -1,5 +1,4 @@
 import { geoPath, geoOrthographic } from 'd3-geo'
-import { geoSatellite } from 'd3-geo-projection'
 import { scaleLinear } from 'd3-scale'
 import { select, selectAll } from 'd3-selection'
 import { LightenDarkenColor } from './helpers'
@@ -12,6 +11,7 @@ let el
 let world
 let worldProjection
 let transitionDuration
+let geoSatellitesData
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth, window.innerHeight)
@@ -82,6 +82,8 @@ function drawChart() {
       .style('fill', '#f2f1ee')
       .style('stroke', '#ccc')
       .style('stroke-width', '0.3px')
+
+    gEnter.append('g').attr('class', 'g-geoSatellites')
     gEnter.append('g').attr('class', 'g-plot')
   }
 
@@ -90,7 +92,7 @@ function drawChart() {
     scaleY.range([height, 0])
   }
 
-  function updateDom({ container, data }) {
+  function updateDom({ container, data, geoSatellitesData }) {
     let svg = container
       .select('svg')
       .attr(
@@ -128,23 +130,43 @@ function drawChart() {
       .attr('d', globePath)
 
     // Orbit
-    let orbit = g.select('.g-orbit path')
+    // let orbit = g.select('.g-orbit path')
 
-    const orbitRadiusX = Math.abs(scaleX(defaultCoords.orbit.x.max) - scaleX(0))
+    // const orbitRadiusX = Math.abs(scaleX(defaultCoords.orbit.x.max) - scaleX(0))
 
-    const orbitRadiusY = Math.abs(scaleY(defaultCoords.orbit.y.max) - scaleY(0))
+    // const orbitRadiusY = Math.abs(scaleY(defaultCoords.orbit.y.max) - scaleY(0))
 
-    orbit.attr(
-      'd',
-      drawEllipse({
-        cx: scaleX(0),
-        cy: scaleY(0),
-        rx: orbitRadiusX,
-        ry: orbitRadiusY
-      })
+    // orbit.attr(
+    //   'd',
+    //   drawEllipse({
+    //     cx: scaleX(0),
+    //     cy: scaleY(0),
+    //     rx: orbitRadiusX,
+    //     ry: orbitRadiusY
+    //   })
+    // )
+
+    // GeoSatellites
+    console.log(geoSatellitesData)
+    let geoSatellites = g
+      .select('.g-geoSatellites')
+      .selectAll('.satellite')
+      .data(geoSatellitesData, d => d.sat_name)
+
+    geoSatellites.join(enter =>
+      enter
+        .append('circle')
+        .attr('class', 'satellite')
+        .classed('satellite--perp', d => d.is_perp)
+        .classed('satellite--geo', d => d.is_geo)
+        .attr('r', 3)
+        .attr('cx', d => scaleX(d.x_coord))
+        .attr('cy', d => scaleY(d.y_coord))
+        .attr('data-x', d => d.x_coord)
+        .attr('data-y', d => d.y_coord)
+        .on('mouseover', interactions.mouseover)
+        .on('mouseleave', interactions.mouseleave)
     )
-
-    console.log(transitionDuration)
 
     // Satellites
     let satellites = g
@@ -159,7 +181,7 @@ function drawChart() {
           .attr('class', 'satellite')
           .classed('satellite--perp', d => d.is_perp)
           .classed('satellite--target', d => d.is_target)
-          .attr('r', 10)
+          .attr('r', 5)
           .attr('cx', d => scaleX(d.x_coord))
           .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
@@ -191,7 +213,7 @@ function drawChart() {
 
     enter({ container, data })
     updateScales({ data })
-    updateDom({ container, data })
+    updateDom({ container, data, geoSatellitesData })
   }
 
   const interactions = {
@@ -209,6 +231,11 @@ function drawChart() {
         { Date: d.timestamp },
         { Longitude: d.long_string }
       ]
+
+      // Remove the date from geoSatellites
+      if (d.is_geo) {
+        delete tooltipBody[1]
+      }
 
       let tooltipContent = `
       <p class="tooltip-heading">
@@ -230,23 +257,6 @@ function drawChart() {
         a${rx}, ${ry} 0 1, 0 ${rx * -2}, 0
         `
     return output2
-  }
-
-  /**
-   * Returns an attrTween for translating along the specified path element.
-   * Taken from: https://bl.ocks.org/mbostock/1705868
-   *  */
-  function translateAlong(path) {
-    var l = path.getTotalLength()
-    return function(d, i, a) {
-      let direction = d.degree_direction
-      l = l * d.degree_diff
-      return function(t) {
-        let atLength = direction === 1 ? t * l : l - t * l
-        let p = path.getPointAtLength(atLength)
-        return 'translate(' + p.x + ',' + p.y + ')'
-      }
-    }
   }
 
   chart.width = function(...args) {
@@ -277,4 +287,8 @@ function setWorld(data, projection) {
   worldProjection = projection
 }
 
-export default { init, setWorld }
+function setGeoSatellites(data) {
+  geoSatellitesData = data
+}
+
+export default { init, setWorld, setGeoSatellites }
