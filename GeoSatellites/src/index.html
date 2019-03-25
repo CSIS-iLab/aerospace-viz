@@ -20,15 +20,15 @@
     </div>
     <main class="interactive-container">
       <header class="page-header">
-        <h1>Satellites in Geo: <span class="country-name"></span></h1>
+        <h1>Satellites in Geo: <span class="satellite-name"></span></h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
-        <p id="description"></p>
         <section class="timeline hide-on-load">
           <header class="timeline-header">
-            Positions on <span class="timeline-current-date"></span>
+            <span class="satellite-name"></span> Position on
+            <span class="timeline-current-date timeline-header__value"></span>
           </header>
           <div class="timeline-controls">
             <button class="timeline-btn play-btn control-btn"></button>
@@ -62,9 +62,9 @@
         </section>
         <ul class="legend-colors hide-on-load">
           <li class="legend-colors--perp">
-            <span class="country-name"></span>
+            <span class="satellite-name"></span>
           </li>
-          <li class="legend-colors--target">Target Satellites</li>
+          <li class="legend-colors--geo">All Satellites in Geo</li>
         </ul>
       </header>
       <section class="chart"></section>

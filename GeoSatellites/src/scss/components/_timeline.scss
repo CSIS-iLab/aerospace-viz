@@ -25,7 +25,7 @@
       @include fontSize(16px);
     }
 
-    span {
+    &__value {
       font-weight: bold;
       color: $orange;
       border-bottom: 2px solid $dark-blue;
