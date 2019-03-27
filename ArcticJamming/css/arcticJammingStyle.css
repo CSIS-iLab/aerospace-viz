@@ -25,7 +25,8 @@ p.scenario-description {
   margin-bottom: 12px;
   font-size: 14px;
   font-family: Abel, Arial, sans-serif;
-  font-weight: 400;
+  font-weight: 600;
+  -webkit-font-smoothing: unset;
   text-transform: uppercase;
 }
 
