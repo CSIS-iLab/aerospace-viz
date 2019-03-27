@@ -1,37 +1,50 @@
 var now = null,
   startDates = [],
   endDates = [],
-  scenario = "Trident Juncture",
-  filters = [
-    function(feature, layers) {
-      var bool = false;
-      if (
-        feature.properties.scenario
-          .toLowerCase()
-          .indexOf(scenario.toLowerCase()) > -1
-      ) {
-        var s = feature.properties.date_start.split("/").map(function(value) {
-          return convertType(value);
-        });
+  scenario = "Zapad",
+  dateOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  };
+descriptions = {
+  Zapad:
+    '<span class="scenario-description-name">Zapad</span> (Fall 2017) was a joint Russia-Belarus military exercise.',
+  "Trident Juncture":
+    '<span class="scenario-description-name">Trident Juncture</span> (Fall 2018) was a NATO military exercise.',
+  Clockwork:
+    '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
+};
+filters = [
+  function(feature, layers) {
+    var bool = false;
+    if (
+      feature.properties.scenario
+        .toLowerCase()
+        .indexOf(scenario.toLowerCase()) > -1
+    ) {
+      var s = feature.properties.date_start.split("/").map(function(value) {
+        return convertType(value);
+      });
 
-        var e = feature.properties.date_end.split("/").map(function(value) {
-          return convertType(value);
-        });
+      var e = feature.properties.date_end.split("/").map(function(value) {
+        return convertType(value);
+      });
 
-        var startDate = new Date(s[2], s[0] - 1, s[1]);
-        var endDate = new Date(e[2], e[0] - 1, e[1]);
+      var startDate = new Date(s[2], s[0] - 1, s[1]);
+      var endDate = new Date(e[2], e[0] - 1, e[1]);
 
-        startDates.push(startDate);
-        endDates.push(endDate);
+      startDates.push(startDate);
+      endDates.push(endDate);
 
-        feature.properties.startDate = startDate;
-        feature.properties.endDate = endDate;
+      feature.properties.startDate = startDate;
+      feature.properties.endDate = endDate;
 
-        bool = true;
-      }
-      return bool;
+      bool = true;
     }
-  ];
+    return bool;
+  }
+];
 
 var framesPerSecond = 120,
   initialRadius = 0,
@@ -86,11 +99,11 @@ var timeline = {
 
     this.el.querySelector(`[data-value='${start}']`).innerHTML = new Date(
       start
-    ).toLocaleDateString("en-US");
+    ).toLocaleDateString("en-US", dateOptions);
 
     this.el.querySelector(`[data-value='${end}']`).innerHTML = new Date(
       end
-    ).toLocaleDateString("en-US");
+    ).toLocaleDateString("en-US", dateOptions);
   },
   setupBtnControls() {
     this.btnControls.addEventListener("click", function() {
@@ -134,12 +147,20 @@ makeMap({
   "api key": "Im_n2elHbHRallDYDff3Eg",
   program: "CSIS Aerospace Security",
   website: "https://aerospace.csis.org",
-  title: "Jamming Activities in the Arctic Circle",
-  description: "Description",
+  title: "GPS Jamming in the Arctic Circle",
+  description:
+    "Some airports in the Arctic Circle have reported GPS signal outages during military exercises in the region. Explore by selecting a military exercise below. Click a site on the map to learn more.",
   cluster: false,
   "mapbox style": "cjiw0cu845ai12sry7ddmwska",
   "ocean color": "#b7c7d1",
   filters: filters,
+  onEachFeature: {
+    click: function(feature, layer, map) {
+      handleFeatureEvents(feature, layer, map);
+    }
+    // mousedown: function(feature, layer, map) {},
+    // mouseenter: function(feature, layer, map) {}
+  },
   addEvent: function() {
     timeline.end = new Date(
       Math.max.apply(
@@ -167,7 +188,10 @@ makeMap({
       now = timeline.start;
 
       Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
-        dateEl.innerText = new Date(now).toLocaleDateString("en-US");
+        dateEl.innerText = new Date(now).toLocaleDateString(
+          "en-US",
+          dateOptions
+        );
       });
 
       var timelineOptions = {
@@ -180,7 +204,10 @@ makeMap({
           Array.from(document.querySelectorAll(".date")).forEach(function(
             dateEl
           ) {
-            dateEl.innerText = new Date(now).toLocaleDateString("en-US");
+            dateEl.innerText = new Date(now).toLocaleDateString(
+              "en-US",
+              dateOptions
+            );
           });
 
           var jams = Array.from(
@@ -221,22 +248,29 @@ makeMap({
     var map = Map.all[0];
     var boxContent = `
 
-    <p class="indicator"><span class="scenario">${
-      timeline.scenario
-    }</span>: <span class="date"></span></p>
+
     <div class="separator"></div>
     <section id="scenario">
     <div class="instruction">
-      <p>Select a scenario</p>
+      <p>Select a military exercise</p>
       <p></p>
     </div>
-    <button>Zapad</button>
-    <button class="active">Trident Juncture</button>
-    <button>Clockwork</button>
+
+${Object.keys(descriptions)
+      .map(function(key) {
+        return `<button ${
+          scenario === key ? 'class="active"' : ""
+        }>${key}</button>`;
+      })
+      .join(" ")}
+
+    <p class="scenario-description">${descriptions[timeline.scenario]}</p>
+    <div>
     </section>
+      <div class="separator"></div>
     <section id="time">
-    <div class="instruction">
-      <p>Click the play button</p>
+    <div class="indicator">
+      <p>Signal loss on <span class="date"></span></p>
       <p><span></span></p>
     </div>
     <div class="timeline">
@@ -248,7 +282,7 @@ makeMap({
     </div>
     </div>
     </section>
-    <p>Click on a point for incident details</p>
+    <!--<p>Click on a point for incident details</p>-->
       <div class="separator"></div>
     <section id="key">
       <div class="label""><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+" )=""></span><span class="itemText" style="transform: translateY(13.3333%);">Jammed Airspace</span></div>
@@ -258,12 +292,6 @@ makeMap({
       `;
 
     box.innerHTML = boxContent;
-
-    document.querySelector(
-      "body > .indicator"
-    ).innerHTML += `<span class="scenario">${
-      timeline.scenario
-    }</span>: <span class="date"></span>`;
 
     scenario = document.querySelector("button.active").innerText;
 
@@ -316,20 +344,20 @@ function makeCustomGeoJsonOptions() {
       });
   }
 
-  function onEachFeature(feature, layer) {
-    handleFeatureEvents(feature, layer, map);
-  }
+  // function onEachFeature(feature, layer) {
+  //   handleFeatureEvents(feature, layer, map);
+  // }
 
   var backgroundOptions = {
     filter: filter,
-    onEachFeature: onEachFeature,
+    // onEachFeature: onEachFeature,
     pointToLayer: function(feature, latlng) {
       return styleCustomPoint(feature, latlng, map, colorKeyWidget);
     }
   };
   var foregroundOptions = {
     filter: filter,
-    onEachFeature: onEachFeature,
+    // onEachFeature: onEachFeature,
     pointToLayer: function(feature, latlng) {
       return stylePoint(feature, latlng, map, colorKeyWidget);
     }
@@ -391,20 +419,12 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
 function formatCustomPopupContent(feature, map) {
   var formattedStartDate = feature.properties.startDate.toLocaleDateString(
     "en-US",
-    {
-      month: "long",
-      day: "numeric",
-      year: "numeric"
-    }
+    dateOptions
   );
 
   var formattedEndDate = feature.properties.endDate.toLocaleDateString(
     "en-US",
-    {
-      month: "long",
-      day: "numeric",
-      year: "numeric"
-    }
+    dateOptions
   );
 
   var date =
@@ -481,9 +501,11 @@ function handleSceneClick(e) {
   }
   timeline.scenario = document.querySelector("button.active").textContent;
 
-  Array.from(document.querySelectorAll(".scenario")).forEach(function(sceneEl) {
-    sceneEl.innerText = timeline.scenario;
-  });
+  Array.from(document.querySelectorAll(".scenario-description")).forEach(
+    function(sceneEl) {
+      sceneEl.innerHTML = descriptions[timeline.scenario];
+    }
+  );
 
   startDates = [];
   endDates = [];
@@ -555,10 +577,16 @@ function handleSceneClick(e) {
 
     timeline.el.querySelector(
       `[data-value='${timeline.start}']`
-    ).innerHTML = new Date(timeline.start).toLocaleDateString("en-US");
+    ).innerHTML = new Date(timeline.start).toLocaleDateString(
+      "en-US",
+      dateOptions
+    );
 
     timeline.el.querySelector(
       `[data-value='${timeline.end}']`
-    ).innerHTML = new Date(timeline.end).toLocaleDateString("en-US");
+    ).innerHTML = new Date(timeline.end).toLocaleDateString(
+      "en-US",
+      dateOptions
+    );
   }
 }

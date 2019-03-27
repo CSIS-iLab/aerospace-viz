@@ -53,7 +53,7 @@ function Map(container, properties) {
         "/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw",
       {}
     ).addTo(this.map);
-    L.control.zoomslider({ position: "topright" }).addTo(this.map);
+    L.control.zoomslider().addTo(this.map);
     L.control
       .attribution({
         position: "bottomleft"
@@ -71,15 +71,15 @@ function makeMap(options) {
   var translations;
 
   if (lang) {
-    fetch(dataURL + spreadsheetID + "/" + 3 + "/public/values?alt=json")
+    fetch(dataURL + options.googleSheet + "/" + 3 + "/public/values?alt=json")
       .then(function(response) {
         return response.json();
       })
       .then(function(json) {
         var translations = parseLanguageData(json.feed.entry);
-        init(dataURL, options, translations);
+        initWithSpreadsheet(dataURL, options, translations);
       });
-  } else if (options.spreadsheetID) {
+  } else if (options.googleSheet) {
     initWithSpreadsheet(dataURL, options);
   } else {
     initWithoutSpreadsheet(options);
@@ -346,52 +346,38 @@ function makeNodes(options) {
     document.querySelector("#" + options.slug + " header p").innerText =
       options.description;
   }
-  if (options.translations) {
-    var translatableNodes = Array.from(document.querySelectorAll(".translate"));
-    translatableStrings = Object.keys(translations).sort(function(a, b) {
-      return b.length - a.length;
-    });
-    translatableNodes.forEach(function(el, i) {
-      translatableStrings.forEach(function(t) {
-        if (Object.keys(translations[t]).length) {
-          var re = new RegExp("\\b(" + RegExp.escape(t) + ")", "gi");
-          el.innerHTML = el.innerHTML.replace(re, translations[t]);
-        }
-      });
-    });
-  }
 }
 
-function makeWidgetContent(widgets, x) {
+function makeWidgetContent(options, x) {
   var widgetNodes = "";
-  var options;
+  var dropdownOptions;
 
-  switch (widgets[x].input) {
+  switch (options.widgets[x].input) {
     case "toggle":
       widgetNodes +=
         '<label for="toggle_' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" class="translate"><input type="radio" name="' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" id="toggle_' +
-        widgets[x].field +
+        options.widgets[x].field +
         '"  value="1" checked>Show</label>';
       widgetNodes +=
         '<label for="$toggle_' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" class="translate"><input type="radio" name="' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" id="toggle_' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" value="0" >Hide</label>';
       break;
 
     case "search":
       widgetNodes +=
         '<input type="text" id="search_' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" placeholder="' +
-        widgets[x].instructions +
+        options.widgets[x].instructions +
         '" size="10" />';
       widgetNodes +=
         '<button type="button" id="resetButton" class="translate">Reset</button>';
@@ -400,25 +386,25 @@ function makeWidgetContent(widgets, x) {
     case "dropdown":
       widgetNodes +=
         '<select id="dropdown_' +
-        widgets[x].field +
+        options.widgets[x].field +
         '" placeholder="' +
-        widgets[x].instructions +
+        options.widgets[x].instructions +
         '" multiple=""></select>';
-      options = makeDropdownOptions(widgets, x);
+      dropdownOptions = makeDropdownOptions(options, x);
       break;
 
     case "checkbox":
       widgetNodes += "<ul>";
       var keyStyle;
 
-      var legendItems = widgets[x].grouping
-        ? widgets[x].keys.groupBy("group")
-        : widgets[x].keys.groupBy("label");
+      var legendItems = options.widgets[x].grouping
+        ? options.widgets[x].keys.groupBy("group")
+        : options.widgets[x].keys.groupBy("label");
 
       Object.keys(legendItems).forEach(function(group, i) {
-        switch (widgets[x].type) {
+        switch (options.widgets[x].type) {
           case "form":
-            var forms = widgets[x].keys.map(function(f) {
+            var forms = options.widgets[x].keys.map(function(f) {
               return f.value;
             });
             var styleOptions = {
@@ -441,9 +427,9 @@ function makeWidgetContent(widgets, x) {
           '<li><label for="' +
           group +
           '"><input class="widget ' +
-          widgets[x].input +
+          options.widgets[x].input +
           '" type="checkbox" name="' +
-          (widgets[x].grouping ? group : legendItems[group][0].value) +
+          (options.widgets[x].grouping ? group : legendItems[group][0].value) +
           '" id="' +
           group +
           '" ' +
@@ -462,11 +448,13 @@ function makeWidgetContent(widgets, x) {
   }
 
   var widgetTitle =
-    widgets[x].field === "all" ? "Search" : widgets[x].field.replace(/_/g, " ");
+    options.widgets[x].field === "all"
+      ? "Search"
+      : options.widgets[x].field.replace(/_/g, " ");
   return {
     nodes: widgetNodes,
     title: widgetTitle,
-    options: options
+    options: dropdownOptions
   };
 }
 
@@ -474,11 +462,11 @@ function makeWidgets(jsons, options, boxContent) {
   var widgetContent = [];
   options.widgets.forEach(function(w, x) {
     var legendData = w.reference
-      ? parseLegendData(jsons[x].feed.entry, w.type)
+      ? parseLegendData(options, jsons[x].feed.entry, w.type)
       : null;
     options.widgets[x].keys = legendData;
 
-    widgetContent.push(makeWidgetContent(options.widgets, x));
+    widgetContent.push(makeWidgetContent(options, x));
     boxContent +=
       '<section class="widget ' +
       options.widgets[x].field +
@@ -623,6 +611,27 @@ function makeWidgets(jsons, options, boxContent) {
           w.map_id = map.id;
         });
       });
+
+      if (map.translations) {
+        var translatableNodes = Array.from(
+          document.querySelectorAll(".translate")
+        );
+        var translatableStrings = Object.keys(map.translations).sort(function(
+          a,
+          b
+        ) {
+          return b.length - a.length;
+        });
+
+        translatableNodes.forEach(function(el, i) {
+          translatableStrings.forEach(function(t) {
+            if (Object.keys(map.translations[t]).length) {
+              var re = new RegExp("\\b(" + RegExp.escape(t) + ")", "gi");
+              el.innerHTML = el.innerHTML.replace(re, map.translations[t]);
+            }
+          });
+        });
+      }
     });
 }
 
@@ -724,8 +733,8 @@ function handleChange(map, element, widgets, x, count, initialized) {
   if (widgets.length >= x + 1 && initialized >= count) makeGroups(map);
 }
 
-function makeDropdownOptions(widgets, x) {
-  var groups = widgets[x].keys.groupBy("group");
+function makeDropdownOptions(options, x) {
+  var groups = options.widgets[x].keys.groupBy("group");
 
   var choices = Object.keys(groups).map(function(g, z) {
     return {
@@ -739,20 +748,20 @@ function makeDropdownOptions(widgets, x) {
   return {
     choices: choices,
     removeItemButton: true,
-    maxItemCount: widgets[x].maximum,
+    maxItemCount: options.widgets[x].maximum,
     callbackOnCreateTemplates: function callbackOnCreateTemplates(template) {
       var _this = this;
 
       return {
         item: function item(classNames, data) {
-          var key = widgets[x].keys.find(function(v) {
-            return v.label === data.label;
+          var key = options.widgets[x].keys.find(function(v) {
+            return v.value.toLowerCase() === data.value.toLowerCase();
           });
           var keyStyle;
 
-          switch (widgets[x].type) {
+          switch (options.widgets[x].type) {
             case "form":
-              var forms = widgets[x].keys.map(function(k) {
+              var forms = options.widgets[x].keys.map(function(k) {
                 return k.value.toLowerCase();
               });
               var styleOptions = {
@@ -799,16 +808,18 @@ function makeDropdownOptions(widgets, x) {
           return template(markup);
         },
         choice: function choice(classNames, data) {
-          var key = widgets[x].keys.find(function(v) {
-            return v.label === data.label;
+          var key = options.widgets[x].keys.find(function(v) {
+            return v.value.toLowerCase() === data.value.toLowerCase();
           });
+
           var keyStyle;
 
-          switch (widgets[x].type) {
+          switch (options.widgets[x].type) {
             case "form":
-              var forms = widgets[x].keys.map(function(k) {
+              var forms = options.widgets[x].keys.map(function(k) {
                 return k.value.toLowerCase();
               });
+
               var styleOptions = {
                 key: key,
                 index: i,
@@ -883,7 +894,7 @@ function parseLanguageData(data) {
   return languageData;
 }
 
-function parseLegendData(json, style) {
+function parseLegendData(options, json, style) {
   var colorScale = createColorScale(json.length);
   var legendItems = [];
   json.forEach(function(row, x) {
@@ -908,6 +919,13 @@ function parseLegendData(json, style) {
               : colorScale[x];
           data.icon = row[Object.keys(row)[y + 6]]["$t"];
           data.pattern = row[Object.keys(row)[y + 7]]["$t"].split(",");
+
+          if (options.translations) {
+            data.label = options.translations[data.label];
+            data.group = options.translations[data.group];
+            // debugger;
+          }
+
           legendItems.push(data);
         }
       }
@@ -1281,7 +1299,10 @@ function formatPopupContent(feature, map) {
   content += externalLinkContent;
 
   if (lang) {
-    translatableStrings = Object.keys(map.translations).sort(function(a, b) {
+    var translatableStrings = Object.keys(map.translations).sort(function(
+      a,
+      b
+    ) {
       return b.length - a.length;
     });
     translatableStrings.forEach(function(t) {
@@ -1759,7 +1780,7 @@ var lineDashArrays = [
   [null, null]
 ];
 var externalLink =
-  '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">><path d="M7.49,0V1.67H1.68V13.32H13.32V7.52H15v5.72a1.76,1.76,0,0,1-.42,1.19,1.64,1.64,0,0,1-1.13.56H1.74a1.67,1.67,0,0,1-1.16-.41A1.61,1.61,0,0,1,0,13.48v-.27C0,9.4,0,5.6,0,1.8A1.83,1.83,0,0,1,.58.4a1.53,1.53,0,0,1,1-.39h6Z" transform="translate(0 0)"/><path d="M9.17,1.67V0H15V5.84H13.34v-3h0c-.05.05-.11.1-.16.16l-.45.46-1.3,1.29-.84.84-.89.9-.88.87-.89.9c-.28.29-.57.57-.86.86L6.16,10l-.88.87a1.83,1.83,0,0,1-.13.16L4,9.86l0,0L5.36,8.47l.95-1,.75-.75,1-1L8.87,5l1-.94.85-.86.92-.91.56-.58Z" transform="translate(0 0)"/></svg>';
+  '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><path d="M7.49,0V1.67H1.68V13.32H13.32V7.52H15v5.72a1.76,1.76,0,0,1-.42,1.19,1.64,1.64,0,0,1-1.13.56H1.74a1.67,1.67,0,0,1-1.16-.41A1.61,1.61,0,0,1,0,13.48v-.27C0,9.4,0,5.6,0,1.8A1.83,1.83,0,0,1,.58.4a1.53,1.53,0,0,1,1-.39h6Z" transform="translate(0 0)"/><path d="M9.17,1.67V0H15V5.84H13.34v-3h0c-.05.05-.11.1-.16.16l-.45.46-1.3,1.29-.84.84-.89.9-.88.87-.89.9c-.28.29-.57.57-.86.86L6.16,10l-.88.87a1.83,1.83,0,0,1-.13.16L4,9.86l0,0L5.36,8.47l.95-1,.75-.75,1-1L8.87,5l1-.94.85-.86.92-.91.56-.58Z" transform="translate(0 0)"/></svg>';
 var remove =
   '<svg viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="#000" fill-rule="evenodd"><path d="M2.592.044l18.364 18.364-2.548 2.548L.044 2.592z"/><path d="M0 18.364L18.364 0l2.548 2.548L2.548 20.912z"/></g></svg>';
 
