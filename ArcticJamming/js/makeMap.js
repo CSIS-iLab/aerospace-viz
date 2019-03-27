@@ -1320,7 +1320,9 @@ function handleLayerClick(feature, layer, map) {
     Object.keys(map.map._layers).forEach(function(l, i) {
       if (map.map._layers[l].unspiderfy) map.map._layers[l].unspiderfy();
     });
-    Object.values(map.group._featureGroup._layers).forEach(function(v) {
+    Object.values(layer.__parent._group._featureGroup._layers).forEach(function(
+      v
+    ) {
       if (v._group && v._group._spiderfied) isSpiderfied = true;
     });
     Array.from(document.querySelectorAll("div.leaflet-marker-icon")).forEach(

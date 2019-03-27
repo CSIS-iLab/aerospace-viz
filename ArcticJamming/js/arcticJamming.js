@@ -155,11 +155,21 @@ makeMap({
   "ocean color": "#b7c7d1",
   filters: filters,
   onEachFeature: {
-    click: function(feature, layer, map) {
-      handleFeatureEvents(feature, layer, map);
+    click: function() {
+      this.closePopup();
+
+      var map = Map.all[0];
+      var popupContent = map.formatPopupContent(this.feature, map);
+
+      this.bindPopup(popupContent);
+    },
+    mouseover: function() {
+      this.bindPopup(`<div class="tooltip">
+      <div class="tooltip-heading">${
+        this.feature.properties.name_hover
+      }</div></div>`);
+      this.openPopup();
     }
-    // mousedown: function(feature, layer, map) {},
-    // mouseenter: function(feature, layer, map) {}
   },
   addEvent: function() {
     timeline.end = new Date(
@@ -285,8 +295,16 @@ ${Object.keys(descriptions)
     <!--<p>Click on a point for incident details</p>-->
       <div class="separator"></div>
     <section id="key">
-      <div class="label""><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+" )=""></span><span class="itemText" style="transform: translateY(13.3333%);">Jammed Airspace</span></div>
-      <div class="label""><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+" )=""></span><span class="itemText" style="transform: translateY(13.3333%);">Military Exercise</span></div>
+    <ul>
+      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Jammed Airspace</span></li>
+      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO Military Activity</span></li>
+      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
+      </ul>
+
+      <ul>
+      <li>Bases</li>
+      <li>Planes</li>
+      <ul>
 
     </section>
       `;
@@ -315,7 +333,11 @@ ${Object.keys(descriptions)
           color: "#d66e42"
         },
         {
-          value: "Military Exercise",
+          value: "Russian Military Exercise",
+          color: "#f9bc65 "
+        },
+        {
+          value: "NATO Military Exercise",
           color: "#196c95 "
         }
       ]
@@ -344,20 +366,20 @@ function makeCustomGeoJsonOptions() {
       });
   }
 
-  // function onEachFeature(feature, layer) {
-  //   handleFeatureEvents(feature, layer, map);
-  // }
+  function onEachFeature(feature, layer) {
+    handleFeatureEvents(feature, layer, map);
+  }
 
   var backgroundOptions = {
     filter: filter,
-    // onEachFeature: onEachFeature,
+    onEachFeature: onEachFeature,
     pointToLayer: function(feature, latlng) {
       return styleCustomPoint(feature, latlng, map, colorKeyWidget);
     }
   };
   var foregroundOptions = {
     filter: filter,
-    // onEachFeature: onEachFeature,
+    onEachFeature: onEachFeature,
     pointToLayer: function(feature, latlng) {
       return stylePoint(feature, latlng, map, colorKeyWidget);
     }
@@ -430,7 +452,7 @@ function formatCustomPopupContent(feature, map) {
   var date =
     formattedStartDate +
     (feature.properties.startDate.getDay() !==
-    feature.properties.endDate.getDay()
+      feature.properties.endDate.getDay() && feature.properties.end_true
       ? " to " + formattedEndDate
       : "");
 

@@ -42,21 +42,35 @@ span.scenario-description-name {
   border-radius: 50%;
   opacity: 0.25;
 }
-[class*="military-exercise"] {
-  background-color: #196c95;
-}
+
 [class*="jammed-airspace"] {
   display: none;
   background-color: #d66e42;
 }
 
 #key {
+  align-items: start;
   display: flex;
   display: -ms-flex;
   align-items: center;
   -ms-flex-align: center;
   width: 100%;
+  justify-content: space-between;
 }
+
+#key ul {
+  /* display: flex; */
+  /* flex-wrap: wrap;
+  display: -ms-flex;
+  align-items: center;
+  -ms-flex-align: center;
+  width: 100%; */
+}
+
+#key ul:nth-child(2) li {
+  justify-content: flex-end;
+}
+
 #controls .label {
   display: flex;
   display: -ms-flex;
@@ -64,6 +78,11 @@ span.scenario-description-name {
   -ms-flex-align: center;
   width: 100%;
 }
+
+.itemText {
+  white-space: nowrap;
+}
+
 .colorKey {
   margin-top: 4px;
 }
@@ -238,6 +257,10 @@ body > .indicator {
 @media (max-width: 425px) {
   aside.toolbox {
     width: 255px;
+  }
+
+  #key {
+    flex-wrap: wrap;
   }
 }
 /* abel-regular - latin */
