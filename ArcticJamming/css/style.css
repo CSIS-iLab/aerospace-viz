@@ -29,7 +29,9 @@ p {
   margin: 0;
   color: #666666;
 }
-
+.hidden {
+  display: none;
+}
 #logo {
   position: absolute;
   top: 50px;

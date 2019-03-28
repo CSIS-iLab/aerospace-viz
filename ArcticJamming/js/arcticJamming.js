@@ -200,22 +200,46 @@ makeMap({
     {
       field: "type",
       type: "color",
-      grouping: "scenario",
       keys: [
         {
           value: "Jammed Airspace",
-          color: "#f9bc65",
-          form: "icon"
+          color: "#f9bc65"
         },
         {
           value: "Russian Military Exercise",
-          color: "#d66e42",
+          color: "#d66e42"
+        },
+        {
+          value: "NATO Military Exercise",
+          color: "#196c95"
+        }
+      ]
+    },
+    {
+      field: "icon",
+      type: "form",
+      keys: [
+        {
+          value: "dot",
+          form: "icon"
+        },
+        {
+          value: "base",
           form: "icon",
           icon: "icons/base.svg"
         },
         {
-          value: "NATO Military Exercise",
-          color: "#196c95",
+          value: "ship",
+          form: "icon",
+          icon: "icons/ship.svg"
+        },
+        {
+          value: "plane",
+          form: "icon",
+          icon: "icons/ship.svg"
+        },
+        {
+          value: "helicopter",
           form: "icon",
           icon: "icons/ship.svg"
         }
@@ -223,18 +247,6 @@ makeMap({
     }
   ]
 });
-
-//
-// document.body.innerHTML += `<div class="base hidden"></div>`;
-//
-// load(
-//   "https://csis-ilab.github.io/mapbox-custom/aegis-ports/img/aegis_marker.svg",
-//   document.querySelector(".hidden")
-// );
-//
-// var base = document
-//   .querySelector(".base")
-//   .innerHTML.replace(/d="/g, 'fill="#f9bc65" d="');
 
 map = Map.all[0];
 
@@ -288,9 +300,8 @@ ${Object.keys(scenarioData)
     <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO  Activity</span></li>
     <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
     </ul>
-
-
   </section>
+  <footer><div class="hidden"></div></footer>
     `;
 
   box.innerHTML = boxContent;
@@ -421,7 +432,7 @@ function makeCustomGeoJsonOptions() {
     filter: filter,
     onEachFeature: onEachFeature,
     pointToLayer: function(feature, latlng) {
-      return stylePoint(feature, latlng, map, colorKeyWidget);
+      return stylePoint(feature, latlng, map, formKeyWidget);
     }
   };
 
@@ -446,6 +457,7 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
     map: map,
     feature: feature
   };
+
   var scenario = feature.properties.scenario.toLowerCase().replace(/ /g, "-");
 
   var value = feature.properties.type.toLowerCase().replace(/ /g, "-");
@@ -503,7 +515,9 @@ function formatCustomPopupContent(feature, map) {
     .map(function(key) {
       return feature.properties[key].replace(
         "</a>",
-        " " + externalLink + "</a>"
+        " " +
+          externalLink +
+          "</a>".replace("<a href", '<a target="_blank" href')
       );
     })
     .join("<br>");
@@ -657,12 +671,4 @@ function handleSceneClick(e) {
       dateOptions
     );
   }
-}
-
-function load(url, element) {
-  req = new XMLHttpRequest();
-  req.open("GET", url, false);
-  req.send(null);
-
-  element.innerHTML = req.responseText;
 }

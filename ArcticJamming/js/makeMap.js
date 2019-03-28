@@ -228,7 +228,8 @@ function initWithSpreadsheet(dataURL, options, translations) {
             makeWidgets(jsons, properties, boxContent);
 
             var footerNode = document.createElement("footer");
-            footerNode.innerHTML = properties.footer;
+            footerNode.innerHTML =
+              properties.footer + '  <div class="hidden"></div>';
 
             var penUltimateNode =
               document.querySelector("#" + properties.slug + " #controls") ||
@@ -1535,6 +1536,20 @@ function styleKey(options) {
 
   var key = group ? group[0] : key;
 
+  var colorKeyWidget = map.widgets.find(function(w) {
+    return w.type === "color";
+  });
+
+  if (colorKeyWidget)
+    colorKey = colorKeyWidget.keys.find(function(k) {
+      return (
+        k.value.toLowerCase() ===
+        feature.properties[colorKeyWidget.field].toLowerCase()
+      );
+    });
+
+  if (colorKey) keyColor = colorKey.color;
+
   key.color = group
     ? chroma.average(
         group.map(function(g) {
@@ -1615,15 +1630,27 @@ function styleKey(options) {
       };
 
     case "icon":
-      keyColor = key.color;
-      var svg = key.icon
-        ? key.icon
-        : "data:image/svg+xml;base64," +
+      if (key.icon) {
+        var slug = key.value.replace(/ /g, "-");
+        load(key.icon, document.querySelector(`.hidden`));
+
+        var svgContent = document.querySelector(`.hidden`).innerHTML;
+
+        if (colorKeyWidget) {
+          svgContent = svgContent.replace(/#000/g, keyColor);
+        }
+
+        svg = "data:image/svg+xml;base64," + window.btoa(svgContent);
+      } else {
+        svg =
+          "data:image/svg+xml;base64," +
           window.btoa(
             '<svg xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5" fill="' +
               keyColor +
               '"/></svg>'
           );
+      }
+
       return {
         svg: svg,
         class: key.icon ? "icon" : "color"
@@ -1850,4 +1877,11 @@ RegExp.escape = function(s) {
 
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function load(url, element) {
+  var req = new XMLHttpRequest();
+  req.open("GET", url, false);
+  req.send(null);
+  element.innerHTML = req.responseText;
 }
