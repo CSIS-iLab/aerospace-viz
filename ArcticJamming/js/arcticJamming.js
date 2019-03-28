@@ -1,3 +1,8 @@
+//norway: 69.1312712296365,23.57666015625
+//sweden: 67.7926408447319,20.830078125000004
+//finland: 68.39918004344189,26.059570312500004
+//russia: 68.64055504059381,33.53027343750001
+
 var framesPerSecond = 120,
   initialRadius = 0,
   radius = initialRadius,
@@ -192,7 +197,7 @@ makeMap({
   maxZoom: 8,
   maxBounds: [
     //south west
-    [40, -10],
+    [40, -20],
     //north east
     [80, 60]
   ],
@@ -249,11 +254,6 @@ makeMap({
 });
 
 map = Map.all[0];
-
-//norway: 69.1312712296365,23.57666015625
-//sweden: 67.7926408447319,20.830078125000004
-//finland: 68.39918004344189,26.059570312500004
-//russia: 68.64055504059381,33.53027343750001
 
 L.control.scale({ position: "bottomleft" }).addTo(map.map);
 
