@@ -41,12 +41,40 @@ span.scenario-description-name {
 }
 [class*="animated_icon"] {
   border-radius: 50%;
-  opacity: 0.25;
 }
 
 [class*="jammed-airspace"] {
   display: none;
+  opacity: 1;
   background-color: #f9bc65;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+99,1e5799+100&0.2+60,0.8+100 */
+  background: -moz-radial-gradient(
+    center,
+    ellipse cover,
+    rgba(249, 188, 101, 0.2) 60%,
+    rgba(249, 188, 101, 0.6) 99%,
+    rgba(249, 188, 101, 0.8) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-radial-gradient(
+    center,
+    ellipse cover,
+    rgba(249, 188, 101, 0.2) 60%,
+    rgba(249, 188, 101, 0.6) 99%,
+    rgba(249, 188, 101, 0.8) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(249, 188, 101, 0.2) 60%,
+    rgba(249, 188, 101, 0.6) 99%,
+    rgba(249, 188, 101, 0.8) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#331e5799', endColorstr='#cc1e5799',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.9s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
 }
 
 #key {
@@ -287,6 +315,45 @@ body > .indicator {
     flex-wrap: wrap;
   }
 }
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg) scale(1);
+  }
+  10% {
+    transform: translate(-1px, -16px) rotate(-1deg) scale(1);
+  }
+  20% {
+    transform: translate(-24px, 0px) rotate(1deg) scale(0.9);
+  }
+
+  30% {
+    transform: translate(24px, 16px) rotate(0deg) scale(0.85);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg) scale(0.9);
+  }
+  50% {
+    transform: translate(-1px, 16px) rotate(-1deg) scale(1);
+  }
+  60% {
+    transform: translate(-24px, 1px) rotate(0deg) scale(0.9);
+  }
+  70% {
+    transform: translate(24px, 1px) rotate(-1deg) scale(0.85);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg) scale(0.9);
+  }
+  90% {
+    transform: translate(1px, 16px) rotate(0deg) scale(1);
+  }
+  100% {
+    transform: translate(1px, -16px) rotate(-1deg) scale(1);
+  }
+}
+
 /* abel-regular - latin */
 @font-face {
   font-family: "Abel";

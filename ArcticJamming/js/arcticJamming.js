@@ -1,3 +1,14 @@
+var framesPerSecond = 120,
+  initialRadius = 0,
+  radius = initialRadius,
+  maxRadius = 500,
+  initialMargin = -5,
+  margin = initialMargin,
+  maxMargin = maxRadius / 2,
+  initialOpacity = 0.5,
+  opacity = initialOpacity,
+  blipTimer;
+
 var map,
   now = null,
   startDates = [],
@@ -28,7 +39,7 @@ scenarioData = {
       '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
   }
 };
-filters = [
+var filters = [
   function(feature, layers) {
     var bool = false;
     if (
@@ -58,17 +69,6 @@ filters = [
     return bool;
   }
 ];
-
-var framesPerSecond = 120,
-  initialRadius = 0,
-  radius = initialRadius,
-  maxRadius = 500,
-  initialMargin = -5,
-  margin = initialMargin,
-  maxMargin = maxRadius / 2,
-  initialOpacity = 0.5,
-  opacity = initialOpacity,
-  blipTimer;
 
 var timeline = {
   scenario: scenario,
@@ -484,7 +484,21 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
   });
 
   marker.on("add", function() {
-    window.animateMarker(0);
+    // window.animateMarker(0);
+
+    var animatedIcons = Array.from(
+      document.querySelectorAll('[class*="jammed-airspace"]')
+    );
+
+    if (animatedIcons.length) {
+      animatedIcons.forEach(function(icon) {
+        // icon.style.opacity = ".5";
+        icon.style.width = `${maxRadius}px`;
+        icon.style.height = `${maxRadius}px`;
+        icon.style.marginLeft = `-${maxMargin}px`;
+        icon.style.marginTop = `-${maxMargin}px`;
+      });
+    }
   });
 
   return marker;
