@@ -10,15 +10,18 @@ const timeline = {
   transitionDuration: 0,
   endDate: 0,
   startDate: 0,
+  step: 24 * 60 * 60 * 1000,
   updateCurrentDate(date) {
+    this.currentDateEl.innerHTML = `${this.formatDate(date)}`
+  },
+  formatDate(date) {
     date = new Date(date)
     date = new Date(
       date.getUTCFullYear(),
       date.getUTCMonth(),
       date.getUTCDate()
     )
-    this.currentDateEl.innerHTML = `${date.getMonth() +
-      1}/${date.getDate()}/${date.getFullYear()}`
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
   },
   getCurrentDate() {
     return this.el.noUiSlider.get()
@@ -31,7 +34,7 @@ const timeline = {
       start: [startDate],
       connect: true,
       behaviour: 'tap-drag',
-      step: 24 * 60 * 60 * 1000,
+      step: this.step,
       range: {
         min: startDate,
         max: endDate
@@ -39,11 +42,11 @@ const timeline = {
       format: {
         from: v => parseInt(v),
         to: v => parseInt(v)
+      },
+      pips: {
+        mode: 'range',
+        density: 15
       }
-      // pips: {
-      //   mode: 'range',
-      //   density: 10
-      // }
     })
 
     this.el.noUiSlider.set(startDate)
@@ -51,6 +54,14 @@ const timeline = {
     this.setupBtnControls()
 
     this.el.noUiSlider.on('update', onUpdate)
+
+    this.el.querySelector(
+      `[data-value='${startDate}']`
+    ).innerHTML = this.formatDate(startDate)
+
+    this.el.querySelector(
+      `[data-value='${endDate}']`
+    ).innerHTML = this.formatDate(endDate)
   },
   setupBtnControls() {
     this.btnControls.addEventListener('click', function() {

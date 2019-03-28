@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Aerospace - Spaceports of the World</title>
+    <title>Aerospace Security - Unusual Behavior in Geo</title>
     <base target="_blank" />
     <link
       href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600"
@@ -20,18 +20,25 @@
     </div>
     <main class="interactive-container">
       <header class="page-header">
-        <h1>Satellites in Geo: <span class="satellite-name"></span></h1>
+        <h1>Unusual Behavior in Geo: <span class="satellite-name"></span></h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Unlike most objects in the geostationary belt,
+          <span class="satellite-country"></span> satellite
+          <span class="satellite-name"></span> has made a series of orbital
+          maneuvers, widely varying its position in GEO. Click the play button
+          to discover <span class="satellite-name"></span>’s movements over
+          time. Hover over any satellite to learn more.
         </p>
         <section class="timeline hide-on-load">
           <header class="timeline-header">
             <span class="satellite-name"></span> Position on
             <span class="timeline-current-date timeline-header__value"></span>
           </header>
+          <button class="timeline-btn play-btn control-btn"></button>
+          <div class="timeline-container">
+            <div class="timeline-bar"></div>
+          </div>
           <div class="timeline-controls">
-            <button class="timeline-btn play-btn control-btn"></button>
             <button
               class="timeline-btn speed-btn speed-btn--halfx"
               data-speed="half"
@@ -51,9 +58,6 @@
               2x
             </button>
           </div>
-          <div class="timeline-container">
-            <div class="timeline-bar"></div>
-          </div>
           <p class="instructions">
             Click the play button to see the satellites' positions change over
             time. Use the controls to change the play speed. Hover on a
@@ -64,7 +68,7 @@
           <li class="legend-colors--perp">
             <span class="satellite-name"></span>
           </li>
-          <li class="legend-colors--geo">All Satellites in Geo</li>
+          <li class="legend-colors--geo">All Satellites Currently in Geo</li>
         </ul>
       </header>
       <section class="chart"></section>
