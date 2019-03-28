@@ -8,13 +8,25 @@ var map,
     day: "numeric",
     year: "numeric"
   };
-descriptions = {
-  Zapad:
-    '<span class="scenario-description-name">Zapad</span> (Fall 2017) was a joint Russia-Belarus military exercise.',
-  "Trident Juncture":
-    '<span class="scenario-description-name">Trident Juncture</span> (Fall 2018) was a NATO military exercise.',
-  Clockwork:
-    '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
+scenarioData = {
+  Zapad: {
+    center: [70.32613725493573, 25.576171875],
+    zoom: 6,
+    description:
+      '<span class="scenario-description-name">Zapad</span> (Fall 2017) was a joint Russia-Belarus military exercise.'
+  },
+  "Trident Juncture": {
+    center: [69.7485511291223, 23.389892578125004],
+    zoom: 6,
+    description:
+      '<span class="scenario-description-name">Trident Juncture</span> (Fall 2018) was a NATO military exercise.'
+  },
+  Clockwork: {
+    center: [67.20403234340081, 20.017089843750004],
+    zoom: 5,
+    description:
+      '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
+  }
 };
 filters = [
   function(feature, layers) {
@@ -140,8 +152,8 @@ var timeline = {
 
 makeMap({
   mapID: "arctic",
-  zoom: 5,
-  center: [67, 23],
+  center: scenarioData[timeline.scenario].center,
+  zoom: scenarioData[timeline.scenario].zoom,
   attribution:
     'Data by <a href="https://aerospace.csis.org" target="_blank">CSIS Aerospace Security</a>, © OpenStreetMap, Leaflet contributors, © CARTO',
   table: "jamming_activities_in_the_arctic_circle",
@@ -152,7 +164,7 @@ makeMap({
   description:
     "Some airports in the Arctic Circle have reported GPS signal outages during military exercises in the region. Explore by selecting a military exercise below. Click a site on the map to learn more.",
   cluster: false,
-  "mapbox style": "cjiw0cu845ai12sry7ddmwska",
+  "mapbox style": "cjtstrbtu0bnt1fpz11u2qpgm",
   "ocean color": "#b7c7d1",
   filters: filters,
   onEachFeature: {
@@ -161,6 +173,7 @@ makeMap({
       var popupContent = map.formatPopupContent(this.feature, map);
 
       this.bindPopup(popupContent);
+      document.querySelector(".leaflet-popup-close-button").style.opacity = "1";
     },
     mouseover: function() {
       this.bindPopup(`<div class="tooltip">
@@ -170,152 +183,19 @@ makeMap({
       this.openPopup();
     }
   },
-  addEvent: function() {
-    timeline.end = new Date(
-      Math.max.apply(
-        null,
-        endDates.map(function(e) {
-          return new Date(e);
-        })
-      )
-    ).getTime();
-
-    timeline.start = new Date(
-      Math.min.apply(
-        null,
-        startDates.map(function(e) {
-          return new Date(e);
-        })
-      )
-    ).getTime();
-
-    if (
-      !isNaN(timeline.start) &&
-      !isNaN(timeline.end) &&
-      !timeline.el.noUiSlider
-    ) {
-      now = timeline.start;
-
-      Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
-        dateEl.innerText = new Date(now).toLocaleDateString(
-          "en-US",
-          dateOptions
-        );
-      });
-
-      var timelineOptions = {
-        start: timeline.start,
-        end: timeline.end,
-        now: now,
-        onChange: function() {
-          now = this.get();
-
-          Array.from(document.querySelectorAll(".date")).forEach(function(
-            dateEl
-          ) {
-            dateEl.innerText = new Date(now).toLocaleDateString(
-              "en-US",
-              dateOptions
-            );
-          });
-
-          var jams = Array.from(
-            document.querySelectorAll(`[class*="jammed-airspace"]`)
-          );
-
-          jams.forEach(function(jam) {
-            var start = parseInt(jam.dataset.start, 10);
-            var end = parseInt(jam.dataset.end, 10);
-
-            if (now >= start && now <= end) {
-              jam.style.display = "block";
-            } else {
-              jam.style.display = "none";
-            }
-          });
-
-          if (now == timeline.end) {
-            timeline.stopTimeline();
-            setTimeout(function() {
-              timeline.el.noUiSlider.set(timeline.start);
-            }, timeline.transitionDuration);
-
-            jams.forEach(function(jam) {
-              jam.style.display = "none";
-            });
-          }
-        }
-      };
-
-      timeline.setupTimeline(timelineOptions);
-    }
-
-    var first = document.querySelector(`[data-start="${now}"]`);
-    if (first) first.style.display = "block";
-  },
-  formatToolbox: function(box) {
-    var boxContent = `
-    <div class="separator"></div>
-    <section id="scenario">
-    <div class="instruction">
-      <p>Select a military exercise</p>
-      <p></p>
-    </div>
-${Object.keys(descriptions)
-      .map(function(key) {
-        return `<button ${
-          scenario === key ? 'class="active"' : ""
-        }>${key}</button>`;
-      })
-      .join(" ")}
-  <p class="scenario-description">${descriptions[timeline.scenario]}</p>
-    <div>
-    </section>
-      <div class="separator"></div>
-    <section id="time">
-    <div class="indicator">
-      <p>Signal loss on <span class="date"></span></p>
-      <p><span></span></p>
-    </div>
-    <div class="timeline">
-    <div class="timeline-controls">
-      <button class="timeline-btn play-btn"></button>
-    </div>
-    <div class="timeline-container">
-      <div class="timeline-bar"></div>
-    </div>
-    </div>
-    </section>
-    <!--<p>Click on a point for incident details</p>-->
-      <div class="separator"></div>
-    <section id="key">
-    <ul>
-      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Jammed Airspace</span></li>
-      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO Military Activity</span></li>
-      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
-      </ul>
-
-      <ul>
-      <li class="label">Bases</li>
-      <li class="label">Planes</li>
-      <ul>
-
-    </section>
-      `;
-
-    box.innerHTML = boxContent;
-
-    scenario = document.querySelector("button.active").innerText;
-
-    timeline.el = document.querySelector(".timeline-bar");
-    timeline.btnControls = document.querySelector(".timeline-btn");
-
-    document
-      .querySelector("#scenario")
-      .addEventListener("click", handleSceneClick);
-  },
+  addEvent: groupsLoaded,
+  formatToolbox: formatToolbox,
   formatPopupContent: formatCustomPopupContent,
   geoJsonOptions: makeCustomGeoJsonOptions,
+  zoomSlider: false,
+  minZoom: 4,
+  maxZoom: 8,
+  maxBounds: [
+    //south west
+    [40, -10],
+    //north east
+    [80, 60]
+  ],
   widgets: [
     {
       field: "type",
@@ -324,22 +204,187 @@ ${Object.keys(descriptions)
       keys: [
         {
           value: "Jammed Airspace",
-          color: "#d66e42"
+          color: "#f9bc65",
+          form: "icon"
         },
         {
           value: "Russian Military Exercise",
-          color: "#f9bc65 "
+          color: "#d66e42",
+          form: "icon",
+          icon: "icons/base.svg"
         },
         {
           value: "NATO Military Exercise",
-          color: "#196c95 "
+          color: "#196c95",
+          form: "icon",
+          icon: "icons/ship.svg"
         }
       ]
     }
   ]
 });
+
+//
+// document.body.innerHTML += `<div class="base hidden"></div>`;
+//
+// load(
+//   "https://csis-ilab.github.io/mapbox-custom/aegis-ports/img/aegis_marker.svg",
+//   document.querySelector(".hidden")
+// );
+//
+// var base = document
+//   .querySelector(".base")
+//   .innerHTML.replace(/d="/g, 'fill="#f9bc65" d="');
+
 map = Map.all[0];
+
+//norway: 69.1312712296365,23.57666015625
+//sweden: 67.7926408447319,20.830078125000004
+//finland: 68.39918004344189,26.059570312500004
+//russia: 68.64055504059381,33.53027343750001
+
 L.control.scale({ position: "bottomleft" }).addTo(map.map);
+
+function formatToolbox(box) {
+  var boxContent = `
+  <div class="separator"></div>
+  <section id="scenario">
+  <div class="instruction">
+    <p>Select a military exercise</p>
+    <p></p>
+  </div>
+${Object.keys(scenarioData)
+    .map(function(key) {
+      return `<button ${
+        scenario === key ? 'class="active"' : ""
+      }>${key}</button>`;
+    })
+    .join(" ")}
+<p class="scenario-description">${
+    scenarioData[timeline.scenario].description
+  }</p>
+  <div>
+  </section>
+    <div class="separator"></div>
+  <section id="time">
+  <div class="indicator">
+    <p>Signal loss on <span class="date"></span></p>
+    <p><span></span></p>
+  </div>
+  <div class="timeline">
+  <div class="timeline-controls">
+    <button class="timeline-btn play-btn"></button>
+  </div>
+  <div class="timeline-container">
+    <div class="timeline-bar"></div>
+  </div>
+  </div>
+  </section>
+  <!--<p>Click on a point for incident details</p>-->
+    <div class="separator"></div>
+  <section>
+  <ul id="key">
+    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Lost</span></li>
+    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO  Activity</span></li>
+    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
+    </ul>
+
+
+  </section>
+    `;
+
+  box.innerHTML = boxContent;
+
+  scenario = document.querySelector("button.active").innerText;
+
+  timeline.el = document.querySelector(".timeline-bar");
+  timeline.btnControls = document.querySelector(".timeline-btn");
+
+  document
+    .querySelector("#scenario")
+    .addEventListener("click", handleSceneClick);
+}
+
+function groupsLoaded() {
+  timeline.end = new Date(
+    Math.max.apply(
+      null,
+      endDates.map(function(e) {
+        return new Date(e);
+      })
+    )
+  ).getTime();
+
+  timeline.start = new Date(
+    Math.min.apply(
+      null,
+      startDates.map(function(e) {
+        return new Date(e);
+      })
+    )
+  ).getTime();
+
+  if (
+    !isNaN(timeline.start) &&
+    !isNaN(timeline.end) &&
+    !timeline.el.noUiSlider
+  ) {
+    now = timeline.start;
+
+    Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
+      dateEl.innerText = new Date(now).toLocaleDateString("en-US", dateOptions);
+    });
+
+    var timelineOptions = {
+      start: timeline.start,
+      end: timeline.end,
+      now: now,
+      onChange: function() {
+        now = this.get();
+
+        Array.from(document.querySelectorAll(".date")).forEach(function(
+          dateEl
+        ) {
+          dateEl.innerText = new Date(now).toLocaleDateString(
+            "en-US",
+            dateOptions
+          );
+        });
+
+        var jams = Array.from(
+          document.querySelectorAll(`[class*="jammed-airspace"]`)
+        );
+
+        jams.forEach(function(jam) {
+          var start = parseInt(jam.dataset.start, 10);
+          var end = parseInt(jam.dataset.end, 10);
+
+          if (now >= start && now <= end) {
+            jam.style.display = "block";
+          } else {
+            jam.style.display = "none";
+          }
+        });
+
+        if (now == timeline.end) {
+          timeline.stopTimeline();
+          setTimeout(function() {
+            timeline.el.noUiSlider.set(timeline.start);
+          }, timeline.transitionDuration);
+
+          jams.forEach(function(jam) {
+            jam.style.display = "none";
+          });
+        }
+      }
+    };
+
+    timeline.setupTimeline(timelineOptions);
+  }
+
+  var first = document.querySelector(`[data-start="${now}"]`);
+  if (first) first.style.display = "block";
+}
 
 function makeCustomGeoJsonOptions() {
   var colorKeyWidget = map.widgets.find(function(w) {
@@ -505,6 +550,7 @@ function animateMarker(timestamp) {
 
 function handleSceneClick(e) {
   if (e.target.classList.contains("active")) return;
+
   if (timeline.playing == true) {
     timeline.stopTimeline();
     timeline.el.noUiSlider.set(timeline.start);
@@ -517,9 +563,15 @@ function handleSceneClick(e) {
   }
   timeline.scenario = document.querySelector("button.active").textContent;
 
+  map.map.flyTo(
+    scenarioData[timeline.scenario].center,
+    scenarioData[timeline.scenario].zoom,
+    { animate: true, duration: 0.5 }
+  );
+
   Array.from(document.querySelectorAll(".scenario-description")).forEach(
     function(sceneEl) {
-      sceneEl.innerHTML = descriptions[timeline.scenario];
+      sceneEl.innerHTML = scenarioData[timeline.scenario].description;
     }
   );
 
@@ -605,4 +657,12 @@ function handleSceneClick(e) {
       dateOptions
     );
   }
+}
+
+function load(url, element) {
+  req = new XMLHttpRequest();
+  req.open("GET", url, false);
+  req.send(null);
+
+  element.innerHTML = req.responseText;
 }

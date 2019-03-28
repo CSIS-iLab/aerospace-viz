@@ -49,7 +49,7 @@ span.scenario-description-name {
 
 [class*="jammed-airspace"] {
   display: none;
-  background-color: #d66e42;
+  background-color: #f9bc65;
 }
 
 #key {
@@ -109,9 +109,22 @@ span.scenario-description-name {
 }
 
 .leaflet-control-scale-line {
-  font-size: 14px;
+  font: 14px/1 "Source Sans Pro", Arial, sans-serif;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  margin: 6px 0;
+}
+.leaflet-top.leaflet-left {
+  right: 24px;
+  top: -6;
+  left: unset;
+  transform: rotate(-90deg);
 }
 
+.leaflet-touch .leaflet-bar a.leaflet-control-zoom-out {
+  transform: rotate(90deg);
+  line-height: 27px;
+}
 .noUi-handle,
 .timeline-bar,
 .timeline-btn,
@@ -164,6 +177,10 @@ span.scenario-description-name {
 .hamburger .menu {
   font-family: Abel, Arial, sans-serif;
   font-size: 15px;
+}
+
+.leaflet-popup-close-button {
+  opacity: 0;
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
@@ -242,8 +259,8 @@ p {
 }
 
 aside.toolbox {
-  left: 48px;
-  width: 335px;
+  left: 12px;
+  width: 425px;
 }
 
 .hamburger .menu {

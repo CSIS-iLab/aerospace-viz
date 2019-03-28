@@ -37,8 +37,14 @@ function Map(container, properties) {
 
   this.render = function() {
     this.map = L.map(container, {
+      minZoom: properties.minZoom || null,
+      maxZoom: properties.maxZoom || null,
+      maxBounds: properties.maxBounds || null,
       scrollWheelZoom: window.innerWidth < 768 ? false : true,
-      zoomControl: false,
+      zoomControl:
+        !properties.hasOwnProperty("zoomSlider") || properties.zoomSlider
+          ? false
+          : true,
       attributionControl: false
     });
 
@@ -53,7 +59,12 @@ function Map(container, properties) {
         "/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw",
       {}
     ).addTo(this.map);
-    L.control.zoomslider().addTo(this.map);
+
+    if (!properties.hasOwnProperty("zoomSlider") || properties.zoomSlider) {
+      window.zoomSlider = L.control.zoomslider();
+      this.map.addControl(window.zoomSlider);
+    }
+
     L.control
       .attribution({
         position: "bottomleft"
