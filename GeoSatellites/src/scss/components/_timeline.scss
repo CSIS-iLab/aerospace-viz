@@ -3,27 +3,22 @@
 ================================*/
 
 .timeline {
-  grid-row: 1;
-  grid-column: span 2;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-column-gap: 1rem;
+  grid-template-columns: min-content auto min-content;
   margin: 0.75rem 0;
   padding: 0.75rem 0;
   border-top: 1px solid rgba(46, 60, 67, 0.08);
   border-bottom: 1px solid rgba(46, 60, 67, 0.08);
 
   .timeline-header {
-    flex: 1 1 auto;
+    grid-column: 1 / -1;
     margin-bottom: 0.75rem;
     @include fontSize(14px);
     font-family: $font__abel;
     font-weight: 400;
     text-transform: uppercase;
     color: $black;
-
-    @include breakpoint('large') {
-      @include fontSize(16px);
-    }
 
     &__value {
       font-weight: bold;
@@ -33,7 +28,9 @@
   }
 
   .timeline-controls {
-    flex: 0 1 auto;
+    display: grid;
+    grid-column-gap: 0.3rem;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .timeline-btn {
@@ -84,10 +81,15 @@
     }
   }
 
+  .instructions {
+    grid-column: 1 / -1;
+  }
+
   .timeline-container {
     flex: 1 1 auto;
     width: 100%;
-    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
   }
 
   .noUi-target {
@@ -139,6 +141,14 @@
     font-family: $font__abel;
     @include fontSize(14px);
     color: $dark-blue;
+  }
+
+  .noUi-marker ~ .noUi-value {
+    left: 10% !important;
+
+    &:last-of-type {
+      left: 90% !important;
+    }
   }
 
   .noUi-marker-large {

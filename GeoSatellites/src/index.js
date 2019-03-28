@@ -25,6 +25,7 @@ async function loadData(
   satelliteFile,
   targetsFile,
   satelliteName,
+  satelliteCountry,
   worldProjection
 ) {
   data = await getData(satelliteFile, targetsFile)
@@ -38,7 +39,7 @@ async function loadData(
   endDate = dates[dates.length - 1]
   currentDate = startDate
 
-  updateSatelliteNames(satelliteName)
+  updateSatelliteNames(satelliteName, satelliteCountry)
 
   // Setting up the timeline will initiate drawChart()
   setupSpeedControls()
@@ -91,9 +92,13 @@ function setupTimeline() {
   })
 }
 
-function updateSatelliteNames(name) {
+function updateSatelliteNames(name, country) {
   Array.from(document.querySelectorAll('.satellite-name')).forEach(el => {
     el.textContent = name
+  })
+
+  Array.from(document.querySelectorAll('.satellite-country')).forEach(el => {
+    el.textContent = country
   })
 }
 
