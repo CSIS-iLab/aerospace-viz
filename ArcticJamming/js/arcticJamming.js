@@ -497,6 +497,8 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
         icon.style.height = `${maxRadius}px`;
         icon.style.marginLeft = `-${maxMargin}px`;
         icon.style.marginTop = `-${maxMargin}px`;
+        icon.parentElement.style.zIndex = "1";
+        icon.parentElement.style.position = "relative";
       });
     }
   });
