@@ -1,3 +1,6 @@
+.hidden {
+  display: none;
+}
 body,
 .leaflet-container {
   font: 14px/1.5 "Source Sans Pro", Arial, sans-serif;
