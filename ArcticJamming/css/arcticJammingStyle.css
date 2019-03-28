@@ -78,6 +78,7 @@ span.scenario-description-name {
   align-items: center;
   -ms-flex-align: center;
   width: 100%;
+  margin: 0;
 }
 
 .itemText {
@@ -103,6 +104,11 @@ span.scenario-description-name {
 .instruction p:last-child {
   font-size: 12px;
 }
+
+.leaflet-control-scale-line {
+  font-size: 14px;
+}
+
 .noUi-handle,
 .timeline-bar,
 .timeline-btn,

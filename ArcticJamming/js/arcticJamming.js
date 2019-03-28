@@ -1,4 +1,5 @@
-var now = null,
+var map,
+  now = null,
   startDates = [],
   endDates = [],
   scenario = "Zapad",
@@ -157,8 +158,6 @@ makeMap({
   onEachFeature: {
     click: function() {
       this.closePopup();
-
-      var map = Map.all[0];
       var popupContent = map.formatPopupContent(this.feature, map);
 
       this.bindPopup(popupContent);
@@ -255,17 +254,13 @@ makeMap({
     if (first) first.style.display = "block";
   },
   formatToolbox: function(box) {
-    var map = Map.all[0];
     var boxContent = `
-
-
     <div class="separator"></div>
     <section id="scenario">
     <div class="instruction">
       <p>Select a military exercise</p>
       <p></p>
     </div>
-
 ${Object.keys(descriptions)
       .map(function(key) {
         return `<button ${
@@ -273,8 +268,7 @@ ${Object.keys(descriptions)
         }>${key}</button>`;
       })
       .join(" ")}
-
-    <p class="scenario-description">${descriptions[timeline.scenario]}</p>
+  <p class="scenario-description">${descriptions[timeline.scenario]}</p>
     <div>
     </section>
       <div class="separator"></div>
@@ -302,8 +296,8 @@ ${Object.keys(descriptions)
       </ul>
 
       <ul>
-      <li>Bases</li>
-      <li>Planes</li>
+      <li class="label">Bases</li>
+      <li class="label">Planes</li>
       <ul>
 
     </section>
@@ -344,9 +338,10 @@ ${Object.keys(descriptions)
     }
   ]
 });
+map = Map.all[0];
+L.control.scale({ position: "bottomleft" }).addTo(map.map);
 
 function makeCustomGeoJsonOptions() {
-  var map = Map.all[0];
   var colorKeyWidget = map.widgets.find(function(w) {
     return w.type === "color";
   });
@@ -509,7 +504,6 @@ function animateMarker(timestamp) {
 }
 
 function handleSceneClick(e) {
-  var map = Map.all[0];
   if (e.target.classList.contains("active")) return;
   if (timeline.playing == true) {
     timeline.stopTimeline();
