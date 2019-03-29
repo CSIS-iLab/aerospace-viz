@@ -1637,7 +1637,16 @@ function styleKey(options) {
         var svgContent = document.querySelector(`.hidden`).innerHTML;
 
         if (colorKeyWidget) {
-          svgContent = svgContent.replace(/#000/g, keyColor);
+          svgContent = svgContent.replace(
+            /((\bfill="#)(([0-a-fA-F]{2}){3}|([0-9a-fA-F]){3})")/gi,
+            ""
+          );
+          svgContent = svgContent.replace(
+            /(<circle |<rectangle |<ellipse |<polygon |<path )/g,
+            function(match, p1, p2, p3) {
+              return match.replace(match, match + 'fill="' + keyColor + '" ');
+            }
+          );
         }
 
         svg = "data:image/svg+xml;base64," + window.btoa(svgContent);

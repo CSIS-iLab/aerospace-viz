@@ -3,16 +3,8 @@
 //finland: 68.39918004344189,26.059570312500004
 //russia: 68.64055504059381,33.53027343750001
 
-var framesPerSecond = 120,
-  initialRadius = 0,
-  radius = initialRadius,
-  maxRadius = 500,
-  initialMargin = -5,
-  margin = initialMargin,
-  maxMargin = maxRadius / 2,
-  initialOpacity = 0.5,
-  opacity = initialOpacity,
-  blipTimer;
+var maxRadius = 375,
+  maxMargin = maxRadius / 2;
 
 var map,
   now = null,
@@ -169,7 +161,7 @@ makeMap({
   description:
     "Some airports in the Arctic Circle have reported GPS signal outages during military exercises in the region. Explore by selecting a military exercise below. Click a site on the map to learn more.",
   cluster: false,
-  "mapbox style": "cjtstrbtu0bnt1fpz11u2qpgm",
+  "mapbox style": "cjtt0jqiq01c51fs1r2sb4hl4",
   "ocean color": "#b7c7d1",
   filters: filters,
   onEachFeature: {
@@ -241,12 +233,12 @@ makeMap({
         {
           value: "plane",
           form: "icon",
-          icon: "icons/ship.svg"
+          icon: "icons/plane.svg"
         },
         {
           value: "helicopter",
           form: "icon",
-          icon: "icons/ship.svg"
+          icon: "icons/helicopter.svg"
         }
       ]
     }
@@ -296,12 +288,14 @@ ${Object.keys(scenarioData)
     <div class="separator"></div>
   <section>
   <ul id="key">
-    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Lost</span></li>
+    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li>
+
     <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO  Activity</span></li>
-    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
+
+    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
     </ul>
   </section>
-  <footer><div class="hidden"></div></footer>
+  <div class="hidden"></div>
     `;
 
   box.innerHTML = boxContent;
@@ -484,21 +478,17 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
   });
 
   marker.on("add", function() {
-    // window.animateMarker(0);
-
     var animatedIcons = Array.from(
       document.querySelectorAll('[class*="jammed-airspace"]')
     );
 
     if (animatedIcons.length) {
       animatedIcons.forEach(function(icon) {
-        // icon.style.opacity = ".5";
         icon.style.width = `${maxRadius}px`;
         icon.style.height = `${maxRadius}px`;
         icon.style.marginLeft = `-${maxMargin}px`;
         icon.style.marginTop = `-${maxMargin}px`;
-        icon.parentElement.style.zIndex = "1";
-        icon.parentElement.style.position = "relative";
+        icon.parentElement.style.zIndex = "-1";
       });
     }
   });
@@ -544,38 +534,6 @@ function formatCustomPopupContent(feature, map) {
   <div class="tooltip-label">${feature.properties.details_hover}</div>
   <div class="tooltip-link">${sources}</div>
   </div>`;
-}
-
-function animateMarker(timestamp) {
-  var animatedIcons = Array.from(
-    document.querySelectorAll('[class*="jammed-airspace"]')
-  );
-  if (animatedIcons.length) {
-    if (blipTimer) clearTimeout(blipTimer);
-
-    blipTimer = setTimeout(function() {
-      requestAnimationFrame(animateMarker);
-
-      radius += (maxRadius - radius) / framesPerSecond;
-      opacity -= 0.9 / framesPerSecond;
-      opacity = Math.max(0, opacity);
-      margin -= (maxMargin + margin) / framesPerSecond;
-
-      animatedIcons.forEach(function(icon) {
-        icon.style.width = `${radius}px`;
-        icon.style.height = `${radius}px`;
-        icon.style.marginLeft = `${margin}px`;
-        icon.style.marginTop = `${margin}px`;
-        icon.style.opacity = opacity;
-      });
-
-      if (opacity <= 0) {
-        radius = initialRadius;
-        opacity = initialOpacity;
-        margin = initialMargin;
-      }
-    }, 500 / framesPerSecond);
-  }
 }
 
 function handleSceneClick(e) {
