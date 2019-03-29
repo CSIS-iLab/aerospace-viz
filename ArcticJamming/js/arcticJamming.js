@@ -188,7 +188,8 @@ makeMap({
   maxZoom: 8,
   maxBounds: [
     //south west
-    [40, -20], //north east
+    [40, -20],
+    //north east
     [80, 60]
   ],
   widgets: [
@@ -242,6 +243,7 @@ makeMap({
     }
   ]
 });
+
 map = Map.all[0];
 
 L.control
@@ -291,58 +293,28 @@ function setIconSize() {
 map.map.on("zoomend", setIconSize);
 
 function formatToolbox(box) {
-  var boxContent = `
-    <div class="separator"></div>
-    <section id="scenario">
-    <div class="instruction">
-      <p>Select a military exercise</p>
-      <p></p>
-    </div>
-  ${Object.keys(scenarioData)
-    .map(function(key) {
-      return `<button ${
-        scenario === key ? 'class="active"' : ""
-      }>${key}</button>`;
-    })
-    .join(" ")}
-  <p class="scenario-description">${
-    scenarioData[timeline.scenario].description
-  }</p>
-    <div>
-    </section>
-      <div class="separator"></div>
-    <section id="time">
-    <div class="indicator">
-      <p>Signal loss on <span class="date"></span></p>
-      <p><span></span></p>
-    </div>
-    <div class="timeline">
-    <div class="timeline-controls">
-      <button class="timeline-btn play-btn"></button>
-    </div>
-    <div class="timeline-container">
-      <div class="timeline-bar"></div>
-    </div>
-    </div>
-    </section>
-    <!--<p>Click on a point for incident details</p>-->
-      <div class="separator"></div>
-    <section>
-    <ul id="key">
-      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li>
-
-      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO  Activity</span></li>
-
-      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
-      </ul>
-    </section>
-    <div class="hidden"></div>
-      `;
+  var boxContent =
+    '<div class="separator"></div><section id="scenario"><div class="instruction"><p>Select a military exercise</p><p></p></div>' +
+    Object.keys(scenarioData)
+      .map(function(key) {
+        return (
+          "<button" +
+          (scenario === key ? ' class="active"' : "") +
+          ">" +
+          key +
+          "</button>"
+        );
+      })
+      .join(" ") +
+    '<p class="scenario-description">' +
+    scenarioData[timeline.scenario].description +
+    '</p> <div> </section> <div class="separator"></div> <section id="time"> <div class="indicator"> <p>Signal loss on <span class="date"></span></p> <p><span></span></p> </div> <div class="timeline"> <div class="timeline-controls"> <button class="timeline-btn play-btn"></button> </div> <div class="timeline-container"> <div class="timeline-bar"></div> </div> </div> </section> <!--<p>Click on a point for incident details</p>--> <div class="separator"></div> <section> <ul id="key"> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO Activity</span></li> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li> </ul> </section> <div class="hidden"></div>';
 
   box.innerHTML = boxContent;
   scenario = document.querySelector("button.active").innerText;
   timeline.el = document.querySelector(".timeline-bar");
   timeline.btnControls = document.querySelector(".timeline-btn");
+
   document
     .querySelector("#scenario")
     .addEventListener("click", handleSceneClick);
