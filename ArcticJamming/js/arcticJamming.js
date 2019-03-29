@@ -16,19 +16,19 @@ var map,
 var scenarioData = {
   Zapad: {
     center: [70.32613725493573, 25.576171875],
-    zoom: 6,
+    zoom: window.innerWidth > 768 ? 6 : 5,
     description:
       '<span class="scenario-description-name">Zapad</span> (Fall 2017) was a joint Russia-Belarus military exercise.'
   },
   "Trident Juncture": {
     center: [69.7485511291223, 23.389892578125004],
-    zoom: 6,
+    zoom: window.innerWidth > 768 ? 6 : 4,
     description:
       '<span class="scenario-description-name">Trident Juncture</span> (Fall 2018) was a NATO military exercise.'
   },
   Clockwork: {
     center: [67.20403234340081, 20.017089843750004],
-    zoom: 5,
+    zoom: window.innerWidth > 768 ? 5 : 3,
     description:
       '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
   }
