@@ -552,14 +552,17 @@ function formatCustomPopupContent(feature, map) {
       );
     })
     .join("<br>");
+
   return (
     '<div class="tooltip"><div class="tooltip-heading">' +
-      feature.properties.name_hover +
-      '</div><div class="tooltip-label">' +
-      date +
-      '</div><div class="tooltip-label">' +
-      feature.properties.details_hover,
-    '</div><div class="tooltip-link">' + +sources + "</div></div>"
+    feature.properties.name_hover +
+    '</div><div class="tooltip-label">' +
+    date +
+    '</div><div class="tooltip-label">' +
+    feature.properties.details_hover +
+    '</div><div class="tooltip-link">' +
+    sources +
+    "</div></div>"
   );
 }
 
