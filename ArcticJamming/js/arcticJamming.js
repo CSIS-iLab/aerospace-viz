@@ -417,7 +417,9 @@ function makeCustomGeoJsonOptions() {
 
   var backgroundOptions = {
     filter: filter,
-    onEachFeature: onEachFeature,
+    onEachFeature: function() {
+      return false;
+    },
     pointToLayer: function(feature, latlng) {
       return styleCustomPoint(feature, latlng, map, colorKeyWidget);
     }
