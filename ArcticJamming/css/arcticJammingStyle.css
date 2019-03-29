@@ -39,6 +39,28 @@ span.scenario-description-name {
   font-weight: bold;
   font-style: italic;
 }
+.leaflet-marker-icon:focus {
+  outline: 0;
+}
+
+.leaflet-marker-icon.land div {
+  font-size: 22px;
+  text-align: center;
+  color: #6b6b6b;
+  font-weight: bold;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.67),
+    -2px -1px 0 rgba(255, 255, 255, 0.67), 1px -1px 0 rgba(255, 255, 255, 0.67),
+    -1px 1px 0 rgba(255, 255, 255, 0.67), 1px 1px 0 rgba(255, 255, 255, 0.67);
+}
+.leaflet-marker-icon.water div {
+  letter-spacing: 0.15em;
+  font-size: 22px;
+  text-align: center;
+  color: #455254;
+  opacity: 0.75;
+  width: 200px;
+  transform: rotate(30deg);
+}
 [class*="animated_icon"] {
   border-radius: 50%;
 }

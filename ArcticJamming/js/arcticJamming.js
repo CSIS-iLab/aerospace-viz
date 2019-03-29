@@ -1,21 +1,18 @@
 "use strict";
 
-//norway: 69.1312712296365,23.57666015625
-//sweden: 67.7926408447319,20.830078125000004
-//finland: 68.39918004344189,26.059570312500004
-//russia: 68.64055504059381,33.53027343750001
-var maxRadius = 375,
-  maxMargin = maxRadius / 2;
 var map,
   now = null,
   startDates = [],
   endDates = [],
   scenario = "Zapad",
+  maxRadius = 375,
+  maxMargin = maxRadius / 2,
   dateOptions = {
     month: "short",
     day: "numeric",
     year: "numeric"
   };
+
 var scenarioData = {
   Zapad: {
     center: [70.32613725493573, 25.576171875],
@@ -36,6 +33,15 @@ var scenarioData = {
       '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
   }
 };
+
+var labels = {
+  "Barent's Sea": { type: "water", center: [72, 34] },
+  Norway: { type: "land", center: [69.1312712296365, 23.57666015625] },
+  Sweden: { type: "land", center: [67.7926408447319, 20.830078125000004] },
+  Finland: { type: "land", center: [68.39918004344189, 26.059570312500004] },
+  Russia: { type: "land", center: [68.64055504059381, 33.53027343750001] }
+};
+
 var filters = [
   function(feature, layers) {
     var bool = false;
@@ -243,6 +249,16 @@ L.control
     position: "bottomleft"
   })
   .addTo(map.map);
+
+Object.keys(labels).forEach(function(text) {
+  new L.Marker(labels[text].center, {
+    icon: new L.DivIcon({
+      iconAnchor: [40, 20],
+      className: labels[text].type,
+      html: "<div>" + text + "</div>"
+    })
+  }).addTo(map.map);
+});
 
 function formatToolbox(box) {
   var boxContent = `
