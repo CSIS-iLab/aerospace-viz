@@ -311,6 +311,16 @@ body > .indicator {
     width: 275px;
   }
 
+  #controls li {
+    margin: 0;
+    flex-basis: 100%;
+  }
+
+  .box section#scenario button {
+    display: block;
+    margin: 3px 0;
+  }
+
   #key {
     flex-wrap: wrap;
   }
