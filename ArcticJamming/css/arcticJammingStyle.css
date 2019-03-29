@@ -9,7 +9,10 @@ h3,
 .date {
   font-family: Abel, Arial, sans-serif;
 }
-
+h1 {
+  font-size: 1.3rem;
+  color: #000;
+}
 header p,
 p.scenario-description,
 .indicator p {
