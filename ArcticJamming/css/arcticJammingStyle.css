@@ -308,7 +308,7 @@ body > .indicator {
 }
 @media (max-width: 425px) {
   aside.toolbox {
-    width: 255px;
+    width: 275px;
   }
 
   #key {
