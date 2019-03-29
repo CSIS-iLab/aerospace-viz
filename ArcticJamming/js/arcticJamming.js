@@ -35,7 +35,7 @@ var scenarioData = {
 };
 
 var labels = {
-  "Barent's Sea": { type: "water", center: [72, 34] },
+  "Barents Sea": { type: "water", center: [72, 34] },
   Norway: { type: "land", center: [69.1312712296365, 23.57666015625] },
   Sweden: { type: "land", center: [67.7926408447319, 20.830078125000004] },
   Finland: { type: "land", center: [68.39918004344189, 26.059570312500004] },
