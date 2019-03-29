@@ -112,12 +112,12 @@ var timeline = {
     this.el.noUiSlider.set(start);
     this.setupBtnControls();
     this.el.noUiSlider.on("update", onChange);
-    this.el.querySelector(
-      "[data-value='".concat(start, "']")
-    ).innerHTML = new Date(start).toLocaleDateString("en-US", dateOptions);
-    this.el.querySelector(
-      "[data-value='".concat(end, "']")
-    ).innerHTML = new Date(end).toLocaleDateString("en-US", dateOptions);
+    this.el.querySelector("[data-value='" + start, "']").innerHTML = new Date(
+      start
+    ).toLocaleDateString("en-US", dateOptions);
+    this.el.querySelector("[data-value='" + end, "']").innerHTML = new Date(
+      end
+    ).toLocaleDateString("en-US", dateOptions);
   },
   setupBtnControls: function setupBtnControls() {
     this.btnControls.addEventListener("click", function() {
@@ -154,7 +154,7 @@ makeMap({
     'Data by <a href="https://aerospace.csis.org" target="_blank">CSIS Aerospace Security</a>, © OpenStreetMap, Leaflet contributors, © CARTO',
   table: "jamming_activities_in_the_arctic_circle",
   "api key": "Im_n2elHbHRallDYDff3Eg",
-  program: "CSIS Aerospace Security",
+  program: "Aerospace Security",
   website: "https://aerospace.csis.org",
   title: "GPS Jamming in the Arctic Circle",
   description:
@@ -172,10 +172,9 @@ makeMap({
     },
     mouseover: function mouseover() {
       this.bindPopup(
-        '<div class="tooltip">\n      <div class="tooltip-heading">'.concat(
+        '<div class="tooltip">\n      <div class="tooltip-heading">' +
           this.feature.properties.name_hover,
-          "</div></div>"
-        )
+        "</div></div>"
       );
       this.openPopup();
     }
@@ -244,6 +243,7 @@ makeMap({
   ]
 });
 map = Map.all[0];
+
 L.control
   .scale({
     position: "bottomleft"
@@ -259,6 +259,36 @@ Object.keys(labels).forEach(function(text) {
     })
   }).addTo(map.map);
 });
+
+function setIconSize() {
+  var zoomLevel = map.map.getZoom();
+
+  var iconElements = Array.from(
+    document.querySelectorAll(".leaflet-marker-icon")
+  );
+
+  iconElements.forEach(function(icon) {
+    icon.style.width = zoomLevel * 4 + "px";
+    icon.style.height = zoomLevel * 4 + "px";
+  });
+
+  var jamElements = Array.from(
+    document.querySelectorAll('[class*="jammed-airspace"]')
+  );
+
+  jamElements.forEach(function(icon) {
+    var size = (zoomLevel - map.minZoom + 1) * 0.5 * maxRadius;
+    icon.style.width = size + "px";
+
+    icon.style.height = size + "px";
+    icon.style.marginLeft = size + "px";
+
+    icon.style.marginLeft = "-" + size / 2 + "px";
+    icon.style.marginTop = "-" + size / 2 + "px";
+  });
+}
+
+map.map.on("zoomend", setIconSize);
 
 function formatToolbox(box) {
   var boxContent = `
@@ -387,7 +417,7 @@ function groupsLoaded() {
     timeline.setupTimeline(timelineOptions);
   }
 
-  var first = document.querySelector('[data-start="'.concat(now, '"]'));
+  var first = document.querySelector('[data-start="' + now, '"]');
   if (first) first.style.display = "block";
 }
 
@@ -462,11 +492,16 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
   var icon = L.divIcon({
     iconAnchor: [0, 0],
     popupAnchor: [0, 10],
-    html: '<div class="animated_icon__'
-      .concat(scenario, "--")
-      .concat(value, '" data-start="')
-      .concat(startDate.getTime(), '" data-end="')
-      .concat(endDate.getTime(), '"></div>')
+    html:
+      '<div class="animated_icon__' +
+      scenario +
+      "--" +
+      value +
+      '" data-start="' +
+      startDate.getTime() +
+      '" data-end="' +
+      endDate.getTime() +
+      '"></div>'
   });
   var marker = L.marker(latlng, {
     icon: icon
@@ -478,10 +513,10 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
 
     if (animatedIcons.length) {
       animatedIcons.forEach(function(icon) {
-        icon.style.width = "".concat(maxRadius, "px");
-        icon.style.height = "".concat(maxRadius, "px");
-        icon.style.marginLeft = "-".concat(maxMargin, "px");
-        icon.style.marginTop = "-".concat(maxMargin, "px");
+        icon.style.width = maxRadius + "px";
+        icon.style.height = maxRadius + "px";
+        icon.style.marginLeft = "-" + maxMargin + "px";
+        icon.style.marginTop = "-" + maxMargin + "px";
         icon.parentElement.style.zIndex = "-1";
       });
     }
@@ -517,17 +552,15 @@ function formatCustomPopupContent(feature, map) {
       );
     })
     .join("<br>");
-  return '<div class="tooltip">\n  <div class="tooltip-heading">'
-    .concat(
-      feature.properties.name_hover,
-      '</div>\n  <div class="tooltip-label">'
-    )
-    .concat(date, '</div>\n  <div class="tooltip-label">')
-    .concat(
+  return (
+    '<div class="tooltip"><div class="tooltip-heading">' +
+      feature.properties.name_hover +
+      '</div><div class="tooltip-label">' +
+      date +
+      '</div><div class="tooltip-label">' +
       feature.properties.details_hover,
-      '</div>\n  <div class="tooltip-link">'
-    )
-    .concat(sources, "</div>\n  </div>");
+    '</div><div class="tooltip-link">' + +sources + "</div></div>"
+  );
 }
 
 function handleSceneClick(e) {
@@ -621,13 +654,15 @@ function handleSceneClick(e) {
     };
     timeline.el.noUiSlider.updateOptions(newOptions, true);
     timeline.el.querySelector(
-      "[data-value='".concat(timeline.start, "']")
+      "[data-value='" + timeline.start,
+      "']"
     ).innerHTML = new Date(timeline.start).toLocaleDateString(
       "en-US",
       dateOptions
     );
     timeline.el.querySelector(
-      "[data-value='".concat(timeline.end, "']")
+      "[data-value='" + timeline.end,
+      "']"
     ).innerHTML = new Date(timeline.end).toLocaleDateString(
       "en-US",
       dateOptions
