@@ -55,6 +55,7 @@ span.scenario-description-name {
 .leaflet-marker-icon.water div {
   letter-spacing: 0.15em;
   font-size: 18px;
+  font-style: italic;
   text-align: center;
   color: #455254;
   opacity: 0.75;
