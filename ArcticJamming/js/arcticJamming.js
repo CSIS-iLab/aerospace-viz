@@ -277,7 +277,7 @@ function setIconSize() {
   );
 
   jamElements.forEach(function(icon) {
-    var size = Math.min(1, zoomLevel - map.minZoom) * 0.5 * maxRadius;
+    var size = Math.max(1, zoomLevel - map.minZoom) * 0.5 * maxRadius;
     icon.style.width = size + "px";
 
     icon.style.height = size + "px";
