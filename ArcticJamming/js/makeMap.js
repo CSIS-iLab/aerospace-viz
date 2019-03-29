@@ -1,5 +1,23 @@
 "use strict";
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function _typeof(obj) {
+      return obj &&
+        typeof Symbol === "function" &&
+        obj.constructor === Symbol &&
+        obj !== Symbol.prototype
+        ? "symbol"
+        : typeof obj;
+    };
+  }
+  return _typeof(obj);
+}
+
 var url =
   window.location != window.parent.location
     ? document.referrer
@@ -20,7 +38,6 @@ function Map(container, properties) {
   Object.keys(properties).forEach(function(property) {
     _this[property] = properties[property];
   });
-
   Map.all = Map.all || [];
   Map.all.push(this);
 
@@ -47,12 +64,9 @@ function Map(container, properties) {
           : true,
       attributionControl: false
     });
-
     if (this.loadEvent) this.map.on("load", this.loadEvent);
     if (this.addEvent) this.map.on("layeradd", this.addEvent);
-
     this.map.setView(this.center, this.zoom);
-
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/ilabmedia/" +
         this["mapbox style"] +
@@ -100,13 +114,9 @@ function makeMap(options) {
 function initWithoutSpreadsheet(options, translations) {
   options.slug = options.mapID.toLowerCase().replace(/ /g, "-");
   options.translations = translations;
-
   makeNodes(options);
-
   var container = document.querySelector("#" + options.slug + "__map.map");
-
   var map = new Map(container, options).render();
-
   fetch(
     "https://csis.carto.com/api/v2/sql?api_key=" +
       map["api key"] +
@@ -118,11 +128,8 @@ function initWithoutSpreadsheet(options, translations) {
     })
     .then(function(json) {
       map.json = [json];
-
       var box = document.querySelector("#" + options.slug + " #controls");
-
       map.formatToolbox(box);
-
       makeGroups(map);
     });
 }
@@ -151,46 +158,37 @@ function initWithSpreadsheet(dataURL, options, translations) {
         .filter(function(i) {
           return i;
         });
-
       var properties = {};
-
       Object.keys(metaData).forEach(function(data) {
         properties[data] = metaData[data];
       });
-
       Object.keys(options).forEach(function(data) {
         properties[data] = options[data];
       });
-
       properties["popup content"] =
         properties["popup content"] &&
         typeof properties["popup content"] === "string"
           ? properties["popup content"].split(",")
           : properties["popup content"] &&
-            typeof properties["popup content"] === "object"
+            _typeof(properties["popup content"]) === "object"
             ? properties["popup content"]
             : [];
-
       properties["popup headers"] =
         properties["popup headers"] &&
         typeof properties["popup headers"] === "string"
           ? properties["popup headers"].split(",")
           : properties["popup headers"] &&
-            typeof properties["popup headers"] === "object"
+            _typeof(properties["popup headers"]) === "object"
             ? properties["popup headers"]
             : [];
-
       properties["center"] =
         typeof properties["center"] === "string"
           ? properties["center"].split(",")
           : properties["center"];
-
       properties.slug = properties.mapID.toLowerCase().replace(/ /g, "-");
       properties.translations = translations;
       properties.widgets = widgets;
-
       makeNodes(properties);
-
       var referenceSheets = widgets.filter(function(w) {
         return w.reference;
       });
@@ -226,15 +224,12 @@ function initWithSpreadsheet(dataURL, options, translations) {
           })
           .then(function(jsons) {
             makeWidgets(jsons, properties, boxContent);
-
             var footerNode = document.createElement("footer");
             footerNode.innerHTML =
               properties.footer + '  <div class="hidden"></div>';
-
             var penUltimateNode =
               document.querySelector("#" + properties.slug + " #controls") ||
               document.querySelector("#" + properties.slug + "header");
-
             penUltimateNode.parentNode.insertBefore(
               footerNode,
               penUltimateNode.nextSibling
@@ -243,7 +238,6 @@ function initWithSpreadsheet(dataURL, options, translations) {
       } else {
         console.log("else");
         makeWidgets(jsons, properties, boxContent);
-
         var container = document.querySelector("#" + properties.slug + " .map");
         new Map(container, properties).render();
       }
@@ -268,7 +262,6 @@ function getWidgets(metaData) {
     "reference",
     "style"
   ];
-
   Object.keys(metaData)
     .filter(function(k) {
       return k.toLowerCase().indexOf("widget") > -1;
@@ -280,7 +273,6 @@ function getWidgets(metaData) {
         process(k, index, property);
       });
     });
-
   widgets.forEach(function(w, i) {
     w.field = w.field.replace(/ /g, "_");
     w.id = i;
@@ -292,20 +284,15 @@ function makeNodes(options) {
   var newSectionHTML = "";
   newSectionHTML += '<section id="' + options.slug + '">';
   newSectionHTML += '<div id="' + options.slug + '__map" class="map"></div>';
-
   newSectionHTML += '<aside class="toolbox">';
-
   newSectionHTML += options.title
     ? '<input type="checkbox" checked class="ui mobile-only"><div class="hamburger mobile-only"><div class="icon"> <span></span> <span></span> <span></span></div><div class="menu translate"></div></div>'
     : "";
-
   newSectionHTML += '<div class="box">';
-
   newSectionHTML +=
     options.title || options.logo || options.description
       ? '<header  class="translate"> <h1></h1> <a target="_blank" id="logo"></a> <p class="translate"></p></header>'
       : "";
-
   newSectionHTML +=
     (options.instructions ? '<p class="translate"></p>' : "") +
     '<div id="controls"><div class="loader"></div></div><footer></footer></div></aside>';
@@ -346,7 +333,6 @@ function makeNodes(options) {
   if (document.querySelector("#" + options.slug + " header")) {
     document.querySelector("#" + options.slug + " .menu").innerText =
       options.title;
-
     document.querySelector("#" + options.slug + " header h1").innerText =
       options.title;
     document.querySelector(
@@ -408,11 +394,9 @@ function makeWidgetContent(options, x) {
     case "checkbox":
       widgetNodes += "<ul>";
       var keyStyle;
-
       var legendItems = options.widgets[x].grouping
         ? options.widgets[x].keys.groupBy("group")
         : options.widgets[x].keys.groupBy("label");
-
       Object.keys(legendItems).forEach(function(group, i) {
         switch (options.widgets[x].type) {
           case "form":
@@ -477,7 +461,6 @@ function makeWidgets(jsons, options, boxContent) {
       ? parseLegendData(options, jsons[x].feed.entry, w.type)
       : null;
     options.widgets[x].keys = legendData;
-
     widgetContent.push(makeWidgetContent(options, x));
     boxContent +=
       '<section class="widget ' +
@@ -489,17 +472,13 @@ function makeWidgets(jsons, options, boxContent) {
     boxContent += "</section>";
     var box = document.querySelector("#" + options.slug + " #controls");
     box.innerHTML = boxContent;
-
     var labelText = document.querySelectorAll(
       "#" + options.slug + " .itemText"
     );
-
     Array.from(labelText).forEach(function(itemText) {
       var height = itemText.offsetHeight;
       var fontSize = window.getComputedStyle(itemText)["font-size"];
-
       var offset = height / parseInt(fontSize.replace("px", ""), 10);
-
       itemText.style.transform = "translateY(" + offset * 10 + "%)";
     });
   });
@@ -572,21 +551,16 @@ function makeWidgets(jsons, options, boxContent) {
         var checks = Array.from(
           element.querySelectorAll("input[type='checkbox']")
         );
-
         var search = Array.from(element.querySelectorAll("input[type='text']"));
         var toggle = Array.from(
           element.querySelectorAll("input[type='radio']")
         );
-
         var inputs = selects
           .concat(checks)
           .concat(search)
           .concat(toggle);
-
         var initialized = 0;
-
         var count = inputs.length;
-
         inputs.forEach(function(input) {
           if (input.type === "text") {
             input.addEventListener("keyup", function() {
@@ -634,7 +608,6 @@ function makeWidgets(jsons, options, boxContent) {
         ) {
           return b.length - a.length;
         });
-
         translatableNodes.forEach(function(el, i) {
           translatableStrings.forEach(function(t) {
             if (Object.keys(map.translations[t]).length) {
@@ -664,33 +637,27 @@ function handleChange(map, element, widgets, x, count, initialized) {
     : element.querySelector("input[type='text']")
       ? Array.from(element.querySelectorAll("input[type='text']"))
       : Array.from(element.querySelectorAll("input"));
-
   var selections = element.querySelector("select")
     ? Array.from(element.querySelector("select").options)
     : element.querySelector("input[type='text']")
       ? Array.from(element.querySelectorAll("input[type='text']"))
       : Array.from(element.querySelectorAll("input:checked"));
-
   var possibleChecks = Array.from(element.querySelectorAll("input")).map(
     function(o) {
       return o.name.toLowerCase();
     }
   );
-
   var possibleOptions = Array.from(
     element.querySelectorAll(".choices__item")
   ).map(function(o) {
     return o.dataset.value.toLowerCase();
   });
-
   var possibleQueries = possibleChecks.concat(possibleOptions);
-
   var query = Array.from(selections).map(function(o) {
     return element.querySelector("input[type='checkbox']")
       ? o.name.toLowerCase()
       : o.value.toLowerCase();
   });
-
   map.filters[widgets[x].id] =
     widgets[x].input === "toggle"
       ? function(feature) {
@@ -726,7 +693,6 @@ function handleChange(map, element, widgets, x, count, initialized) {
           }
         : function(feature, layers) {
             var bool = true;
-
             var field = widgets[x].grouping
               ? widgets[x].grouping
               : widgets[x].field;
@@ -738,16 +704,15 @@ function handleChange(map, element, widgets, x, count, initialized) {
             ) {
               bool = false;
             }
+
             return bool;
           };
-
   if (initialized >= count) map.removeGroups();
   if (widgets.length >= x + 1 && initialized >= count) makeGroups(map);
 }
 
 function makeDropdownOptions(options, x) {
   var groups = options.widgets[x].keys.groupBy("group");
-
   var choices = Object.keys(groups).map(function(g, z) {
     return {
       id: z,
@@ -756,7 +721,6 @@ function makeDropdownOptions(options, x) {
       choices: groups[g]
     };
   });
-
   return {
     choices: choices,
     removeItemButton: true,
@@ -823,7 +787,6 @@ function makeDropdownOptions(options, x) {
           var key = options.widgets[x].keys.find(function(v) {
             return v.value.toLowerCase() === data.value.toLowerCase();
           });
-
           var keyStyle;
 
           switch (options.widgets[x].type) {
@@ -831,7 +794,6 @@ function makeDropdownOptions(options, x) {
               var forms = options.widgets[x].keys.map(function(k) {
                 return k.value.toLowerCase();
               });
-
               var styleOptions = {
                 key: key,
                 index: i,
@@ -934,8 +896,7 @@ function parseLegendData(options, json, style) {
 
           if (options.translations) {
             data.label = options.translations[data.label];
-            data.group = options.translations[data.group];
-            // debugger;
+            data.group = options.translations[data.group]; // debugger;
           }
 
           legendItems.push(data);
@@ -943,7 +904,6 @@ function parseLegendData(options, json, style) {
       }
     });
   });
-
   return legendItems;
 }
 
@@ -977,18 +937,15 @@ function stylePoint(feature, latlng, map, colorKeyWidget, formKeyWidget) {
     var forms = formKeyWidget.keys.map(function(k) {
       return k.value.toLowerCase();
     });
-
     var i = forms.indexOf(
       feature.properties[formKeyWidget.field].toLowerCase()
     );
-
     var key = formKeyWidget.keys.find(function(k) {
       return (
         k.value.toLowerCase() ===
         feature.properties[formKeyWidget.field].toLowerCase()
       );
     });
-
     var styleOptions = {
       key: key,
       index: i,
@@ -997,7 +954,6 @@ function stylePoint(feature, latlng, map, colorKeyWidget, formKeyWidget) {
       map: map,
       feature: feature
     };
-
     pointStyle = styleKey(styleOptions);
   } else if (colorKeyWidget && feature.properties[colorKeyWidget.field]) {
     var key = colorKeyWidget.keys.find(function(k) {
@@ -1018,7 +974,6 @@ function stylePoint(feature, latlng, map, colorKeyWidget, formKeyWidget) {
       '<svg xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5" fill="' +
       "#38f" +
       '"/></svg>';
-
     pointStyle = {
       class: "default",
       svg: encodeURI("data:image/svg+xml;base64," + window.btoa(svg))
@@ -1061,7 +1016,6 @@ function makeGeoJsonOptions(map, colorKeyWidget, formKeyWidget) {
     forms = formKeyWidget.keys.map(function(f) {
       return f.value;
     });
-
     forms.forEach(function(f, i) {
       switch (i) {
         case 0:
@@ -1092,7 +1046,6 @@ function makeGeoJsonOptions(map, colorKeyWidget, formKeyWidget) {
       colors: colors,
       forms: forms
     };
-
     var backgroundOptions = {
       filter: filter,
       onEachFeature: onEachFeature,
@@ -1169,15 +1122,12 @@ function makeGroups(map) {
   var colorKeyWidget = map.widgets.find(function(w) {
     return w.type === "color";
   });
-
   var formKeyWidget = map.widgets.find(function(w) {
     return w.type === "form";
   });
-
   var geoJsonOptions = map.geoJsonOptions
     ? map.geoJsonOptions(map, colorKeyWidget, formKeyWidget)
     : makeGeoJsonOptions(map, colorKeyWidget, formKeyWidget);
-
   map.json.forEach(function(json, i) {
     var color;
 
@@ -1196,7 +1146,8 @@ function makeGroups(map) {
         showCoverageOnHover: false,
         zoomToBoundsOnClick: false,
         maxClusterRadius: map.cluster,
-        disableClusteringAtZoom: map.cluster, /////////////
+        disableClusteringAtZoom: map.cluster,
+        /////////////
         iconCreateFunction: function iconCreateFunction(cluster) {
           return L.divIcon({
             className: "icon-group",
@@ -1212,7 +1163,6 @@ function makeGroups(map) {
         }
       })
     );
-
     geoJsonOptions.forEach(function(option) {
       if (colorKeyWidget) {
         json.features = json.features.sort(function(a, b) {
@@ -1240,14 +1190,11 @@ function handleFeatureEvents(feature, layer, map) {
           handleLayerClick(feature, layer, map);
         }
       };
-
   layer.on(eventOptions);
-
   var popupContent =
     typeof map.formatPopupContent === "function"
       ? map.formatPopupContent(feature, map)
       : formatPopupContent(feature, map);
-
   layer.bindPopup(popupContent);
 }
 
@@ -1296,7 +1243,6 @@ function formatPopupContent(feature, map) {
       return p;
     })
     .join("");
-
   var link = feature.properties.hyperlink || feature.properties.link;
   var externalLinkContent =
     link && link.trim()
@@ -1322,6 +1268,7 @@ function formatPopupContent(feature, map) {
       content = content.replace(re, map.translations[t]);
     });
   }
+
   return content;
 }
 
@@ -1389,7 +1336,11 @@ function handleClusterClick(e, map, i) {
 }
 
 function styleNonPoint(feature, options, index) {
-  var { map, formKeyWidget, colorKeyWidget, colors, forms } = options;
+  var map = options.map,
+    formKeyWidget = options.formKeyWidget,
+    colorKeyWidget = options.colorKeyWidget,
+    colors = options.colors,
+    forms = options.forms;
   var colorKey = colorKeyWidget
     ? colorKeyWidget.keys.find(function(k) {
         return (
@@ -1415,7 +1366,6 @@ function styleNonPoint(feature, options, index) {
   }
 
   var color = colorKey ? colorKey.color : formKey ? formKey.color : null;
-
   var formKeyForm = formKeyWidget
     ? formKeyWidget.keys.reduce(function(a, c) {
         return c.form;
@@ -1448,6 +1398,7 @@ function styleNonPoint(feature, options, index) {
   } else {
     if (colorKey.form === "pattern") {
       var pattern;
+
       switch (true) {
         case colorKey.pattern[0].indexOf("stripe") > -1:
           var patternOptions = {
@@ -1458,7 +1409,6 @@ function styleNonPoint(feature, options, index) {
             spaceOpacity: 1,
             angle: 45
           };
-
           pattern = new L.StripePattern(patternOptions);
           break;
 
@@ -1472,18 +1422,17 @@ function styleNonPoint(feature, options, index) {
             fillColor: colorKey.pattern[colorKey.pattern.length - 1],
             fillOpacity: 1
           };
-
           var shape = new L.PatternCircle(shapeOptions);
-
-          var patternOptions = { width: 8, height: 8 };
-
+          var patternOptions = {
+            width: 8,
+            height: 8
+          };
           pattern = new L.Pattern(patternOptions);
           pattern.addShape(shape);
           break;
       }
 
       pattern.addTo(options.map.map);
-
       return {
         fillPattern: pattern ? pattern : null,
         fillColor: color,
@@ -1498,22 +1447,20 @@ function styleNonPoint(feature, options, index) {
     var lineColor;
     var lineWeight;
     var lineOpacity;
+
     switch (true) {
       case feature.geometry.type.toLowerCase().indexOf("line") > -1:
         lineColor = chroma(color)
           .brighten()
           .hex();
-
         lineOpacity = 1;
         lineWeight = 4;
-
         break;
+
       case feature.geometry.type.toLowerCase().indexOf("polygon") > -1:
         lineColor = defaultColor;
-
         lineOpacity = 0.5;
         lineWeight = 2;
-
         break;
     }
 
@@ -1529,17 +1476,19 @@ function styleNonPoint(feature, options, index) {
 }
 
 function styleKey(options) {
-  var { map, feature, group, key, index, forms } = options;
+  var map = options.map,
+    feature = options.feature,
+    group = options.group,
+    key = options.key,
+    index = options.index,
+    forms = options.forms;
   var keyColor;
   var dashArray;
   var colors;
-
   var key = group ? group[0] : key;
-
   var colorKeyWidget = map.widgets.find(function(w) {
     return w.type === "color";
   });
-
   if (colorKeyWidget)
     colorKey = colorKeyWidget.keys.find(function(k) {
       return (
@@ -1547,9 +1496,7 @@ function styleKey(options) {
         feature.properties[colorKeyWidget.field].toLowerCase()
       );
     });
-
   if (colorKey) keyColor = colorKey.color;
-
   key.color = group
     ? chroma.average(
         group.map(function(g) {
@@ -1632,9 +1579,8 @@ function styleKey(options) {
     case "icon":
       if (key.icon) {
         var slug = key.value.replace(/ /g, "-");
-        load(key.icon, document.querySelector(`.hidden`));
-
-        var svgContent = document.querySelector(`.hidden`).innerHTML;
+        load(key.icon, document.querySelector(".hidden"));
+        var svgContent = document.querySelector(".hidden").innerHTML;
 
         if (colorKeyWidget) {
           svgContent = svgContent.replace(
@@ -1667,7 +1613,6 @@ function styleKey(options) {
 
     case "pattern":
       keyColor = key.color;
-
       var svg;
 
       switch (true) {
@@ -1694,6 +1639,7 @@ function styleKey(options) {
                 '"/></svg>'
             );
           break;
+
         case key.pattern[0].indexOf("dot") > -1:
           svg =
             "data:image/svg+xml;base64," +
@@ -1702,8 +1648,8 @@ function styleKey(options) {
                 colorOne +
                 '"/></svg>'
             );
-
           break;
+
         default:
           svg =
             "data:image/svg+xml;base64," +

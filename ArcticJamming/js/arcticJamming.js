@@ -1,11 +1,11 @@
+"use strict";
+
 //norway: 69.1312712296365,23.57666015625
 //sweden: 67.7926408447319,20.830078125000004
 //finland: 68.39918004344189,26.059570312500004
 //russia: 68.64055504059381,33.53027343750001
-
 var maxRadius = 375,
   maxMargin = maxRadius / 2;
-
 var map,
   now = null,
   startDates = [],
@@ -16,7 +16,7 @@ var map,
     day: "numeric",
     year: "numeric"
   };
-scenarioData = {
+var scenarioData = {
   Zapad: {
     center: [70.32613725493573, 25.576171875],
     zoom: 6,
@@ -39,6 +39,7 @@ scenarioData = {
 var filters = [
   function(feature, layers) {
     var bool = false;
+
     if (
       feature.properties.scenario
         .toLowerCase()
@@ -47,26 +48,21 @@ var filters = [
       var s = feature.properties.date_start.split("/").map(function(value) {
         return convertType(value);
       });
-
       var e = feature.properties.date_end.split("/").map(function(value) {
         return convertType(value);
       });
-
       var startDate = new Date(s[2], s[0] - 1, s[1]);
       var endDate = new Date(e[2], e[0] - 1, e[1]);
-
       startDates.push(startDate);
       endDates.push(endDate);
-
       feature.properties.startDate = startDate;
       feature.properties.endDate = endDate;
-
       bool = true;
     }
+
     return bool;
   }
 ];
-
 var timeline = {
   scenario: scenario,
   playing: false,
@@ -75,13 +71,16 @@ var timeline = {
   end: null,
   start: null,
   step: 24 * 60 * 60 * 1000,
-  updateCurrentLaunches(launches) {
+  updateCurrentLaunches: function updateCurrentLaunches(launches) {
     this.currentLaunchesEl.innerHTML = launches;
   },
-  setupTimeline({ start, end, now, onChange }) {
+  setupTimeline: function setupTimeline(_ref) {
+    var start = _ref.start,
+      end = _ref.end,
+      now = _ref.now,
+      onChange = _ref.onChange;
     this.end = end;
     this.start = start;
-
     noUiSlider.create(this.el, {
       start: this.start,
       connect: true,
@@ -92,30 +91,29 @@ var timeline = {
         max: this.end
       },
       format: {
-        from: v => parseInt(v, 10),
-        to: v => parseInt(v, 10)
+        from: function from(v) {
+          return parseInt(v, 10);
+        },
+        to: function to(v) {
+          return parseInt(v, 10);
+        }
       },
       pips: {
         mode: "range",
         density: (100 / (this.end - this.start)) * this.step
       }
     });
-
     this.el.noUiSlider.set(start);
-
     this.setupBtnControls();
-
     this.el.noUiSlider.on("update", onChange);
-
-    this.el.querySelector(`[data-value='${start}']`).innerHTML = new Date(
-      start
-    ).toLocaleDateString("en-US", dateOptions);
-
-    this.el.querySelector(`[data-value='${end}']`).innerHTML = new Date(
-      end
-    ).toLocaleDateString("en-US", dateOptions);
+    this.el.querySelector(
+      "[data-value='".concat(start, "']")
+    ).innerHTML = new Date(start).toLocaleDateString("en-US", dateOptions);
+    this.el.querySelector(
+      "[data-value='".concat(end, "']")
+    ).innerHTML = new Date(end).toLocaleDateString("en-US", dateOptions);
   },
-  setupBtnControls() {
+  setupBtnControls: function setupBtnControls() {
     this.btnControls.addEventListener("click", function() {
       if (now == timeline.end) {
         timeline.el.noUiSlider.set(timeline.start);
@@ -128,25 +126,20 @@ var timeline = {
 
       timeline.timer = setInterval(function() {
         now += timeline.el.noUiSlider.options.step;
-
         timeline.el.noUiSlider.set(now);
       }, timeline.transitionDuration);
-
       this.classList.remove("play-btn");
       this.classList.add("pause-btn");
-
       timeline.playing = true;
     });
   },
-
-  stopTimeline() {
+  stopTimeline: function stopTimeline() {
     clearInterval(timeline.timer);
     timeline.playing = false;
     timeline.btnControls.classList.remove("pause-btn");
     timeline.btnControls.classList.add("play-btn");
   }
 };
-
 makeMap({
   mapID: "arctic",
   center: scenarioData[timeline.scenario].center,
@@ -165,18 +158,19 @@ makeMap({
   "ocean color": "#b7c7d1",
   filters: filters,
   onEachFeature: {
-    click: function() {
+    click: function click() {
       this.closePopup();
       var popupContent = map.formatPopupContent(this.feature, map);
-
       this.bindPopup(popupContent);
       document.querySelector(".leaflet-popup-close-button").style.opacity = "1";
     },
-    mouseover: function() {
-      this.bindPopup(`<div class="tooltip">
-      <div class="tooltip-heading">${
-        this.feature.properties.name_hover
-      }</div></div>`);
+    mouseover: function mouseover() {
+      this.bindPopup(
+        '<div class="tooltip">\n      <div class="tooltip-heading">'.concat(
+          this.feature.properties.name_hover,
+          "</div></div>"
+        )
+      );
       this.openPopup();
     }
   },
@@ -189,8 +183,7 @@ makeMap({
   maxZoom: 8,
   maxBounds: [
     //south west
-    [40, -20],
-    //north east
+    [40, -20], //north east
     [80, 60]
   ],
   widgets: [
@@ -244,67 +237,66 @@ makeMap({
     }
   ]
 });
-
 map = Map.all[0];
-
-L.control.scale({ position: "bottomleft" }).addTo(map.map);
+L.control
+  .scale({
+    position: "bottomleft"
+  })
+  .addTo(map.map);
 
 function formatToolbox(box) {
   var boxContent = `
-  <div class="separator"></div>
-  <section id="scenario">
-  <div class="instruction">
-    <p>Select a military exercise</p>
-    <p></p>
-  </div>
-${Object.keys(scenarioData)
+    <div class="separator"></div>
+    <section id="scenario">
+    <div class="instruction">
+      <p>Select a military exercise</p>
+      <p></p>
+    </div>
+  ${Object.keys(scenarioData)
     .map(function(key) {
       return `<button ${
         scenario === key ? 'class="active"' : ""
       }>${key}</button>`;
     })
     .join(" ")}
-<p class="scenario-description">${
+  <p class="scenario-description">${
     scenarioData[timeline.scenario].description
   }</p>
-  <div>
-  </section>
-    <div class="separator"></div>
-  <section id="time">
-  <div class="indicator">
-    <p>Signal loss on <span class="date"></span></p>
-    <p><span></span></p>
-  </div>
-  <div class="timeline">
-  <div class="timeline-controls">
-    <button class="timeline-btn play-btn"></button>
-  </div>
-  <div class="timeline-container">
-    <div class="timeline-bar"></div>
-  </div>
-  </div>
-  </section>
-  <!--<p>Click on a point for incident details</p>-->
-    <div class="separator"></div>
-  <section>
-  <ul id="key">
-    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li>
+    <div>
+    </section>
+      <div class="separator"></div>
+    <section id="time">
+    <div class="indicator">
+      <p>Signal loss on <span class="date"></span></p>
+      <p><span></span></p>
+    </div>
+    <div class="timeline">
+    <div class="timeline-controls">
+      <button class="timeline-btn play-btn"></button>
+    </div>
+    <div class="timeline-container">
+      <div class="timeline-bar"></div>
+    </div>
+    </div>
+    </section>
+    <!--<p>Click on a point for incident details</p>-->
+      <div class="separator"></div>
+    <section>
+    <ul id="key">
+      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li>
 
-    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO  Activity</span></li>
+      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO  Activity</span></li>
 
-    <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
-    </ul>
-  </section>
-  <div class="hidden"></div>
-    `;
+      <li class="label"><span class="colorKey" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li>
+      </ul>
+    </section>
+    <div class="hidden"></div>
+      `;
 
   box.innerHTML = boxContent;
-
   scenario = document.querySelector("button.active").innerText;
-
   timeline.el = document.querySelector(".timeline-bar");
   timeline.btnControls = document.querySelector(".timeline-btn");
-
   document
     .querySelector("#scenario")
     .addEventListener("click", handleSceneClick);
@@ -319,7 +311,6 @@ function groupsLoaded() {
       })
     )
   ).getTime();
-
   timeline.start = new Date(
     Math.min.apply(
       null,
@@ -335,18 +326,15 @@ function groupsLoaded() {
     !timeline.el.noUiSlider
   ) {
     now = timeline.start;
-
     Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
       dateEl.innerText = new Date(now).toLocaleDateString("en-US", dateOptions);
     });
-
     var timelineOptions = {
       start: timeline.start,
       end: timeline.end,
       now: now,
-      onChange: function() {
+      onChange: function onChange() {
         now = this.get();
-
         Array.from(document.querySelectorAll(".date")).forEach(function(
           dateEl
         ) {
@@ -355,11 +343,9 @@ function groupsLoaded() {
             dateOptions
           );
         });
-
         var jams = Array.from(
-          document.querySelectorAll(`[class*="jammed-airspace"]`)
+          document.querySelectorAll('[class*="jammed-airspace"]')
         );
-
         jams.forEach(function(jam) {
           var start = parseInt(jam.dataset.start, 10);
           var end = parseInt(jam.dataset.end, 10);
@@ -376,18 +362,16 @@ function groupsLoaded() {
           setTimeout(function() {
             timeline.el.noUiSlider.set(timeline.start);
           }, timeline.transitionDuration);
-
           jams.forEach(function(jam) {
             jam.style.display = "none";
           });
         }
       }
     };
-
     timeline.setupTimeline(timelineOptions);
   }
 
-  var first = document.querySelector(`[data-start="${now}"]`);
+  var first = document.querySelector('[data-start="'.concat(now, '"]'));
   if (first) first.style.display = "block";
 }
 
@@ -401,7 +385,6 @@ function makeCustomGeoJsonOptions() {
 
   function filter(feature) {
     var activeFilters = map.filters.length ? map.filters : filters;
-
     return activeFilters
       .map(function(f) {
         return f(feature);
@@ -417,21 +400,20 @@ function makeCustomGeoJsonOptions() {
 
   var backgroundOptions = {
     filter: filter,
-    onEachFeature: function() {
+    onEachFeature: function onEachFeature() {
       return false;
     },
-    pointToLayer: function(feature, latlng) {
+    pointToLayer: function pointToLayer(feature, latlng) {
       return styleCustomPoint(feature, latlng, map, colorKeyWidget);
     }
   };
   var foregroundOptions = {
     filter: filter,
     onEachFeature: onEachFeature,
-    pointToLayer: function(feature, latlng) {
+    pointToLayer: function pointToLayer(feature, latlng) {
       return stylePoint(feature, latlng, map, formKeyWidget);
     }
   };
-
   return [backgroundOptions, foregroundOptions];
 }
 
@@ -439,46 +421,40 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
   var colorKeyWidget = map.widgets.find(function(w) {
     return w.type === "color";
   });
-
   var key = colorKeyWidget.keys.find(function(k) {
     return (
       k.value.toLowerCase() ===
       feature.properties[colorKeyWidget.field].toLowerCase()
     );
   });
-
   var styleOptions = {
     key: key,
     color: key.color,
     map: map,
     feature: feature
   };
-
   var scenario = feature.properties.scenario.toLowerCase().replace(/ /g, "-");
-
   var value = feature.properties.type.toLowerCase().replace(/ /g, "-");
-
   var s = feature.properties.date_start.split("/").map(function(value) {
     return convertType(value);
   });
-
   var e = feature.properties.date_end.split("/").map(function(value) {
     return convertType(value);
   });
-
   var startDate = new Date(s[2], s[0] - 1, s[1]);
   var endDate = new Date(e[2], e[0] - 1, e[1]);
-
   var icon = L.divIcon({
     iconAnchor: [0, 0],
     popupAnchor: [0, 10],
-    html: `<div class="animated_icon__${scenario}--${value}" data-start="${startDate.getTime()}" data-end="${endDate.getTime()}"></div>`
+    html: '<div class="animated_icon__'
+      .concat(scenario, "--")
+      .concat(value, '" data-start="')
+      .concat(startDate.getTime(), '" data-end="')
+      .concat(endDate.getTime(), '"></div>')
   });
-
   var marker = L.marker(latlng, {
     icon: icon
   });
-
   marker.on("add", function() {
     var animatedIcons = Array.from(
       document.querySelectorAll('[class*="jammed-airspace"]')
@@ -486,15 +462,14 @@ function styleCustomPoint(feature, latlng, map, colorKeyWidget) {
 
     if (animatedIcons.length) {
       animatedIcons.forEach(function(icon) {
-        icon.style.width = `${maxRadius}px`;
-        icon.style.height = `${maxRadius}px`;
-        icon.style.marginLeft = `-${maxMargin}px`;
-        icon.style.marginTop = `-${maxMargin}px`;
+        icon.style.width = "".concat(maxRadius, "px");
+        icon.style.height = "".concat(maxRadius, "px");
+        icon.style.marginLeft = "-".concat(maxMargin, "px");
+        icon.style.marginTop = "-".concat(maxMargin, "px");
         icon.parentElement.style.zIndex = "-1";
       });
     }
   });
-
   return marker;
 }
 
@@ -503,19 +478,16 @@ function formatCustomPopupContent(feature, map) {
     "en-US",
     dateOptions
   );
-
   var formattedEndDate = feature.properties.endDate.toLocaleDateString(
     "en-US",
     dateOptions
   );
-
   var date =
     formattedStartDate +
     (feature.properties.startDate.getDay() !==
       feature.properties.endDate.getDay() && feature.properties.end_true
       ? " to " + formattedEndDate
       : "");
-
   var sources = Object.keys(feature.properties)
     .filter(function(key) {
       return key.indexOf("click") > -1 && feature.properties[key].trim();
@@ -529,13 +501,17 @@ function formatCustomPopupContent(feature, map) {
       );
     })
     .join("<br>");
-
-  return `<div class="tooltip">
-  <div class="tooltip-heading">${feature.properties.name_hover}</div>
-  <div class="tooltip-label">${date}</div>
-  <div class="tooltip-label">${feature.properties.details_hover}</div>
-  <div class="tooltip-link">${sources}</div>
-  </div>`;
+  return '<div class="tooltip">\n  <div class="tooltip-heading">'
+    .concat(
+      feature.properties.name_hover,
+      '</div>\n  <div class="tooltip-label">'
+    )
+    .concat(date, '</div>\n  <div class="tooltip-label">')
+    .concat(
+      feature.properties.details_hover,
+      '</div>\n  <div class="tooltip-link">'
+    )
+    .concat(sources, "</div>\n  </div>");
 }
 
 function handleSceneClick(e) {
@@ -547,29 +523,32 @@ function handleSceneClick(e) {
   }
 
   var active = document.querySelector("button.active");
+
   if (e.target.tagName === "BUTTON") {
     active.classList.remove("active");
     e.target.classList.add("active");
   }
-  timeline.scenario = document.querySelector("button.active").textContent;
 
+  timeline.scenario = document.querySelector("button.active").textContent;
   map.map.flyTo(
     scenarioData[timeline.scenario].center,
     scenarioData[timeline.scenario].zoom,
-    { animate: true, duration: 0.5 }
+    {
+      animate: true,
+      duration: 0.5
+    }
   );
-
   Array.from(document.querySelectorAll(".scenario-description")).forEach(
     function(sceneEl) {
       sceneEl.innerHTML = scenarioData[timeline.scenario].description;
     }
   );
-
   startDates = [];
   endDates = [];
 
   map.filters[0] = function(feature, layers) {
     var bool = false;
+
     if (
       feature.properties.scenario
         .toLowerCase()
@@ -578,28 +557,23 @@ function handleSceneClick(e) {
       var s = feature.properties.date_start.split("/").map(function(value) {
         return convertType(value);
       });
-
       var e = feature.properties.date_end.split("/").map(function(value) {
         return convertType(value);
       });
-
       var startDate = new Date(s[2], s[0] - 1, s[1]);
       var endDate = new Date(e[2], e[0] - 1, e[1]);
-
       startDates.push(startDate);
       endDates.push(endDate);
-
       feature.properties.startDate = startDate;
       feature.properties.endDate = endDate;
-
       bool = true;
     }
+
     return bool;
   };
 
   map.removeGroups();
   makeGroups(map);
-
   timeline.end = new Date(
     Math.max.apply(
       null,
@@ -608,7 +582,6 @@ function handleSceneClick(e) {
       })
     )
   ).getTime();
-
   timeline.start = new Date(
     Math.min.apply(
       null,
@@ -630,18 +603,15 @@ function handleSceneClick(e) {
         density: (100 / (timeline.end - timeline.start)) * timeline.step
       }
     };
-
     timeline.el.noUiSlider.updateOptions(newOptions, true);
-
     timeline.el.querySelector(
-      `[data-value='${timeline.start}']`
+      "[data-value='".concat(timeline.start, "']")
     ).innerHTML = new Date(timeline.start).toLocaleDateString(
       "en-US",
       dateOptions
     );
-
     timeline.el.querySelector(
-      `[data-value='${timeline.end}']`
+      "[data-value='".concat(timeline.end, "']")
     ).innerHTML = new Date(timeline.end).toLocaleDateString(
       "en-US",
       dateOptions
