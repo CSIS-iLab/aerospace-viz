@@ -55,7 +55,7 @@ function Map(container, properties) {
   this.render = function() {
     this.map = L.map(container, {
       minZoom: properties.minZoom || null,
-      maxZoom: properties.maxZoom || null,
+      maxZoom: properties.maxZoom || 20,
       maxBounds: properties.maxBounds || null,
       scrollWheelZoom: window.innerWidth < 768 ? false : true,
       zoomControl:
@@ -66,6 +66,7 @@ function Map(container, properties) {
     });
     if (this.loadEvent) this.map.on("load", this.loadEvent);
     if (this.addEvent) this.map.on("layeradd", this.addEvent);
+
     this.map.setView(this.center, this.zoom);
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/ilabmedia/" +
@@ -295,7 +296,7 @@ function makeNodes(options) {
       : "";
   newSectionHTML +=
     (options.instructions ? '<p class="translate"></p>' : "") +
-    '<div id="controls"><div class="loader"></div></div><footer></footer></div></aside>';
+    '<div id="controls"><div class="loader"></div></div><footer><div class="hidden"></div></footer></div></aside>';
   newSectionHTML += "</section>";
   document.body.innerHTML += newSectionHTML;
   document.title = options.title + " | CSIS " + options.program;
@@ -403,16 +404,19 @@ function makeWidgetContent(options, x) {
             var forms = options.widgets[x].keys.map(function(f) {
               return f.value;
             });
+
             var styleOptions = {
               group: legendItems[group],
               index: i,
-              forms: forms
+              forms: forms,
+              map: options
             };
             keyStyle = styleKey(styleOptions);
             break;
 
           case "color":
             var styleOptions = {
+              map: options,
               group: legendItems[group]
             };
             keyStyle = styleKey(styleOptions);
@@ -743,14 +747,16 @@ function makeDropdownOptions(options, x) {
               var styleOptions = {
                 key: key,
                 index: i,
-                forms: forms
+                forms: forms,
+                map: options
               };
               keyStyle = styleKey(styleOptions);
               break;
 
             case "color":
               var styleOptions = {
-                key: key
+                key: key,
+                map: options
               };
               keyStyle = styleKey(styleOptions);
               break;
@@ -797,14 +803,16 @@ function makeDropdownOptions(options, x) {
               var styleOptions = {
                 key: key,
                 index: i,
-                forms: forms
+                forms: forms,
+                map: options
               };
               keyStyle = styleKey(styleOptions);
               break;
 
             case "color":
               var styleOptions = {
-                key: key
+                key: key,
+                map: options
               };
               keyStyle = styleKey(styleOptions);
               break;
@@ -1486,10 +1494,12 @@ function styleKey(options) {
   var dashArray;
   var colors;
   var key = group ? group[0] : key;
+
   var colorKeyWidget = map.widgets.find(function(w) {
     return w.type === "color";
   });
-  if (colorKeyWidget)
+
+  if (colorKeyWidget && colorKeyWidget.keys && feature)
     colorKey = colorKeyWidget.keys.find(function(k) {
       return (
         k.value.toLowerCase() ===
@@ -1601,7 +1611,7 @@ function styleKey(options) {
           "data:image/svg+xml;base64," +
           window.btoa(
             '<svg xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="5" fill="' +
-              keyColor +
+              (keyColor || key.color) +
               '"/></svg>'
           );
       }
