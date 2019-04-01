@@ -10,6 +10,7 @@ $(function() {
       zoomType: 'x',
       type: 'area'
     },
+    colors: ['#f9bc65', '#196c95', '#d66e42', '#b5bdc1'],
     // Chart Title and Subtitle
     title: {
       text: "Space Environment: Total Launches by Country"
