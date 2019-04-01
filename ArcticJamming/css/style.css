@@ -149,10 +149,6 @@ header + p {
   max-width: calc(100% - 48px);
 }
 
-#controls li:hover {
-  cursor: pointer;
-}
-
 h1 + #controls,
 #logo + controls,
 p + #controls {

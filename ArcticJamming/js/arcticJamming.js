@@ -16,19 +16,19 @@ var map,
 var scenarioData = {
   Zapad: {
     center: [70.32613725493573, 25.576171875],
-    zoom: window.innerWidth > 768 ? 6 : 5,
+    zoom: window.innerWidth > 768 ? 7 : 5,
     description:
       '<span class="scenario-description-name">Zapad</span> (Fall 2017) was a joint Russia-Belarus military exercise.'
   },
   "Trident Juncture": {
     center: [69.7485511291223, 23.389892578125004],
-    zoom: window.innerWidth > 768 ? 6 : 4,
+    zoom: window.innerWidth > 768 ? 7 : 4,
     description:
       '<span class="scenario-description-name">Trident Juncture</span> (Fall 2018) was a NATO military exercise.'
   },
   Clockwork: {
     center: [67.20403234340081, 20.017089843750004],
-    zoom: window.innerWidth > 768 ? 5 : 3,
+    zoom: window.innerWidth > 768 ? 6 : 3,
     description:
       '<span class="scenario-description-name">Clockwork</span> (Spring 2019) was a UK military exercise.'
   }
@@ -272,6 +272,23 @@ function setIconSize() {
   iconElements.forEach(function(icon) {
     icon.style.width = zoomLevel * 4 + "px";
     icon.style.height = zoomLevel * 4 + "px";
+    var text = icon.querySelector("div");
+    if (text) text.style.fontSize = zoomLevel * 4 - 4 + "px";
+  });
+
+  var jamElements = Array.from(
+    document.querySelectorAll('[class*="jammed-airspace"]')
+  );
+
+  jamElements.forEach(function(icon) {
+    var size = Math.max(0.5, zoomLevel - map.minZoom) * 0.5 * maxRadius;
+    icon.style.width = size + "px";
+    icon.style.height = size + "px";
+
+    icon.style.marginLeft = size + "px";
+
+    icon.style.marginLeft = "-" + size / 2 + "px";
+    icon.style.marginTop = "-" + size / 2 + "px";
   });
 
   var jamElements = Array.from(
