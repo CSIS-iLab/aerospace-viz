@@ -10,7 +10,7 @@ $(function() {
       zoomType: 'x',
       type: 'area'
     },
-    colors: ['#f9bc65', '#196c95', '#d66e42', '#b5bdc1'],
+    colors: ['#196c95', '#f9bc65', '#d66e42', '#b5bdc1'],
     // Chart Title and Subtitle
     title: {
       text: "Space Environment: Total Launches by Country"
@@ -28,7 +28,7 @@ $(function() {
     legend: {
       align: 'center',
       verticalAlign: 'bottom',
-      layout: 'horizontal'
+      layout: 'horizontal',
     },
     // Y Axis
     yAxis: {
@@ -49,6 +49,7 @@ $(function() {
       area: {
         stacking: null, // Normal bar graph
         // stacking: "normal", // Stacked bar graph
+        fillOpacity: .9,
         marker: {
           enabled: false,
           symbol: "circle"
