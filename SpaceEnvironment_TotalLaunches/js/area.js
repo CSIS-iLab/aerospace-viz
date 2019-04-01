@@ -3,7 +3,21 @@ $(function() {
     // Load Data in from Google Sheets
     data: {
       googleSpreadsheetKey: '1FpDY2RRA1EW5Pk7cK9tRSstaH6P0f-2GEDc_VjNRI4o',
-      googleSpreadsheetWorksheet: 1
+      googleSpreadsheetWorksheet: 1,
+      // complete: function (options) {
+      //     let array = []
+      //     options.series.forEach(option => {
+      //         array.push(option.name)
+      //         option.legendIndex = 0
+      //         console.log(option)
+      //       })
+      //       takeOut = array.filter(item => item === 'Others')
+      //       others = takeOut[0]
+      //       console.log(others)
+      //       leaveIn = array.filter(item => item !== 'Others')
+      //       leaveIn.sort().push(others)
+      //       console.log(leaveIn)
+      //     }
     },
     // General Chart Options
     chart: {
@@ -49,7 +63,7 @@ $(function() {
       area: {
         stacking: null, // Normal bar graph
         // stacking: "normal", // Stacked bar graph
-        fillOpacity: .9,
+        fillOpacity: .8,
         marker: {
           enabled: false,
           symbol: "circle"
