@@ -4,12 +4,12 @@ import SpeedControls from './js/speed-controls'
 import timeline from './js/timeline'
 import { getData, getWorldData } from './js/data'
 
-const baseSpeed = 1000
+const baseSpeed = 300
 
 const speeds = {
   half: baseSpeed * 2,
   '1x': baseSpeed,
-  '2x': baseSpeed / 4
+  '2x': baseSpeed / 2
 }
 
 let breakpoint = breakpoints.calculate()

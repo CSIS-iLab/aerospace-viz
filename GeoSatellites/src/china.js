@@ -5,7 +5,7 @@ const satelliteCountry = 'Chinese'
 const satelliteFile = './data/20190325-china.csv'
 const geoSatellitesFile = './data/20190328-all-geo-satellites.csv'
 
-const worldProjection = [-144, -6]
+const worldProjection = [-60, -18]
 
 function init() {
   loadData(
