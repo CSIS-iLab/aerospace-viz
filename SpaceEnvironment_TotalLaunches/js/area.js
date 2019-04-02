@@ -71,7 +71,7 @@ $(function() {
       area: {
         stacking: null, // Normal bar graph
         // stacking: "normal", // Stacked bar graph
-        fillOpacity: .8,
+        fillOpacity: .7,
         marker: {
           enabled: false,
           symbol: "circle"
