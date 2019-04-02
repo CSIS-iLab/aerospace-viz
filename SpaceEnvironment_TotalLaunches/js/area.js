@@ -6,21 +6,21 @@ $(function() {
       googleSpreadsheetWorksheet: 1,
       complete: function (data) {
         // Display legend alphabetically
-        let dataItem = data.series
+        let dataItems = data.series
         let dataNames = []
 
-          dataItem.forEach(item => {
+          dataItems.forEach(item => {
               item.legendIndex = ''
               dataNames.push(item.name)
             })
 
             notSorting = dataNames.filter(arrayItem => arrayItem === 'Others')
-            alphaSort = dataNames.filter(arrayItem => arrayItem !== 'Others')
-            alphaSort.sort().push(notSorting[0])
+            alphaSorting = dataNames.filter(arrayItem => arrayItem !== 'Others')
+            alphaSorting.sort().push(notSorting[0])
 
-            dataItem.forEach(item => {
-              for (i = 0; i < alphaSort.length; i++) {
-                if (item.name === alphaSort[i]) {
+            dataItems.forEach(item => {
+              for (i = 0; i < alphaSorting.length; i++) {
+                if (item.name === alphaSorting[i]) {
                   item.legendIndex = i
                 }
               }
