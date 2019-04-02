@@ -34,7 +34,7 @@ const timeline = {
       start: [startDate],
       connect: true,
       behaviour: 'tap-drag',
-      step: this.step,
+      // step: this.step,
       range: {
         min: startDate,
         max: endDate
@@ -54,6 +54,17 @@ const timeline = {
     this.setupBtnControls()
 
     this.el.noUiSlider.on('update', onUpdate)
+    this.el.noUiSlider.on('slide', function(values, handle) {
+      let tempDate = new Date(values[handle])
+      tempDate = new Date(
+        tempDate.getUTCFullYear(),
+        tempDate.getUTCMonth(),
+        tempDate.getUTCDate()
+      ).getTime()
+      // console.log(values[handle])
+      // console.log(tempDate)
+      timeline.el.noUiSlider.set(tempDate)
+    })
 
     this.el.querySelector(
       `[data-value='${startDate}']`
@@ -81,7 +92,9 @@ const timeline = {
   startTimeline() {
     timeline.timer = setInterval(function() {
       let currentDate = timeline.getCurrentDate()
-      timeline.el.noUiSlider.set(currentDate + 24 * 60 * 60 * 1000)
+      let testCurrent = new Date(currentDate)
+      let newDate = testCurrent.setDate(testCurrent.getDate() + 1)
+      timeline.el.noUiSlider.set(newDate)
     }, timeline.transitionDuration)
 
     timeline.controlBtn.classList.remove('play-btn')
