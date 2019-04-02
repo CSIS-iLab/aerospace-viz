@@ -4,20 +4,28 @@ $(function() {
     data: {
       googleSpreadsheetKey: '1FpDY2RRA1EW5Pk7cK9tRSstaH6P0f-2GEDc_VjNRI4o',
       googleSpreadsheetWorksheet: 1,
-      // complete: function (options) {
-      //     let array = []
-      //     options.series.forEach(option => {
-      //         array.push(option.name)
-      //         option.legendIndex = 0
-      //         console.log(option)
-      //       })
-      //       takeOut = array.filter(item => item === 'Others')
-      //       others = takeOut[0]
-      //       console.log(others)
-      //       leaveIn = array.filter(item => item !== 'Others')
-      //       leaveIn.sort().push(others)
-      //       console.log(leaveIn)
-      //     }
+      complete: function (data) {
+        // Display legend alphabetically
+        let dataItem = data.series
+        let dataNames = []
+
+          dataItem.forEach(item => {
+              item.legendIndex = ''
+              dataNames.push(item.name)
+            })
+
+            notSorting = dataNames.filter(arrayItem => arrayItem === 'Others')
+            alphaSort = dataNames.filter(arrayItem => arrayItem !== 'Others')
+            alphaSort.sort().push(notSorting[0])
+
+            dataItem.forEach(item => {
+              for (i = 0; i < alphaSort.length; i++) {
+                if (item.name === alphaSort[i]) {
+                  item.legendIndex = i
+                }
+              }
+            })
+          },
     },
     // General Chart Options
     chart: {
