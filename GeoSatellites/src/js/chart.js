@@ -50,14 +50,8 @@ function drawChart() {
   let width = 0
   let height = 0
 
-  let scaleX = scaleLinear().domain([
-    defaultCoords.orbit.x.min,
-    defaultCoords.orbit.x.max
-  ])
-  let scaleY = scaleLinear().domain([
-    defaultCoords.orbit.y.min,
-    defaultCoords.orbit.y.max
-  ])
+  let scaleX = scaleLinear()
+  let scaleY = scaleLinear()
 
   function enter({ container, data }) {
     const svg = container.selectAll('svg').data([data])
@@ -88,8 +82,12 @@ function drawChart() {
   }
 
   function updateScales({ data }) {
-    scaleX.range([0, width])
-    scaleY.range([height, 0])
+    scaleX
+      .domain([defaultCoords.orbit.x.min, defaultCoords.orbit.x.max])
+      .range([0, width])
+    scaleY
+      .domain([defaultCoords.orbit.y.min, defaultCoords.orbit.y.max])
+      .range([height, 0])
   }
 
   function updateDom({ container, data, geoSatellitesData }) {
@@ -129,42 +127,30 @@ function drawChart() {
       .datum(topojson.feature(world, world.objects.countries))
       .attr('d', globePath)
 
-    // Orbit
-    // let orbit = g.select('.g-orbit path')
-
-    // const orbitRadiusX = Math.abs(scaleX(defaultCoords.orbit.x.max) - scaleX(0))
-
-    // const orbitRadiusY = Math.abs(scaleY(defaultCoords.orbit.y.max) - scaleY(0))
-
-    // orbit.attr(
-    //   'd',
-    //   drawEllipse({
-    //     cx: scaleX(0),
-    //     cy: scaleY(0),
-    //     rx: orbitRadiusX,
-    //     ry: orbitRadiusY
-    //   })
-    // )
-
     // GeoSatellites
     let geoSatellites = g
       .select('.g-geoSatellites')
       .selectAll('.satellite')
       .data(geoSatellitesData, d => d.sat_name)
 
-    geoSatellites.join(enter =>
-      enter
-        .append('circle')
-        .attr('class', 'satellite')
-        .classed('satellite--perp', d => d.is_perp)
-        .classed('satellite--geo', d => d.is_geo)
-        .attr('r', 3)
-        .attr('cx', d => scaleX(d.x_coord))
-        .attr('cy', d => scaleY(d.y_coord))
-        .attr('data-x', d => d.x_coord)
-        .attr('data-y', d => d.y_coord)
-        .on('mouseover', interactions.mouseover)
-        .on('mouseleave', interactions.mouseleave)
+    geoSatellites.join(
+      enter =>
+        enter
+          .append('circle')
+          .attr('class', 'satellite')
+          .classed('satellite--perp', d => d.is_perp)
+          .classed('satellite--geo', d => d.is_geo)
+          .attr('r', 3)
+          .attr('cx', d => scaleX(d.x_coord))
+          .attr('cy', d => scaleY(d.y_coord))
+          .attr('data-x', d => d.x_coord)
+          .attr('data-y', d => d.y_coord)
+          .on('mouseover', interactions.mouseover)
+          .on('mouseleave', interactions.mouseleave),
+      update =>
+        update
+          .attr('cx', d => scaleX(d.x_coord))
+          .attr('cy', d => scaleY(d.y_coord))
     )
 
     // Satellites
