@@ -49,7 +49,6 @@ async function getData(satelliteURL, geoSatellitesURL) {
     })
 
     dataset.perp = new Map(Array.from(dataset.perp).sort((a, b) => a[0] - b[0]))
-
     return dataset
   })
 

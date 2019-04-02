@@ -82,7 +82,7 @@ function setupTimeline() {
     startDate: startDate,
     endDate: endDate,
     transitionDuration: transitionDuration,
-    onUpdate: function() {
+    onUpdate: function(values, handle) {
       drawChart()
       timeline.updateCurrentDate(currentDate)
       if (currentDate == endDate) {
