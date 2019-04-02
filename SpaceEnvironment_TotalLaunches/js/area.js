@@ -6,26 +6,29 @@ $(function() {
       googleSpreadsheetWorksheet: 1,
       complete: function (data) {
         // Display legend alphabetically
-        let dataItems = data.series
+        const dataItems = data.series
         let dataNames = []
 
+        dataItems.forEach(item => {
+            item.legendIndex = ''
+            dataNames.push(item.name)
+          })
+
+        let notSorting = dataNames.filter(arrayItem => arrayItem === 'Others')
+        let alphaSorting = dataNames.filter(arrayItem => arrayItem !== 'Others')
+        alphaSorting.sort()
+        if (notSorting !== undefined || notSorting.length > 0) {
+        alphaSorting.push(notSorting)
+        }
+
           dataItems.forEach(item => {
-              item.legendIndex = ''
-              dataNames.push(item.name)
-            })
-
-            notSorting = dataNames.filter(arrayItem => arrayItem === 'Others')
-            alphaSorting = dataNames.filter(arrayItem => arrayItem !== 'Others')
-            alphaSorting.sort().push(notSorting[0])
-
-            dataItems.forEach(item => {
-              for (i = 0; i < alphaSorting.length; i++) {
-                if (item.name === alphaSorting[i]) {
-                  item.legendIndex = i
-                }
+            for (i = 0; i < alphaSorting.length; i++) {
+              if (item.name === alphaSorting[i]) {
+                item.legendIndex = i
               }
-            })
-          },
+            }
+          })
+        },
     },
     // General Chart Options
     chart: {
