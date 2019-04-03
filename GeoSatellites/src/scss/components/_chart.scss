@@ -4,6 +4,14 @@
   padding: 0 1rem;
   text-align: center;
 
+  @include breakpoint('medium') {
+    min-height: 500px;
+  }
+
+  @include breakpoint('large') {
+    min-height: 400px;
+  }
+
   .satellite {
     fill-opacity: 0.8;
     stroke-width: 0.5;
