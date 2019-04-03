@@ -252,7 +252,7 @@ function drawChart() {
   chart.height = function(...args) {
     if (!args.length) return height
     height = args[0] - margin.top - margin.bottom
-    perpRadius = height * 0.0174
+    perpRadius = height * 0.025
     radius = height * 0.0117
 
     return chart
