@@ -12,6 +12,7 @@
     &::before {
       content: '';
       display: block;
+      flex: 0 0 auto;
       width: 10px;
       height: 10px;
       margin: 2px 0.5rem 0 0;
@@ -25,6 +26,7 @@
     }
 
     &:first-of-type {
+      flex: 0 0 auto; // The satellite name should never wrap multiple lines
       margin-right: 1.5rem;
     }
   }
