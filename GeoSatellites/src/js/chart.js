@@ -49,6 +49,8 @@ function drawChart() {
 
   let width = 0
   let height = 0
+  let radius = 3
+  let perpRadius = 5
 
   let scaleX = scaleLinear()
   let scaleY = scaleLinear()
@@ -140,7 +142,7 @@ function drawChart() {
           .attr('class', 'satellite')
           .classed('satellite--perp', d => d.is_perp)
           .classed('satellite--geo', d => d.is_geo)
-          .attr('r', 3)
+          .attr('r', radius)
           .attr('cx', d => scaleX(d.x_coord))
           .attr('cy', d => scaleY(d.y_coord))
           .attr('data-x', d => d.x_coord)
@@ -166,7 +168,7 @@ function drawChart() {
           .attr('class', 'satellite')
           .classed('satellite--perp', d => d.is_perp)
           .classed('satellite--target', d => d.is_target)
-          .attr('r', 5)
+          .attr('r', perpRadius)
           .attr('data-x', d => d.x_coord)
           .attr('data-y', d => d.y_coord)
           .attr(
@@ -250,6 +252,8 @@ function drawChart() {
   chart.height = function(...args) {
     if (!args.length) return height
     height = args[0] - margin.top - margin.bottom
+    perpRadius = height * 0.0174
+    radius = height * 0.0117
 
     return chart
   }

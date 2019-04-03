@@ -2,7 +2,7 @@ import loadData from './index'
 
 const satellite = 'SJ-17'
 const satelliteCountry = 'Chinese'
-const satelliteFile = './data/20190325-china.csv'
+const satelliteFile = './data/20190403-china.csv'
 const geoSatellitesFile = './data/20190328-all-geo-satellites.csv'
 
 const worldProjection = [-60, -18]

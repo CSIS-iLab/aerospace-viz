@@ -1,6 +1,6 @@
 import loadData from './index'
 
-const satellite = 'Luch-Olymp'
+const satellite = 'Olymp-K'
 const satelliteCountry = 'Russian'
 const satelliteFile = './data/20190401-russia.csv'
 const geoSatellitesFile = './data/20190328-all-geo-satellites.csv'
