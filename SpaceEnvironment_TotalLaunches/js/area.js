@@ -18,7 +18,7 @@ $(function() {
         let alphaSorting = dataNames.filter(arrayItem => arrayItem !== 'Others')
         alphaSorting.sort()
         if (notSorting.length > 0) {
-          alphaSorting.push(notSorting)
+          alphaSorting.push(notSorting[0])
         }
 
           dataItems.forEach(item => {
