@@ -1,0 +1,23 @@
+/*============================
+=            Source          =
+============================*/
+
+.source {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 0 auto;
+	padding: 0.5rem 0.5rem;
+	z-index: 5;
+	background-color: rgba($white, 0.7);
+
+	p {
+		@include fontSize(11px);
+		line-height: 1;
+		margin: 0;
+	}
+
+	a {
+		color: $dark-blue;
+	}
+}

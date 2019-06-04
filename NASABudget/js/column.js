@@ -6,7 +6,8 @@ $(function() {
 
   var drilldownData = {}
   var seriesDrilldown = []
-//hello paul take 2
+  var yTitle = ''
+
   Highcharts.data({
     googleSpreadsheetKey: '1TNgeonCjrQQKIc8keK4pGSHaZ70bH620RuCCwKW0V80',
       googleSpreadsheetWorksheet: 1,
@@ -54,6 +55,11 @@ $(function() {
           drilldownData[type][year].data.push(
             [category, value]
           )
+          drilldownData[type][year].data.sort(function(a, b) {
+            if (b[1] < a[1]) return -1;
+            if (b[1] > a[1]) return 1;
+            return 0;
+          })
         })
 
         datasets = Object.keys(data)
@@ -87,7 +93,7 @@ $(function() {
             seriesDrilldown.push(series)
         })
         populateSelect()
-        renderChart(seriesData[0], seriesDrilldown[0])
+        renderChart(seriesData[0], seriesDrilldown[0],datasets[0])
       }
   })
 
@@ -102,12 +108,12 @@ $(function() {
     $('.datasets').on('change', function() {
       var chart = $('#hcContainer').highcharts()
       chart.destroy()
-      renderChart(seriesData[this.value], seriesDrilldown[this.value])
+      renderChart(seriesData[this.value], seriesDrilldown[this.value],datasets[this.value])
     })
   }
 
 
-  function renderChart(data, drilldown) {
+  function renderChart(data, drilldown, dataset) {
       var chartCont = {
         // General Chart Options
         chart: {
@@ -142,12 +148,20 @@ $(function() {
         // Y Axis
         yAxis: {
           title: {
-            text: "Then-Year Dollars, in Millions"
+            text: "Budget Authority, in Billions (" + dataset + ")"
           },
+          labels: {
+              formatter: function () {
+                  var label = "$" + this.value/1000 +"B";
+                  return label;
+              }
+          }
         },
         // Tooltip
         tooltip: {
-          valueDecimals: 2
+          valueDecimals: 2,
+          valuePrefix: '$',
+          valueSuffix: 'M'
         },
         series: data,
         drilldown: {

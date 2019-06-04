@@ -1,0 +1,32 @@
+/* ----------  Colors  ---------- */
+$black: #000;
+$off-black: #333;
+$white: #fff;
+
+$blue: #196c95;
+$light-blue: #5db6d0;
+$dark-blue: #44545f;
+$yellow: #f9bc65;
+$orange: #d66e42;
+$green: #4f9793;
+$dark-green: #3e7a82;
+$dark-gray: #4b5255;
+$gray: #b5bdc1;
+$light-gray: #dedede;
+
+$map-water: #b7c7d1;
+$map-land: #f2f1ee;
+$map-land-borders: #c3c3c3;
+$gridlines: #e6e6e6;
+$axis-labels: #666;
+
+$legend-background: rgba($white, 0.7);
+
+$categories: (
+  perp: $orange,
+  geo: $gray
+);
+
+/* ----------  Fonts  ---------- */
+$font__abel: 'Abel', 'Arial', sans-serif;
+$font__source: 'Source Sans Pro', 'Arial', sans-serif;

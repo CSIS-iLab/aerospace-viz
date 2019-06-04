@@ -1,0 +1,18 @@
+/*============================
+=            Source          =
+============================*/
+
+.source {
+  margin: 0 1rem;
+  text-align: right;
+
+  p {
+    margin: 0;
+    @include fontSize(11px);
+    line-height: 1;
+  }
+
+  a {
+    color: $dark-blue;
+  }
+}

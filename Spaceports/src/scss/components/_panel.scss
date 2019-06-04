@@ -1,0 +1,69 @@
+/*=============================
+=            Panel            =
+=============================*/
+.panel {
+	position: absolute;
+	top: 4rem;
+	right: -36%;
+	bottom: 1rem;
+	z-index: 10;
+	width: 33%;
+	background-color: $white;
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px 3px;
+	padding: 1rem;
+	transition: right 750ms ease-in-out;
+	overflow-y: scroll;
+	@include fontSize(14px);
+
+	&.is-active {
+		right: 0;
+	}
+
+	.panel-close {
+		position: absolute;
+		top: 0.5rem;
+		right: 0;
+		padding-right: 1rem;
+		background-color: transparent;
+		border: 0;
+		text-align: right;
+		cursor: pointer;
+	}
+
+	.panel-heading {
+		margin: 0 0.75rem 0.5rem 0;
+		@include fontSize(20px);
+		font-family: $font__abel;
+		font-weight: 400;
+		text-transform: uppercase;
+		color: $black;
+	}
+
+	.panel-facts {
+		margin: 0 0 2rem 1.25rem;
+		padding: 0;
+		line-height: 1.3;
+
+		li {
+			margin-bottom: 0.25rem;
+		}
+
+		.panel-fact-value {
+			font-weight: bold;
+		}
+	}
+
+	.chart-title {
+		margin: 0 0 0.5rem 0;
+		@include fontSize(18px);
+		font-family: $font__abel;
+		font-weight: 400;
+		color: $black;
+		text-align: center;
+	}
+
+	.panel-subtitle {
+		margin: 0 0 0.5rem 1.7rem;
+		@include fontSize(13px);
+	}
+}

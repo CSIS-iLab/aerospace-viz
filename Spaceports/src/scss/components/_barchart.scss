@@ -1,0 +1,64 @@
+/*=================================
+=            Bar Chart            =
+=================================*/
+.barchart-container {
+	margin-bottom: 2.5rem;
+
+	@each $orbit, $color in $orbits {
+		.bar-#{$orbit} {
+			fill: $color;
+
+			&.is-active {
+				fill: darken($color, 10%);
+			}
+		}
+	}
+
+	.axis {
+		text {
+			font-family: $font__abel;
+			fill: $axis-labels;
+		}
+
+		path,
+		line {
+			stroke: $gridlines;
+		}
+	}
+
+	.barchart {
+		margin-bottom: 0.5rem;
+	}
+
+	.barchart-legend {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		@include fontSize(12px);
+		text-transform: capitalize;
+
+		li {
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				margin: 0 0.2rem 0 0;
+				border-radius: 50%;
+			}
+
+			&:last-of-type {
+				margin-bottom: 0;
+			}
+		}
+
+		@each $orbit, $color in $orbits {
+			.legend-item[data-orbit='#{$orbit}']::before {
+				background-color: $color;
+			}
+		}
+	}
+}

@@ -1,0 +1,38 @@
+.chart {
+  display: grid;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  text-align: center;
+
+  @include breakpoint('medium') {
+    min-height: 500px;
+  }
+
+  @include breakpoint('large') {
+    min-height: 400px;
+  }
+
+  .satellite {
+    fill-opacity: 0.8;
+    stroke-width: 0.5;
+    transition: fill 0.2s linear;
+
+    @each $category, $color in $categories {
+      &.satellite--#{$category} {
+        fill: $color;
+        stroke: darken($color, 20%);
+
+        &.is-active {
+          fill: lighten($color, 10%);
+          fill-opacity: 1;
+        }
+      }
+    }
+
+    &.satellite--geo {
+      fill-opacity: 0.6;
+    }
+  }
+}

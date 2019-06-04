@@ -1,0 +1,64 @@
+/*===========================
+=            Map            =
+===========================*/
+
+.interactive-container {
+	position: relative;
+	// overflow-x: hidden;
+	display: none;
+
+	@include breakpoint('medium') {
+		display: block;
+	}
+
+	.svg-map {
+		background-color: $map-water;
+	}
+
+	.map-background {
+		fill: $map-water;
+	}
+
+	.country {
+		fill: $map-land;
+		stroke: $map-land-borders;
+	}
+
+	.spaceport {
+		fill-opacity: 0.7;
+
+		&.human-launched {
+			stroke: $blue;
+			stroke-width: 2px;
+		}
+	}
+}
+
+.zoomBtns {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	z-index: 20;
+	cursor: pointer;
+	display: none;
+
+	&.is-visible {
+		display: flex;
+	}
+
+	.zoom {
+		background-color: $white;
+		display: block;
+		border: 1px solid $dark-blue;
+		@include fontSize(16px);
+		border-radius: 0;
+	}
+
+	.zoom-out {
+		border-left: 0;
+	}
+
+	.zoom-reset {
+		border-left: 0;
+	}
+}

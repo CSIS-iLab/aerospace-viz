@@ -1,0 +1,35 @@
+// General
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font__source;
+  @include fontSize(16px);
+  margin: 0;
+  padding: 0;
+  --breakpoint: 'xsmall';
+
+  @include breakpoint('small') {
+    --breakpoint: 'small';
+  }
+
+  @include breakpoint('medium') {
+    --breakpoint: 'medium';
+  }
+
+  @include breakpoint('large') {
+    --breakpoint: 'large';
+  }
+}
+
+%content-wrapper {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a {
+}
