@@ -8,7 +8,7 @@ $(function() {
   var seriesDrilldown = []
 //hello paul take 2
   Highcharts.data({
-    googleSpreadsheetKey: '1GKIk9j34dFOIkPj-7Ao-tz0d1sFpre5FbczUl4vGusM',
+    googleSpreadsheetKey: '1TNgeonCjrQQKIc8keK4pGSHaZ70bH620RuCCwKW0V80',
       googleSpreadsheetWorksheet: 1,
       switchRowsAndColumns: true,
       parsed: function(columns) {
