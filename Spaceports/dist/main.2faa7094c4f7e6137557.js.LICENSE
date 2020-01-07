@@ -1,0 +1,13 @@
+/*! nouislider - 11.1.0 - 2018-04-02 11:18:13 */
+
+/*! In this file: Construction of DOM elements; */
+
+/*! In this file: Browser events (not slider events like slide, change); */
+
+/*! In this file: Slider events (not browser events); */
+
+/*! In this file: Mechanics for slider operation */
+
+/*! In this file: All methods eventually exposed in slider.noUiSlider... */
+
+/*! In this file: Calls to functions. All other scope_ files define functions only; */
