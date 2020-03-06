@@ -1,7 +1,8 @@
 var basemap = L.tileLayer(
-  "https://api.mapbox.com/styles/v1/ilabmedia/cjtt0jqiq01c51fs1r2sb4hl4.html?fresh=true&title=copy&access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw",
+  'https://api.mapbox.com/styles/v1/ilabmedia/cjtt0jqiq01c51fs1r2sb4hl4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw',
   {}
 );
+mapbox://styles/ilabmedia/cjtt0jqiq01c51fs1r2sb4hl4
 
 var map = L.map("map", {
   center: [12.95, 77.49],
@@ -10,13 +11,12 @@ var map = L.map("map", {
   scrollWheelZoom: true,
   minZoom: 3,
   zoomControl: true,
-  scrollWheelZoom: true,
   layers: [basemap],
   attributionControl: false
 });
 
 const client = new carto.Client({
-  apiKey: "naHBRG0yKpdLewQzEuuBrg",
+  apiKey: "3W5HgCXM23QVjB8bFW413w",
   username: "csis"
 });
 
@@ -72,14 +72,11 @@ function createPopup(event) {
 
     content += `
     <div class="popupHeaderStyle"> 
-      ${data.name_of_asset}
+      ${data.location_as_reported}
     </div> 
     <div class="popupEntryStyle"> 
-      ${data.location}
+      ${data.date}
     </div>
-    <p class="popupEntryStyle"> 
-      ${data.description}
-    </p>
     `
     popup.setContent("" + content);
     popup.openOn(map);
@@ -91,55 +88,55 @@ L.control
     position: "bottomright"
   })
   .setPrefix(
-    'Data by <a href="https://amti.csis.org" target="_blank">CSIS AMTI</a>, Leaflet contributors'
+    'Data by <a href="https://aerospace.csis.org" target="_blank">CSIS Aerospace</a>, Leaflet contributors'
   )
   .addTo(map);
 
-var checks = Array.from(
-  document.querySelectorAll(".type_of_asset ul input")
-).map(function (checkbox) {
-  return checkbox.name;
-});
+// var checks = Array.from(
+//   document.querySelectorAll(".type_of_asset ul input")
+// ).map(function (checkbox) {
+//   return checkbox.name;
+// });
 
-var filter_checks = new carto.filter.Category("type_of_asset", {
-  notIn: checks
-});
+// var filter_checks = new carto.filter.Category("type_of_asset", {
+//   notIn: checks
+// });
 
-document
-  .querySelector(".type_of_asset ul")
-  .addEventListener("click", function (e) {
-    var checkbox = e.target.type === "checkbox" ? e.target : null;
+// document
+//   .querySelector(".type_of_asset ul")
+//   .addEventListener("click", function (e) {
+//     var checkbox = e.target.type === "checkbox" ? e.target : null;
 
-    if (checkbox) {
-      var checked = Array.from(
-        document.querySelectorAll(".type_of_asset ul input:checked")
-      ).map(function (checkbox) {
-        return checkbox.name;
-      });
+//     if (checkbox) {
+//       var checked = Array.from(
+//         document.querySelectorAll(".type_of_asset ul input:checked")
+//       ).map(function (checkbox) {
+//         return checkbox.name;
+//       });
 
-      var notChecked = checks.filter(function (name) {
-        return checked.indexOf(name) < 0;
-      });
+//       var notChecked = checks.filter(function (name) {
+//         return checked.indexOf(name) < 0;
+//       });
 
-      var filter_checked = new carto.filter.Category("type_of_asset", {
-        in: checked
-      });
+//       var filter_checked = new carto.filter.Category("type_of_asset", {
+//         in: checked
+//       });
 
-      var filter_notChecked = new carto.filter.Category("type_of_asset", {
-        notIn: notChecked
-      });
+//       var filter_notChecked = new carto.filter.Category("type_of_asset", {
+//         notIn: notChecked
+//       });
 
-      var filters =
-        checkbox.name === "OTHERS" && checkbox.checked
-          ? [filter_checks, filter_checked]
-          : checkbox.name === "OTHERS" && !checkbox.checked
-            ? [filter_checked]
-            : [filter_notChecked];
+//       var filters =
+//         checkbox.name === "OTHERS" && checkbox.checked
+//           ? [filter_checks, filter_checked]
+//           : checkbox.name === "OTHERS" && !checkbox.checked
+//             ? [filter_checked]
+//             : [filter_notChecked];
 
-      jammedPlacesSource.getFilters().forEach(function (f) {
-        jammedPlacesSource.removeFilter(f);
-      });
+//       jammedPlacesSource.getFilters().forEach(function (f) {
+//         jammedPlacesSource.removeFilter(f);
+//       });
 
-      jammedPlacesSource.addFilter(new carto.filter.OR(filters));
-    }
-  });
+//       jammedPlacesSource.addFilter(new carto.filter.OR(filters));
+//     }
+//   });
