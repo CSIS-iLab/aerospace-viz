@@ -1,12 +1,11 @@
 var basemap = L.tileLayer(
-  'https://api.mapbox.com/styles/v1/ilabmedia/cjtt0jqiq01c51fs1r2sb4hl4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw',
+  'https://api.mapbox.com/styles/v1/ilabmedia/ck7kn54kz0n551ium4z5qzliv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw',
   {}
 );
-mapbox://styles/ilabmedia/cjtt0jqiq01c51fs1r2sb4hl4
 
 var map = L.map("map", {
-  center: [12.95, 77.49],
-  zoom: 3,
+  center: [35.943, 23.647],
+  zoom: 5,
   maxZoom: 12,
   scrollWheelZoom: true,
   minZoom: 3,
@@ -58,6 +57,7 @@ const popup = L.popup({ closeButton: true });
 
 jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
 
+console.log(jammedPlacesLayer)
 function createPopup(event) {
   popup.setLatLng(event.latLng);
 

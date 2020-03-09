@@ -22,6 +22,9 @@
   <script src="https://libs.cartocdn.com/carto.js/v4.1.11/carto.min.js"></script>
   <link href="https://carto.com/developers/carto-js/examples/maps/public/style.css" rel="stylesheet" />
 
+  <!-- Include noUiSlider -->
+  <link rel="stylesheet" href="css/nouislider.css">
+
   <!-- Include Zoom Slider plugin -->
   <script src="zoom-slider/zoomslider.js"></script>
   <link href="zoom-slider/zoomslider.css" rel="stylesheet">
@@ -62,8 +65,7 @@
       </header>
 
       <section>
-        <p class="translate description open-sans mobile-toggle">Click on the highlighted facilities to learn more about
-          each location. Toggle different types of assets on and off by checking the boxes below.</p>
+        <p class="translate description open-sans mobile-toggle">Click a site on the map to learn more.</p>
         <div class="separator mobile-toggle"></div>
         <div id="controls">
           <div id="info">
@@ -103,45 +105,13 @@
       </section> -->
     </div>
 
-    <div class="CDB-infowindow CDB-infowindow--light js-infowindow">
-      <div class="CDB-infowindow-close js-close"></div>
-      <div class="CDB-infowindow-container">
-        <div class="CDB-infowindow-bg">
-          <div class="CDB-infowindow-inner js-inner">
-            <ul class="CDB-infowindow-list js-content">
-              <li class="CDB-infowindow-listItem">
-                <h5 class="CDB-infowindow-subtitle">location as reported</h5>
-                <h4 class="CDB-infowindow-title">{{location_as_reported}}</h4>
-              </li>
-              <li class="CDB-infowindow-listItem">
-                <h5 class="CDB-infowindow-subtitle">date</h5>
-                <h4 class="CDB-infowindow-title">{{date}}</h4>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="CDB-hook">
-          <div class="CDB-hook-inner"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="CDB-Tooltip CDB-Tooltip--isLight">
-      <ul class="CDB-Tooltip-list">
-        <li class="CDB-Tooltip-listItem">
-          <h4 class="CDB-Tooltip-listText">{{location_as_reported}}</h4>
-        </li>
-      </ul>
-    </div>
-
-
-
     <footer>
       <div class="hidden"></div>
     </footer>
     </div>
   </aside>
   </section>
+  <script src="js/vendor/nouislider.min.js"></script>
   <script src="js/mediterranean-jamming.js"></script>
 </body>
 
