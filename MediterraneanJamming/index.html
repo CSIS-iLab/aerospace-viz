@@ -20,6 +20,7 @@
   <link href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" rel="stylesheet" />
   <!-- Include CARTO.js -->
   <script src="https://libs.cartocdn.com/carto.js/v4.1.11/carto.min.js"></script>
+  <script src="https://cartodb-libs.global.ssl.fastly.net/carto.js/v4.2.0/carto.min.js"></script>
   <link href="https://carto.com/developers/carto-js/examples/maps/public/style.css" rel="stylesheet" />
 
   <!-- Include noUiSlider -->
@@ -31,7 +32,7 @@
 
   <link rel="preconnect stylesheet" href="https://use.typekit.net/ats0hoc.css" />
 
-  <link href="css/makeMap.css" rel="stylesheet" />
+  <!-- <link href="css/makeMap.css" rel="stylesheet" /> -->
 
   <link href="css/mediterranean-jamming.css" rel="stylesheet" />
 </head>
@@ -66,11 +67,11 @@
       <section>
         <p class="translate description open-sans mobile-toggle">Click a site on the map to learn more.</p>
         <div class="separator mobile-toggle"></div>
-        <div id="controls"></div>
         <div id="event-start"></div>
         <div id="event-end"></div>
         <div id="info"></div>
       </section>
+      <div id="controls"></div>
       <!-- <section class="widget type_of_asset">
         <h3 class="mobile-toggle translate">Type of Facility</h3>
         <ul class="actions">
