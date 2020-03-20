@@ -83,121 +83,75 @@ function getDates() {
         dates.push(date.getTime())
 
       })
-<<<<<<< HEAD
       let date = new Date(d[2], d[0] - 1, d[1])
       dates.push(date.getTime())
 
     })
-    dates.sort(function (a, b) { return a - b })
-    len = dates.length
-    s = dates[0]
-    e = dates[len - 1]
+  dates.sort(function (a, b) { return a - b })
+  len = dates.length
+  s = dates[0]
+  e = dates[len - 1]
 
 
-    noUiSlider.create(slider, {
-      start: [s],
-      range: {
-        'min': s,
-        'max': e,
-      },
+  noUiSlider.create(slider, {
+    start: [s],
+    range: {
+      'min': s,
+      'max': e,
+    },
 
-      step: 24 * 60 * 60 * 1000,
-      behaviour: 'tap-drag',
-    })
-
-    var dateValue = document.getElementById('event-start')
-
-
-    dateValue.innerHTML = formatDate(new Date(s))
-
-    slider.noUiSlider.on('update', function (values) {
-      dateValue.innerHTML = formatDate(new Date(+values));
-    });
-
-    // Create a string representation of the date.
-    function formatDate(date) {
-=======
-      dates.sort(function (a, b) { return a - b })
-      len = dates.length
-      s = dates[0]
-      e = dates[len - 1]
-
-
-      noUiSlider.create(slider, {
-        start: [s],
-        range: {
-          'min': s,
-          'max': e,
-        },
-
-        step: 24 * 60 * 60 * 1000,
-        behaviour: 'tap-drag',
-      })
-
-      console.log(s)
-
-      var dateValues = [
-        document.getElementById('event-start'),
-        document.getElementById('event-end')
-      ];
-
-      slider.noUiSlider.on('update', function (values, handle) {
-        dateValues[handle].innerHTML = formatDate(new Date(+values[handle]));
-      });
-
->>>>>>> d0967aabf3447622c2cd2acdf0077d04b342c813
-      // Create a list of day and month names.
-      var weekdays = [
-        "Sunday", "Monday", "Tuesday",
-        "Wednesday", "Thursday", "Friday",
-        "Saturday"
-      ];
-
-      var months = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-      ];
-
-      // Append a suffix to dates.
-      // Example: 23 => 23rd, 1 => 1st.
-      function nth(d) {
-        if (d > 3 && d < 21) return 'th';
-        switch (d % 10) {
-          case 1:
-            return "st";
-          case 2:
-            return "nd";
-          case 3:
-            return "rd";
-          default:
-            return "th";
-        }
-      }
-<<<<<<< HEAD
-
-      return weekdays[date.getDay()] + ", " +
-        date.getDate() + nth(date.getDate()) + " " +
-        months[date.getMonth()] + " " +
-        date.getFullYear();
-    }
+    step: 24 * 60 * 60 * 1000,
+    behaviour: 'tap-drag',
   })
-=======
->>>>>>> d0967aabf3447622c2cd2acdf0077d04b342c813
 
-      // Create a string representation of the date.
-      function formatDate(date) {
-        return weekdays[date.getDay()] + ", " +
-          date.getDate() + nth(date.getDate()) + " " +
-          months[date.getMonth()] + " " +
-          date.getFullYear();
+  var dateValue = document.getElementById('event-start')
+
+
+  dateValue.innerHTML = formatDate(new Date(s))
+
+  slider.noUiSlider.on('update', function (values) {
+    dateValue.innerHTML = formatDate(new Date(+values));
+  });
+
+  // Create a string representation of the date.
+  function formatDate(date) {
+    // Create a list of day and month names.
+    var weekdays = [
+      "Sunday", "Monday", "Tuesday",
+      "Wednesday", "Thursday", "Friday",
+      "Saturday"
+    ];
+
+    var months = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+
+    // Append a suffix to dates.
+    // Example: 23 => 23rd, 1 => 1st.
+    function nth(d) {
+      if (d > 3 && d < 21) return 'th';
+      switch (d % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
       }
-    })
+    }
+
+    return weekdays[date.getDay()] + ", " +
+      date.getDate() + nth(date.getDate()) + " " +
+      months[date.getMonth()] + " " +
+      date.getFullYear();
+  }
+
 }
-
-
-
 
 
 
