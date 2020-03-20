@@ -20,8 +20,7 @@ const client = new carto.Client({
 });
 
 const jammedPlacesSource = new carto.source.SQL(
-  "SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea"
-
+  "SELECT *, to_timestamp('date', 'DD-MM-YYYY HH24-MI-SS') FROM copy_of_gps_jamming_in_the_mediterranean_sea"
 );
 
 const jammedPlacesStyle = new carto.style.CartoCSS(`
@@ -54,21 +53,37 @@ client
   .bringToFront()
   .addTo(map);
 
-const popup = L.popup({ closeButton: true });
+let slider = document.getElementById("controls")
 
-jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
+noUiSlider.create(slider, {
+  start: [0],
+  connect: true,
+  range: {
+    'min': 0,
+    'max': 9999999999999
+  }
+})
 
-let dates = []
-let s
-let e
+console.log(jammedPlacesSource)
 
-fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea')
-  .then((resp) => resp.json())
-  .then((response) => {
-    response.rows.forEach((row, i) => {
-      let d = row.date.split('/').map(function (value) {
-        return convertType(value)
+slider.noUiSlider.on('change', function () {
+  let dateValues = slider.noUiSlider.get()
+  jammedPlacesSource.setQuery('SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea WHERE date ===' + dateValues)
+})
+
+function getDates() {
+  fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea')
+    .then((resp) => resp.json())
+    .then((response) => {
+      response.rows.forEach((row, i) => {
+        let d = row.date.split('/').map(function (value) {
+          return convertType(value)
+        })
+        let date = new Date(d[2], d[0] - 1, d[1])
+        dates.push(date.getTime())
+
       })
+<<<<<<< HEAD
       let date = new Date(d[2], d[0] - 1, d[1])
       dates.push(date.getTime())
 
@@ -101,6 +116,36 @@ fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT
 
     // Create a string representation of the date.
     function formatDate(date) {
+=======
+      dates.sort(function (a, b) { return a - b })
+      len = dates.length
+      s = dates[0]
+      e = dates[len - 1]
+
+
+      noUiSlider.create(slider, {
+        start: [s],
+        range: {
+          'min': s,
+          'max': e,
+        },
+
+        step: 24 * 60 * 60 * 1000,
+        behaviour: 'tap-drag',
+      })
+
+      console.log(s)
+
+      var dateValues = [
+        document.getElementById('event-start'),
+        document.getElementById('event-end')
+      ];
+
+      slider.noUiSlider.on('update', function (values, handle) {
+        dateValues[handle].innerHTML = formatDate(new Date(+values[handle]));
+      });
+
+>>>>>>> d0967aabf3447622c2cd2acdf0077d04b342c813
       // Create a list of day and month names.
       var weekdays = [
         "Sunday", "Monday", "Tuesday",
@@ -130,6 +175,7 @@ fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT
             return "th";
         }
       }
+<<<<<<< HEAD
 
       return weekdays[date.getDay()] + ", " +
         date.getDate() + nth(date.getDate()) + " " +
@@ -137,7 +183,18 @@ fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT
         date.getFullYear();
     }
   })
+=======
+>>>>>>> d0967aabf3447622c2cd2acdf0077d04b342c813
 
+      // Create a string representation of the date.
+      function formatDate(date) {
+        return weekdays[date.getDay()] + ", " +
+          date.getDate() + nth(date.getDate()) + " " +
+          months[date.getMonth()] + " " +
+          date.getFullYear();
+      }
+    })
+}
 
 
 
@@ -166,6 +223,9 @@ var filters = [
   }
 ]
 
+const popup = L.popup({ closeButton: true });
+
+jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
 
 function createPopup(event) {
   popup.setLatLng(event.latLng);
@@ -208,7 +268,7 @@ function timestamp(str) {
   return new Date(str).getTime();
 }
 
-let slider = document.getElementById("controls")
+
 
 
 
