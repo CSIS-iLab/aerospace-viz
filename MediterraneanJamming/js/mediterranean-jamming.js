@@ -20,7 +20,8 @@ const client = new carto.Client({
 });
 
 const jammedPlacesSource = new carto.source.SQL(
-  "SELECT *, to_timestamp('date', 'DD-MM-YYYY HH24-MI-SS') FROM copy_of_gps_jamming_in_the_mediterranean_sea"
+  "SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea"
+
 );
 
 const jammedPlacesStyle = new carto.style.CartoCSS(`
@@ -53,105 +54,93 @@ client
   .bringToFront()
   .addTo(map);
 
-let slider = document.getElementById("controls")
+const popup = L.popup({ closeButton: true });
 
-noUiSlider.create(slider, {
-  start: [0],
-  connect: true,
-  range: {
-    'min': 0,
-    'max': 9999999999999
-  }
-})
+jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
 
-console.log(jammedPlacesSource)
+let dates = []
+let s
+let e
 
-slider.noUiSlider.on('change', function () {
-  let dateValues = slider.noUiSlider.get()
-  jammedPlacesSource.setQuery('SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea WHERE date ===' + dateValues)
-})
-
-function getDates() {
-  fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea')
-    .then((resp) => resp.json())
-    .then((response) => {
-      response.rows.forEach((row, i) => {
-        let d = row.date.split('/').map(function (value) {
-          return convertType(value)
-        })
-        let date = new Date(d[2], d[0] - 1, d[1])
-        dates.push(date.getTime())
-
+fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea')
+  .then((resp) => resp.json())
+  .then((response) => {
+    response.rows.forEach((row, i) => {
+      let d = row.date.split('/').map(function (value) {
+        return convertType(value)
       })
       let date = new Date(d[2], d[0] - 1, d[1])
       dates.push(date.getTime())
 
     })
-  dates.sort(function (a, b) { return a - b })
-  len = dates.length
-  s = dates[0]
-  e = dates[len - 1]
+    dates.sort(function (a, b) { return a - b })
+    len = dates.length
+    s = dates[0]
+    e = dates[len - 1]
 
 
-  noUiSlider.create(slider, {
-    start: [s],
-    range: {
-      'min': s,
-      'max': e,
-    },
+    noUiSlider.create(slider, {
+      start: [s],
+      range: {
+        'min': s,
+        'max': e,
+      },
 
-    step: 24 * 60 * 60 * 1000,
-    behaviour: 'tap-drag',
+      step: 24 * 60 * 60 * 1000,
+      behaviour: 'tap-drag',
+    })
+
+    var dateValue = document.getElementById('event-start')
+
+
+    dateValue.innerHTML = formatDate(new Date(s))
+
+    slider.noUiSlider.on('update', function (values) {
+      dateValue.innerHTML = formatDate(new Date(+values));
+    });
+
+    // Create a string representation of the date.
+    function formatDate(date) {
+      // Create a list of day and month names.
+      var weekdays = [
+        "Sunday", "Monday", "Tuesday",
+        "Wednesday", "Thursday", "Friday",
+        "Saturday"
+      ];
+
+      var months = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+      ];
+
+      // Append a suffix to dates.
+      // Example: 23 => 23rd, 1 => 1st.
+      function nth(d) {
+        if (d > 3 && d < 21) return 'th';
+        switch (d % 10) {
+          case 1:
+            return "st";
+          case 2:
+            return "nd";
+          case 3:
+            return "rd";
+          default:
+            return "th";
+        }
+      }
+
+      return weekdays[date.getDay()] + ", " +
+        date.getDate() + nth(date.getDate()) + " " +
+        months[date.getMonth()] + " " +
+        date.getFullYear();
+    }
   })
 
-  var dateValue = document.getElementById('event-start')
 
 
-  dateValue.innerHTML = formatDate(new Date(s))
 
-  slider.noUiSlider.on('update', function (values) {
-    dateValue.innerHTML = formatDate(new Date(+values));
-  });
-
-  // Create a string representation of the date.
-  function formatDate(date) {
-    // Create a list of day and month names.
-    var weekdays = [
-      "Sunday", "Monday", "Tuesday",
-      "Wednesday", "Thursday", "Friday",
-      "Saturday"
-    ];
-
-    var months = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
-    ];
-
-    // Append a suffix to dates.
-    // Example: 23 => 23rd, 1 => 1st.
-    function nth(d) {
-      if (d > 3 && d < 21) return 'th';
-      switch (d % 10) {
-        case 1:
-          return "st";
-        case 2:
-          return "nd";
-        case 3:
-          return "rd";
-        default:
-          return "th";
-      }
-    }
-
-    return weekdays[date.getDay()] + ", " +
-      date.getDate() + nth(date.getDate()) + " " +
-      months[date.getMonth()] + " " +
-      date.getFullYear();
-  }
-
-}
 
 
 
@@ -177,9 +166,6 @@ var filters = [
   }
 ]
 
-const popup = L.popup({ closeButton: true });
-
-jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
 
 function createPopup(event) {
   popup.setLatLng(event.latLng);
@@ -222,7 +208,7 @@ function timestamp(str) {
   return new Date(str).getTime();
 }
 
-
+let slider = document.getElementById("controls")
 
 
 
