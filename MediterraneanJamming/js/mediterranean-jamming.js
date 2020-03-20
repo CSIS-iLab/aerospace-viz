@@ -90,49 +90,47 @@ fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT
       behaviour: 'tap-drag',
     })
 
-    console.log(s)
+    var dateValue = document.getElementById('event-start')
 
-    var dateValues = [
-      document.getElementById('event-start'),
-      document.getElementById('event-end')
-    ];
 
-    slider.noUiSlider.on('update', function (values, handle) {
-      dateValues[handle].innerHTML = formatDate(new Date(+values[handle]));
+    dateValue.innerHTML = formatDate(new Date(s))
+
+    slider.noUiSlider.on('update', function (values) {
+      dateValue.innerHTML = formatDate(new Date(+values));
     });
-
-    // Create a list of day and month names.
-    var weekdays = [
-      "Sunday", "Monday", "Tuesday",
-      "Wednesday", "Thursday", "Friday",
-      "Saturday"
-    ];
-
-    var months = [
-      "January", "February", "March",
-      "April", "May", "June", "July",
-      "August", "September", "October",
-      "November", "December"
-    ];
-
-    // Append a suffix to dates.
-    // Example: 23 => 23rd, 1 => 1st.
-    function nth(d) {
-      if (d > 3 && d < 21) return 'th';
-      switch (d % 10) {
-        case 1:
-          return "st";
-        case 2:
-          return "nd";
-        case 3:
-          return "rd";
-        default:
-          return "th";
-      }
-    }
 
     // Create a string representation of the date.
     function formatDate(date) {
+      // Create a list of day and month names.
+      var weekdays = [
+        "Sunday", "Monday", "Tuesday",
+        "Wednesday", "Thursday", "Friday",
+        "Saturday"
+      ];
+
+      var months = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+      ];
+
+      // Append a suffix to dates.
+      // Example: 23 => 23rd, 1 => 1st.
+      function nth(d) {
+        if (d > 3 && d < 21) return 'th';
+        switch (d % 10) {
+          case 1:
+            return "st";
+          case 2:
+            return "nd";
+          case 3:
+            return "rd";
+          default:
+            return "th";
+        }
+      }
+
       return weekdays[date.getDay()] + ", " +
         date.getDate() + nth(date.getDate()) + " " +
         months[date.getMonth()] + " " +
@@ -182,10 +180,10 @@ function createPopup(event) {
     ];
 
     content += `
-    <div class="popupHeaderStyle"> 
+    <div class="popupHeaderStyle">
     ${data.location_as_reported}
-    </div> 
-    <div class="popupEntryStyle"> 
+    </div>
+    <div class="popupEntryStyle">
     ${data.date}
     </div>
     `
@@ -215,80 +213,80 @@ let slider = document.getElementById("controls")
 
 
 
-let timeline = {
-  playing: false,
-  timer: null,
-  transitionDuration: 1000,
-  end: null,
-  start: null,
-  step: 24 * 60 * 60 * 1000,
-  setupTimeline: function setupTimeline(_ref) {
-    var start = _ref.start,
-      end = _ref.end,
-      now = _ref.now,
-      onChange = _ref.onChange
-    this.end = end
-    this.start = start
+// let timeline = {
+//   playing: false,
+//   timer: null,
+//   transitionDuration: 1000,
+//   end: null,
+//   start: null,
+//   step: 24 * 60 * 60 * 1000,
+//   setupTimeline: function setupTimeline(_ref) {
+//     var start = _ref.start,
+//       end = _ref.end,
+//       now = _ref.now,
+//       onChange = _ref.onChange
+//     this.end = end
+//     this.start = start
 
-    noUiSlider.create(this.el, {
-      start: this.start,
-      connect: true,
-      behaviour: 'tap-drag',
-      step: this.step,
-      range: {
-        min: this.start,
-        max: this.end
-      },
-      format: {
-        from: function from(v) {
-          return parseInt(v, 10)
-        },
-        to: function to(v) {
-          return parseInt(v, 10)
-        }
-      },
-      pips: {
-        mode: 'range',
-        density: (100 / (this.end - this.start)) * this.step
-      }
-    })
-    this.el.noUiSlider.set(start)
-    this.setupBtnControls()
-    this.el.noUiSlider.on('update', onChange)
-    this.el.querySelector("[data-value='" + start, "']").innerHTML = new Date(
-      start
-    ).toLocaleDateString('en-US', dateOptions)
-    this.el.querySelector("[data-value='" + end, "']").innerHTML = new Date(
-      end
-    ).toLocaleDateString('en-US', dateOptions)
-  },
-  setupBtnControls: function setupBtnControls() {
-    this.btnControls.addEventListener('click', function () {
-      if (now == timeline.end) {
-        timeline.el.noUiSlider.set(timeline.start)
-      }
+//     noUiSlider.create(this.el, {
+//       start: this.start,
+//       connect: true,
+//       behaviour: 'tap-drag',
+//       step: this.step,
+//       range: {
+//         min: this.start,
+//         max: this.end
+//       },
+//       format: {
+//         from: function from(v) {
+//           return parseInt(v, 10)
+//         },
+//         to: function to(v) {
+//           return parseInt(v, 10)
+//         }
+//       },
+//       pips: {
+//         mode: 'range',
+//         density: (100 / (this.end - this.start)) * this.step
+//       }
+//     })
+//     this.el.noUiSlider.set(start)
+//     this.setupBtnControls()
+//     this.el.noUiSlider.on('update', onChange)
+//     this.el.querySelector("[data-value='" + start, "']").innerHTML = new Date(
+//       start
+//     ).toLocaleDateString('en-US', dateOptions)
+//     this.el.querySelector("[data-value='" + end, "']").innerHTML = new Date(
+//       end
+//     ).toLocaleDateString('en-US', dateOptions)
+//   },
+//   setupBtnControls: function setupBtnControls() {
+//     this.btnControls.addEventListener('click', function () {
+//       if (now == timeline.end) {
+//         timeline.el.noUiSlider.set(timeline.start)
+//       }
 
-      if (timeline.playing == true) {
-        timeline.stopTimeline()
-        return
-      }
+//       if (timeline.playing == true) {
+//         timeline.stopTimeline()
+//         return
+//       }
 
-      timeline.timer = setInterval(function () {
-        now += timeline.el.noUiSlider.options.step
-        timeline.el.noUiSlider.set(now)
-      }, timeline.transitionDuration)
-      this.classList.remove('play-btn')
-      this.classList.add('pause-btn')
-      timeline.playing = true
-    })
-  },
-  stopTimeline: function stopTimeline() {
-    clearInterval(timeline.timer)
-    timeline.playing = false
-    timeline.btnControls.classList.remove('pause-btn')
-    timeline.btnControls.classList.add('play-btn')
-  }
-}
+//       timeline.timer = setInterval(function () {
+//         now += timeline.el.noUiSlider.options.step
+//         timeline.el.noUiSlider.set(now)
+//       }, timeline.transitionDuration)
+//       this.classList.remove('play-btn')
+//       this.classList.add('pause-btn')
+//       timeline.playing = true
+//     })
+//   },
+//   stopTimeline: function stopTimeline() {
+//     clearInterval(timeline.timer)
+//     timeline.playing = false
+//     timeline.btnControls.classList.remove('pause-btn')
+//     timeline.btnControls.classList.add('play-btn')
+//   }
+// }
 
 
 // var checks = Array.from(

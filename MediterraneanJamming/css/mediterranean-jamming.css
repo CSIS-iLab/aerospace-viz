@@ -11,14 +11,17 @@ div#results {
 }
 
 #logo {
-  position: absolute;
-  top: 70px;
-  right: 15px;
-  width: 50px;
-  height: 50px;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  cursor: pointer;
+  display:block;
+  float:right;
+  width:50px;
+  height:50px;
+  margin-bottom:6px;
+  margin-left:12px;
+  padding:0;
+  background-repeat:no-repeat;
+  background-position:50%;
+  background-size:contain;
+  border:0
 }
 
 .box header h1 {
@@ -32,14 +35,6 @@ div#results {
   width: calc(100% - 67px);
 }
 
-.translate description mobile-toggle {
-  color: #747D82;
-  font-size: 12px;
-  line-height: 16px;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-  font-weight: 400; 
-}
-
 .mobile-toggle translate {
   font-family: "Open Sans Condensed", sans-serif;
   font-weight: 700;
@@ -47,44 +42,6 @@ div#results {
   font-size: 20px;
   line-height: 24px;
   margin: 16px 0 4px;
-}
-
-.ul {
-  font: 12px/16px 'Open Sans';
-  cursor: pointer;
-  color: #000;
-}
-
-.colorKey,
-.shapeKey {
-  display: inline-block;
-  height: 12px;
-  width: 12px;
-  margin: 3px 5px 0 5px;
-}
-
-.colorKey {
-  border-radius: 20px;
-}
-
-input[name='Coastal Surveillance Radar Systems'] + .colorKey {
-  background-color: #3969ac;
-  border-radius: 50%;
-}
-
-input[name='Indian Offshore Military Facility'] + .colorKey {
-  background-color: #f2b701;
-  border-radius: 50%;
-}
-
-input[name='Commercial/Dual-use Facilities'] + .colorKey {
-  background-color: #7f3c8d;
-  border-radius: 50%;
-}
-
-input[name='Foreign Military Facilities w/ Indian Access'] + .colorKey {
-  background-color: #11a579;
-  border-radius: 50%;
 }
 
 .leaflet-popup-content-wrapper {
