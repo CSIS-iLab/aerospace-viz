@@ -85,11 +85,6 @@ p {
   border-radius: 6px;
 }
 
-.js-price-placeholder {
-  font-weight: 700;
-  color: #000;
-}
-
 #controls #info h3 {
   font-family: "Open Sans Condensed", sans-serif;
   font-weight: 700;
@@ -102,7 +97,7 @@ p {
 aside.toolbox {
   display: block;
   top: -24px;
-  left: calc(100vw - 324px);
+  left: 12px;
   position: relative;
   -webkit-user-select: none;
   user-select: none;
@@ -180,17 +175,22 @@ aside.toolbox .ui:checked ~ .hamburger span:nth-child(3) {
   transform: rotate(-45deg) translate(0, 0px);
 }
 
-.leaflet-control-zoom,
-leaflet-bar,
-leaflet-control {
-  display: none;
+.leaflet-control-scale-line {
+  font: 14px/1 'Source Sans Pro', Arial, sans-serif;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  margin: 6px 0;
+}
+.leaflet-top.leaflet-left {
+  right: 24px;
+  top: -6;
+  left: unset;
+  transform: rotate(-90deg);
 }
 
-.menu-translate {
-  font-weight: 700;
-  font-size: 16px;
-  font-family: "Open Sans Condensed, sans-serif";
-  color: #000;
+.leaflet-touch .leaflet-bar a.leaflet-control-zoom-out {
+  transform: rotate(90deg);
+  line-height: 27px;
 }
 
 
