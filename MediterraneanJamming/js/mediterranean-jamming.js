@@ -11,7 +11,9 @@ var map = L.map("map", {
   minZoom: 3,
   zoomControl: true,
   layers: [basemap],
-  attributionControl: false
+  attributionControl: false,
+  addEvent: groupsLoaded,
+  formatToolbox: formatToolbox
 });
 
 const client = new carto.Client({
@@ -61,6 +63,7 @@ jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
 let dates = []
 let s
 let e
+let stepVal = 24 * 60 * 60 * 1000
 
 fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea')
   .then((resp) => resp.json())
@@ -79,92 +82,214 @@ fetch('https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT
     e = dates[len - 1]
 
 
-    noUiSlider.create(slider, {
-      start: [s],
-      range: {
-        'min': s,
-        'max': e,
-      },
+    // noUiSlider.create(slider, {
+    //   start: [s],
+    //   range: {
+    //     'min': s,
+    //     'max': e,
+    //   },
 
+    //   step: 24 * 60 * 60 * 1000,
+    //   behaviour: 'tap-drag',
+    //   pips: {
+    //     mode: 'range',
+    //     // density: (100 / (e - s)) * stepVal
+    //   }
+    // })
+
+
+    // var dateValue = document.getElementById('event-start')
+
+
+    // dateValue.innerHTML = formatDate(new Date(s))
+
+    // slider.noUiSlider.on('update', function (values) {
+    //   dateValue.innerHTML = formatDate(new Date(+values));
+    // });
+    var timeline = {
+      el: document.querySelector('.timeline-bar'),
+      controlBtn: document.getElementById('timeline-controls'),
+      playing: false,
+      timer: null,
+      transitionDuration: 1000,
+      end: e,
+      start: s,
       step: 24 * 60 * 60 * 1000,
-      behaviour: 'tap-drag',
-    })
+      setupTimeline: function setupTimeline(_ref) {
+        var start = _ref.start,
+          end = _ref.end,
+          now = _ref.now,
+          onChange = _ref.onChange
+        this.end = end
+        this.start = start
 
-    var dateValue = document.getElementById('event-start')
+        noUiSlider.create(this.el, {
+          start: this.start,
+          connect: true,
+          behaviour: 'tap-drag',
+          step: this.step,
+          range: {
+            min: this.start,
+            max: this.end
+          },
+          format: {
+            from: function from(v) {
+              return parseInt(v, 10)
+            },
+            to: function to(v) {
+              return parseInt(v, 10)
+            }
+          },
+          pips: {
+            mode: 'range',
+            density: (100 / (this.end - this.start)) * this.step
+          }
+        })
+        this.el.noUiSlider.set(start)
+        this.setupBtnControls()
+        this.el.noUiSlider.on('update', onChange)
+        this.el.querySelector("[data-value='" + start, "']").innerHTML = formatDate(new Date(
+          start
+        )).toLocaleDateString('en-US', dateOptions)
+        this.el.querySelector("[data-value='" + end, "']").innerHTML = formatDate(new Date(
+          end
+        )).toLocaleDateString('en-US', dateOptions)
+      },
+      setupBtnControls: function setupBtnControls() {
+        this.btnControls.addEventListener('click', function () {
+          if (now == timeline.end) {
+            timeline.el.noUiSlider.set(timeline.start)
+          }
 
+          if (timeline.playing == true) {
+            timeline.stopTimeline()
+            return
+          }
 
-    dateValue.innerHTML = formatDate(new Date(s))
+          timeline.timer = setInterval(function () {
+            now += timeline.el.noUiSlider.options.step
+            timeline.el.noUiSlider.set(now)
+          }, timeline.transitionDuration)
+          this.classList.remove('play-btn')
+          this.classList.add('pause-btn')
+          timeline.playing = true
+        })
+      },
+      stopTimeline: function stopTimeline() {
+        clearInterval(timeline.timer)
+        timeline.playing = false
+        timeline.btnControls.classList.remove('pause-btn')
+        timeline.btnControls.classList.add('play-btn')
+      }
+    }
 
-    slider.noUiSlider.on('update', function (values) {
-      dateValue.innerHTML = formatDate(new Date(+values));
-    });
+    function formatToolbox(box) {
+      var boxContent =
+        '<div class="separator"></div><section id="scenario"><div class="instruction"><p>Select a military exercise</p><p></p></div>' +
+        Object.keys(scenarioData)
+          .map(function (key) {
+            return (
+              '<button' +
+              (scenario === key ? ' class="active"' : '') +
+              '>' +
+              key +
+              '</button>'
+            )
+          })
+          .join(' ') +
+        '<p class="scenario-description">' +
+        scenarioData[timeline.scenario].description +
+        '</p> <div> </section> <div class="separator"></div> <section id="time"> <div class="indicator"> <p>Signal loss on <span class="date"></span></p> <p><span></span></p> </div> <div class="timeline"> <div class="timeline-controls"> <button class="timeline-btn play-btn"></button> </div> <div class="timeline-container"> <div class="timeline-bar"></div> </div> </div> </section> <!--<p>Click on a point for incident details</p>--> <div class="separator"></div> <section> <ul id="key"> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO Activity</span></li> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li> </ul> </section> <div class="hidden"></div>'
 
-    // Create a string representation of the date.
-    function formatDate(date) {
-      // Create a list of day and month names.
-      var weekdays = [
-        "Sunday", "Monday", "Tuesday",
-        "Wednesday", "Thursday", "Friday",
-        "Saturday"
-      ];
+      box.innerHTML = boxContent
+      scenario = document.querySelector('button.active').innerText
+      timeline.el = document.querySelector('.timeline-bar')
+      timeline.btnControls = document.querySelector('.timeline-btn')
 
-      var months = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-      ];
+      var m = this
 
-      // Append a suffix to dates.
-      // Example: 23 => 23rd, 1 => 1st.
-      function nth(d) {
-        if (d > 3 && d < 21) return 'th';
-        switch (d % 10) {
-          case 1:
-            return "st";
-          case 2:
-            return "nd";
-          case 3:
-            return "rd";
-          default:
-            return "th";
+      document
+        .querySelector('#scenario')
+        .addEventListener('click', e => handleSceneClick(e, m))
+    }
+
+    function groupsLoaded() {
+      timeline.end = formatDate(new Date(
+        Math.max.apply(
+          null,
+          endDates.map(function (e) {
+            return new Date(e)
+          })
+        )
+      )).getTime()
+      timeline.start = formatDate(new Date(
+        Math.min.apply(
+          null,
+          startDates.map(function (e) {
+            return new Date(e)
+          })
+        )
+      )).getTime()
+      if (
+        !isNaN(timeline.start) &&
+        !isNaN(timeline.end) &&
+        !timeline.el.noUiSlider
+      ) {
+        now = timeline.start
+        Array.from(document.querySelectorAll('.date')).forEach(function (dateEl) {
+          dateEl.innerText = formatDate(new Date(now)).toLocaleDateString(
+            'en-US',
+            dateOptions
+          )
+        })
+        var timelineOptions = {
+          start: timeline.start,
+          end: timeline.end,
+          now: now,
+          onChange: function onChange() {
+            now = this.get()
+            Array.from(document.querySelectorAll('.date')).forEach(function (
+              dateEl
+            ) {
+              dateEl.innerText = formatDate(new Date(now)).toLocaleDateString(
+                'en-US',
+                dateOptions
+              )
+            })
+            var jams = Array.from(
+              document.querySelectorAll('[class*="jammed-airspace"]')
+            )
+            jams.forEach(function (jam) {
+              var start = parseInt(jam.dataset.start, 10)
+              var end = parseInt(jam.dataset.end, 10)
+
+              if (now >= start && now <= end) {
+                jam.style.display = 'block'
+              } else {
+                jam.style.display = 'none'
+              }
+            })
+
+            if (now == timeline.end) {
+              timeline.stopTimeline()
+              setTimeout(function () {
+                timeline.el.noUiSlider.set(timeline.start)
+              }, timeline.transitionDuration)
+              jams.forEach(function (jam) {
+                jam.style.display = 'none'
+              })
+            }
+          }
         }
+        timeline.setupTimeline(timelineOptions)
       }
 
-      return weekdays[date.getDay()] + ", " +
-        date.getDate() + nth(date.getDate()) + " " +
-        months[date.getMonth()] + " " +
-        date.getFullYear();
+      var first = document.querySelector('[data-start="' + now, '"]')
+      if (first) first.style.display = 'block'
     }
   })
 
 
-
-
-
-
-
-
-
-var filters = [
-  function (feature, layers) {
-    var bool = false
-
-    var s = feature.properties.date_start.split('/').map(function (value) {
-      return convertType(value)
-    })
-    var e = feature.properties.date_end.split('/').map(function (value) {
-      return convertType(value)
-    })
-    var startDate = new Date(s[2], s[0] - 1, s[1])
-    var endDate = new Date(e[2], e[0] - 1, e[1])
-    feature.properties.startDate = startDate
-    feature.properties.endDate = endDate
-    bool = true
-
-    return bool
-  }
-]
 
 
 function createPopup(event) {
@@ -190,7 +315,6 @@ function createPopup(event) {
     popup.setContent("" + content);
     popup.openOn(map);
   }
-  console.log(event)
 }
 
 L.control
@@ -203,140 +327,7 @@ L.control
   .addTo(map);
 
 
-// Create a new date from a string, return as a timestamp.
-function timestamp(str) {
-  return new Date(str).getTime();
-}
-
-let slider = document.getElementById("controls")
-
-
-
-
-// let timeline = {
-//   playing: false,
-//   timer: null,
-//   transitionDuration: 1000,
-//   end: null,
-//   start: null,
-//   step: 24 * 60 * 60 * 1000,
-//   setupTimeline: function setupTimeline(_ref) {
-//     var start = _ref.start,
-//       end = _ref.end,
-//       now = _ref.now,
-//       onChange = _ref.onChange
-//     this.end = end
-//     this.start = start
-
-//     noUiSlider.create(this.el, {
-//       start: this.start,
-//       connect: true,
-//       behaviour: 'tap-drag',
-//       step: this.step,
-//       range: {
-//         min: this.start,
-//         max: this.end
-//       },
-//       format: {
-//         from: function from(v) {
-//           return parseInt(v, 10)
-//         },
-//         to: function to(v) {
-//           return parseInt(v, 10)
-//         }
-//       },
-//       pips: {
-//         mode: 'range',
-//         density: (100 / (this.end - this.start)) * this.step
-//       }
-//     })
-//     this.el.noUiSlider.set(start)
-//     this.setupBtnControls()
-//     this.el.noUiSlider.on('update', onChange)
-//     this.el.querySelector("[data-value='" + start, "']").innerHTML = new Date(
-//       start
-//     ).toLocaleDateString('en-US', dateOptions)
-//     this.el.querySelector("[data-value='" + end, "']").innerHTML = new Date(
-//       end
-//     ).toLocaleDateString('en-US', dateOptions)
-//   },
-//   setupBtnControls: function setupBtnControls() {
-//     this.btnControls.addEventListener('click', function () {
-//       if (now == timeline.end) {
-//         timeline.el.noUiSlider.set(timeline.start)
-//       }
-
-//       if (timeline.playing == true) {
-//         timeline.stopTimeline()
-//         return
-//       }
-
-//       timeline.timer = setInterval(function () {
-//         now += timeline.el.noUiSlider.options.step
-//         timeline.el.noUiSlider.set(now)
-//       }, timeline.transitionDuration)
-//       this.classList.remove('play-btn')
-//       this.classList.add('pause-btn')
-//       timeline.playing = true
-//     })
-//   },
-//   stopTimeline: function stopTimeline() {
-//     clearInterval(timeline.timer)
-//     timeline.playing = false
-//     timeline.btnControls.classList.remove('pause-btn')
-//     timeline.btnControls.classList.add('play-btn')
-//   }
-// }
-
-
-// var checks = Array.from(
-//   document.querySelectorAll(".type_of_asset ul input")
-// ).map(function (checkbox) {
-//   return checkbox.name;
-// });
-
-// var filter_checks = new carto.filter.Category("type_of_asset", {
-//   notIn: checks
-// });
-
-// document
-//   .querySelector(".type_of_asset ul")
-//   .addEventListener("click", function (e) {
-//     var checkbox = e.target.type === "checkbox" ? e.target : null;
-
-//     if (checkbox) {
-//       var checked = Array.from(
-//         document.querySelectorAll(".type_of_asset ul input:checked")
-//       ).map(function (checkbox) {
-//         return checkbox.name;
-//       });
-
-//       var notChecked = checks.filter(function (name) {
-//         return checked.indexOf(name) < 0;
-//       });
-
-//       var filter_checked = new carto.filter.Category("type_of_asset", {
-//         in: checked
-//       });
-
-//       var filter_notChecked = new carto.filter.Category("type_of_asset", {
-//         notIn: notChecked
-//       });
-
-//       var filters =
-//         checkbox.name === "OTHERS" && checkbox.checked
-//           ? [filter_checks, filter_checked]
-//           : checkbox.name === "OTHERS" && !checkbox.checked
-//             ? [filter_checked]
-//             : [filter_notChecked];
-
-//       jammedPlacesSource.getFilters().forEach(function (f) {
-//         jammedPlacesSource.removeFilter(f);
-//       });
-
-//       jammedPlacesSource.addFilter(new carto.filter.OR(filters));
-//     }
-//   });
+// let slider = document.getElementById("controls")
 
 function convertType(value) {
   var v = Number(value)
@@ -351,4 +342,42 @@ function convertType(value) {
           : value.toLowerCase() === 'false'
             ? false
             : value
+}
+
+// Create a string representation of the date.
+function formatDate(date) {
+  // Create a list of day and month names.
+  var weekdays = [
+    "Sunday", "Monday", "Tuesday",
+    "Wednesday", "Thursday", "Friday",
+    "Saturday"
+  ];
+
+  var months = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ];
+
+  // Append a suffix to dates.
+  // Example: 23 => 23rd, 1 => 1st.
+  function nth(d) {
+    if (d > 3 && d < 21) return 'th';
+    switch (d % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  }
+
+  return weekdays[date.getDay()] + ", " +
+    date.getDate() + nth(date.getDate()) + " " +
+    months[date.getMonth()] + " " +
+    date.getFullYear();
 }
