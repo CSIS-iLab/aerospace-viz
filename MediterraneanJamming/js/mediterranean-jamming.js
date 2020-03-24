@@ -12,8 +12,7 @@ var map = L.map("map", {
   zoomControl: true,
   layers: [basemap],
   attributionControl: false,
-  // addEvent: groupsLoaded,
-  formatToolbox: formatToolbox
+  // formatToolbox: formatToolbox
 });
 
 const client = new carto.Client({
@@ -52,6 +51,7 @@ client
   .bringToFront()
   .addTo(map);
 
+
 const popup = L.popup({ closeButton: true });
 
 jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
@@ -67,13 +67,13 @@ fetch(
   .then(resp => resp.json())
   .then(response => {
     response.rows.forEach((row, i) => {
-      let d = row.date.split("/").map(function(value) {
+      let d = row.date.split("/").map(function (value) {
         return convertType(value);
       });
       let date = new Date(d[2], d[0] - 1, d[1]);
       dates.push(date.getTime());
     });
-    dates.sort(function(a, b) {
+    dates.sort(function (a, b) {
       return a - b;
     });
     len = dates.length;
@@ -87,28 +87,31 @@ fetch(
 var timeline = {
   el: document.querySelector(".timeline-bar"),
   controlBtn: document.getElementById("timeline-controls"),
+  currentDateEl: document.querySelector('.timeline-current-date'),
   playing: false,
   timer: null,
-  transitionDuration: 1000,
+  transitionDuration: 300,
   end: e,
   start: s,
   step: 24 * 60 * 60 * 1000,
+  updateCurrentDate(date) {
+    this.currentDateEl.innerHTML = `${this.formatDate(date)}`
+  },
   onChange: function onChange() {
     now = this.get();
-    Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
-      dateEl.innerText = formatDate(new Date(now)).toLocaleDateString(
-        "en-US",
-        dateOptions
-      );
+    timeline.updateCurrentDate(now)
+    console.log(dates)
+    console.log(now)
+    Array.from(document.querySelectorAll(".date")).forEach(function (dateEl) {
+      dateEl.innerText = formatDate(now)
     });
     var jams = Array.from(
       document.querySelectorAll('[class*="jammed-airspace"]')
     );
-    jams.forEach(function(jam) {
-      var start = parseInt(jam.dataset.start, 10);
-      var end = parseInt(jam.dataset.end, 10);
-
-      if (now >= start && now <= end) {
+    dates.forEach(function (jam) {
+      // var start = parseInt(jam.dataset.start, 10);
+      // var end = parseInt(jam.dataset.end, 10);
+      if (now == jam) {
         jam.style.display = "block";
       } else {
         jam.style.display = "none";
@@ -117,15 +120,24 @@ var timeline = {
 
     if (now == timeline.end) {
       timeline.stopTimeline();
-      setTimeout(function() {
+      setTimeout(function () {
         timeline.el.noUiSlider.set(timeline.start);
       }, timeline.transitionDuration);
-      jams.forEach(function(jam) {
+      jams.forEach(function (jam) {
         jam.style.display = "none";
       });
     }
   },
-  setupTimeline: function({ start, end }) {
+  formatDate(date) {
+    date = new Date(date)
+    date = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate()
+    )
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+  },
+  setupTimeline: function ({ start, end }) {
     console.log(this);
     this.start = start;
     this.end = end;
@@ -148,29 +160,35 @@ var timeline = {
       },
       pips: {
         mode: "range",
-        density: (100 / (this.end - this.start)) * this.step
+        density: 30
       }
     });
     this.el.noUiSlider.set(this.start);
     this.setupBtnControls();
     this.el.noUiSlider.on("update", this.onChange);
-    // this.el.querySelector(
-    //   "[data-value='" + this.start,
-    //   "']"
-    // ).innerHTML = formatDate(new Date(this.start)).toLocaleDateString(
-    //   "en-US",
-    //   dateOptions
-    // );
-    // this.el.querySelector(
-    //   "[data-value='" + this.end,
-    //   "']"
-    // ).innerHTML = formatDate(new Date(this.end)).toLocaleDateString(
-    //   "en-US",
-    //   dateOptions
-    // );
+    this.el.noUiSlider.on('slide', function (values, handle) {
+      let tempDate = new Date(values[handle])
+      tempDate = new Date(
+        tempDate.getUTCFullYear(),
+        tempDate.getUTCMonth(),
+        tempDate.getUTCDate()
+      ).getTime()
+      // console.log(values[handle])
+      // console.log(tempDate)
+      timeline.el.noUiSlider.set(tempDate)
+    })
+    this.el.querySelector(
+      "[data-value='" + this.start,
+      "']"
+    ).innerHTML = this.formatDate(start)
+    this.el.querySelector(
+      "[data-value='" + this.end,
+      "']"
+    ).innerHTML = this.formatDate(end)
   },
-  setupBtnControls: function() {
-    this.controlBtn.addEventListener("click", function() {
+  setupBtnControls: function () {
+    this.controlBtn.addEventListener("click", function () {
+      let currentDate = now
       if (now == timeline.end) {
         timeline.el.noUiSlider.set(timeline.start);
       }
@@ -180,7 +198,8 @@ var timeline = {
         return;
       }
 
-      timeline.timer = setInterval(function() {
+      timeline.timer = setInterval(function () {
+        let currentDate = now
         now += timeline.el.noUiSlider.options.step;
         timeline.el.noUiSlider.set(now);
       }, timeline.transitionDuration);
@@ -189,7 +208,7 @@ var timeline = {
       timeline.playing = true;
     });
   },
-  stopTimeline: function() {
+  stopTimeline: function () {
     clearInterval(timeline.timer);
     timeline.playing = false;
     timeline.controlBtn.classList.remove("pause-btn");
@@ -197,35 +216,7 @@ var timeline = {
   }
 };
 
-function formatToolbox(box) {
-  var boxContent =
-    '<div class="separator"></div><section id="scenario"><div class="instruction"><p>Select a military exercise</p><p></p></div>' +
-    Object.keys(scenarioData)
-      .map(function(key) {
-        return (
-          "<button" +
-          (scenario === key ? ' class="active"' : "") +
-          ">" +
-          key +
-          "</button>"
-        );
-      })
-      .join(" ") +
-    '<p class="scenario-description">' +
-    scenarioData[timeline.scenario].description +
-    '</p> <div> </section> <div class="separator"></div> <section id="time"> <div class="indicator"> <p>Signal loss on <span class="date"></span></p> <p><span></span></p> </div> <div class="timeline"> <div class="timeline-controls"> <button class="timeline-btn play-btn"></button> </div> <div class="timeline-container"> <div class="timeline-bar"></div> </div> </div> </section> <!--<p>Click on a point for incident details</p>--> <div class="separator"></div> <section> <ul id="key"> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZjliYzY1Ii8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">GPS Signal Loss</span></li> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjMTk2Yzk1Ii8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">NATO Activity</span></li> <li class="label"><span class="colorKey" style="background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI1IiBmaWxsPSIjZDY2ZTQyIi8+PC9zdmc+\')"></span><span class="itemText" style="transform: translateY(13.3333%);">Russian Military Activity</span></li> </ul> </section> <div class="hidden"></div>';
 
-  box.innerHTML = boxContent;
-  scenario = document.querySelector("button.active").innerText;
-  timeline.el = document.querySelector(".timeline-bar");
-  timeline.btnControls = document.querySelector(".timeline-btn");
-
-  var m = this;
-
-  document
-    .querySelector("#scenario")
-    .addEventListener("click", e => handleSceneClick(e, m));
-}
 
 function createPopup(event) {
   popup.setLatLng(event.latLng);
@@ -258,75 +249,22 @@ L.control
   )
   .addTo(map);
 
-// let slider = document.getElementById("controls")
+// let marker = L.marker(latlng).addTo(map)
+
+
+
 
 function convertType(value) {
   var v = Number(value);
   return !isNaN(v)
     ? v
     : value.toLowerCase() === "undefined"
-    ? undefined
-    : value.toLowerCase() === "null"
-    ? null
-    : value.toLowerCase() === "true"
-    ? true
-    : value.toLowerCase() === "false"
-    ? false
-    : value;
-}
-
-// Create a string representation of the date.
-function formatDate(date) {
-  // Create a list of day and month names.
-  var weekdays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-
-  var months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-
-  // Append a suffix to dates.
-  // Example: 23 => 23rd, 1 => 1st.
-  function nth(d) {
-    if (d > 3 && d < 21) return "th";
-    switch (d % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  }
-
-  return (
-    weekdays[date.getDay()] +
-    ", " +
-    date.getDate() +
-    nth(date.getDate()) +
-    " " +
-    months[date.getMonth()] +
-    " " +
-    date.getFullYear()
-  );
+      ? undefined
+      : value.toLowerCase() === "null"
+        ? null
+        : value.toLowerCase() === "true"
+          ? true
+          : value.toLowerCase() === "false"
+            ? false
+            : value;
 }

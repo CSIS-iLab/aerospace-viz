@@ -32,7 +32,7 @@
 
   <link rel="preconnect stylesheet" href="https://use.typekit.net/ats0hoc.css" />
 
-  <!-- <link href="css/makeMap.css" rel="stylesheet" /> -->
+  <link href="css/makeMap.css" rel="stylesheet" />
 
   <link href="css/mediterranean-jamming.css" rel="stylesheet" />
 </head>
@@ -63,51 +63,24 @@
           class="mobile-toggle" id="logo"></a>
 
       </header>
-
-      <section>
-        <p class="translate description open-sans mobile-toggle">Click a site on the map to learn more.</p>
-        <div class="separator mobile-toggle"></div>
-        <div id="event-start"></div>
-        <div id="event-end"></div>
-        <div id="info"></div>
+      <p class="translate description open-sans mobile-toggle">Click a site on the map to learn more.</p>
+      <div class="separator"></div>
+      <section id="time">
+        <div class="indicator">
+          <p>Signal loss on <span class="date timeline-current-date timeline-header__value"></span></p>
+          <p><span></span></p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-controls"> <button id="timeline-controls" class="timeline-btn play-btn control-btn"
+              aria-pressed="false" aria-label="Play timeline"></button> </div>
+          <div class="timeline-container">
+            <div class="timeline-bar"></div>
+          </div>
+        </div>
       </section>
-      <button id="timeline-controls" class="timeline-btn play-btn control-btn" aria-pressed="false"
-        aria-label="Play timeline"></button>
-      <div id="controls"></div>
-      <div class="timeline-bar"></div>
-      <!-- <section class="widget type_of_asset">
-        <h3 class="mobile-toggle translate">Type of Facility</h3>
-        <ul class="actions">
-          <li>
-            <label for="Indian Offshore Military Facility"><input class="widget checkbox" type="checkbox"
-                name="Indian Offshore Military Facility" id="Indian Offshore Military Facility" checked="" /><span
-                class="colorKey"></span><span class="itemText" style="transform: translateY(14.1667%);">Offshore
-                Military Bases</span></label>
-          </li>
 
-          <li>
-            <label for="Coastal Surveillance Radar Systems"><input class="widget checkbox" type="checkbox"
-                name="Coastal Surveillance Radar Systems" id="Coastal Surveillance Radar Systems" checked="" /><span
-                class="colorKey"></span><span class="itemText" style="transform: translateY(14.1667%);">Coastal Radar
-                Networks</span></label>
-          </li>
+      <div class="hidden"></div>
 
-          <li>
-            <label for="Foreign Military Facilities w/ Indian Access"><input class="widget checkbox" type="checkbox"
-                name="Foreign Military Facilities w/ Indian Access" id="Foreign Military Facilities w/ Indian Access"
-                checked="" /><span class="colorKey"></span><span class="itemText"
-                style="transform: translateY(14.1667%);">Access to Foreign Military Facilities</span></label>
-          </li>
-
-          <li>
-            <label for="Commercial/Dual-use Facilities"><input class="widget checkbox" type="checkbox"
-                name="Commercial/Dual-use Facilities" id="Commercial/Dual-use Facilities" checked="" /><span
-                class="colorKey"></span><span class="itemText" style="transform: translateY(14.1667%);">Strategic
-                Commercial Ports</span></label>
-          </li>
-
-        </ul>
-      </section> -->
     </div>
 
     <footer>
