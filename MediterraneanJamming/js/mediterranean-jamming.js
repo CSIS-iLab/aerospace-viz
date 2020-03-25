@@ -1,3 +1,8 @@
+const apiKey = "3W5HgCXM23QVjB8bFW413w";
+const username = "csis";
+const datatable = "copy_of_gps_jamming_in_the_mediterranean_sea";
+
+/* Load Map & Data Layer */
 var basemap = L.tileLayer(
   "https://api.mapbox.com/styles/v1/ilabmedia/ck7kn54kz0n551ium4z5qzliv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaWxhYm1lZGlhIiwiYSI6ImNpbHYycXZ2bTAxajZ1c2tzdWU1b3gydnYifQ.AHxl8pPZsjsqoz95-604nw",
   {}
@@ -12,86 +17,78 @@ var map = L.map("map", {
   zoomControl: true,
   layers: [basemap],
   attributionControl: false
-  // formatToolbox: formatToolbox
 });
 
-const client = new carto.Client({
-  apiKey: "3W5HgCXM23QVjB8bFW413w",
-  username: "csis"
-});
-
-const jammedPlacesSource = new carto.source.SQL(
-  "SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea"
-);
-
-const jammedPlacesStyle = new carto.style.CartoCSS(`
-        #layer {
-          marker-width: 16.5;
-          marker-fill: #f9bc65;
-          marker-fill-opacity: 0.9;
-          marker-allow-overlap: true;
-          marker-line-width: 0;
-          marker-line-color: #FFFFFF;
-          marker-line-opacity: 1;
-        }
-      `);
-
-const jammedPlacesLayer = new carto.layer.Layer(
-  jammedPlacesSource,
-  jammedPlacesStyle,
-  {
-    featureOverColumns: ["location_as_reported", "date"]
-  }
-);
-
-client.addLayer(jammedPlacesLayer);
-
-client
-  .getLeafletLayer()
-  .bringToFront()
+L.control
+  .attribution({
+    position: "bottomright"
+  })
+  .setPrefix(
+    'Data by <a href="https://aerospace.csis.org" target="_blank">CSIS Aerospace</a>, Leaflet contributors'
+  )
   .addTo(map);
 
-const popup = L.popup({ closeButton: true });
-
-jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
-
+/* Create Timeline */
 let dates = [];
-let s;
-let e;
-let stepVal = 24 * 60 * 60 * 1000;
+let jammingIcons = [];
 
 fetch(
-  "https://csis.carto.com/api/v2/sql?api_key=3W5HgCXM23QVjB8bFW413w&q=SELECT * FROM copy_of_gps_jamming_in_the_mediterranean_sea"
+  `https://${username}.carto.com/api/v2/sql?api_key=${apiKey}&q=SELECT * FROM ${datatable}`
 )
   .then(resp => resp.json())
   .then(response => {
     response.rows.forEach((row, i) => {
-      let d = row.date.split("/").map(function(value) {
-        return convertType(value);
-      });
-      let date = new Date(d[2], d[0] - 1, d[1]);
-      dates.push(date.getTime());
+      const date = new Date(row.date);
+      row.timestamp = date.getTime();
+      dates.push(row.timestamp);
+
+      row.formattedDate = `${date.getMonth() +
+        1}/${date.getDate()}/${date.getFullYear()}`;
     });
-    dates.sort(function(a, b) {
-      return a - b;
-    });
+    dates.sort();
     len = dates.length;
 
-    console.log(response);
-    console.log(dates);
+    createMarkers(response.rows);
 
     timeline.setupTimeline({ start: dates[0], end: dates[len - 1] });
   });
 
-var timeline = {
+/* Create points as Leaflet markers so they are selectable & filterable with JS */
+function createMarkers(markers) {
+  for (let i = 0; i < markers.length; i++) {
+    const {
+      lat,
+      long,
+      location_as_reported,
+      timestamp,
+      formattedDate
+    } = markers[i];
+
+    L.marker([lat, long], {
+      icon: new L.divIcon({
+        className: "jamming-icon-container",
+        html: `<div class="jamming-icon" data-timestamp="${timestamp}"></div>`
+      })
+    }).addTo(map).bindPopup(`<div class="popupHeaderStyle">
+    ${location_as_reported}
+    </div>
+    <div class="popupEntryStyle">
+    ${formattedDate}
+    </div>`);
+  }
+
+  jammingIcons = Array.from(document.querySelectorAll(".jamming-icon"));
+}
+
+const timeline = {
   el: document.querySelector(".timeline-bar"),
   controlBtn: document.getElementById("timeline-btn"),
   currentDateEl: document.querySelector(".timeline-current-date"),
   playing: false,
   timer: null,
   transitionDuration: 300,
-  end: e,
-  start: s,
+  end: null,
+  start: null,
   step: 24 * 60 * 60 * 1000,
   updateCurrentDate(date) {
     this.currentDateEl.innerHTML = `${this.formatDate(date)}`;
@@ -99,22 +96,10 @@ var timeline = {
   onChange: function onChange() {
     now = this.get();
     timeline.updateCurrentDate(now);
-    console.log(dates);
-    console.log(now);
-    Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
-      dateEl.innerText = formatDate(now);
-    });
-    var jams = Array.from(
-      document.querySelectorAll('[class*="jammed-airspace"]')
-    );
-    dates.forEach(function(jam) {
-      // var start = parseInt(jam.dataset.start, 10);
-      // var end = parseInt(jam.dataset.end, 10);
-      if (now == jam) {
-        jam.style.display = "block";
-      } else {
-        jam.style.display = "none";
-      }
+
+    jammingIcons.forEach(icon => {
+      const iconDate = +icon.getAttribute("data-timestamp");
+      icon.classList.toggle("isActive", iconDate === now);
     });
 
     if (now == timeline.end) {
@@ -122,9 +107,6 @@ var timeline = {
       setTimeout(function() {
         timeline.el.noUiSlider.set(timeline.start);
       }, timeline.transitionDuration);
-      jams.forEach(function(jam) {
-        jam.style.display = "none";
-      });
     }
   },
   formatDate(date) {
@@ -137,9 +119,11 @@ var timeline = {
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   },
   setupTimeline: function({ start, end }) {
-    console.log(this);
     this.start = start;
     this.end = end;
+
+    this.setupBtnControls();
+
     noUiSlider.create(this.el, {
       start: this.start,
       connect: true,
@@ -162,8 +146,8 @@ var timeline = {
         density: 30
       }
     });
+
     this.el.noUiSlider.set(this.start);
-    this.setupBtnControls();
     this.el.noUiSlider.on("update", this.onChange);
     this.el.noUiSlider.on("slide", function(values, handle) {
       let tempDate = new Date(values[handle]);
@@ -172,14 +156,15 @@ var timeline = {
         tempDate.getUTCMonth(),
         tempDate.getUTCDate()
       ).getTime();
-      // console.log(values[handle])
-      // console.log(tempDate)
+
       timeline.el.noUiSlider.set(tempDate);
     });
+
     this.el.querySelector(
       "[data-value='" + this.start,
       "']"
     ).innerHTML = this.formatDate(start);
+
     this.el.querySelector(
       "[data-value='" + this.end,
       "']"
@@ -214,51 +199,3 @@ var timeline = {
     timeline.controlBtn.classList.add("play-btn");
   }
 };
-
-function createPopup(event) {
-  popup.setLatLng(event.latLng);
-
-  if (!popup.isOpen()) {
-    var data = event.data;
-    var content = "<div>";
-
-    var keys = ["location_as_reported", "date"];
-
-    content += `
-    <div class="popupHeaderStyle">
-    ${data.location_as_reported}
-    </div>
-    <div class="popupEntryStyle">
-    ${data.date}
-    </div>
-    `;
-    popup.setContent("" + content);
-    popup.openOn(map);
-  }
-}
-
-L.control
-  .attribution({
-    position: "bottomright"
-  })
-  .setPrefix(
-    'Data by <a href="https://aerospace.csis.org" target="_blank">CSIS Aerospace</a>, Leaflet contributors'
-  )
-  .addTo(map);
-
-// let marker = L.marker(latlng).addTo(map)
-
-function convertType(value) {
-  var v = Number(value);
-  return !isNaN(v)
-    ? v
-    : value.toLowerCase() === "undefined"
-    ? undefined
-    : value.toLowerCase() === "null"
-    ? null
-    : value.toLowerCase() === "true"
-    ? true
-    : value.toLowerCase() === "false"
-    ? false
-    : value;
-}

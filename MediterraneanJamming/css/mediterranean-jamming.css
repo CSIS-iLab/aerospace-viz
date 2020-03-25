@@ -25,31 +25,6 @@ p {
   border-radius: 3px;
 }
 
-[class*="jammed-airspace"] {
-  display: none;
-  opacity: 1;
-  background-color: #f9bc65;
-
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#331e5799', endColorstr='#cc1e5799',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-  -webkit-mask-image: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.75) 35%,
-    transparent 70%
-  );
-
-  mask-image: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.75) 35%,
-    transparent 70%
-  );
-
-  animation: shake 0.9s;
-  animation-iteration-count: infinite;
-}
-
 /* Tooltip */
 .leaflet-popup-content {
   -webkit-font-smoothing: antialiased;
@@ -303,6 +278,7 @@ p {
   line-height: 27px;
 }
 
+/* Markers */
 .leaflet-div-icon {
   background: transparent;
   border: none;
@@ -312,30 +288,48 @@ p {
   outline: 0;
 }
 
-.leaflet-marker-icon.land div {
-  font-size: 22px;
-  text-align: center;
-  color: #6b6b6b;
-  font-weight: bold;
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.67),
-    -2px -1px 0 rgba(255, 255, 255, 0.67), 1px -1px 0 rgba(255, 255, 255, 0.67),
-    -1px 1px 0 rgba(255, 255, 255, 0.67), 1px 1px 0 rgba(255, 255, 255, 0.67);
-}
-.leaflet-marker-icon.water div {
-  letter-spacing: 0.15em;
-  font-size: 18px;
-  font-style: italic;
-  text-align: center;
-  color: #455254;
-  opacity: 0.75;
-  width: 200px;
-  transform: rotate(30deg);
-}
-[class*="animated_icon"] {
+.jamming-icon {
+  width: 20px;
+  height: 20px;
+  background-color: #f9bc65;
   border-radius: 50%;
+  opacity: 0.8;
+  mix-blend-mode: overlay;
 }
-img.leaflet-marker-icon {
-  z-index: 999 !important;
+
+.jamming-icon::before {
+  content: "";
+  position: absolute;
+  top: calc(375px / -2);
+  left: calc(375px / -2);
+  width: 375px;
+  height: 375px;
+  background-color: #f9bc65;
+  visibility: hidden;
+  opacity: 0;
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#331e5799', endColorstr='#cc1e5799',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.75) 35%,
+    transparent 70%
+  );
+
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.75) 35%,
+    transparent 70%
+  );
+}
+
+.jamming-icon.isActive::before {
+  visibility: visible;
+  opacity: 1;
+  animation: shake 0.9s;
+  animation-iteration-count: infinite;
 }
 
 /* Animation */
