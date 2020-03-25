@@ -2,19 +2,12 @@ import loadData from './index'
 
 const satellite = 'SJ-17'
 const satelliteCountry = 'Chinese'
-const satelliteFile = './data/20190403-china.csv'
-const geoSatellitesFile = './data/20190328-china-geo-satellites.csv'
+const satelliteFile = './data/20200325-china.csv'
 
 const worldProjection = [-60, -18]
 
 function init() {
-  loadData(
-    satelliteFile,
-    geoSatellitesFile,
-    satellite,
-    satelliteCountry,
-    worldProjection
-  )
+  loadData(satelliteFile, satellite, satelliteCountry, worldProjection)
 }
 
 window.addEventListener('DOMContentLoaded', init)

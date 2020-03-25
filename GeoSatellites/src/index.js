@@ -23,13 +23,11 @@ let transitionDuration = speeds[currentSpeed]
 
 async function loadData(
   satelliteFile,
-  targetsFile,
   satelliteName,
   satelliteCountry,
   worldProjection
 ) {
-  data = await getData(satelliteFile, targetsFile)
-  Chart.setGeoSatellites(data.geoSatellites)
+  data = await getData(satelliteFile)
 
   world = await getWorldData()
   Chart.setWorld(world, worldProjection)

@@ -25,6 +25,13 @@
       }
     }
 
+    /* stylelint-disable-next-line */
+    &.legend-colors--geo::before {
+      width: 15px;
+      height: 2px;
+      border-radius: 0;
+    }
+
     &:first-of-type {
       flex: 0 0 auto; // The satellite name should never wrap multiple lines
       margin-right: 1.5rem;

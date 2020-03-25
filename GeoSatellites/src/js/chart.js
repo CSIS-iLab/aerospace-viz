@@ -11,7 +11,6 @@ let el
 let world
 let worldProjection
 let transitionDuration
-let geoSatellitesData
 
 function resize() {
   const sz = Math.min(el.node().offsetWidth, window.innerHeight)
@@ -64,7 +63,8 @@ function drawChart() {
       .attr('class', 'g-orbit')
       .append('path')
       .attr('fill', 'none')
-      .attr('stroke', '#000')
+      .attr('stroke', '#b5bdc1')
+      .attr('stroke-width', 2)
 
     const earth = gEnter.append('g').attr('class', 'g-earth')
     earth
@@ -79,7 +79,6 @@ function drawChart() {
       .style('stroke', '#ccc')
       .style('stroke-width', '0.3px')
 
-    gEnter.append('g').attr('class', 'g-geoSatellites')
     gEnter.append('g').attr('class', 'g-plot')
   }
 
@@ -92,7 +91,7 @@ function drawChart() {
       .range([height, 0])
   }
 
-  function updateDom({ container, data, geoSatellitesData }) {
+  function updateDom({ container, data }) {
     let svg = container
       .select('svg')
       .attr(
@@ -129,30 +128,21 @@ function drawChart() {
       .datum(topojson.feature(world, world.objects.countries))
       .attr('d', globePath)
 
-    // GeoSatellites
-    let geoSatellites = g
-      .select('.g-geoSatellites')
-      .selectAll('.satellite')
-      .data(geoSatellitesData, d => d.sat_name)
+    // Geostationary Belt
+    let orbit = g.select('.g-orbit path')
 
-    geoSatellites.join(
-      enter =>
-        enter
-          .append('circle')
-          .attr('class', 'satellite')
-          .classed('satellite--perp', d => d.is_perp)
-          .classed('satellite--geo', d => d.is_geo)
-          .attr('r', radius)
-          .attr('cx', d => scaleX(d.x_coord))
-          .attr('cy', d => scaleY(d.y_coord))
-          .attr('data-x', d => d.x_coord)
-          .attr('data-y', d => d.y_coord)
-          .on('mouseover', interactions.mouseover)
-          .on('mouseleave', interactions.mouseleave),
-      update =>
-        update
-          .attr('cx', d => scaleX(d.x_coord))
-          .attr('cy', d => scaleY(d.y_coord))
+    const orbitRadiusX = Math.abs(scaleX(defaultCoords.orbit.x.max) - scaleX(0))
+
+    const orbitRadiusY = Math.abs(scaleY(defaultCoords.orbit.y.max) - scaleY(0))
+
+    orbit.attr(
+      'd',
+      drawEllipse({
+        cx: scaleX(0),
+        cy: scaleY(0),
+        rx: orbitRadiusX,
+        ry: orbitRadiusY
+      })
     )
 
     // Satellites
@@ -197,7 +187,7 @@ function drawChart() {
 
     enter({ container, data })
     updateScales({ data })
-    updateDom({ container, data, geoSatellitesData })
+    updateDom({ container, data })
   }
 
   const interactions = {
@@ -210,16 +200,7 @@ function drawChart() {
       select(this).classed('is-active', false)
     },
     showTooltip(d) {
-      let tooltipBody = [
-        { Operator: d.sat_operator },
-        { Date: d.timestamp },
-        { Longitude: d.long_string }
-      ]
-
-      // Remove the date from geoSatellites
-      if (d.is_geo) {
-        delete tooltipBody[1]
-      }
+      let tooltipBody = [{ Date: d.timestamp }, { Longitude: d.long_string }]
 
       let tooltipContent = `
       <p class="tooltip-heading">
@@ -273,8 +254,4 @@ function setWorld(data, projection) {
   worldProjection = projection
 }
 
-function setGeoSatellites(data) {
-  geoSatellitesData = data
-}
-
-export default { init, setWorld, setGeoSatellites }
+export default { init, setWorld }
