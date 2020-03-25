@@ -71,9 +71,6 @@ function createMarkers(markers) {
       })
     }).addTo(map).bindPopup(`<div class="popupHeaderStyle">
     ${location_as_reported}
-    </div>
-    <div class="popupEntryStyle">
-    ${formattedDate}
     </div>`);
   }
 
@@ -104,7 +101,7 @@ const timeline = {
 
     if (now == timeline.end) {
       timeline.stopTimeline();
-      setTimeout(function() {
+      setTimeout(function () {
         timeline.el.noUiSlider.set(timeline.start);
       }, timeline.transitionDuration);
     }
@@ -118,7 +115,7 @@ const timeline = {
     );
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   },
-  setupTimeline: function({ start, end }) {
+  setupTimeline: function ({ start, end }) {
     this.start = start;
     this.end = end;
 
@@ -149,7 +146,7 @@ const timeline = {
 
     this.el.noUiSlider.set(this.start);
     this.el.noUiSlider.on("update", this.onChange);
-    this.el.noUiSlider.on("slide", function(values, handle) {
+    this.el.noUiSlider.on("slide", function (values, handle) {
       let tempDate = new Date(values[handle]);
       tempDate = new Date(
         tempDate.getUTCFullYear(),
@@ -170,8 +167,8 @@ const timeline = {
       "']"
     ).innerHTML = this.formatDate(end);
   },
-  setupBtnControls: function() {
-    this.controlBtn.addEventListener("click", function() {
+  setupBtnControls: function () {
+    this.controlBtn.addEventListener("click", function () {
       let currentDate = now;
       if (now == timeline.end) {
         timeline.el.noUiSlider.set(timeline.start);
@@ -182,7 +179,7 @@ const timeline = {
         return;
       }
 
-      timeline.timer = setInterval(function() {
+      timeline.timer = setInterval(function () {
         let currentDate = now;
         now += timeline.el.noUiSlider.options.step;
         timeline.el.noUiSlider.set(now);
@@ -192,7 +189,7 @@ const timeline = {
       timeline.playing = true;
     });
   },
-  stopTimeline: function() {
+  stopTimeline: function () {
     clearInterval(timeline.timer);
     timeline.playing = false;
     timeline.controlBtn.classList.remove("pause-btn");
