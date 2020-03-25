@@ -11,7 +11,7 @@ var map = L.map("map", {
   minZoom: 3,
   zoomControl: true,
   layers: [basemap],
-  attributionControl: false,
+  attributionControl: false
   // formatToolbox: formatToolbox
 });
 
@@ -51,7 +51,6 @@ client
   .bringToFront()
   .addTo(map);
 
-
 const popup = L.popup({ closeButton: true });
 
 jammedPlacesLayer.on(carto.layer.events.FEATURE_CLICKED, createPopup);
@@ -67,13 +66,13 @@ fetch(
   .then(resp => resp.json())
   .then(response => {
     response.rows.forEach((row, i) => {
-      let d = row.date.split("/").map(function (value) {
+      let d = row.date.split("/").map(function(value) {
         return convertType(value);
       });
       let date = new Date(d[2], d[0] - 1, d[1]);
       dates.push(date.getTime());
     });
-    dates.sort(function (a, b) {
+    dates.sort(function(a, b) {
       return a - b;
     });
     len = dates.length;
@@ -86,8 +85,8 @@ fetch(
 
 var timeline = {
   el: document.querySelector(".timeline-bar"),
-  controlBtn: document.getElementById("timeline-controls"),
-  currentDateEl: document.querySelector('.timeline-current-date'),
+  controlBtn: document.getElementById("timeline-btn"),
+  currentDateEl: document.querySelector(".timeline-current-date"),
   playing: false,
   timer: null,
   transitionDuration: 300,
@@ -95,20 +94,20 @@ var timeline = {
   start: s,
   step: 24 * 60 * 60 * 1000,
   updateCurrentDate(date) {
-    this.currentDateEl.innerHTML = `${this.formatDate(date)}`
+    this.currentDateEl.innerHTML = `${this.formatDate(date)}`;
   },
   onChange: function onChange() {
     now = this.get();
-    timeline.updateCurrentDate(now)
-    console.log(dates)
-    console.log(now)
-    Array.from(document.querySelectorAll(".date")).forEach(function (dateEl) {
-      dateEl.innerText = formatDate(now)
+    timeline.updateCurrentDate(now);
+    console.log(dates);
+    console.log(now);
+    Array.from(document.querySelectorAll(".date")).forEach(function(dateEl) {
+      dateEl.innerText = formatDate(now);
     });
     var jams = Array.from(
       document.querySelectorAll('[class*="jammed-airspace"]')
     );
-    dates.forEach(function (jam) {
+    dates.forEach(function(jam) {
       // var start = parseInt(jam.dataset.start, 10);
       // var end = parseInt(jam.dataset.end, 10);
       if (now == jam) {
@@ -120,24 +119,24 @@ var timeline = {
 
     if (now == timeline.end) {
       timeline.stopTimeline();
-      setTimeout(function () {
+      setTimeout(function() {
         timeline.el.noUiSlider.set(timeline.start);
       }, timeline.transitionDuration);
-      jams.forEach(function (jam) {
+      jams.forEach(function(jam) {
         jam.style.display = "none";
       });
     }
   },
   formatDate(date) {
-    date = new Date(date)
+    date = new Date(date);
     date = new Date(
       date.getUTCFullYear(),
       date.getUTCMonth(),
       date.getUTCDate()
-    )
-    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+    );
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   },
-  setupTimeline: function ({ start, end }) {
+  setupTimeline: function({ start, end }) {
     console.log(this);
     this.start = start;
     this.end = end;
@@ -166,29 +165,29 @@ var timeline = {
     this.el.noUiSlider.set(this.start);
     this.setupBtnControls();
     this.el.noUiSlider.on("update", this.onChange);
-    this.el.noUiSlider.on('slide', function (values, handle) {
-      let tempDate = new Date(values[handle])
+    this.el.noUiSlider.on("slide", function(values, handle) {
+      let tempDate = new Date(values[handle]);
       tempDate = new Date(
         tempDate.getUTCFullYear(),
         tempDate.getUTCMonth(),
         tempDate.getUTCDate()
-      ).getTime()
+      ).getTime();
       // console.log(values[handle])
       // console.log(tempDate)
-      timeline.el.noUiSlider.set(tempDate)
-    })
+      timeline.el.noUiSlider.set(tempDate);
+    });
     this.el.querySelector(
       "[data-value='" + this.start,
       "']"
-    ).innerHTML = this.formatDate(start)
+    ).innerHTML = this.formatDate(start);
     this.el.querySelector(
       "[data-value='" + this.end,
       "']"
-    ).innerHTML = this.formatDate(end)
+    ).innerHTML = this.formatDate(end);
   },
-  setupBtnControls: function () {
-    this.controlBtn.addEventListener("click", function () {
-      let currentDate = now
+  setupBtnControls: function() {
+    this.controlBtn.addEventListener("click", function() {
+      let currentDate = now;
       if (now == timeline.end) {
         timeline.el.noUiSlider.set(timeline.start);
       }
@@ -198,8 +197,8 @@ var timeline = {
         return;
       }
 
-      timeline.timer = setInterval(function () {
-        let currentDate = now
+      timeline.timer = setInterval(function() {
+        let currentDate = now;
         now += timeline.el.noUiSlider.options.step;
         timeline.el.noUiSlider.set(now);
       }, timeline.transitionDuration);
@@ -208,15 +207,13 @@ var timeline = {
       timeline.playing = true;
     });
   },
-  stopTimeline: function () {
+  stopTimeline: function() {
     clearInterval(timeline.timer);
     timeline.playing = false;
     timeline.controlBtn.classList.remove("pause-btn");
     timeline.controlBtn.classList.add("play-btn");
   }
 };
-
-
 
 function createPopup(event) {
   popup.setLatLng(event.latLng);
@@ -251,20 +248,17 @@ L.control
 
 // let marker = L.marker(latlng).addTo(map)
 
-
-
-
 function convertType(value) {
   var v = Number(value);
   return !isNaN(v)
     ? v
     : value.toLowerCase() === "undefined"
-      ? undefined
-      : value.toLowerCase() === "null"
-        ? null
-        : value.toLowerCase() === "true"
-          ? true
-          : value.toLowerCase() === "false"
-            ? false
-            : value;
+    ? undefined
+    : value.toLowerCase() === "null"
+    ? null
+    : value.toLowerCase() === "true"
+    ? true
+    : value.toLowerCase() === "false"
+    ? false
+    : value;
 }

@@ -6,89 +6,51 @@
   <title>GPS Jamming In The Mediterranean Sea | ASP | CSIS</title>
   <meta name="viewport" content="initial-scale=1.0" />
   <meta charset="utf-8" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet" />
 
   <!-- Share meta -->
   <meta property="og:locale" content="en_US" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="GPS Jamming In The Mediterranean Sea - Aerospace Security Project" />
 
-  <script src="https://unpkg.com/babel-polyfill@6.26.0/dist/polyfill.js"></script>
-  <!-- Include Leaflet -->
-  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
   <link href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" rel="stylesheet" />
-  <!-- Include CARTO.js -->
-  <script src="https://libs.cartocdn.com/carto.js/v4.1.11/carto.min.js"></script>
-  <script src="https://cartodb-libs.global.ssl.fastly.net/carto.js/v4.2.0/carto.min.js"></script>
-  <link href="https://carto.com/developers/carto-js/examples/maps/public/style.css" rel="stylesheet" />
 
-  <!-- Include noUiSlider -->
   <link rel="stylesheet" href="css/nouislider.css">
-
-  <!-- Include Zoom Slider plugin -->
-  <!-- <script src="zoom-slider/zoomslider.js"></script>
-  <link href="zoom-slider/zoomslider.css" rel="stylesheet"> -->
-
-  <link rel="preconnect stylesheet" href="https://use.typekit.net/ats0hoc.css" />
-
-  <link href="css/makeMap.css" rel="stylesheet" />
-
   <link href="css/mediterranean-jamming.css" rel="stylesheet" />
 </head>
 
 <body>
-  <nav id='menu-ui' class='menu-ui'></nav>
   <div id="map" class="map" tabindex="0"></div>
   <aside class="toolbox">
-
-    <div class="hamburger mobile-only">
-      <div class="icon">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="menu-translate">
-        GPS Jamming In The Mediterranean Sea
-      </div>
-    </div>
     <div class="box">
-      <header class="mobile-toggle">
-        <h1 class="translate">
+      <header>
+        <h1>
           GPS Jamming In The Mediterranean Sea
         </h1>
-
-        <a href="https://aerospace.csis.org" target="_blank"
-          style="background-image: url(&quot;https://raw.githubusercontent.com/CSIS-iLab/aerospace_wp/master/favicon-96x96.png&quot;)"
-          class="mobile-toggle" id="logo"></a>
-
       </header>
-      <p class="translate description open-sans mobile-toggle">Click a site on the map to learn more.</p>
-      <div class="separator"></div>
+      <p class="description">Click a site on the map to learn more.</p>
       <section id="time">
         <div class="indicator">
           <p>Signal loss on <span class="date timeline-current-date timeline-header__value"></span></p>
           <p><span></span></p>
         </div>
         <div class="timeline">
-          <div class="timeline-controls"> <button id="timeline-controls" class="timeline-btn play-btn control-btn"
-              aria-pressed="false" aria-label="Play timeline"></button> </div>
+          <div class="timeline-controls">   
+            <button id="timeline-btn" class="timeline-btn play-btn control-btn"
+              aria-pressed="false" aria-label="Play timeline"></button>
+          </div>
           <div class="timeline-container">
             <div class="timeline-bar"></div>
           </div>
         </div>
       </section>
-
-      <div class="hidden"></div>
-
-    </div>
-
-    <footer>
-      <div class="hidden"></div>
-    </footer>
     </div>
   </aside>
   </section>
+  <script src="https://unpkg.com/babel-polyfill@6.26.0/dist/polyfill.js"></script>
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+  <script src="https://libs.cartocdn.com/carto.js/v4.1.11/carto.min.js"></script>
+  <script src="https://cartodb-libs.global.ssl.fastly.net/carto.js/v4.2.0/carto.min.js"></script>
   <script src="js/vendor/nouislider.min.js"></script>
   <script src="js/mediterranean-jamming.js"></script>
 </body>
