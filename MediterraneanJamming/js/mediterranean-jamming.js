@@ -83,7 +83,7 @@ const timeline = {
   currentDateEl: document.querySelector(".timeline-current-date"),
   playing: false,
   timer: null,
-  transitionDuration: 300,
+  transitionDuration: 85,
   end: null,
   start: null,
   step: 24 * 60 * 60 * 1000,
