@@ -4,7 +4,7 @@ import SpeedControls from './js/speed-controls'
 import timeline from './js/timeline'
 import { getData, getWorldData } from './js/data'
 
-const baseSpeed = 300
+const baseSpeed = 100
 
 const speeds = {
   half: baseSpeed * 2,
@@ -23,13 +23,11 @@ let transitionDuration = speeds[currentSpeed]
 
 async function loadData(
   satelliteFile,
-  targetsFile,
   satelliteName,
   satelliteCountry,
   worldProjection
 ) {
-  data = await getData(satelliteFile, targetsFile)
-  Chart.setGeoSatellites(data.geoSatellites)
+  data = await getData(satelliteFile)
 
   world = await getWorldData()
   Chart.setWorld(world, worldProjection)

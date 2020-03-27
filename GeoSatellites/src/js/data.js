@@ -2,21 +2,15 @@ import * as d3Fetch from 'd3-fetch'
 
 const knownCountries = ['US', 'China', 'Russia']
 
-async function getData(satelliteURL, geoSatellitesURL) {
+async function getData(satelliteURL) {
   const satellitePromise = d3Fetch.csv(satelliteURL)
-  const geoSatellitesPromise = d3Fetch.csv(geoSatellitesURL)
 
-  let data = Promise.all([satellitePromise, geoSatellitesPromise]).then(res => {
-    const [satelliteData, geoSatellitesData] = res
+  let data = Promise.all([satellitePromise]).then(res => {
+    const [satelliteData] = res
 
     let filteredSatellites = filterSatellites(satelliteData)
     filteredSatellites.forEach(d => {
       formatSatelliteData(d, true)
-    })
-
-    let filteredGeoSatellites = filterSatellites(geoSatellitesData)
-    filteredGeoSatellites.forEach(d => {
-      formatSatelliteData(d, false)
     })
 
     const timestamps = Array.from(
@@ -28,8 +22,7 @@ async function getData(satelliteURL, geoSatellitesURL) {
     )
 
     let dataset = {
-      perp: new Map(),
-      geoSatellites: filteredGeoSatellites
+      perp: new Map()
     }
 
     timestamps.forEach((timestamp, i) => {
