@@ -83,7 +83,7 @@ const timeline = {
   currentDateEl: document.querySelector(".timeline-current-date"),
   playing: false,
   timer: null,
-  transitionDuration: 85,
+  transitionDuration: 1000,
   end: null,
   start: null,
   step: 24 * 60 * 60 * 1000,
@@ -179,11 +179,35 @@ const timeline = {
         return;
       }
 
-      timeline.timer = setInterval(function () {
-        let currentDate = now;
-        now += timeline.el.noUiSlider.options.step;
-        timeline.el.noUiSlider.set(now);
-      }, timeline.transitionDuration);
+      let ints = []
+
+      jammingIcons.forEach(icon => {
+        const iconDate = +icon.getAttribute("data-timestamp");
+        ints.push(iconDate)
+      })
+
+      let i = 0
+
+      function jamTimer() {
+
+        if (i >= ints.length) {
+          i = 0
+        }
+
+        let currentDate = now
+        now = ints[i]
+        timeline.el.noUiSlider.set(now)
+        i++
+      }
+
+      timeline.timer = setInterval(jamTimer, timeline.transitionDuration)
+
+      // timeline.timer = setInterval(function () {
+      //   let currentDate = now;
+      //   now += timeline.el.noUiSlider.options.step;
+      //   timeline.el.noUiSlider.set(now);
+      //   console.log(now)
+      // }, timeline.transitionDuration);
       this.classList.remove("play-btn");
       this.classList.add("pause-btn");
       timeline.playing = true;
