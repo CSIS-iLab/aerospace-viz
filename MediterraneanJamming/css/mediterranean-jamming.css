@@ -314,7 +314,7 @@ p {
 }
 
 /* Animation */
-@keyframes shake {
+/* @keyframes shake {
   0% {
     transform: translate(1px, 1px) rotate(0deg) scale(1);
     background: -moz-radial-gradient(
@@ -581,9 +581,9 @@ p {
       rgba(249, 188, 101, 0.5) 99%
     );
   }
-}
+} */
 
-@keyframes shake2 {
+/* @keyframes shake2 {
   0% {
     transform: translate(1px, 1px) rotate(0deg) scale(1);
     background: -moz-radial-gradient(
@@ -850,7 +850,7 @@ p {
       rgba(93, 182, 208, 0.5) 99%
     );
   }
-}
+} */
 
 @keyframes shake3 {
   0% {
