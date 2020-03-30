@@ -1,10 +1,10 @@
 import loadData from './index'
 
-const satellite = 'Luch (Olymp-K)'
+const satellite = 'Luch'
 const satelliteCountry = 'Russian'
-const satelliteFile = './data/20200326-russia.csv'
+const satelliteFile = './data/20200330-russia.csv'
 
-const worldProjection = [-15, -18]
+const worldProjection = [0, -18]
 
 function init() {
   loadData(satelliteFile, satellite, satelliteCountry, worldProjection)
