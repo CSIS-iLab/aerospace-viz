@@ -10,7 +10,7 @@ var basemap = L.tileLayer(
 
 var map = L.map("map", {
   center: [35.943, 23.647],
-  zoom: 5,
+  zoom: 6,
   maxZoom: 12,
   scrollWheelZoom: true,
   minZoom: 3,
@@ -65,6 +65,7 @@ function createMarkers(markers) {
     } = markers[i];
 
     L.marker([lat, long], {
+      riseOnHover: true,
       icon: new L.divIcon({
         className: "jamming-icon-container",
         html: `<div class="jamming-icon" data-timestamp="${timestamp}"></div>`
@@ -97,6 +98,7 @@ const timeline = {
     jammingIcons.forEach(icon => {
       const iconDate = +icon.getAttribute("data-timestamp");
       icon.classList.toggle("isActive", iconDate === now);
+      icon.parentNode.classList.toggle("isActive", iconDate === now)
     });
 
     if (now == timeline.end) {
