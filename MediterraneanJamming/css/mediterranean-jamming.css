@@ -25,26 +25,6 @@ p {
   border-radius: 3px;
 }
 
-/* Tooltip */
-.leaflet-tooltip-content {
-  -webkit-font-smoothing: antialiased;
-}
-
-.popupHeaderStyle {
-  font-family: Abel, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1.5;
-  margin-bottom: 0.2rem;
-  text-transform: uppercase;
-}
-
-.popupEntryStyle {
-  color: #000;
-  font-weight: 400;
-  margin: 0 0 6px 0;
-}
-
 /* Toolbox */
 .toolbox {
   position: absolute;
@@ -237,29 +217,6 @@ p {
   width: 100%;
   z-index: 0;
 }
-
-.leaflet-popup-content-wrapper,
-.leaflet-tooltip {
-  background-color: rgba(255, 255, 255, 0.875);
-  border-radius: 0;
-  border: 1px solid #000;
-}
-
-.leaflet-popup-tip {
-  display: none;
-}
-
-/* Remove tooltip arrow/tip */
-.leaflet-tooltip-top:before,
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-    position: absolute;
-    pointer-events: none;
-    border: 6px solid transparent;
-    background: transparent;
-    content: "";
-    }
 
 .leaflet-container a svg {
   height: 10px;
@@ -615,11 +572,9 @@ p {
   }
 }
 
-.tooltip,
-p {
-  -webkit-font-smoothing: antialiased;
-}
-.tooltip .tooltip-heading {
+/* Tooltip */
+
+.popupHeaderStyle {
   font-family: Abel, Arial, sans-serif;
   font-size: 16px;
   font-weight: bold;
@@ -628,40 +583,26 @@ p {
   text-transform: uppercase;
 }
 
-.tooltip .tooltip-label {
-  color: #000;
-  font-weight: 400;
-  margin: 0 0 6px 0;
+.tooltip,
+p {
+  -webkit-font-smoothing: antialiased;
 }
 
-.tooltip .tooltip-value {
-  border-bottom: 2px solid #44545f;
-  color: #d66e42;
-  font-weight: 400;
+.leaflet-popup-content-wrapper,
+.leaflet-tooltip {
+  background-color: rgba(255, 255, 255, 0.875);
+  border-radius: 0;
+  border: 1px solid #000;
 }
 
-.tooltip a {
-  color: #196c94;
-  font-weight: 400;
-  text-decoration: none;
-  background-image: linear-gradient(#fff 50%, #b5bdc1 50%),
-    linear-gradient(
-      to bottom,
-      rgba(214, 110, 66, 0.75) 0,
-      rgba(214, 110, 66, 0.75) 100%
-    );
-  background-position: 0 100%, 0 100%;
-  background-repeat: repeat-x, repeat-x;
-  background-size: 4px 4px, 4px 4px;
-  -moz-transition: all 200ms ease;
-  -o-transition: all 200ms ease;
-  -webkit-transition: all 200ms ease;
-  transition: all 200ms ease;
-}
-.tooltip a:hover {
-  /* background-size: 4px 4px, 4px 100%;
-  color: #44545f; */
-
-  background-size: 0 0, 0 0;
-  color: #d66e42;
-}
+/* Remove tooltip arrow/tip */
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+    position: absolute;
+    pointer-events: none;
+    border: 6px solid transparent;
+    background: transparent;
+    content: "";
+    }
