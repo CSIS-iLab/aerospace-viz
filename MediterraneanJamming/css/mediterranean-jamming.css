@@ -279,8 +279,8 @@ p {
 .jamming-icon::before {
   content: "";
   position: absolute;
-  top: calc(150px / -2);
-  left: calc(150px / -2);
+  top: calc(135px / -2);
+  left: calc(135px / -2);
   width: 150px;
   height: 150px;
   background-color: #f9bc65;
