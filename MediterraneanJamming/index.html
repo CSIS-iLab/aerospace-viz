@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GPS Jamming In The Mediterranean Sea | ASP | CSIS</title>
+  <meta name="viewport" content="initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Abel|Source+Sans+Pro:400,600" rel="stylesheet" />
+
+  <!-- Share meta -->
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="GPS Jamming In The Mediterranean Sea - Aerospace Security Project" />
+
+  <link href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/nouislider.css">
+  <link href="css/mediterranean-jamming.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="map" class="map" tabindex="0"></div>
+  <aside class="toolbox">
+    <div class="box">
+      <header>
+        <h1>
+          GPS Jamming In The Mediterranean Sea
+        </h1>
+      </header>
+      <p class="description">Click a site on the map to learn more. Use the timeline to see the days on which events
+        occurred.</p>
+      <section id="time">
+        <div class="indicator">
+          <p>Signal loss on <span class="date timeline-current-date timeline-header__value"></span></p>
+          <p><span></span></p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-controls">
+            <button id="timeline-btn" class="timeline-btn play-btn control-btn" aria-pressed="false"
+              aria-label="Play timeline"></button>
+          </div>
+          <div class="timeline-container">
+            <div class="timeline-bar"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </aside>
+  </section>
+  <script src="https://unpkg.com/babel-polyfill@6.26.0/dist/polyfill.js"></script>
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+  <script src="https://libs.cartocdn.com/carto.js/v4.1.11/carto.min.js"></script>
+  <script src="https://cartodb-libs.global.ssl.fastly.net/carto.js/v4.2.0/carto.min.js"></script>
+  <script src="js/vendor/nouislider.min.js"></script>
+  <script src="js/mediterranean-jamming.js"></script>
+</body>
+
+</html>
