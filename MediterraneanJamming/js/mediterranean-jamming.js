@@ -69,7 +69,7 @@ function createMarkers(markers) {
         className: "jamming-icon-container",
         html: `<div class="jamming-icon" data-timestamp="${timestamp}"></div>`
       })
-    }).addTo(map).bindPopup(`<div class="popupHeaderStyle">
+    }).addTo(map).bindTooltip(`<div class="popupHeaderStyle tooltip tooltip-heading">
     ${location_as_reported}
     </div>`);
   }
