@@ -4,7 +4,7 @@ import SpeedControls from './js/speed-controls'
 import timeline from './js/timeline'
 import { getData, getWorldData } from './js/data'
 
-const baseSpeed = 100
+const baseSpeed = 200
 
 const speeds = {
   half: baseSpeed * 2,
