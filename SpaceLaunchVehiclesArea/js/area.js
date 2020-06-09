@@ -12,7 +12,7 @@ $(function() {
     },
     // Chart Title and Subtitle
     title: {
-      text: "Yearly American Launches by Rocket"
+      text: "Successful U.S. Space Launches"
     },
     subtitle: {
       text: "Click and drag to zoom in"
