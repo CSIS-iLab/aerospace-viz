@@ -1,812 +1,98 @@
 Highcharts.chart('hcContainer', {
-
+  data: {  
+      googleSpreadsheetKey: '11gJ3QuXf4_34uDomERHdO3FQNLZ2_6_t8dY_SZKaESo',
+      googleSpreadsheetWorksheet: 1
+  },
   chart: {
-    type: 'column',
-    events: {
-      load: function() {
-        var chart = this;
-
-        // Add event:
-        chart.series.forEach(function(series) {
-          if (series.legendGroup) {
-            Highcharts.addEvent(series.legendGroup.element, 'mouseover', function() {
-              // Internal method:
-              chart.pointer.applyInactiveState([series.points[0]]);
-            });
-            Highcharts.addEvent(series.legendGroup.element, 'mouseout', function() {
-              chart.series.forEach(function(s) {
-                s.setState();
-              });
-            });
-          }
-        });
-      }
-    }
+      type: 'column'
   },
 
   title: {
-    text: 'SLV Launch Data Stacked Column'
-  },
-  
-  credits: {
-    enabled: true,
-    href: false,
-    text: "CSIS Aerospace Security"
-  },
-
-  plotOptions: {
-    column: {
-      stacking: 'normal'
-    }
-  },
-
-  tooltip: {
-    pointFormat: '<span style="color:{point.color}">●</span> {series.userOptions.stack}: <b>{point.y}</b><br/>'
+      text: 'SLV Launch Data'
   },
 
   xAxis: {
-    type: 'category'
-  },
+      categories: [
+      '2002', 
+      '2003',
+      '2004',
+      '2005',
+      '2006',
+      '2007',
+      '2008',
+      '2009',
+      '2010',
+      '2011',
+      '2012',
+      '2013',
+      '2014',
+      '2015',
+      '2016',
+      '2017',
+      '2018',
+      '2019',
+      '2020']
+},
 
-  yAxis: {
-    reversedStacks: false,
-    title: undefined
-  },
-
-  series: [{
-    name: 'Success',
-    color: '#196c95',
-    id: 'Success',
-    stack: 'Delta IV',
-    data: [{
-      y: 0,
-      name: '2002'
-    }, {
-      y: 2,
-      name: '2003'
-    }, {
-      y: 0,
-      name: '2004'
-    }, {
-      y: 0,
-      name: '2005'
-    }, {
-      y: 3,
-      name: '2006'
-    }, {
-      y: 0,
-      name: '2007'
-    }, {
-      y: 0,
-      name: '2008'
-    }, {
-      y: 2,
-      name: '2009'
-    }, {
-      y: 2,
-      name: '2010'
-    }, {
-      y: 2,
-      name: '2011'
-    }, {
-      y: 3,
-      name: '2012'
-    }, {
-      y: 2,
-      name: '2013'
-    }, {
-      y: 3,
-      name: '2014'
-    }, {
-      y: 2,
-      name: '2015'
-    }, {
-      y: 3,
-      name: '2016'
-    }, {
-      y: 1,
-      name: '2017'
-    }, {
-      y: 1, 
-      name: '2018'
-    }, {
-      y: 2, 
-      name: '2019'
-    }, {
-      y: 0,
-      name: '2020'
-    }]
-  }, {
-    linkedTo: 'Success',
-    color: '#196c95',
-    stack: 'Atlas V',
-    data: [{
-      y: 1,
-      name: '2002'
-    }, {
-      y: 2,
-      name: '2003'
-    }, {
-      y: 1,
-      name: '2004'
-    }, {
-      y: 2,
-      name: '2005'
-    }, {
-      y: 2,
-      name: '2006'
-    }, {
-      y: 3,
-      name: '2007'
-    }, {
-      y: 2,
-      name: '2008'
-    }, {
-      y: 5,
-      name: '2009'
-    }, {
-      y: 4,
-      name: '2010'
-    }, {
-      y: 5,
-      name: '2011'
-    }, {
-      y: 6,
-      name: '2012'
-    }, {
-      y: 8,
-      name: '2013'
-    }, {
-      y: 9,
-      name: '2014'
-    }, {
-      y: 9,
-      name: '2015'
-    }, {
-      y: 8,
-      name: '2016'
-    }, {
-      y: 6,
-      name: '2017'
-    }, {
-      y: 5, 
-      name: '2018'
-    }, {
-      y: 2, 
-      name: '2019'
-    }, {
-      y: 3,
-      name: '2020'
-    }]
-  }, {
-    linkedTo: 'Success',
-    color: '#196c95',
-    stack: 'Falcon 9',
-    data: [{
-      y: 0,
-      name: '2002'
-    }, {
-      y: 0,
-      name: '2003'
-    }, {
-      y: 0,
-      name: '2004'
-    }, {
-      y: 0,
-      name: '2005'
-    }, {
-      y: 0,
-      name: '2006'
-    }, {
-      y: 0,
-      name: '2007'
-    }, {
-      y: 0,
-      name: '2008'
-    }, {
-      y: 0,
-      name: '2009'
-    }, {
-      y: 2,
-      name: '2010'
-    }, {
-      y: 0,
-      name: '2011'
-    }, {
-      y: 2,
-      name: '2012'
-    }, {
-      y: 3,
-      name: '2013'
-    }, {
-      y: 6,
-      name: '2014'
-    }, {
-      y: 6,
-      name: '2015'
-    }, {
-      y: 8,
-      name: '2016'
-    }, {
-      y: 18,
-      name: '2017'
-    }, {
-      y: 20, 
-      name: '2018'
-    }, {
-      y: 11, 
-      name: '2019'
-    }, {
-      y: 8,
-      name: '2020'
-    }]
-  }, 
-  
-  {
-    name: 'Failure/Partial Failure',
-    color: '#f9bc65',
-    id: 'Failure/Partial Failure',
-    stack: 'Delta IV',
-    data: [{
-      y: 0,
-      name: '2002'
-    }, {
-      y: 0,
-      name: '2003'
-    }, {
-      y: 0,
-      name: '2004'
-    }, {
-      y: 0,
-      name: '2005'
-    }, {
-      y: 0,
-      name: '2006'
-    }, {
-      y: 0,
-      name: '2007'
-    }, {
-      y: 0,
-      name: '2008'
-    }, {
-      y: 0,
-      name: '2009'
-    }, {
-      y: 0,
-      name: '2010'
-    }, {
-      y: 0,
-      name: '2011'
-    }, {
-      y: 0,
-      name: '2012'
-    }, {
-      y: 0,
-      name: '2013'
-    }, {
-      y: 0,
-      name: '2014'
-    }, {
-      y: 0,
-      name: '2015'
-    }, {
-      y: 0,
-      name: '2016'
-    }, {
-      y: 0,
-      name: '2017'
-    }, {
-      y: 0, 
-      name: '2018'
-    }, {
-      y: 0, 
-      name: '2019'
-    }, {
-      y: 0,
-      name: '2020'
-    }]
-  }, {
-    linkedTo: 'Failure/Partial Failure',
-    color: '#f9bc65',
-    stack: 'Atlas V',
-    data: [{
-      y: 0,
-      name: '2002'
-    }, {
-      y: 0,
-      name: '2003'
-    }, {
-      y: 0,
-      name: '2004'
-    }, {
-      y: 0,
-      name: '2005'
-    }, {
-      y: 0,
-      name: '2006'
-    }, {
-      y: 1,
-      name: '2007'
-    }, {
-      y: 0,
-      name: '2008'
-    }, {
-      y: 0,
-      name: '2009'
-    }, {
-      y: 0,
-      name: '2010'
-    }, {
-      y: 0,
-      name: '2011'
-    }, {
-      y: 0,
-      name: '2012'
-    }, {
-      y: 0,
-      name: '2013'
-    }, {
-      y: 0,
-      name: '2014'
-    }, {
-      y: 0,
-      name: '2015'
-    }, {
-      y: 0,
-      name: '2016'
-    }, {
-      y: 0,
-      name: '2017'
-    }, {
-      y: 0, 
-      name: '2018'
-    }, {
-      y: 0, 
-      name: '2019'
-    }, {
-      y: 0,
-      name: '2020'
-    }]
-  }, {
-    linkedTo: 'Failure/Partial Failure',
-    color: '#f9bc65',
-    stack: 'Falcon 9',
-    data: [{
-      y: 0,
-      name: '2002'
-    }, {
-      y: 0,
-      name: '2003'
-    }, {
-      y: 0,
-      name: '2004'
-    }, {
-      y: 0,
-      name: '2005'
-    }, {
-      y: 0,
-      name: '2006'
-    }, {
-      y: 0,
-      name: '2007'
-    }, {
-      y: 0,
-      name: '2008'
-    }, {
-      y: 0,
-      name: '2009'
-    }, {
-      y: 0,
-      name: '2010'
-    }, {
-      y: 0,
-      name: '2011'
-    }, {
-      y: 0,
-      name: '2012'
-    }, {
-      y: 0,
-      name: '2013'
-    }, {
-      y: 0,
-      name: '2014'
-    }, {
-      y: 1,
-      name: '2015'
-    }, {
-      y: 1,
-      name: '2016'
-    }, {
-      y: 0,
-      name: '2017'
-    }, {
-      y: 0, 
-      name: '2018'
-    }, {
-      y: 0, 
-      name: '2019'
-    }, {
-      y: 0,
-      name: '2020'
-    }]
-  },
-
-  {
-      name: 'Heavy Success',
-      color: '#5DB6D0',
-      id: 'Heavy Success',
-      stack: 'Delta IV',
-      data: [{
-        y: 0,
-        name: '2002'
-      }, {
-        y: 0,
-        name: '2003'
-      }, {
-        y: 0,
-        name: '2004'
-      }, {
-        y: 0,
-        name: '2005'
-      }, {
-        y: 0,
-        name: '2006'
-      }, {
-        y: 1,
-        name: '2007'
-      }, {
-        y: 0,
-        name: '2008'
-      }, {
-        y: 1,
-        name: '2009'
-      }, {
-        y: 1,
-        name: '2010'
-      }, {
-        y: 1,
-        name: '2011'
-      }, {
-        y: 1,
-        name: '2012'
-      }, {
-        y: 1,
-        name: '2013'
-      }, {
-        y: 1,
-        name: '2014'
-      }, {
-        y: 0,
-        name: '2015'
-      }, {
-        y: 1,
-        name: '2016'
-      }, {
-        y: 0,
-        name: '2017'
-      }, {
-        y: 1, 
-        name: '2018'
-      }, {
-        y: 1, 
-        name: '2019'
-      }, {
-        y: 0,
-        name: '2020'
-      }]
-    }, {
-      linkedTo: 'Heavy Success',
-      color: '#5DB6D0',
-      stack: 'Atlas V',
-      data: [{
-        y: 0,
-        name: '2002'
-      }, {
-        y: 0,
-        name: '2003'
-      }, {
-        y: 0,
-        name: '2004'
-      }, {
-        y: 0,
-        name: '2005'
-      }, {
-        y: 0,
-        name: '2006'
-      }, {
-        y: 0,
-        name: '2007'
-      }, {
-        y: 0,
-        name: '2008'
-      }, {
-        y: 0,
-        name: '2009'
-      }, {
-        y: 0,
-        name: '2010'
-      }, {
-        y: 0,
-        name: '2011'
-      }, {
-        y: 0,
-        name: '2012'
-      }, {
-        y: 0,
-        name: '2013'
-      }, {
-        y: 0,
-        name: '2014'
-      }, {
-        y: 0,
-        name: '2015'
-      }, {
-        y: 0,
-        name: '2016'
-      }, {
-        y: 0,
-        name: '2017'
-      }, {
-        y: 0, 
-        name: '2018'
-      }, {
-        y: 0, 
-        name: '2019'
-      }, {
-        y: 0,
-        name: '2020'
-      }]
-    }, {
-      linkedTo: 'Heavy Success',
-      color: '#5DB6D0',
-      stack: 'Falcon 9',
-      data: [{
-        y: 0,
-        name: '2002'
-      }, {
-        y: 0,
-        name: '2003'
-      }, {
-        y: 0,
-        name: '2004'
-      }, {
-        y: 0,
-        name: '2005'
-      }, {
-        y: 0,
-        name: '2006'
-      }, {
-        y: 0,
-        name: '2007'
-      }, {
-        y: 0,
-        name: '2008'
-      }, {
-        y: 0,
-        name: '2009'
-      }, {
-        y: 0,
-        name: '2010'
-      }, {
-        y: 0,
-        name: '2011'
-      }, {
-        y: 0,
-        name: '2012'
-      }, {
-        y: 0,
-        name: '2013'
-      }, {
-        y: 0,
-        name: '2014'
-      }, {
-        y: 0,
-        name: '2015'
-      }, {
-        y: 0,
-        name: '2016'
-      }, {
-        y: 0,
-        name: '2017'
-      }, {
-        y: 1, 
-        name: '2018'
-      }, {
-        y: 2, 
-        name: '2019'
-      }, {
-        y: 0,
-        name: '2020'
-      }]
-    },
-
-    {
-      name: 'Heavy Failure/Partial Failure',
-      color: '#D66E42',
-      id: 'Heavy Failure/Partial Failure',
-      stack: 'Delta IV',
-      data: [{
-        y: 0,
-        name: '2002'
-      }, {
-        y: 0,
-        name: '2003'
-      }, {
-        y: 1,
-        name: '2004'
-      }, {
-        y: 0,
-        name: '2005'
-      }, {
-        y: 0,
-        name: '2006'
-      }, {
-        y: 0,
-        name: '2007'
-      }, {
-        y: 0,
-        name: '2008'
-      }, {
-        y: 0,
-        name: '2009'
-      }, {
-        y: 0,
-        name: '2010'
-      }, {
-        y: 0,
-        name: '2011'
-      }, {
-        y: 0,
-        name: '2012'
-      }, {
-        y: 0,
-        name: '2013'
-      }, {
-        y: 0,
-        name: '2014'
-      }, {
-        y: 0,
-        name: '2015'
-      }, {
-        y: 0,
-        name: '2016'
-      }, {
-        y: 0,
-        name: '2017'
-      }, {
-        y: 0, 
-        name: '2018'
-      }, {
-        y: 0, 
-        name: '2019'
-      }, {
-        y: 0,
-        name: '2020'
-      }]
-    }, {
-      linkedTo: 'Heavy Failure/Partial Failure',
-      color: '#D66E42',
-      stack: 'Atlas V',
-      data: [{
-        y: 0,
-        name: '2002'
-      }, {
-        y: 0,
-        name: '2003'
-      }, {
-        y: 0,
-        name: '2004'
-      }, {
-        y: 0,
-        name: '2005'
-      }, {
-        y: 0,
-        name: '2006'
-      }, {
-        y: 0,
-        name: '2007'
-      }, {
-        y: 0,
-        name: '2008'
-      }, {
-        y: 0,
-        name: '2009'
-      }, {
-        y: 0,
-        name: '2010'
-      }, {
-        y: 0,
-        name: '2011'
-      }, {
-        y: 0,
-        name: '2012'
-      }, {
-        y: 0,
-        name: '2013'
-      }, {
-        y: 0,
-        name: '2014'
-      }, {
-        y: 0,
-        name: '2015'
-      }, {
-        y: 0,
-        name: '2016'
-      }, {
-        y: 0,
-        name: '2017'
-      }, {
-        y: 0, 
-        name: '2018'
-      }, {
-        y: 0, 
-        name: '2019'
-      }, {
-        y: 0,
-        name: '2020'
-      }]
-    }, {
-      linkedTo: 'Heavy Failure/Partial Failure',
-      color: '#D66E42',
-      stack: 'Falcon 9',
-      data: [{
-        y: 0,
-        name: '2002'
-      }, {
-        y: 0,
-        name: '2003'
-      }, {
-        y: 0,
-        name: '2004'
-      }, {
-        y: 0,
-        name: '2005'
-      }, {
-        y: 0,
-        name: '2006'
-      }, {
-        y: 0,
-        name: '2007'
-      }, {
-        y: 0,
-        name: '2008'
-      }, {
-        y: 0,
-        name: '2009'
-      }, {
-        y: 0,
-        name: '2010'
-      }, {
-        y: 0,
-        name: '2011'
-      }, {
-        y: 0,
-        name: '2012'
-      }, {
-        y: 0,
-        name: '2013'
-      }, {
-        y: 0,
-        name: '2014'
-      }, {
-        y: 0,
-        name: '2015'
-      }, {
-        y: 0,
-        name: '2016'
-      }, {
-        y: 0,
-        name: '2017'
-      }, {
-        y: 0, 
-        name: '2018'
-      }, {
-        y: 0, 
-        name: '2019'
-      }, {
-        y: 0,
-        name: '2020'
-      }]
+yAxis: {
+    allowDecimals: false,
+    min: 0,
+    title: {
+        text: 'Number of Launches'
     }
+},
 
-]});
+
+plotOptions: {
+    column: {
+        stacking: 'normal'
+    }
+},
+
+series: [{
+    name: 'Delta IV',
+    color: '#196C95',
+    stack: 'Delta IV'
+}, {
+    name: 'Delta IV Failure/Partial Failure',
+    color: '#B5BDC1',
+    stack: 'Delta IV',
+    showInLegend: false
+}, {
+    name: 'Delta IV Heavy',
+    color: '#5DB6D0',
+    stack: 'Delta IV Heavy'
+}, {
+    name: 'Delta IV Heavy Failure/Partial Failure',
+    color: '#B5BDC1',
+    stack: 'Delta IV Heavy',
+    showInLegend: false
+}, {
+    name: 'Atlas V',
+    color: '#F9BC65',
+    stack: 'Atlas V'
+}, {
+    name: 'Atlas V Failure/Partial Failure',
+    stack: 'Atlas V',
+    color: '#B5BDC1',
+    showInLegend: false
+}, {
+    name: 'Falcon 9',
+    color: '#4F9793',
+    stack: 'Falcon 9'
+}, {
+    name: 'Falcon 9 Failure/Partial Failure',
+    color: '#B5BDC1',
+    stack: 'Falcon 9',
+    showInLegend: false
+}, {
+    name: 'Falcon 9 Heavy',
+    color: '#3E7A82',
+    stack: 'Falcon 9 Heavy'
+}, {
+    name: 'Falcon 9 Heavy Failure/Partial Failure',
+    color: '#B5BDC1',
+    stack: 'Falcon 9 Heavy',
+    showInLegend: false
+}]
+});
