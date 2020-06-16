@@ -42,6 +42,11 @@ yAxis: {
     }
 },
 
+credits: {
+  enabled: true,
+  href: false,
+  text: "CSIS Aerospace Security"
+},
 
 plotOptions: {
     column: {
