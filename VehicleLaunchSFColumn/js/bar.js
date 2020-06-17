@@ -58,9 +58,14 @@ plotOptions: {
 legend: {
     labelFormatter: function() {
 
-        if ((this.name === "Delta IV") || (this.name === "Atlas IV") || (this.name === "Falcon 9")) {
+        if ((this.name === "Delta IV Success") || (this.name === "Atlas V Success") || (this.name === "Falcon 9 Success")) {
             let name = this.name.split("")
             let updateName = name.slice(0,8)
+            finalName = updateName.join("")
+            return finalName
+        } else if ((this.name === "Delta IV Heavy Success") || (this.name ==="Falcon 9 Heavy Success")) {
+            let name = this.name.split("")
+            let updateName = name.slice(0,14)
             finalName = updateName.join("")
             return finalName
         }
