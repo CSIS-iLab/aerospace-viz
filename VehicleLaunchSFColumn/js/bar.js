@@ -55,6 +55,23 @@ plotOptions: {
     }
 },
 
+tooltip: {
+    shared: true,
+    useHTML: true,
+    formatter: function() {
+        let string = ""
+
+        for (i = 0; i < this.points.length; i+=2 ) {
+            //console.log(this.points[i].series.userOptions.stack)
+            string += '<b>' + this.points[i].series.userOptions.stack + '</b>' + '<br>' + '&emsp;' + this.points[i].series.name.slice(-8) + ': ' + this.points[i].y + '<br>' + 
+            '&emsp;' + this.points[i+1].series.name.slice(-8) + ': ' + this.points[i+1].y + '</br>'
+        
+        }
+
+        return '<b>' + this.x + '</b>' + '<br>' + string
+    }
+},
+
 legend: {
     labelFormatter: function() {
 
