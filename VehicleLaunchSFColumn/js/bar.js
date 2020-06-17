@@ -68,7 +68,7 @@ tooltip: {
         
         }
 
-        return '<b>' + this.x + '</b>' + '<br>' + string
+        return '<span style="font-size: 14px;"><b>' + this.x + '</b></span>' + '<br>' + string
     }
 },
 
