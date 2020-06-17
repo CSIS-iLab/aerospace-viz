@@ -39,7 +39,8 @@ yAxis: {
     min: 0,
     title: {
         text: 'Number of Launches'
-    }
+    },
+    reversedStacks: false
 },
 
 credits: {
@@ -51,6 +52,18 @@ credits: {
 plotOptions: {
     column: {
         stacking: 'normal'
+    }
+},
+
+legend: {
+    labelFormatter: function() {
+
+        if ((this.name === "Delta IV") || (this.name === "Atlas IV") || (this.name === "Falcon 9")) {
+            let name = this.name.split("")
+            let updateName = name.slice(0,8)
+            finalName = updateName.join("")
+            return finalName
+        }
     }
 },
 
