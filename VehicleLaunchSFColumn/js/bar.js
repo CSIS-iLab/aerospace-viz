@@ -100,6 +100,11 @@ legend: {
             let updateName = name.slice(0,14)
             finalName = updateName.join("")
             return finalName
+        } else if (this.name === "Delta IV Failure/Partial Failure") {
+            let name = this.name.split("");
+            let updateName = name.slice(-8);
+            finalName = 'All' + updateName.join("");
+            return finalName;
         }
     }
 },
@@ -110,16 +115,18 @@ series: [{
     stack: 'Delta IV'
 }, {
     name: 'Delta IV Failure/Partial Failure',
-    color: '#F2F2F2',
+    color: '#B5BDC1',
+    id: 'Failure',
     stack: 'Delta IV',
-    showInLegend: false
+    //showInLegend: false
 }, {
     name: 'Delta IV Heavy',
     color: '#5DB6D0',
     stack: 'Delta IV Heavy'
 }, {
-    name: 'Delta IV Heavy Failure/Partial Failure',
-    color: '#F2F2F2',
+    //name: 'Delta IV Heavy Failure/Partial Failure',
+    linkedTo: "Failure",
+    color: '#B5BDC1',
     stack: 'Delta IV Heavy',
     showInLegend: false
 }, {
@@ -127,17 +134,19 @@ series: [{
     color: '#F9BC65',
     stack: 'Atlas V'
 }, {
-    name: 'Atlas V Failure/Partial Failure',
+    //name: 'Atlas V Failure/Partial Failure',
+    linkedTo: "Failure",
     stack: 'Atlas V',
-    color: '#F2F2F2',
+    color: '#B5BDC1',
     showInLegend: false
 }, {
     name: 'Falcon 9',
     color: '#4F9793',
     stack: 'Falcon 9'
 }, {
-    name: 'Falcon 9 Failure/Partial Failure',
-    color: '#F2F2F2',
+    //name: 'Falcon 9 Failure/Partial Failure',
+    linkedTo: "Failure",
+    color: '#B5BDC1',
     stack: 'Falcon 9',
     showInLegend: false
 }, {
@@ -145,8 +154,9 @@ series: [{
     color: '#3E7A82',
     stack: 'Falcon 9 Heavy'
 }, {
-    name: 'Falcon 9 Heavy Failure/Partial Failure',
-    color: '#F2F2F2',
+    //name: 'Falcon 9 Heavy Failure/Partial Failure',
+    linkedTo: "Failure",
+    color: '#B5BDC1',
     stack: 'Falcon 9 Heavy',
     showInLegend: false
 }]
