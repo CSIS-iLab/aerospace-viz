@@ -95,7 +95,7 @@ series: [{
     stack: 'Delta IV'
 }, {
     name: 'Delta IV Failure/Partial Failure',
-    color: '#B5BDC1',
+    color: '#F2F2F2',
     stack: 'Delta IV',
     showInLegend: false
 }, {
@@ -104,7 +104,7 @@ series: [{
     stack: 'Delta IV Heavy'
 }, {
     name: 'Delta IV Heavy Failure/Partial Failure',
-    color: '#B5BDC1',
+    color: '#F2F2F2',
     stack: 'Delta IV Heavy',
     showInLegend: false
 }, {
@@ -114,7 +114,7 @@ series: [{
 }, {
     name: 'Atlas V Failure/Partial Failure',
     stack: 'Atlas V',
-    color: '#B5BDC1',
+    color: '#F2F2F2',
     showInLegend: false
 }, {
     name: 'Falcon 9',
@@ -122,7 +122,7 @@ series: [{
     stack: 'Falcon 9'
 }, {
     name: 'Falcon 9 Failure/Partial Failure',
-    color: '#B5BDC1',
+    color: '#F2F2F2',
     stack: 'Falcon 9',
     showInLegend: false
 }, {
@@ -131,7 +131,7 @@ series: [{
     stack: 'Falcon 9 Heavy'
 }, {
     name: 'Falcon 9 Heavy Failure/Partial Failure',
-    color: '#B5BDC1',
+    color: '#F2F2F2',
     stack: 'Falcon 9 Heavy',
     showInLegend: false
 }]
