@@ -90,61 +90,50 @@ Highcharts.chart("hcContainer", {
 
   series: [
     {
-      //name: "Delta IV",
       color: "#196C95",
       stack: "Delta IV",
     },
     {
-      //name: "Delta IV Failure/Partial Failure",
       color: "#B5BDC1",
       id: "Failure",
       stack: "Delta IV",
       legendIndex: 1,
-      //showInLegend: false
     },
     {
-      //name: "Delta IV Heavy",
       color: "#5DB6D0",
       stack: "Delta IV Heavy",
     },
     {
-      //name: 'Delta IV Heavy Failure/Partial Failure',
       linkedTo: "Failure",
       color: "#B5BDC1",
       stack: "Delta IV Heavy",
       showInLegend: false,
     },
     {
-      //name: "Atlas V",
       color: "#F9BC65",
       stack: "Atlas V",
     },
     {
-      //name: 'Atlas V Failure/Partial Failure',
       linkedTo: "Failure",
       stack: "Atlas V",
       color: "#B5BDC1",
       showInLegend: false,
     },
     {
-      //name: "Falcon 9",
       color: "#4F9793",
       stack: "Falcon 9",
     },
     {
-      //name: 'Falcon 9 Failure/Partial Failure',
       linkedTo: "Failure",
       color: "#B5BDC1",
       stack: "Falcon 9",
       showInLegend: false,
     },
     {
-      //name: "Falcon 9 Heavy",
       color: "#3E7A82",
       stack: "Falcon 9 Heavy",
     },
     {
-      //name: 'Falcon 9 Heavy Failure/Partial Failure',
       linkedTo: "Failure",
       color: "#B5BDC1",
       stack: "Falcon 9 Heavy",
