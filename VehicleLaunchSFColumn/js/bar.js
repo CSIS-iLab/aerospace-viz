@@ -63,12 +63,27 @@ tooltip: {
 
         for (i = 0; i < this.points.length; i+=2 ) {
             //console.log(this.points[i].series.userOptions.stack)
-            string += '<b>' + this.points[i].series.userOptions.stack + '</b>' + '<br>' + '&emsp;' + this.points[i].series.name.slice(-8) + ': ' + this.points[i].y + '<br>' + 
-            '&emsp;' + this.points[i+1].series.name.slice(-8) + ': ' + this.points[i+1].y + '</br>'
+           // string += '<b>' + this.points[i].series.userOptions.stack + '</b>' + '<br>' + '&emsp;' + this.points[i].series.name.slice(-8) + ': ' + this.points[i].y + '<br>' + 
+            //'&emsp;' + this.points[i+1].series.name.slice(-8) + ': ' + this.points[i+1].y + '</br>'
+
+            
+                string += '<tr>' +
+                    '<td><b>' + this.points[i].series.userOptions.stack + '</b></td>' + 
+                    '<td>' + this.points[i].y + '</td>' + 
+                    '<td>' + this.points[i+1].y + '</td>' + 
+                '</tr>' 
         
         }
 
-        return '<span style="font-size: 14px;"><b>' + this.x + '</b></span>' + '<br>' + string
+        return '<span style="font-size: 14px;"><b>' + this.x + '</b></span>' + '<br>' + 
+                
+                '<table>'  + 
+                '<tr>' + 
+                    '<th></th>' + 
+                    '<th> Success </th>' + 
+                    '<th> Failure </th>' + 
+                '</tr>'+ string + 
+                '</table>'
     }
 },
 
