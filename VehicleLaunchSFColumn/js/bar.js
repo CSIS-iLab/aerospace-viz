@@ -102,8 +102,8 @@ legend: {
             return finalName
         } else if (this.name === "Delta IV Failure/Partial Failure") {
             let name = this.name.split("");
-            let updateName = name.slice(-8);
-            finalName = 'All' + updateName.join("");
+            let updateName = name.slice(9,13);
+            finalName = updateName.join("") + 'ed Launches'
             return finalName;
         }
     }
@@ -118,6 +118,7 @@ series: [{
     color: '#B5BDC1',
     id: 'Failure',
     stack: 'Delta IV',
+    legendIndex: 1
     //showInLegend: false
 }, {
     name: 'Delta IV Heavy',
