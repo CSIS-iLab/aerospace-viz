@@ -8,7 +8,7 @@ Highcharts.chart('hcContainer', {
   },
 
   title: {
-      text: 'SLV Launch Data'
+      text: 'Rocket Successes and Failures'
   },
 
   xAxis: {
@@ -46,7 +46,7 @@ yAxis: {
 credits: {
   enabled: true,
   href: false,
-  text: "CSIS Aerospace Security"
+  text: "CSIS Aerospace Security | Gunter's Space Page, SpaceX, United Launch Alliance"
 },
 
 plotOptions: {
