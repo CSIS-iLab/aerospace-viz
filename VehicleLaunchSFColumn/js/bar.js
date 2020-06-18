@@ -12,27 +12,7 @@ Highcharts.chart("hcContainer", {
   },
 
   xAxis: {
-    categories: [
-      "2002",
-      "2003",
-      "2004",
-      "2005",
-      "2006",
-      "2007",
-      "2008",
-      "2009",
-      "2010",
-      "2011",
-      "2012",
-      "2013",
-      "2014",
-      "2015",
-      "2016",
-      "2017",
-      "2018",
-      "2019",
-      "2020",
-    ],
+    tickInterval: 1
   },
 
   yAxis: {
@@ -97,28 +77,13 @@ Highcharts.chart("hcContainer", {
 
   legend: {
     labelFormatter: function () {
-      if (
-        this.name === "Delta IV Success" ||
-        this.name === "Atlas V Success" ||
-        this.name === "Falcon 9 Success"
-      ) {
-        let name = this.name.split("");
-        let updateName = name.slice(0, 8);
-        finalName = updateName.join("");
-        return finalName;
-      } else if (
-        this.name === "Delta IV Heavy Success" ||
-        this.name === "Falcon 9 Heavy Success"
-      ) {
-        let name = this.name.split("");
-        let updateName = name.slice(0, 14);
-        finalName = updateName.join("");
-        return finalName;
-      } else if (this.name === "Delta IV Failure/Partial Failure") {
+      if (this.name === "Delta IV Failure/Partial Failure") {
         let name = this.name.split("");
         let updateName = name.slice(9, 13);
         finalName = updateName.join("") + "ed Launches";
         return finalName;
+      } else {
+        return this.name.replace(/success/gi, "");
       }
     },
   },
