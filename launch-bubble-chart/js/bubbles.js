@@ -11,77 +11,25 @@ Highcharts.chart('hcContainer', {
   },
 
   title: {
-      text: 'Sugar and fat intake per country'
+      text: 'Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles'
   },
 
   subtitle: {
-      text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
-  },
-
-  accessibility: {
-      point: {
-          valueDescriptionFormat: '{index}. {point.name}, fat: {point.x}g, sugar: {point.y}g, obesity: {point.z}%.'
-      }
+      text: "Bubble sizes correspond to the vehicle's number of successful launches"
   },
 
   xAxis: {
       gridLineWidth: 1,
       title: {
-          text: 'Daily fat intake'
+          text: 'Year of First Successful Orbital Launch'
       },
-      labels: {
-          format: '{value} gr'
-      },
-      plotLines: [{
-          color: 'black',
-          dashStyle: 'dot',
-          width: 2,
-          value: 65,
-          label: {
-              rotation: 0,
-              y: 15,
-              style: {
-                  fontStyle: 'italic'
-              },
-              text: 'Safe fat intake 65g/day'
-          },
-          zIndex: 3
-      }],
-      accessibility: {
-          rangeDescription: 'Range: 60 to 100 grams.'
-      }
   },
 
   yAxis: {
-      startOnTick: false,
-      endOnTick: false,
       title: {
-          text: 'Daily sugar intake'
+          text: '$K / kg (FY21 dollars)'
       },
-      labels: {
-          format: '{value} gr'
-      },
-      maxPadding: 0.2,
-      plotLines: [{
-          color: 'black',
-          dashStyle: 'dot',
-          width: 2,
-          value: 50,
-          label: {
-              align: 'right',
-              style: {
-                  fontStyle: 'italic'
-              },
-              text: 'Safe sugar intake 50g/day',
-              x: -10
-          },
-          zIndex: 3
-      }],
-      accessibility: {
-          rangeDescription: 'Range: 0 to 160 grams.'
-      }
   },
-
   tooltip: {
       useHTML: true,
       headerFormat: '<table>',
