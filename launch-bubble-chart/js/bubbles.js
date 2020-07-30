@@ -216,10 +216,9 @@ function renderChart(fy21Data, dataset) {
   });
 }
 
-function populateSelect() {
-  $(".dropdown").on("change", function() {
-    var chart = $("#hcContainer").highcharts();
-      chart.destroy();
-      renderChart(allData[this.value], datasets[this.value]);
-  })
-}
+const select = document.getElementById("dropdown");
+  select.addEventListener("change", function () {
+    let chart = Highcharts.chart("hcContainer", {});
+    chart.destroy();
+    renderChart(allData[this.value], datasets[this.value]);
+  });
