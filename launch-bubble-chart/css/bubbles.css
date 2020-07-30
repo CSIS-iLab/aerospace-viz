@@ -1,5 +1,16 @@
+#tooltip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 85px;
+  float:left; 
+  max-width: 350px;
+}
+
 table {
   border-collapse: collapse;
+  font-family: 'Roboto';
+  font-size: 12px;
 }
 
 td:first-of-type {

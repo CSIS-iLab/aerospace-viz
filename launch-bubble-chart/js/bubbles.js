@@ -76,7 +76,10 @@ function renderChart(data) {
     legend: {
       enabled: false,
     },
-
+    credits: {
+      enabled: true,
+      text: "CSIS Aerospace Security Project"
+    },
     title: {
       text:
         "Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles",
@@ -126,7 +129,7 @@ function renderChart(data) {
         }
 
         const html = `
-          <span style="font-size: 14px; width: 500px;"><b>${launchVehicle}</b></span><br/>
+          <span style="font-size: 14px; width: 500px; font-family: 'Roboto'"><b>${launchVehicle}</b></span><br/>
           <table>
             <tr>
               <td class='columnOne'>First Successful Launch</td>
@@ -161,7 +164,8 @@ function renderChart(data) {
             </tr>
           </table>
         `
-        return html
+        $("#tooltip").html(html);
+        return false
       },
       footerFormat: "</table>",
       followPointer: true,
