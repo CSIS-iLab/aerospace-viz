@@ -92,6 +92,7 @@ function renderChart(fy21Data, dataset) {
       title: {
         text: "$K / kg (" + dataset + ")",
       },
+      type: "logarithmic"
     }],
     tooltip: {
       useHTML: true,
