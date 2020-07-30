@@ -2,9 +2,11 @@ table {
   border-collapse: collapse;
 }
 
-td {
-  padding: 2px;
+td:first-of-type {
+  font-weight: bold;
+  text-align: right;
 }
+
 tr { 
   border: solid #B5BDC1;
   border-width: 1px 0;
@@ -15,13 +17,5 @@ tr:first-child {
 }
 tr:last-child {
   border-bottom: none;
-}
-
-.columnOne {
-  text-align: right;
-}
-
-.columnTwo {
-  text-align: left;
 }
 

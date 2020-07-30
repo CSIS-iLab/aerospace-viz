@@ -1,7 +1,13 @@
-let fy21Data = [];
-let thenYearData = [];
-let allData = [fy21Data, thenYearData];
-let datasets = ["FY21 Dollars", "Then-Year Dollars"]
+let allData = {
+  fy21: {
+    title: 'FY21 Dollars',
+    values: []
+  },
+  thenYear: {
+    title: 'Then-Year Dollars',
+    values: []
+  }
+}
 
 Highcharts.data({
   googleSpreadsheetKey: "1FGdaphIbRjDpXsOdU3omWGRpH5DTImmzWW-H43lLOms",
@@ -9,7 +15,14 @@ Highcharts.data({
   switchRowsAndColumns: true,
   parsed: function parsed(columns) {
     columns.splice(0, 2);
-    columns.forEach((row) => {
+    for (let i = 0; i < columns.length; i++) {
+      const row = columns[i]
+    
+       // This will skip the current loop iteration and move to the next one
+      if (row[2] == null) {
+        continue
+      }
+
       const launchVehicle = row[0];
       let firstLaunchYear = row[1];
       let successfulLaunches = row[2];
@@ -23,43 +36,36 @@ Highcharts.data({
       let similarVehicles = row[10];
       let source = row[11];
 
-      
+      const data = {
+        x: firstLaunchYear,
+        z: successIncludingSimilarVehicles,
+        launchVehicle: launchVehicle,
+        successfulLaunches: successfulLaunches,
+        launchClass: launchClass,
+        country: country,
+        similarVehicles: similarVehicles,
+        source: source,
+      }
 
       if (successfulLaunches != null) {
-      fy21Data.push({
-        x: firstLaunchYear,
+      allData.fy21.values.push({
+        ...data,
         y: fy21CostPerKg,
-        z: successIncludingSimilarVehicles,
-        fy21TotalLaunchCost: fy21TotalLaunchCost,
-        launchVehicle: launchVehicle,
-        successfulLaunches: successfulLaunches,
-        launchClass: launchClass,
-        country: country,
-        similarVehicles: similarVehicles,
-        source: source,
-        yAxisTitle: "$K / kg (FY21 Dollars)"
+        launchCost: fy21TotalLaunchCost,
       });
 
-      thenYearData.push({
-        x: firstLaunchYear,
+      allData.thenYear.values.push({
+        ...data,
         y: thenYearCostPerKg,
-        z: successIncludingSimilarVehicles,
-        thenYearLaunchCost: thenYearLaunchCost,
-        launchVehicle: launchVehicle,
-        successfulLaunches: successfulLaunches,
-        launchClass: launchClass,
-        country: country,
-        similarVehicles: similarVehicles,
-        source: source,
-        yAxisTitle: "$K / kg (Then-Year Dollars)"
+        launchCost: thenYearLaunchCost,
       });
     }
-    });
-    renderChart(allData[0], datasets[0]);
+    }
+    renderChart(allData.fy21);
   },
 });
 
-function renderChart(fy21Data, dataset) {
+function renderChart(data) {
   Highcharts.chart("hcContainer", {
     chart: {
       type: "bubble",
@@ -90,14 +96,13 @@ function renderChart(fy21Data, dataset) {
 
     yAxis: [{
       title: {
-        text: "$K / kg (" + dataset + ")",
+        text: "$K / kg (" + data.title + ")",
       },
       type: "logarithmic"
     }],
     tooltip: {
       useHTML: true,
       formatter: function() {
-
         let launchVehicle = this.point.launchVehicle
         let firstSuccessfulLaunch = this.point.x
         let successfulLaunches = this.point.successfulLaunches
@@ -109,91 +114,54 @@ function renderChart(fy21Data, dataset) {
         let similarVehicles = this.point.similarVehicles
         let source = this.point.source
 
-        if (similarVehicles == null) {
-          return (
-            '<span style="font-size: 14px; width: 500px;"><b>' + launchVehicle + "</b></span>" +
-            "<br>" +
-            "<table>" +
-            "<tr>" +
-              "<td class='columnOne'><b>First Successful Launch</b></td>" + 
-              "<td class='columnTwo'>" + firstSuccessfulLaunch + "</td>" + 
-            "</tr>" + 
-            "<tr>" + 
-              "<td class='columnOne'><b>Successful Launches</b></td>" + 
-              "<td class='columnTwo'>" + successfulLaunches + "</td>" +
-            "</tr>" + 
-            "<tr>"+ 
-              "<td class='columnOne'><b>Successful Launches Including Similar Vehicles</b></td>" + 
-              "<td class='columnTwo'>" + successIncludingSimilarVehicles + "</td>" + 
-            "</tr>" + 
-            "<tr>" + 
-              "<td class='columnOne'><b>Launch Cost Per Kilogram ($/kg)</b></td>" + 
-              "<td class='columnTwo'>" + fy21CostPerKg + "</td>" + 
-            "</tr>" + 
-              "<td class='columnOne'><b>Total Launch Cost ($M)</b></td>" + 
-              "<td class='columnTwo'>" + fy21TotalLaunchCost + "</td>" + 
-            "<tr>" + 
-              "<td class='columnOne'><b>Launch Class</b></td>" + 
-              "<td class='columnTwo'>" + launchClass + "</td>" +
-            "</tr>" + 
-            "<tr>" + 
-              "<td class='columnOne'><b>Country</b></td>" + 
-              "<td class='columnTwo'>" + country + "</td>" +
-            "</tr>" + 
-            "<tr>" + 
-              "<td class='columnOne'><b>Similar Vehicles (Number of Successful Launches)</b></td>" + 
-              "<td class='columnTwo'></td>" + 
-            "</tr>" + 
-            "<tr>" + 
-              "<td class='columnOne'><b>Source</b></td>" +
-              "<td class='columnTwo'>" + source + "</td>" +
-            "</tr>"
-            + "</table>"
-          )
-        } else{
-            return (
-              '<span style="font-size: 14px;"><b>' +
-              launchVehicle +
-              "</b></span>" +
-              "<br>" +
-              "<table>" +
-              "<tr>" +
-                "<td class='columnOne'><b>First Successful Launch</b></td>" + 
-                "<td class='columnTwo'>" + firstSuccessfulLaunch + "</td>" + 
-              "</tr>" + 
-              "<tr>" + 
-                "<td class='columnOne'><b>Successful Launches</b></td>" + 
-                "<td class='columnTwo'>" + successfulLaunches + "</td>" +
-              "</tr>" + 
-              "<tr>"+ 
-                "<td class='columnOne'><b>Successful Launches Including Similar Vehicles</b></td>" + 
-                "<td class='columnTwo'>" + successIncludingSimilarVehicles + "</td>" + 
-              "</tr>" + 
-              "<tr>" + 
-                "<td class='columnOne'><b>Launch Cost Per Kilogram ($/kg)</b></td>" + 
-                "<td class='columnTwo'>" + fy21CostPerKg + "</td>" + 
-              "</tr>" + 
-                "<td class='columnOne'><b>Total Launch Cost ($M)</b></td>" + 
-                "<td class='columnTwo'>" + fy21TotalLaunchCost + "</td>" + 
-              "<tr>" + 
-                "<td class='columnOne'><b>Launch Class</b></td>" + 
-                "<td class='columnTwo'>" + launchClass + "</td>" +
-              "</tr>" + 
-              "<tr>" + 
-                "<td class='columnOne'><b>Country</b></td>" + 
-                "<td class='columnTwo'>" + country + "</td>" +
-              "</tr>" + 
-              "<tr>" + 
-                "<td class='columnOne'><b>Similar Vehicles (Number of Successful Launches)</b></td>" + 
-                "<td class='columnTwo'>" + similarVehicles + "</td>" + 
-              "</tr>" + 
-              "<tr>" + 
-                "<td class='columnOne'><b>Source</b></td>" +
-                "<td class='columnTwo'>" + source + "</td>" +
-              "</tr>"
-              + "</table>"
-            );        
-          }
+        let similarVehiclesRow = ''
+
+        if (similarVehicles) {
+          similarVehiclesRow = `
+            <tr>
+            <td>Similar Vehicles (Number of Successful Launches)</td>
+            <td>${similarVehicles}</td>
+            </tr>
+          `
+        }
+
+        const html = `
+          <span style="font-size: 14px; width: 500px;"><b>${launchVehicle}</b></span><br/>
+          <table>
+            <tr>
+              <td class='columnOne'>First Successful Launch</td>
+              <td class='columnTwo'>${firstSuccessfulLaunch}</td> 
+            </tr> 
+            <tr>
+              <td class='columnOne'>Successful Launches</td> 
+              <td class='columnTwo'>${successfulLaunches}</td>
+            </tr>
+            <tr>
+              <td class='columnOne'>Successful Launches Including Similar Vehicles</td>
+              <td class='columnTwo'>${successIncludingSimilarVehicles}</td>
+            </tr>
+            <tr>
+              <td class='columnOne'>Launch Cost Per Kilogram ($/kg)</td> 
+              <td class='columnTwo'>${fy21CostPerKg}</td>
+            </tr>
+              <td class='columnOne'>Total Launch Cost ($M)</td>
+              <td class='columnTwo'>${fy21TotalLaunchCost}</td>
+            <tr>
+              <td class='columnOne'>Launch Class</td>
+              <td class='columnTwo'>${launchClass}</td>
+            </tr>
+            <tr>
+              <td class='columnOne'>Country</td>
+              <td class='columnTwo'>${country}</td>
+            </tr>
+            ${similarVehiclesRow}
+            <tr>
+              <td class='columnOne'>Source</td>
+              <td class='columnTwo'>${source}</td>
+            </tr>
+          </table>
+        `
+        return html
       },
       footerFormat: "</table>",
       followPointer: true,
@@ -210,7 +178,7 @@ function renderChart(fy21Data, dataset) {
     series: [
       {
         type: "bubble",
-        data: fy21Data,
+        data: data.values,
       },
     ],
   });
@@ -220,5 +188,5 @@ const select = document.getElementById("dropdown");
   select.addEventListener("change", function () {
     let chart = Highcharts.chart("hcContainer", {});
     chart.destroy();
-    renderChart(allData[this.value], datasets[this.value]);
+    renderChart(allData[Object.keys(allData)[this.value]]);
   });
