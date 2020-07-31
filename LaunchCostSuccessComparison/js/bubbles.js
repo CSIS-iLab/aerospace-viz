@@ -166,8 +166,10 @@ function renderChart(data) {
         `
         return html
       },
-      footerFormat: "</table>",
       followPointer: true,
+      positioner: function() {
+        return {xAxis: this.chart.left, y: this.chart.plotTop}
+      }
     },
 
     plotOptions: {
