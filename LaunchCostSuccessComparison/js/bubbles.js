@@ -164,8 +164,7 @@ function renderChart(data) {
             </tr>
           </table>
         `
-        $("#tooltip").html(html);
-        return false
+        return html
       },
       footerFormat: "</table>",
       followPointer: true,
