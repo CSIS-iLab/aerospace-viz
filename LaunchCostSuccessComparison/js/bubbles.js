@@ -47,19 +47,60 @@ Highcharts.data({
         source: source,
       }
 
-      if (successfulLaunches != null) {
-      allData.fy21.values.push({
-        ...data,
-        y: fy21CostPerKg,
-        launchCost: fy21TotalLaunchCost,
-      });
+      if (successfulLaunches != null && launchClass == "Heavy") {
+        allData.fy21.values.push({
+          ...data,
+          y: fy21CostPerKg,
+          launchCost: fy21TotalLaunchCost,
+          color: '#196C95',
+          legendIndex: 1
+        });
 
-      allData.thenYear.values.push({
-        ...data,
-        y: thenYearCostPerKg,
-        launchCost: thenYearLaunchCost,
-      });
-    }
+        allData.thenYear.values.push({
+          ...data,
+          y: thenYearCostPerKg,
+          launchCost: thenYearLaunchCost,
+          color: '#196C95',
+          legendIndex: 1
+        });
+      }
+
+      if (successfulLaunches != null && launchClass == "Medium") {
+        allData.fy21.values.push({
+          ...data,
+          y: fy21CostPerKg,
+          launchCost: fy21TotalLaunchCost,
+          color: '#4F9793',
+          legendIndex: 2
+        });
+
+        allData.thenYear.values.push({
+          ...data,
+          y: thenYearCostPerKg,
+          launchCost: thenYearLaunchCost,
+          color: '#4F9793',
+          legendIndex: 2
+        });
+      }
+
+      if (successfulLaunches != null && launchClass == "Small") {
+        allData.fy21.values.push({
+          ...data,
+          y: fy21CostPerKg,
+          launchCost: fy21TotalLaunchCost,
+          color: '#F9BC65',
+          legendIndex: 3
+        });
+
+        allData.thenYear.values.push({
+          ...data,
+          y: thenYearCostPerKg,
+          launchCost: thenYearLaunchCost,
+          color: '#F9BC65',
+          legendIndex: 3
+        });
+      }
+
     }
     renderChart(allData.fy21);
   },
