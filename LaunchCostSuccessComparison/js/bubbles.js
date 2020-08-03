@@ -111,7 +111,7 @@ function renderChart(data) {
         let successfulLaunches = this.point.successfulLaunches
         let successIncludingSimilarVehicles = this.point.z
         let fy21CostPerKg = this.point.y
-        let fy21TotalLaunchCost = this.point.fy21TotalLaunchCost
+        let launchCost = this.point.launchCost
         let launchClass = this.point.launchClass
         let country = this.point.country
         let similarVehicles = this.point.similarVehicles
@@ -148,7 +148,7 @@ function renderChart(data) {
               <td class='columnTwo'>${fy21CostPerKg}</td>
             </tr>
               <td class='columnOne'>Total Launch Cost ($M)</td>
-              <td class='columnTwo'>${fy21TotalLaunchCost}</td>
+              <td class='columnTwo'>${launchCost}</td>
             <tr>
               <td class='columnOne'>Launch Class</td>
               <td class='columnTwo'>${launchClass}</td>
