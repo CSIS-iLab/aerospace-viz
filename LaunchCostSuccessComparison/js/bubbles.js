@@ -167,8 +167,11 @@ function renderChart(data) {
         return html
       },
       followPointer: true,
-      positioner: function() {
-        return {xAxis: this.chart.left, y: this.chart.plotTop}
+      positioner: function(labelWidth) {
+        return {
+          x: this.chart.chartWidth - labelWidth - this.options.borderWidth,
+          y: this.chart.plotTop
+        }
       }
     },
 
