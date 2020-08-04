@@ -133,6 +133,7 @@ function renderChart(heavyData, mediumData, smallData) {
       type: "bubble",
       plotBorderWidth: 1,
       zoomType: "xy",
+      backgroundColor: 'rgba(0,0,0,0)'
     },
     legend: {
       title: {
@@ -146,6 +147,7 @@ function renderChart(heavyData, mediumData, smallData) {
     title: {
       text:
         "Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles",
+      margin: 70
     },
 
     subtitle: {
@@ -227,15 +229,10 @@ function renderChart(heavyData, mediumData, smallData) {
             </tr>
           </table>
         `
-        return html
+        $("#tooltip").html(html);
+        return false
       },
       followPointer: true,
-      positioner: function(labelWidth) {
-        return {
-          x: this.chart.chartWidth - labelWidth - this.options.borderWidth,
-          y: this.chart.plotTop
-        }
-      }
     },
 
     plotOptions: {

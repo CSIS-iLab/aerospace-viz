@@ -2,15 +2,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 85px;
   float:left; 
+  margin-top: 140px;
   max-width: 350px;
+  border: 1px solid;
+  border-color: #DBDBDB;
+  width: 20%;
 }
 
 table {
   border-collapse: collapse;
   font-family: 'Roboto';
   font-size: 12px;
+  table-layout: fixed;
 }
 
 td:first-of-type {
@@ -30,3 +34,11 @@ tr:last-child {
   border-bottom: none;
 }
 
+#hcContainer {
+  width: 75%;
+}
+
+.dropdown-container {
+  margin-left: 35%;
+  top: 115px;
+}
