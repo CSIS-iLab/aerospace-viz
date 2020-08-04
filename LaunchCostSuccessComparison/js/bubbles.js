@@ -1,10 +1,39 @@
-let allData = {
+/*let allData = {
   fy21: {
     title: 'FY21 Dollars',
     values: []
   },
   thenYear: {
     title: 'Then-Year Dollars',
+    values: []
+  }
+}*/
+
+let heavyData = {
+  fy21: {
+    title: 'FY21 Dollars',
+    values: []
+  },
+  thenYear: {
+    title: 'Then-Year Dollars',
+    values: []
+  }
+}
+
+let mediumData = {
+  fy21: {
+    values: []
+  },
+  thenYear: {
+    values: []
+  }
+}
+
+let smallData = {
+  fy21: {
+    values: []
+  },
+  thenYear: {
     values: []
   }
 }
@@ -48,25 +77,39 @@ Highcharts.data({
       }
 
       if (successfulLaunches != null && launchClass == "Heavy") {
-        allData.fy21.values.push({
+        /*allData.fy21.values.push({
           ...data,
           y: fy21CostPerKg,
-          launchCost: fy21TotalLaunchCost,
-          color: '#196C95',
-          legendIndex: 1
+          launchCost: fy21TotalLaunchCost
         });
 
         allData.thenYear.values.push({
           ...data,
           y: thenYearCostPerKg,
+          launchCost: thenYearLaunchCost
+        });*/
+
+        
+        heavyData.fy21.values.push({
+          ...data,
+          y: fy21CostPerKg,
+          launchCost: fy21TotalLaunchCost,
+          color: '#196C95',
+          legendIndex: 1
+        })
+        
+        heavyData.thenYear.values.push({
+          ...data,
+          y: thenYearCostPerKg,
           launchCost: thenYearLaunchCost,
           color: '#196C95',
           legendIndex: 1
-        });
+        })
+
       }
 
       if (successfulLaunches != null && launchClass == "Medium") {
-        allData.fy21.values.push({
+        /*allData.fy21.values.push({
           ...data,
           y: fy21CostPerKg,
           launchCost: fy21TotalLaunchCost,
@@ -80,11 +123,27 @@ Highcharts.data({
           launchCost: thenYearLaunchCost,
           color: '#4F9793',
           legendIndex: 2
-        });
+        });*/
+
+        mediumData.fy21.values.push({
+          ...data,
+          y: fy21CostPerKg,
+          launchCost: fy21TotalLaunchCost,
+          color: '#4F9793',
+          legendIndex: 2
+        })
+
+        mediumData.thenYear.values.push({
+          ...data,
+          y: thenYearCostPerKg,
+          launchCost: thenYearLaunchCost,
+          color: '#4F9793',
+          legendIndex: 2
+        })
       }
 
       if (successfulLaunches != null && launchClass == "Small") {
-        allData.fy21.values.push({
+        /*allData.fy21.values.push({
           ...data,
           y: fy21CostPerKg,
           launchCost: fy21TotalLaunchCost,
@@ -98,24 +157,43 @@ Highcharts.data({
           launchCost: thenYearLaunchCost,
           color: '#F9BC65',
           legendIndex: 3
-        });
+        });*/
+
+        smallData.fy21.values.push({
+          ...data,
+          y: fy21CostPerKg,
+          launchCost: fy21TotalLaunchCost,
+          color: '#F9BC65',
+          legendIndex: 3
+        })
+
+        smallData.thenYear.values.push({
+          ...data,
+          y: thenYearCostPerKg,
+          launchCost: thenYearLaunchCost,
+          color: '#F9BC65',
+          legendIndex: 3
+        })
       }
 
     }
-    renderChart(allData.fy21);
+    renderChart(
+      heavyData.fy21, mediumData.fy21, smallData.fy21
+    );
   },
 });
 
-function renderChart(data) {
+function renderChart(heavyData, mediumData, smallData) {
   Highcharts.chart("hcContainer", {
     chart: {
       type: "bubble",
       plotBorderWidth: 1,
       zoomType: "xy",
     },
-
     legend: {
-      enabled: false,
+      title: {
+        text: 'Launch Vehicle Class<br/><span style="font-size: 9px; color: #666; font-weight: normal">(Click to hide)</span>',
+      },
     },
     credits: {
       enabled: true,
@@ -140,7 +218,7 @@ function renderChart(data) {
 
     yAxis: [{
       title: {
-        text: "$K / kg (" + data.title + ")",
+        text: "$K / kg (" + heavyData.title + ")",
       },
       type: "logarithmic"
     }],
@@ -226,9 +304,20 @@ function renderChart(data) {
     },
     series: [
       {
+        name: "Heavy",
         type: "bubble",
-        data: data.values,
+        data: heavyData.values,
       },
+      {
+        name: "Medium",
+        type: "bubble",
+        data: mediumData.values,
+      },
+      {
+        name: "Small",
+        type: "bubble",
+        data: smallData.values
+      }
     ],
   });
 }
@@ -237,5 +326,9 @@ const select = document.getElementById("dropdown");
   select.addEventListener("change", function () {
     let chart = Highcharts.chart("hcContainer", {});
     chart.destroy();
-    renderChart(allData[Object.keys(allData)[this.value]]);
+    renderChart(
+      heavyData[Object.keys(heavyData)[this.value]], 
+      mediumData[Object.keys(mediumData)[this.value]],
+      smallData[Object.keys(smallData)[this.value]]
+    );
   });
