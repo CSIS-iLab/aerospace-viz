@@ -1,13 +1,19 @@
 #tooltip {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  float:left; 
-  margin-top: 140px;
-  max-width: 350px;
-  border: 1px solid;
-  border-color: #DBDBDB;
-  width: 20%;
+  display: none;
+}
+
+@media screen and (min-width: 48em) {
+  #tooltip:not(:empty) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float:left; 
+    margin-top: 140px;
+    max-width: 350px;
+    border: 1px solid;
+    width: 20%;
+    border-color: lightgray;
+  }
 }
 
 table {
@@ -38,7 +44,20 @@ tr:last-child {
   width: 75%;
 }
 
+@media screen and (min-width: 48em) {
 .dropdown-container {
+  position:absolute;
+  z-index: 1;
   margin-left: 35%;
-  top: 115px;
+  top: 100px;
+}
+}
+
+@media screen and (max-width: 47em) {
+  .dropdown-container {
+    position: absolute;
+    z-index: 1;
+    margin-left: 20%;
+    top: 220px;
+  }  
 }
