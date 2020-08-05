@@ -46,11 +46,12 @@ tr:last-child {
 
 @media screen and (min-width: 48em) {
 .dropdown-container {
-  position:absolute;
-  z-index: 1;
-  margin-left: 35%;
-  top: 100px;
-}
+    position:absolute;
+    z-index: 1;
+    margin-left: 35%;
+    top: 100px;
+    border-color: lightgray;
+  }
 }
 
 @media screen and (max-width: 47em) {
@@ -59,5 +60,6 @@ tr:last-child {
     z-index: 1;
     margin-left: 20%;
     top: 220px;
+    border-color: lightgray;
   }  
 }
