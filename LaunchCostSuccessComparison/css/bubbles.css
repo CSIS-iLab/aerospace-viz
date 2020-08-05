@@ -24,6 +24,8 @@ table {
 }
 
 td:first-of-type {
+  min-width: 175px;
+  max-width: 175px;
   font-weight: bold;
   text-align: right;
 }
