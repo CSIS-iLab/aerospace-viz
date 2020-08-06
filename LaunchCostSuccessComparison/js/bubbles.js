@@ -186,48 +186,27 @@ function renderChart(heavyData, mediumData, smallData) {
 
         if (similarVehicles) {
           similarVehiclesRow = `
-            <tr>
-            <td>Similar Vehicles (Number of Successful Launches)</td>
-            <td>${similarVehicles}</td>
-            </tr>
+            Similar launch vehicles with successful launches include <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${similarVehicles}</span>.
           `
         }
 
         const html = `
-          <span style="font-size: 14px; width: 500px; font-family: 'Roboto'"><b>${launchVehicle}</b></span><br/>
-          <table>
-            <tr>
-              <td class='columnOne'>First Successful Launch</td>
-              <td class='columnTwo'>${firstSuccessfulLaunch}</td> 
-            </tr> 
-            <tr>
-              <td class='columnOne'>Successful Launches</td> 
-              <td class='columnTwo'>${successfulLaunches}</td>
-            </tr>
-            <tr>
-              <td class='columnOne'>Successful Launches Including Similar Vehicles</td>
-              <td class='columnTwo'>${successIncludingSimilarVehicles}</td>
-            </tr>
-            <tr>
-              <td class='columnOne'>Launch Cost Per Kilogram ($/kg)</td> 
-              <td class='columnTwo'>${fy21CostPerKg}</td>
-            </tr>
-              <td class='columnOne'>Total Launch Cost ($M)</td>
-              <td class='columnTwo'>${launchCost}</td>
-            <tr>
-              <td class='columnOne'>Launch Class</td>
-              <td class='columnTwo'>${launchClass}</td>
-            </tr>
-            <tr>
-              <td class='columnOne'>Country</td>
-              <td class='columnTwo'>${country}</td>
-            </tr>
-            ${similarVehiclesRow}
-            <tr>
-              <td class='columnOne'>Source</td>
-              <td class='columnTwo'>${source}</td>
-            </tr>
-          </table>
+          <span style="font-size: 16px; width: 500px; font-family: 'Roboto'"><b>${launchVehicle}</b></span>
+          <ul style="font-family: 'Roboto'">
+            <li>Country: ${country}</li>
+            <li>Payload Cost ($/kg): ${launchCost}</li>
+            <li>Class: ${launchClass}</li>
+          </ul>
+          <span style="font-family: 'Roboto'">The
+          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${launchVehicle}</span> 
+          launch vehicle has completed
+          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${successfulLaunches}</span>
+          successful launches since
+          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42"> ${firstSuccessfulLaunch}</span>
+          at approximately
+          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${fy21CostPerKg} per launch.</span> 
+          <span style="font-family: 'Roboto'">${similarVehiclesRow}</span><br><br>
+          <span style="font-size: 10px; font-family: 'Roboto'">${source}</span>
         `
         $("#tooltip").html(html);
         return false
