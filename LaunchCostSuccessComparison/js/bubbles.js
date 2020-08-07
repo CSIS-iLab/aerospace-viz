@@ -27,6 +27,8 @@ let smallData = {
   }
 }
 
+let allData = []
+
 Highcharts.data({
   googleSpreadsheetKey: "1FGdaphIbRjDpXsOdU3omWGRpH5DTImmzWW-H43lLOms",
   googleSpreadsheetWorksheet: 1,
@@ -119,8 +121,11 @@ Highcharts.data({
           legendIndex: 3
         })
       }
-
+      
     }
+
+    allData = [...heavyData.fy21.values, ...mediumData.fy21.values, ...smallData.fy21.values]
+    
     renderChart(
       heavyData.fy21, mediumData.fy21, smallData.fy21
     );
