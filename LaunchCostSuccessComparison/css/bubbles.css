@@ -57,7 +57,7 @@ tr:last-child {
     position:absolute;
     z-index: 1;
     margin-left: 35%;
-    top: 100px;
+    top: 70px;
     border-color: lightgray;
   }
 }

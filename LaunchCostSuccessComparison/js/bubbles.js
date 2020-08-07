@@ -144,12 +144,6 @@ function renderChart(heavyData, mediumData, smallData) {
         "Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles",
       margin: 70
     },
-
-    subtitle: {
-      text:
-        "Bubble sizes correspond to the vehicle's number of successful launches",
-    },
-
     xAxis: {
       gridLineWidth: 1,
       title: {
