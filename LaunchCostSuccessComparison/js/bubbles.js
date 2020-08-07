@@ -135,11 +135,6 @@ function renderChart(heavyData, mediumData, smallData) {
       zoomType: "xy",
       backgroundColor: 'rgba(0,0,0,0)'
     },
-    legend: {
-      title: {
-        text: 'Launch Vehicle Class<br/><span style="font-size: 9px; color: #666; font-weight: normal">(Click to hide)</span>',
-      },
-    },
     credits: {
       enabled: true,
       text: "CSIS Aerospace Security Project"
@@ -186,27 +181,27 @@ function renderChart(heavyData, mediumData, smallData) {
 
         if (similarVehicles) {
           similarVehiclesRow = `
-            Similar launch vehicles with successful launches include <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${similarVehicles}</span>.
+            Similar launch vehicles with successful launches include <span style="font-family: 'Arial'; font-size: 14px; text-decoration: underline; text-decoration-color: #D66E42">${similarVehicles}</span>.
           `
         }
 
         const html = `
-          <span style="font-size: 16px; width: 500px; font-family: 'Roboto'"><b>${launchVehicle}</b></span>
-          <ul style="font-family: 'Roboto'">
+          <span style="font-size: 20px; width: 500px; font-family: 'Abel'"><b>${launchVehicle}</b></span>
+          <ul style="font-family: 'Arial'; font-size: 14px;">
             <li>Country: ${country}</li>
             <li>Payload Cost ($/kg): ${launchCost}</li>
             <li>Class: ${launchClass}</li>
           </ul>
-          <span style="font-family: 'Roboto'">The
-          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${launchVehicle}</span> 
+          <span style="font-family: 'Arial'; font-size: 14px;">The
+          <span style="font-family: 'Arial'; text-decoration: underline;  text-decoration-color: #D66E42; font-size: 14px;">${launchVehicle}</span> 
           launch vehicle has completed
-          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${successfulLaunches}</span>
+          <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42"; font-size: 14px;>${successfulLaunches}</span>
           successful launches since
-          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42"> ${firstSuccessfulLaunch}</span>
+          <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42; font-size: 14px;"> ${firstSuccessfulLaunch}</span>
           at approximately
-          <span style="font-family: 'Roboto'; text-decoration: underline; text-decoration-color: #D66E42">${fy21CostPerKg} per launch.</span> 
-          <span style="font-family: 'Roboto'">${similarVehiclesRow}</span><br><br>
-          <span style="font-size: 10px; font-family: 'Roboto'">${source}</span>
+          <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42; font-size: 14px;">${fy21CostPerKg} per launch.</span> 
+          <span style="font-family: 'Arial'; font-size: 14px;">${similarVehiclesRow}</span><br><br>
+          <span style="font-size: 10px; font-family: 'Arial'">${source}</span>
         `
         $("#tooltip").html(html);
         return false
