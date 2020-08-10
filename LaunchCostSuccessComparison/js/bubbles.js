@@ -125,7 +125,7 @@ Highcharts.data({
     }
 
     allData = [...heavyData.fy21.values, ...mediumData.fy21.values, ...smallData.fy21.values]
-    
+
     renderChart(
       heavyData.fy21, mediumData.fy21, smallData.fy21
     );
@@ -246,3 +246,70 @@ const select = document.getElementById("dropdown");
       smallData[Object.keys(smallData)[this.value]]
     );
   });
+
+
+// *******Autocomplete.js*********
+
+// autoComplete.js on typing event emitter
+document.querySelector("#autoComplete").addEventListener("autoComplete", event => {
+	console.log(event);
+});
+// The autoComplete.js Engine instance creator
+const autoCompletejs = new autoComplete({
+	data: {
+		src: [allData],
+		key: ["launchVehicle", "country", "launchClass"],
+		cache: true
+	},
+	sort: (a, b) => {
+		if (a.match < b.match) return -1;
+		if (a.match > b.match) return 1;
+		return 0;
+	},
+	placeHolder: "Search for a Launch Vehicle or Country",
+	selector: "#autoComplete",
+	threshold: 0,
+	debounce: 0,
+	searchEngine: "strict",
+	highlight: true,
+	maxResults: 5,
+	resultsList: {
+		render: true,
+		container: source => {
+      source.setAttribute("id", "autoComplete_list");
+		},
+		destination: document.querySelector("#autoComplete"),
+		position: "afterend",
+		element: "ul"
+	},
+	resultItem: {
+		content: (data, source) => {
+      source.innerHTML = data.match;
+		},
+		element: "li"
+	},
+	noResults: () => {
+		const result = document.createElement("li");
+		result.setAttribute("class", "no_result");
+		result.setAttribute("tabindex", "1");
+		result.innerHTML = "No Results";
+		document.querySelector("#autoComplete_list").appendChild(result);
+	},
+	onSelection: feedback => {
+		
+		const selection = feedback.selection.value.food;
+		// Render selected choice to selection div
+		document.querySelector(".selection").innerHTML = selection;
+		// Clear Input
+		document.querySelector("#autoComplete").value = "";
+		// Change placeholder with the selected value
+		document
+			.querySelector("#autoComplete")
+			.setAttribute("placeholder", selection);
+		// Concole log autoComplete data feedback
+		console.log('feedback')
+		console.log(feedback);
+		console.log(feedback.selection.key)
+		console.log(feedback.selection.value[feedback.selection.key])
+	}
+});
