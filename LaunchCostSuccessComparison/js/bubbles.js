@@ -1,33 +1,33 @@
 let heavyData = {
   fy21: {
-    title: 'FY21 Dollars',
-    values: []
+    title: "FY21 Dollars",
+    values: [],
   },
   thenYear: {
-    title: 'Then-Year Dollars',
-    values: []
-  }
-}
+    title: "Then-Year Dollars",
+    values: [],
+  },
+};
 
 let mediumData = {
   fy21: {
-    values: []
+    values: [],
   },
   thenYear: {
-    values: []
-  }
-}
+    values: [],
+  },
+};
 
 let smallData = {
   fy21: {
-    values: []
+    values: [],
   },
   thenYear: {
-    values: []
-  }
-}
+    values: [],
+  },
+};
 
-let allData = []
+let allData = [];
 
 Highcharts.data({
   googleSpreadsheetKey: "1FGdaphIbRjDpXsOdU3omWGRpH5DTImmzWW-H43lLOms",
@@ -36,11 +36,11 @@ Highcharts.data({
   parsed: function parsed(columns) {
     columns.splice(0, 2);
     for (let i = 0; i < columns.length; i++) {
-      const row = columns[i]
-    
-       // This will skip the current loop iteration and move to the next one
+      const row = columns[i];
+
+      // This will skip the current loop iteration and move to the next one
       if (row[2] == null) {
-        continue
+        continue;
       }
 
       const launchVehicle = row[0];
@@ -65,25 +65,24 @@ Highcharts.data({
         country: country,
         similarVehicles: similarVehicles,
         source: source,
-      }
+      };
 
       if (successfulLaunches != null && launchClass == "Heavy") {
         heavyData.fy21.values.push({
           ...data,
           y: fy21CostPerKg,
           launchCost: fy21TotalLaunchCost,
-          color: '#196C95',
-          legendIndex: 1
-        })
-        
+          color: "#196C95",
+          legendIndex: 1,
+        });
+
         heavyData.thenYear.values.push({
           ...data,
           y: thenYearCostPerKg,
           launchCost: thenYearLaunchCost,
-          color: '#196C95',
-          legendIndex: 1
-        })
-
+          color: "#196C95",
+          legendIndex: 1,
+        });
       }
 
       if (successfulLaunches != null && launchClass == "Medium") {
@@ -91,17 +90,17 @@ Highcharts.data({
           ...data,
           y: fy21CostPerKg,
           launchCost: fy21TotalLaunchCost,
-          color: '#4F9793',
-          legendIndex: 2
-        })
+          color: "#4F9793",
+          legendIndex: 2,
+        });
 
         mediumData.thenYear.values.push({
           ...data,
           y: thenYearCostPerKg,
           launchCost: thenYearLaunchCost,
-          color: '#4F9793',
-          legendIndex: 2
-        })
+          color: "#4F9793",
+          legendIndex: 2,
+        });
       }
 
       if (successfulLaunches != null && launchClass == "Small") {
@@ -109,26 +108,29 @@ Highcharts.data({
           ...data,
           y: fy21CostPerKg,
           launchCost: fy21TotalLaunchCost,
-          color: '#F9BC65',
-          legendIndex: 3
-        })
+          color: "#F9BC65",
+          legendIndex: 3,
+        });
 
         smallData.thenYear.values.push({
           ...data,
           y: thenYearCostPerKg,
           launchCost: thenYearLaunchCost,
-          color: '#F9BC65',
-          legendIndex: 3
-        })
+          color: "#F9BC65",
+          legendIndex: 3,
+        });
       }
-      
     }
 
-    allData = [...heavyData.fy21.values, ...mediumData.fy21.values, ...smallData.fy21.values]
+    allData = [
+      ...heavyData.fy21.values,
+      ...mediumData.fy21.values,
+      ...smallData.fy21.values,
+    ];
 
-    renderChart(
-      heavyData.fy21, mediumData.fy21, smallData.fy21
-    );
+    setupSearch(allData);
+
+    renderChart(heavyData.fy21, mediumData.fy21, smallData.fy21);
   },
 });
 
@@ -138,16 +140,16 @@ function renderChart(heavyData, mediumData, smallData) {
       type: "bubble",
       plotBorderWidth: 1,
       zoomType: "xy",
-      backgroundColor: 'rgba(0,0,0,0)'
+      backgroundColor: "rgba(0,0,0,0)",
     },
     credits: {
       enabled: true,
-      text: "CSIS Aerospace Security Project"
+      text: "CSIS Aerospace Security Project",
     },
     title: {
       text:
         "Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles",
-      margin: 70
+      margin: 70,
     },
     xAxis: {
       gridLineWidth: 1,
@@ -156,32 +158,34 @@ function renderChart(heavyData, mediumData, smallData) {
       },
     },
 
-    yAxis: [{
-      title: {
-        text: "$K / kg (" + heavyData.title + ")",
+    yAxis: [
+      {
+        title: {
+          text: "$K / kg (" + heavyData.title + ")",
+        },
+        type: "logarithmic",
       },
-      type: "logarithmic"
-    }],
+    ],
     tooltip: {
       useHTML: true,
-      formatter: function() {
-        let launchVehicle = this.point.launchVehicle
-        let firstSuccessfulLaunch = this.point.x
-        let successfulLaunches = this.point.successfulLaunches
-        let successIncludingSimilarVehicles = this.point.z
-        let fy21CostPerKg = this.point.y
-        let launchCost = this.point.launchCost
-        let launchClass = this.point.launchClass
-        let country = this.point.country
-        let similarVehicles = this.point.similarVehicles
-        let source = this.point.source
+      formatter: function () {
+        let launchVehicle = this.point.launchVehicle;
+        let firstSuccessfulLaunch = this.point.x;
+        let successfulLaunches = this.point.successfulLaunches;
+        let successIncludingSimilarVehicles = this.point.z;
+        let fy21CostPerKg = this.point.y;
+        let launchCost = this.point.launchCost;
+        let launchClass = this.point.launchClass;
+        let country = this.point.country;
+        let similarVehicles = this.point.similarVehicles;
+        let source = this.point.source;
 
-        let similarVehiclesRow = ''
+        let similarVehiclesRow = "";
 
         if (similarVehicles) {
           similarVehiclesRow = `
             Similar launch vehicles with successful launches include <span style="font-family: 'Arial'; font-size: 14px; text-decoration: underline; text-decoration-color: #D66E42">${similarVehicles}</span>.
-          `
+          `;
         }
 
         const html = `
@@ -201,9 +205,9 @@ function renderChart(heavyData, mediumData, smallData) {
           <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42; font-size: 14px;">${fy21CostPerKg} per launch.</span> 
           <span style="font-family: 'Arial'; font-size: 14px;">${similarVehiclesRow}</span><br><br>
           <span style="font-size: 10px; font-family: 'Arial'">${source}</span>
-        `
+        `;
         $("#tooltip").html(html);
-        return false
+        return false;
       },
       followPointer: true,
     },
@@ -230,86 +234,88 @@ function renderChart(heavyData, mediumData, smallData) {
       {
         name: "Small",
         type: "bubble",
-        data: smallData.values
-      }
+        data: smallData.values,
+      },
     ],
   });
 }
 
 const select = document.getElementById("dropdown");
-  select.addEventListener("change", function () {
-    let chart = Highcharts.chart("hcContainer", {});
-    chart.destroy();
-    renderChart(
-      heavyData[Object.keys(heavyData)[this.value]], 
-      mediumData[Object.keys(mediumData)[this.value]],
-      smallData[Object.keys(smallData)[this.value]]
-    );
-  });
-
+select.addEventListener("change", function () {
+  let chart = Highcharts.chart("hcContainer", {});
+  chart.destroy();
+  renderChart(
+    heavyData[Object.keys(heavyData)[this.value]],
+    mediumData[Object.keys(mediumData)[this.value]],
+    smallData[Object.keys(smallData)[this.value]]
+  );
+});
 
 // *******Autocomplete.js*********
 
 // autoComplete.js on typing event emitter
-document.querySelector("#autoComplete").addEventListener("autoComplete", event => {
-	console.log(event);
-});
+document
+  .querySelector("#autoComplete")
+  .addEventListener("autoComplete", (event) => {
+    console.log(event);
+    console.log(allData);
+  });
 // The autoComplete.js Engine instance creator
-const autoCompletejs = new autoComplete({
-	data: {
-		src: [allData],
-		key: ["launchVehicle", "country", "launchClass"],
-		cache: true
-	},
-	sort: (a, b) => {
-		if (a.match < b.match) return -1;
-		if (a.match > b.match) return 1;
-		return 0;
-	},
-	placeHolder: "Search for a Launch Vehicle or Country",
-	selector: "#autoComplete",
-	threshold: 0,
-	debounce: 0,
-	searchEngine: "strict",
-	highlight: true,
-	maxResults: 5,
-	resultsList: {
-		render: true,
-		container: source => {
-      source.setAttribute("id", "autoComplete_list");
-		},
-		destination: document.querySelector("#autoComplete"),
-		position: "afterend",
-		element: "ul"
-	},
-	resultItem: {
-		content: (data, source) => {
-      source.innerHTML = data.match;
-		},
-		element: "li"
-	},
-	noResults: () => {
-		const result = document.createElement("li");
-		result.setAttribute("class", "no_result");
-		result.setAttribute("tabindex", "1");
-		result.innerHTML = "No Results";
-		document.querySelector("#autoComplete_list").appendChild(result);
-	},
-	onSelection: feedback => {
-		
-		const selection = feedback.selection.value.food;
-		// Render selected choice to selection div
-		document.querySelector(".selection").innerHTML = selection;
-		// Clear Input
-		document.querySelector("#autoComplete").value = "";
-		// Change placeholder with the selected value
-		document
-			.querySelector("#autoComplete")
-			.setAttribute("placeholder", selection);
-		// Concole log autoComplete data feedback
-		console.log('feedback')
-		console.log(feedback);
-		console.log(feedback.selection.key)
-		console.log(feedback.selection.value[feedback.selection.key])
-	}
-});
+function setupSearch(data) {
+  const autoCompletejs = new autoComplete({
+    data: {
+      src: data,
+      key: ["launchVehicle", "country", "launchClass"],
+      cache: true,
+    },
+    sort: (a, b) => {
+      if (a.match < b.match) return -1;
+      if (a.match > b.match) return 1;
+      return 0;
+    },
+    placeHolder: "Search for a Launch Vehicle or Country",
+    selector: "#autoComplete",
+    threshold: 0,
+    debounce: 0,
+    searchEngine: "strict",
+    highlight: true,
+    maxResults: 5,
+    resultsList: {
+      render: true,
+      container: (source) => {
+        source.setAttribute("id", "autoComplete_list");
+      },
+      destination: document.querySelector("#autoComplete"),
+      position: "afterend",
+      element: "ul",
+    },
+    resultItem: {
+      content: (data, source) => {
+        source.innerHTML = data.match;
+      },
+      element: "li",
+    },
+    noResults: () => {
+      const result = document.createElement("li");
+      result.setAttribute("class", "no_result");
+      result.setAttribute("tabindex", "1");
+      result.innerHTML = "No Results";
+      document.querySelector("#autoComplete_list").appendChild(result);
+    },
+    onSelection: (feedback) => {
+      /* TODO: Remember to change this value, otherwise when you select a result, it says "Undefined" in the textarea */
+      const selection = feedback.selection.value.food;
+      // Clear Input
+      document.querySelector("#autoComplete").value = "";
+      // Change placeholder with the selected value
+      document
+        .querySelector("#autoComplete")
+        .setAttribute("placeholder", selection);
+      // Concole log autoComplete data feedback
+      console.log("feedback");
+      console.log(feedback);
+      console.log(feedback.selection.key);
+      console.log(feedback.selection.value[feedback.selection.key]);
+    },
+  });
+}
