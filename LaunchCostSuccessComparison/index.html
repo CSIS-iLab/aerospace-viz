@@ -1,45 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles | CSIS Aerospace Security Program</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Include Project Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/bubbles.css">
-</head>
-<body>
-  <select id="dropdown" class="dropdown-container" style="float: left;">
-        <option value="0">FY21 Dollars</option>
-        <option value="1">Then-Year Dollars</option>
-  </select>
-  		<input id="autoComplete" type="text">
-
-  <div id="outerContainer">       
-    <div id="hcContainer" style="float: left;">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>
+      Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch
+      Vehicles | CSIS Aerospace Security Program
+    </title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Include Project Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="css/bubbles.css" />
+  </head>
+  <body>
+    <select id="dropdown" class="dropdown-container" style="float: left;">
+      <option value="fy21">FY21 Dollars</option>
+      <option value="thenYear">Then-Year Dollars</option>
+    </select>
+    <div class="search">
+      <input id="autoComplete" type="text" />
+      <button type="reset" id="resetSearch">Reset</button>
     </div>
-    <div id="tooltip" class="tooltip"><span id="instructions">Bubble sizes correspond to each vehicle's number of successful orbital launches. Hover over a bubble to learn more. Use the dropdown menu to toggle between then-year and FY21 dollars. The bubbles' colors correspond to vehicle launch class. Click a launch class in the legend to hide vehicles of that class. Use the search tool to find vehicles by name or country.</span></div>
-  </div>
 
+    <div id="outerContainer">
+      <div id="hcContainer" style="float: left;"></div>
+      <div id="tooltip" class="tooltip">
+        <span id="instructions"
+          >Bubble sizes correspond to each vehicle's number of successful
+          orbital launches. Hover over a bubble to learn more. Use the dropdown
+          menu to toggle between then-year and FY21 dollars. The bubbles' colors
+          correspond to vehicle launch class. Click a launch class in the legend
+          to hide vehicles of that class. Use the search tool to find vehicles
+          by name or country.</span
+        >
+      </div>
+    </div>
 
-  <!-- Include jQuery & Highcharts Libraries; Adjust per project -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/highcharts-more.js"></script>
-  <script src="https://code.highcharts.com/maps/modules/data.js"></script>
-  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <!-- Include jQuery & Highcharts Libraries; Adjust per project -->
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"
+    ></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
 
-  <!-- Include iFrame Resizer -->
-  <script src="https://csis-ilab.github.io/aerospace-viz/globals/iframeSizer.contentWindow.min.js"></script>
-  <!-- Include Project Specific Highcharts Theme -->
-  <script src="https://csis-ilab.github.io/aerospace-viz/globals/aerospace-highcharts-theme.js"></script>
-  <!-- <script src="../../globals/aerospace-highcharts-theme.js"></script> -->
-  <!-- Include Project Specific Javascript Files -->
-  <script src="js/bubbles.js"></script>
-
-</body>
+    <!-- Include iFrame Resizer -->
+    <script src="https://csis-ilab.github.io/aerospace-viz/globals/iframeSizer.contentWindow.min.js"></script>
+    <!-- Include Project Specific Highcharts Theme -->
+    <script src="https://csis-ilab.github.io/aerospace-viz/globals/aerospace-highcharts-theme.js"></script>
+    <!-- <script src="../../globals/aerospace-highcharts-theme.js"></script> -->
+    <!-- Include Project Specific Javascript Files -->
+    <script src="js/bubbles.js"></script>
+  </body>
 </html>

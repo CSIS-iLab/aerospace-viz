@@ -1,4 +1,19 @@
-let heavyData = {
+const classInfo = {
+  Heavy: {
+    color: "#196C95",
+    lendIndex: 1,
+  },
+  Medium: {
+    color: "#4F9793",
+    legendIndex: 2,
+  },
+  Small: {
+    color: "#F9BC65",
+    legendIndex: 3,
+  },
+};
+
+let allData = {
   fy21: {
     title: "FY21 Dollars",
     values: [],
@@ -9,25 +24,9 @@ let heavyData = {
   },
 };
 
-let mediumData = {
-  fy21: {
-    values: [],
-  },
-  thenYear: {
-    values: [],
-  },
-};
-
-let smallData = {
-  fy21: {
-    values: [],
-  },
-  thenYear: {
-    values: [],
-  },
-};
-
-let allData = [];
+let searchItemsSet = new Set();
+let searchItemsArray = [];
+let currentChartData = [];
 
 Highcharts.data({
   googleSpreadsheetKey: "1FGdaphIbRjDpXsOdU3omWGRpH5DTImmzWW-H43lLOms",
@@ -55,87 +54,47 @@ Highcharts.data({
       let country = row[9];
       let similarVehicles = row[10];
       let source = row[11];
+      let tags = row[12];
+
+      tags.split(",").forEach((tag) => searchItemsSet.add(tag.trim()));
 
       const data = {
         x: firstLaunchYear,
         z: successIncludingSimilarVehicles,
-        launchVehicle: launchVehicle,
-        successfulLaunches: successfulLaunches,
-        launchClass: launchClass,
-        country: country,
-        similarVehicles: similarVehicles,
-        source: source,
+        launchVehicle,
+        successfulLaunches,
+        launchClass,
+        country,
+        similarVehicles,
+        source,
+        color: classInfo[launchClass].color,
+        legendIndex: classInfo[launchClass].legendIndex,
+        tags,
       };
 
-      if (successfulLaunches != null && launchClass == "Heavy") {
-        heavyData.fy21.values.push({
-          ...data,
-          y: fy21CostPerKg,
-          launchCost: fy21TotalLaunchCost,
-          color: "#196C95",
-          legendIndex: 1,
-        });
+      allData.fy21.values.push({
+        ...data,
+        y: fy21CostPerKg,
+        launchCost: fy21TotalLaunchCost,
+      });
 
-        heavyData.thenYear.values.push({
-          ...data,
-          y: thenYearCostPerKg,
-          launchCost: thenYearLaunchCost,
-          color: "#196C95",
-          legendIndex: 1,
-        });
-      }
-
-      if (successfulLaunches != null && launchClass == "Medium") {
-        mediumData.fy21.values.push({
-          ...data,
-          y: fy21CostPerKg,
-          launchCost: fy21TotalLaunchCost,
-          color: "#4F9793",
-          legendIndex: 2,
-        });
-
-        mediumData.thenYear.values.push({
-          ...data,
-          y: thenYearCostPerKg,
-          launchCost: thenYearLaunchCost,
-          color: "#4F9793",
-          legendIndex: 2,
-        });
-      }
-
-      if (successfulLaunches != null && launchClass == "Small") {
-        smallData.fy21.values.push({
-          ...data,
-          y: fy21CostPerKg,
-          launchCost: fy21TotalLaunchCost,
-          color: "#F9BC65",
-          legendIndex: 3,
-        });
-
-        smallData.thenYear.values.push({
-          ...data,
-          y: thenYearCostPerKg,
-          launchCost: thenYearLaunchCost,
-          color: "#F9BC65",
-          legendIndex: 3,
-        });
-      }
+      allData.thenYear.values.push({
+        ...data,
+        y: thenYearCostPerKg,
+        launchCost: thenYearLaunchCost,
+      });
     }
 
-    allData = [
-      ...heavyData.fy21.values,
-      ...mediumData.fy21.values,
-      ...smallData.fy21.values,
-    ];
+    searchItemsArray = [...searchItemsSet];
 
-    setupSearch(allData);
+    setupSearch(searchItemsArray);
 
-    renderChart(heavyData.fy21, mediumData.fy21, smallData.fy21);
+    renderChart(allData.fy21);
   },
 });
 
-function renderChart(heavyData, mediumData, smallData) {
-  Highcharts.chart("hcContainer", {
+function renderChart(data) {
+  let chart = Highcharts.chart("hcContainer", {
     chart: {
       type: "bubble",
       plotBorderWidth: 1,
@@ -161,7 +120,7 @@ function renderChart(heavyData, mediumData, smallData) {
     yAxis: [
       {
         title: {
-          text: "$K / kg (" + heavyData.title + ")",
+          text: "$K / kg (" + allData.title + ")",
         },
         type: "logarithmic",
       },
@@ -224,48 +183,43 @@ function renderChart(heavyData, mediumData, smallData) {
       {
         name: "Heavy",
         type: "bubble",
-        data: heavyData.values,
+        data: data.values.filter((data) => data.launchClass == "Heavy"),
       },
       {
         name: "Medium",
         type: "bubble",
-        data: mediumData.values,
+        data: data.values.filter((data) => data.launchClass == "Medium"),
       },
       {
         name: "Small",
         type: "bubble",
-        data: smallData.values,
+        data: data.values.filter((data) => data.launchClass == "Small"),
       },
     ],
   });
+
+  currentChartData = [
+    ...chart.series[0].data,
+    ...chart.series[1].data,
+    ...chart.series[2].data,
+  ];
 }
 
 const select = document.getElementById("dropdown");
 select.addEventListener("change", function () {
+  console.log(this);
   let chart = Highcharts.chart("hcContainer", {});
   chart.destroy();
-  renderChart(
-    heavyData[Object.keys(heavyData)[this.value]],
-    mediumData[Object.keys(mediumData)[this.value]],
-    smallData[Object.keys(smallData)[this.value]]
-  );
+  renderChart(allData[this.value]);
 });
 
 // *******Autocomplete.js*********
-
-// autoComplete.js on typing event emitter
-document
-  .querySelector("#autoComplete")
-  .addEventListener("autoComplete", (event) => {
-    console.log(event);
-    console.log(allData);
-  });
-// The autoComplete.js Engine instance creator
 function setupSearch(data) {
+  const input = document.querySelector("#autoComplete");
+
   const autoCompletejs = new autoComplete({
     data: {
       src: data,
-      key: ["launchVehicle", "country", "launchClass"],
       cache: true,
     },
     sort: (a, b) => {
@@ -303,19 +257,29 @@ function setupSearch(data) {
       document.querySelector("#autoComplete_list").appendChild(result);
     },
     onSelection: (feedback) => {
-      /* TODO: Remember to change this value, otherwise when you select a result, it says "Undefined" in the textarea */
-      const selection = feedback.selection.value.food;
+      const selection = feedback.selection.value;
+
+      for (let i = 0; i < currentChartData.length; i++) {
+        const item = currentChartData[i];
+
+        if (item.tags.includes(selection)) {
+          item.graphic.attr({ opacity: 1, "stroke-width": 2 });
+        } else {
+          item.graphic.attr({ opacity: 0.2, "stroke-width": 1 });
+        }
+      }
+
       // Clear Input
-      document.querySelector("#autoComplete").value = "";
-      // Change placeholder with the selected value
-      document
-        .querySelector("#autoComplete")
-        .setAttribute("placeholder", selection);
-      // Concole log autoComplete data feedback
-      console.log("feedback");
-      console.log(feedback);
-      console.log(feedback.selection.key);
-      console.log(feedback.selection.value[feedback.selection.key]);
+      input.value = selection;
     },
+  });
+
+  const resetSearch = document.getElementById("resetSearch");
+  resetSearch.addEventListener("click", function () {
+    for (let i = 0; i < currentChartData.length; i++) {
+      const item = currentChartData[i];
+      item.graphic.attr({ opacity: 1, "stroke-width": 1 });
+    }
+    input.value = null;
   });
 }

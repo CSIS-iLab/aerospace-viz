@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    float:left; 
+    float: left;
     margin-top: 110px;
     margin-left: 20px;
     max-width: 350px;
@@ -25,7 +25,7 @@
 
 table {
   border-collapse: collapse;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   table-layout: fixed;
 }
@@ -36,8 +36,8 @@ td:first-of-type {
   text-align: right;
 }
 
-tr { 
-  border: solid #B5BDC1;
+tr {
+  border: solid #b5bdc1;
   border-width: 1px 0;
 }
 
@@ -53,8 +53,8 @@ tr:last-child {
 }
 
 @media screen and (min-width: 48em) {
-.dropdown-container {
-    position:absolute;
+  .dropdown-container {
+    position: absolute;
     z-index: 1;
     margin-left: 35%;
     top: 70px;
@@ -69,5 +69,22 @@ tr:last-child {
     margin-left: 20%;
     top: 220px;
     border-color: lightgray;
-  }  
+  }
+}
+
+.search {
+  position: relative;
+  z-index: 1;
+  display: flex;
+}
+
+#autoComplete_list:empty {
+  display: none;
+}
+
+#autoComplete_list {
+  position: absolute;
+  top: 1rem;
+  background: #fff;
+  border: 1px solid #000;
 }
