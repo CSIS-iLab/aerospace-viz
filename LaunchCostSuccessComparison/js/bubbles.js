@@ -101,14 +101,15 @@ function renderChart(data) {
       zoomType: "xy",
       backgroundColor: "rgba(0,0,0,0)",
     },
+    exporting: {
+      enabled: false
+    },
     credits: {
-      enabled: true,
+      enabled: false,
       text: "CSIS Aerospace Security Project",
     },
     title: {
-      text:
-        "Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles",
-      margin: 70,
+      text: null
     },
     xAxis: {
       gridLineWidth: 1,
@@ -143,27 +144,21 @@ function renderChart(data) {
 
         if (similarVehicles) {
           similarVehiclesRow = `
-            Similar launch vehicles with successful launches include <span style="font-family: 'Arial'; font-size: 14px; text-decoration: underline; text-decoration-color: #D66E42">${similarVehicles}</span>.
+            Similar launch vehicles with successful launches include <span class="tooltip__value">${similarVehicles}</span>.
           `;
         }
 
         const html = `
-          <span style="font-size: 20px; width: 500px; font-family: 'Abel'"><b>${launchVehicle}</b></span>
-          <ul style="font-family: 'Arial'; font-size: 14px;">
-            <li>Country: ${country}</li>
-            <li>Payload Cost ($/kg): ${launchCost}</li>
-            <li>Class: ${launchClass}</li>
+          <h2 class="tooltip__heading">${launchVehicle}</h2>
+          <ul>
+            <li>Country: <span class="tooltip__value">${country}</span></li>
+            <li>Payload Cost ($/kg): <span class="tooltip__value">${launchCost}</span></li>
+            <li>Class: <span class="tooltip__value">${launchClass}</span></li>
           </ul>
-          <span style="font-family: 'Arial'; font-size: 14px;">The
-          <span style="font-family: 'Arial'; text-decoration: underline;  text-decoration-color: #D66E42; font-size: 14px;">${launchVehicle}</span> 
-          launch vehicle has completed
-          <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42"; font-size: 14px;>${successfulLaunches}</span>
-          successful launches since
-          <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42; font-size: 14px;"> ${firstSuccessfulLaunch}</span>
-          at approximately
-          <span style="font-family: 'Arial'; text-decoration: underline; text-decoration-color: #D66E42; font-size: 14px;">${fy21CostPerKg} per launch.</span> 
-          <span style="font-family: 'Arial'; font-size: 14px;">${similarVehiclesRow}</span><br><br>
-          <span style="font-size: 10px; font-family: 'Arial'">${source}</span>
+          <p>The <span class="tooltip__value">${launchVehicle}</span> launch vehicle has completed <span class="tooltip__value">${successfulLaunches}</span>
+          successful launches since <span class="tooltip__value">${firstSuccessfulLaunch}</span> at approximately 
+          <span class="tooltip__value">${fy21CostPerKg}</span> per launch. ${similarVehiclesRow}</p>
+          <p class="tooltip__source">Source: ${source}</p>
         `;
         $("#tooltip").html(html);
         return false;

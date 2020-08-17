@@ -17,28 +17,29 @@
     <link rel="stylesheet" type="text/css" href="css/bubbles.css" />
   </head>
   <body>
-    <select id="dropdown" class="dropdown-container" style="float: left;">
-      <option value="fy21">FY21 Dollars</option>
-      <option value="thenYear">Then-Year Dollars</option>
-    </select>
-    <div class="search">
-      <input id="autoComplete" type="text" />
-      <button type="reset" id="resetSearch">Reset</button>
-    </div>
-
-    <div id="outerContainer">
-      <div id="hcContainer" style="float: left;"></div>
+    <main id="outerContainer">
+      <header>
+        <h1>Comparing Cost of Launch to Low-Earth Orbit for Successful Orbital Launch Vehicles</h1>
+        <select id="dropdown" class="dropdown-container">
+          <option value="fy21">FY21 Dollars</option>
+          <option value="thenYear">Then-Year Dollars</option>
+        </select>
+        <div class="search">
+          <input id="autoComplete" type="text" />
+          <button type="reset" id="resetSearch">Reset</button>
+        </div>
+      </header>
+      <div id="hcContainer"></div>
       <div id="tooltip" class="tooltip">
-        <span id="instructions"
-          >Bubble sizes correspond to each vehicle's number of successful
-          orbital launches. Hover over a bubble to learn more. Use the dropdown
-          menu to toggle between then-year and FY21 dollars. The bubbles' colors
-          correspond to vehicle launch class. Click a launch class in the legend
-          to hide vehicles of that class. Use the search tool to find vehicles
-          by name or country.</span
-        >
+        <div id="instructions">
+          <p>
+            Each bubble represents a launch vehicle, and is sized according to each vehicle's number of successful orbital launches and colored by launch class. Hover over a bubble to learn more about that launch vehicle.</p>
+          <p>Use the search tool to find vehicles by name or country. Use the dropdown menu to toggle between then-year and FY21 dollars.</p>
+          <p>Click a launch class in the legend to hide vehicles of that class.</p>
+        </div>
       </div>
-    </div>
+      <footer>CSIS Aerospace Security Project</footer>
+    </main>
 
     <!-- Include jQuery & Highcharts Libraries; Adjust per project -->
     <script
@@ -48,7 +49,6 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/maps/modules/data.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
 
