@@ -106,7 +106,6 @@ function renderChart(data) {
     },
     credits: {
       enabled: false,
-      text: "CSIS Aerospace Security Project",
     },
     title: {
       text: null
