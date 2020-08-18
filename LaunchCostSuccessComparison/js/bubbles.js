@@ -111,6 +111,9 @@ function renderChart(data) {
     title: {
       text: null
     },
+    legend: {
+      x: 35
+    },
     xAxis: {
       gridLineWidth: 1,
       title: {
@@ -172,6 +175,30 @@ function renderChart(data) {
           enabled: true,
           format: "{point.name}",
         },
+        point: {
+          events: {
+            mouseOver: function() {
+              const details = document.getElementById("details")
+              const instructions = document.getElementById("instructions")
+              var chart = this.series.chart;
+
+              if (chart) {
+                console.log("hello")
+                instructions.classList.remove("is-visible")
+                details.classList.add("is-visible");                
+              }
+            }
+          }
+        },
+        events: {
+          mouseOut: function() {
+            if (chart) {
+              console.log("goodbye")
+              details.classList.remove("is-visible")
+              instructions.classList.add("is-visible")
+            }
+          }
+        }
       },
     },
     series: [
