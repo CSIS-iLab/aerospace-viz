@@ -121,7 +121,7 @@ function renderChart(data) {
     yAxis: [
       {
         title: {
-          text: "$K / kg (" + allData.title + ")",
+          text: "$K / kg (" + data.title + ")",
         },
         type: "logarithmic",
       },
@@ -160,7 +160,7 @@ function renderChart(data) {
           <span class="tooltip__value">${fy21CostPerKg}</span> per launch. ${similarVehiclesRow}</p>
           <p class="tooltip__source">Source: ${source}</p>
         `;
-        $("#tooltip").html(html);
+        document.getElementById('details').innerHTML = html;
         return false;
       },
       followPointer: true,
@@ -276,5 +276,21 @@ function setupSearch(data) {
       item.graphic.attr({ opacity: 1, "stroke-width": 1 });
     }
     input.value = null;
+  });
+
+  // Toggle event for search input
+  // showing & hidding results list onfocus / blur
+  ["focus", "blur"].forEach(function(eventType) {
+    const resultsList = document.querySelector("#autoComplete_list");
+
+    input.addEventListener(eventType, function() {
+      // Hide results list & show other elemennts
+      if (eventType === "blur") {
+        resultsList.style.display = "none";
+      } else if (eventType === "focus") {
+        // Show results list & hide other elemennts
+        resultsList.style.display = "block";
+      }
+    });
   });
 }
