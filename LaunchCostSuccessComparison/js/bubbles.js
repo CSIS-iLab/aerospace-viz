@@ -123,7 +123,7 @@ function renderChart(data) {
     yAxis: [
       {
         title: {
-          text: "$K / kg (" + data.title + ")",
+          text: "$ / kg (" + data.title + ")",
         },
         type: "logarithmic",
       },
@@ -143,7 +143,6 @@ function renderChart(data) {
         let source = this.point.source;
 
         let similarVehiclesRow = "";
-
         if (similarVehicles) {
           similarVehiclesRow = `
             Similar launch vehicles with successful launches include <span class="tooltip__value">${similarVehicles}</span>.
@@ -154,12 +153,12 @@ function renderChart(data) {
           <h2 class="tooltip__heading">${launchVehicle}</h2>
           <ul>
             <li>Country: <span class="tooltip__value">${country}</span></li>
-            <li>Payload Cost ($/kg): <span class="tooltip__value">${launchCost}</span></li>
+            <li>Payload Cost: <span class="tooltip__value">${fy21CostPerKg}</span> $/kg</li>
             <li>Class: <span class="tooltip__value">${launchClass}</span></li>
           </ul>
           <p>The <span class="tooltip__value">${launchVehicle}</span> launch vehicle has completed <span class="tooltip__value">${successfulLaunches}</span>
           successful launches since <span class="tooltip__value">${firstSuccessfulLaunch}</span> at approximately 
-          <span class="tooltip__value">${fy21CostPerKg}</span> per launch. ${similarVehiclesRow}</p>
+          <span class="tooltip__value">$${launchCost} M</span> per launch. ${similarVehiclesRow}</p>
           <p class="tooltip__source">Source: ${source}</p>
         `;
         document.getElementById('details').innerHTML = html;
