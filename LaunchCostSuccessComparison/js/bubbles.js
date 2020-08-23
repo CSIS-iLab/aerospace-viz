@@ -4,7 +4,7 @@ const classInfo = {
     lendIndex: 1,
   },
   Medium: {
-    color: "#4F9793",
+    color: "#5DB6D0",
     legendIndex: 2,
   },
   Small: {
@@ -182,22 +182,20 @@ function renderChart(data) {
               var chart = this.series.chart;
 
               if (chart) {
-                console.log("hello")
                 instructions.classList.remove("is-visible")
                 details.classList.add("is-visible");                
               }
             }
           }
         },
-        events: {
+        /*events: {
           mouseOut: function() {
             if (chart) {
-              console.log("goodbye")
               details.classList.remove("is-visible")
               instructions.classList.add("is-visible")
             }
           }
-        }
+        }*/
       },
     },
     series: [
@@ -248,7 +246,7 @@ function setupSearch(data) {
       if (a.match > b.match) return 1;
       return 0;
     },
-    placeHolder: "Search for a Launch Vehicle or Country",
+    placeHolder: "Vehicle, Country, Spaceport...",
     selector: "#autoComplete",
     threshold: 0,
     debounce: 0,
