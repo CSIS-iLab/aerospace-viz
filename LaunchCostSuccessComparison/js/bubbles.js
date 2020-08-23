@@ -135,8 +135,8 @@ function renderChart(data) {
         let firstSuccessfulLaunch = this.point.x;
         let successfulLaunches = this.point.successfulLaunches;
         let successIncludingSimilarVehicles = this.point.z;
-        let fy21CostPerKg = this.point.y;
-        let launchCost = this.point.launchCost;
+        let fy21CostPerKg = Highcharts.numberFormat(this.point.y, 0);
+        let launchCost = Highcharts.numberFormat(this.point.launchCost, 0);
         let launchClass = this.point.launchClass;
         let country = this.point.country;
         let similarVehicles = this.point.similarVehicles;
