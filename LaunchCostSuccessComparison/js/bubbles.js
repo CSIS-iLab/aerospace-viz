@@ -96,6 +96,12 @@ Highcharts.data({
 function renderChart(data) {
   let chart = Highcharts.chart("hcContainer", {
     chart: {
+      events: {
+        click: function() {
+          instructions.classList.add("is-visible")
+          details.classList.remove("is-visible"); 
+        }
+      },
       type: "bubble",
       plotBorderWidth: 1,
       zoomType: "xy",
@@ -189,14 +195,6 @@ function renderChart(data) {
             }
           }
         },
-        /*events: {
-          mouseOut: function() {
-            if (chart) {
-              details.classList.remove("is-visible")
-              instructions.classList.add("is-visible")
-            }
-          }
-        }*/
       },
     },
     series: [
