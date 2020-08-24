@@ -135,7 +135,7 @@ function renderChart(data) {
       formatter: function () {
         let launchVehicle = this.point.launchVehicle;
         let firstSuccessfulLaunch = this.point.x;
-        let successfulLaunches = this.point.successfulLaunches;
+        let successfulLaunches = Highcharts.numberFormat(this.point.successfulLaunches, 0);
         let successIncludingSimilarVehicles = this.point.z;
         let fy21CostPerKg = Highcharts.numberFormat(this.point.y, 0);
         let launchCost = Highcharts.numberFormat(this.point.launchCost, 0);
