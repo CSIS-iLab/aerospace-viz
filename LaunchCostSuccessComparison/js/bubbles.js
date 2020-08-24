@@ -100,6 +100,8 @@ function renderChart(data) {
       plotBorderWidth: 1,
       zoomType: "xy",
       backgroundColor: "rgba(0,0,0,0)",
+      width: null,
+      height: 650
     },
     exporting: {
       enabled: false

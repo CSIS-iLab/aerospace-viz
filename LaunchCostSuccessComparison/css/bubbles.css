@@ -22,19 +22,19 @@ p+p {
 
 @media screen and (min-width: 48em) {
   #outerContainer {
-    grid-template-columns: 2fr auto;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: auto min-content min-content;
   }
 }
 
 header {
-  grid-column: 1 / -1;
+  grid-column: 1 / 2;
 }
 
 #inputContainer {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   flex-wrap: wrap;
 }
 
@@ -52,7 +52,8 @@ footer {
   }
 
   #hcContainer {
-    grid-row: 2 / 4;
+    grid-row: 1 / 4;
+    grid-column: 2 / 4;
   }
 }
 
@@ -66,8 +67,6 @@ footer {
     position: relative;
     display: block;
     max-width: 350px;
-    /*border: 1px solid;*/
-    /*border-color: #d8d8d8;*/
     padding: 16px;
     height: 341px;
     margin-top: 8px;
@@ -119,6 +118,7 @@ h1 {
 
 .search {
   position: relative;
+  margin-top: 1rem;
   z-index: 1;
   display: flex;
 }
@@ -144,7 +144,7 @@ h1 {
 }
 
 .dropdown {
-  margin-right: 2rem;
+  margin-left: 0;
 }
 
 #autoComplete {
