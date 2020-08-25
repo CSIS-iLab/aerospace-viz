@@ -32,7 +32,7 @@ $(function() {
     // Y Axis
     yAxis: {
       title: {
-        text: "Successful Launches"
+        text: "Cumulative Successful Launches"
       },
     },
     // Tooltip
