@@ -56,7 +56,9 @@ Highcharts.data({
       let source = row[11];
       let tags = row[12];
 
+      if (tags) {
       tags.split(",").forEach((tag) => searchItemsSet.add(tag.trim()));
+      }
 
       const data = {
         x: firstLaunchYear,
@@ -102,12 +104,34 @@ function renderChart(data) {
           details.classList.remove("is-visible"); 
         }
       },
+      resetZoomButton: {
+        theme: {
+          fill: '#b5bdc1',
+          style: {
+            fontFamily: 'Abel',
+            fontSize: '12px',
+            fontSize: '.75rem',
+            color: '#000',  
+            textTransform: 'uppercase',
+            letterSpacing: '0.6px',
+            transition: 'all .3s ease-in-out'
+          },
+          states: {
+            hover: {
+              fill: '#c6ced2',
+              style: {
+                transition: 'all .3s ease-in-out'
+              }
+            }
+          }
+        }
+      },
       type: "bubble",
       plotBorderWidth: 1,
       zoomType: "xy",
       backgroundColor: "rgba(0,0,0,0)",
       width: null,
-      height: 650
+      height: 575
     },
     exporting: {
       enabled: false
@@ -144,7 +168,7 @@ function renderChart(data) {
         let successfulLaunches = Highcharts.numberFormat(this.point.successfulLaunches, 0);
         let successIncludingSimilarVehicles = this.point.z;
         let fy21CostPerKg = Highcharts.numberFormat(this.point.y, 0);
-        let launchCost = Highcharts.numberFormat(this.point.launchCost, 0);
+        let launchCost = this.point.launchCost;
         let launchClass = this.point.launchClass;
         let country = this.point.country;
         let similarVehicles = this.point.similarVehicles;
@@ -160,13 +184,13 @@ function renderChart(data) {
         const html = `
           <h2 class="tooltip__heading">${launchVehicle}</h2>
           <ul>
-            <li>Country: <span class="tooltip__value">${country}</span></li>
-            <li>Payload Cost: <span class="tooltip__value">${fy21CostPerKg}</span> $/kg</li>
-            <li>Class: <span class="tooltip__value">${launchClass}</span></li>
+            <li>Country: <span class="tooltip__value" id="li">${country}</span></li>
+            <li>Payload Cost to LEO: <span class="tooltip__value" id="li">${fy21CostPerKg}</span> $/kg</li>
+            <li>Class: <span class="tooltip__value" id="li">${launchClass}</span></li>
           </ul>
           <p>The <span class="tooltip__value">${launchVehicle}</span> launch vehicle has completed <span class="tooltip__value">${successfulLaunches}</span>
           successful launches since <span class="tooltip__value">${firstSuccessfulLaunch}</span> at approximately 
-          <span class="tooltip__value">$${launchCost} M</span> per launch. ${similarVehiclesRow}</p>
+          <span class="tooltip__value">$${launchCost} million</span> per launch. ${similarVehiclesRow}</p>
           <p class="tooltip__source">Source: ${source}</p>
         `;
         document.getElementById('details').innerHTML = html;
@@ -280,10 +304,12 @@ function setupSearch(data) {
       for (let i = 0; i < currentChartData.length; i++) {
         const item = currentChartData[i];
 
-        if (item.tags.includes(selection)) {
-          item.graphic.attr({ opacity: 1, "stroke-width": 2 });
-        } else {
-          item.graphic.attr({ opacity: 0.2, "stroke-width": 1 });
+        if (item.tags) {
+          if (item.tags.includes(selection)) {
+            item.graphic.attr({ opacity: 1, "stroke-width": 2 });
+          } else {
+            item.graphic.attr({ opacity: 0.2, "stroke-width": 1 });
+          }
         }
       }
 
