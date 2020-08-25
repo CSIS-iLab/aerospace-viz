@@ -131,13 +131,15 @@ function renderChart(data) {
       zoomType: "xy",
       backgroundColor: "rgba(0,0,0,0)",
       width: null,
-      height: 575
+      height: 490,
+      marginTop: 27
     },
     exporting: {
       enabled: false
     },
     credits: {
-      enabled: false,
+      enabled: true,
+      text: 'CSIS Aerospace Security Project'
     },
     title: {
       text: null
