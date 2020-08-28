@@ -154,14 +154,25 @@ function renderChart(data) {
       },
     },
 
-    yAxis: [
-      {
-        title: {
-          text: "$ / kg (" + data.title + ")",
-        },
-        type: "logarithmic",
+    yAxis: {
+      title: {
+        text: "$ / kg (" + data.title + ")",
       },
-    ],
+      type: "logarithmic",
+      labels: {
+        formatter: function () {
+          if (this.value >= 1000000000) {
+            return "$" + this.value / 1000000000 + "B";
+          } else if (this.value >= 1000000) {
+            return "$" + (this.value / 1000000) + "M";
+          } else if (this.value >= 1000) {
+            return "$" + (this.value / 1000) + "K";
+          } else {
+            return this.value;
+          }
+        }
+      }
+    },
     tooltip: {
       useHTML: true,
       formatter: function () {
