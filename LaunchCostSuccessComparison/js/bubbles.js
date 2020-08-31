@@ -148,6 +148,7 @@ function renderChart(data) {
       x: 35
     },
     xAxis: {
+      endOnTick: true,
       gridLineWidth: 1,
       title: {
         text: "Year of First Successful Orbital Launch",
@@ -160,7 +161,7 @@ function renderChart(data) {
       },
       type: "logarithmic",
       tickInterval: 1,
-      tickPositions: [500, 1000, 2000, 5000, 20000, 50000, 100000, 500000, 5000000].map((v) => Math.log10(v)),
+      tickPositions: [500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 5000000].map((v) => Math.log10(v)),
       labels: {
         formatter: function () {
           if (this.value >= 1000000000) {
@@ -170,7 +171,7 @@ function renderChart(data) {
           } else if (this.value >= 1000) {
             return "$" + (this.value / 1000) + "K";
           } else {
-            return this.value;
+            return "$" + this.value;
           }
         }
       },
