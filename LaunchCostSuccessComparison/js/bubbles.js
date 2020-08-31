@@ -160,7 +160,7 @@ function renderChart(data) {
       },
       type: "logarithmic",
       tickInterval: 1,
-    tickPositions: [500, 1000, 2000, 5000, 20000, 50000, 100000, 500000/*, 5000000*/].map((v) => Math.log10(v)),
+      tickPositions: [500, 1000, 2000, 5000, 20000, 50000, 100000, 500000, 5000000].map((v) => Math.log10(v)),
       labels: {
         formatter: function () {
           if (this.value >= 1000000000) {
@@ -253,14 +253,13 @@ function renderChart(data) {
         data: data.values.filter((data) => data.launchClass == "Small"),
       },
     ],
-    function(chart) {
-      currentChartData = [
-      ...chart.series[0].data,
-      ...chart.series[1].data,
-      ...chart.series[2].data,
-      ];
-    }
   });
+
+  currentChartData = [
+    ...chart.series[0].data,
+    ...chart.series[1].data,
+    ...chart.series[2].data,
+  ];
 }
 
 const select = document.getElementById("dropdown");
@@ -324,7 +323,7 @@ function setupSearch(data) {
         }
 
         if (item.tags.includes(selection)) {
-          item.graphic.attr({ opacity: 1, "stroke-width": 2 });
+            item.graphic.attr({ opacity: 1, "stroke-width": 2 });
         } else {
           item.graphic.attr({ opacity: 0.2, "stroke-width": 1 });
         }
