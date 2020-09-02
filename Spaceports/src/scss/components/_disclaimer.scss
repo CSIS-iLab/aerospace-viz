@@ -5,10 +5,11 @@
 .disclaimer {
   margin: 1rem;
   max-width: 100%;
+  min-height: 325px;
 
-	@include breakpoint('medium') {
-		display: none;
-	}
+  @include breakpoint('medium') {
+    display: none;
+  }
 
   img {
     width: 100%;
