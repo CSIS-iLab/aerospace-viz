@@ -1,0 +1,47 @@
+@use 'abstracts' as *;
+
+/*=====================================
+=            Form Elements            =
+=====================================*/
+
+.input__label {
+  display: block;
+  margin: 0 0 5px;
+  @extend %form__label;
+}
+
+.input__desc {
+  margin: 0 0 5px;
+  color: $color__gray-400;
+  @include font-size(14px);
+  line-height: 1.3;
+}
+
+// Select
+.input__select {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100px;
+  height: 30px;
+  margin: 0;
+  padding: 3px 35px 3px 7px;
+  color: $color__gray-800;
+  @include font-size(15px);
+  line-height: 1.28571em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: $color__white;
+  background-image: url('../img/css-icons/arrow-down.svg'),
+    linear-gradient(to right, $color__primary, $color__primary);
+  background-repeat: no-repeat;
+  background-position: 100% center;
+  background-size: 30px 30px, 30px 30px;
+  border: 2px solid $color__primary;
+  border-radius: 2px;
+  appearance: none;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

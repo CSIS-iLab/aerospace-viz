@@ -1,0 +1,14 @@
+@use 'abstracts' as *;
+
+/*==================================
+=            Disclaimer            =
+==================================*/
+
+.interactive__disclaimer {
+  margin-top: 2rem;
+  font-size: 14px;
+
+  @include breakpoint('medium') {
+    display: none;
+  }
+}

@@ -1,0 +1,38 @@
+@use 'abstracts' as *;
+
+/*===================================
+=            Page Layout            =
+===================================*/
+
+.interactive__container,
+.interactive__source {
+  max-width: $size__content-max-width;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.interactive__header {
+  max-width: $size__max-width;
+  margin: 0 auto 1.5rem;
+
+  @include breakpoint('medium') {
+    display: grid;
+    grid-template-columns: auto min-content;
+    margin-bottom: 0;
+    column-gap: 1rem;
+
+    .interactive__title {
+      grid-column: 1 / -1;
+    }
+
+    p {
+      padding-left: 1.5rem;
+    }
+  }
+}
+
+.interactive__container {
+  position: relative;
+  padding: 0;
+  text-align: left;
+}
