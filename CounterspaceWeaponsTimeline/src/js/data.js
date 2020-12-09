@@ -1,16 +1,27 @@
 const d3 = Object.assign({}, require('d3-fetch'))
 
 function parseData({ src }) {
-  const quantityPromise = fetchCSV(src.quantity)
+  const valuePromise = fetchCSV(src)
 
-  let data = Promise.all([quantityPromise, valuePromise]).then((res) => {
-    const [quantityData] = res
+  let data = Promise.all([valuePromise]).then((res) => {
+    const [valueData] = res
 
-    const years = [...new Set(quantityData.map((d) => +d.year))].sort(
-      (a, b) => b - a
-    )
+    console.log(valueData)
 
-    let dataset = {}
+    const years = valueData
+      .filter(d => d.year > 0)
+      .map((d) => d.year)
+      .sort()
+
+    const categories = [...new Set(valueData.map((d) => d['Counterspace Category']))].filter(d => d != "").sort()
+
+    let dataset = {
+      years: [years[0], years[years.length - 1]],
+      values: valueData,
+      categories
+    }
+
+    console.log(dataset)
 
     return dataset
   })
@@ -21,12 +32,16 @@ function parseData({ src }) {
 const stringFields = ['element', 'country', 'iso', 'type', 'article']
 
 function fetchCSV(src) {
-  return d3.csv(src, (d) => {
-    for (var i in d) {
-      if (!stringFields.includes(i)) {
-        d[i] = +d[i]
-      }
-    }
+  // return d3.csv(src)
+  return d3.csv(src, (d, i) => {
+    // for (var i in d) {
+    //   if (!stringFields.includes(i)) {
+    //     d[i] = +d[i]
+    //   }
+    // }
+
+    d.id = i
+    d.year = +d.year // Use on whole integers
 
     return d
   })
