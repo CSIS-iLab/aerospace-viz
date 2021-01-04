@@ -1,0 +1,29 @@
+space_track_code,name,latitude,longitude,operator,year_added_to_map,human_launch_year,first_launch,lat_string,long_string
+PKMTR,Plesetsk Cosmodrome,62.93,40.58,Russian Aerospace Forces (Russia),1966,,"March 17, 1966",62.9°N,40.6°E
+KODAK,Pacific Spaceport Complex – Alaska,57.44,-152.34,Alaska Aerospace Corporation (United States),2010,,"November 20, 2010",57.4°N,152.3°W
+VOSTO,Vostochny Cosmodrome,51.88,128.33,Roscosmos (Russia),2016,,"April 28, 2016",51.9°N,128.3°E
+SVOB,Svobodny Cosmodrome,51.7,128,Russian Aerospace Forces (Russia),1997,,"March 4, 1997",51.7°N,128.0°E
+OREN,Yasny Launch Base,51.09,59.84,Russian Aerospace Forces (Russia),2006,,"August 12, 2006",51.1°N,59.8°E
+KYMTR,Kapustin Yar Cosmodrome,48.59,45.72,Russian Aerospace Forces (Russia),1962,,"March 16, 1962",48.6°N,45.7°E
+TTMTR,Baikonur Cosmodrome,45.97,63.31,Russian Aerospace Forces / Roscosmos (Russia),1957,1961,"October 4, 1957",46.0°N,63.3°E
+JSC,Jiuquan Satellite Launch Center,40.97,100.28,People’s Liberation Army (China),1970,2003,"April 24, 1970",41.0°N,100.3°E
+YUN,Sohae Satellite Launching Station,39.66,124.71,National Aerospace Development Administration (North Korea),2012,,"December 12, 2012",39.7°N,124.7°E
+TSC,Taiyuan Satellite Launch Center,38.85,111.61,People’s Liberation Army (China),1988,,"September 6, 1988",38.9°N,111.6°E
+WLPIS,Wallops Flight Facility,37.94,-75.47,NASA / Virginia Space (United States),1961,,"February 16, 1961",37.9°N,75.5°W
+SEM,Imam Khomeini Space Center,35.24,53.95,Iranian Space Agency (Iran),2009,,"February 2, 2009",35.2°N,54.0°E
+AFWTR,Vandenberg Air Force Base,34.58,-120.63,U.S. Air Force (United States),1959,,"February 28, 1959",34.6°N,120.6°W
+NSC,Naro Space Center,34.43,127.54,Korea Aerospace Research Institute (South Korea),2013,,"January 30, 2013",34.4°N,127.5°E
+YAVNE,Palmachim Airbase,31.9,34.69,Israeli Air Force / Israel Space Agency (Israel),1988,,"September 19, 1988",31.9°N,34.7°E
+KSCUT,Uchinoura Space Center,31.25,131.08,Japan Aerospace Exploration Agency (Japan),1970,,"February 11, 1970",31.3°N,131.1°E
+HGSTR,Hammaguir Test Centre,31.1,-2.84,Interarmy Special Weapons Test Centre (France),1965,,"November 26, 1965",31.1°N,2.8°W
+TNSTA,Tanegashima Space Center,30.37,130.96,Japan Aerospace Exploration Agency (Japan),1975,,"September 9, 1975",30.4°N,131.0°E
+AFETR,Cape Canaveral / Kennedy Space Center,28.61,-80.60,U.S. Air Force / NASA (United States),1958,1962,"February 1, 1958",28.6°N,80.6°W
+XSC,Xichang Satellite Launch Center,28.25,102.03,People’s Liberation Army (China),1984,,"January 29, 1984",28.3°N,102.0°E
+WSC,Wenchang Satellite Launch Center,19.61,110.95,People’s Liberation Army (China),2016,,"November 3, 2016",19.6°N,111.0°E
+SRI,Satish Dhawan Space Centre,13.72,80.23,Indian Space Research Organisation (India),1980,,"July 18, 1980",13.7°N,80.2°E
+KWAJL,Ronald Reagan Ballistic Missile Defense Test Site,9.05,167.74,U.S. Army (United States),2008,,"September 29, 2008",9.1°N,167.7°E
+FRGUI,Guiana Space Centre,5.24,-52.77,ESA / CNES (Europe / France),1970,,"March 10, 1970",5.2°N,52.8°W
+SNMLP,Broglio Space Centre,-2.94,40.21,NASA / Sapienza University Rome (United States / Italy),1967,,"April 26, 1967",2.9°S,40.2°E
+WOMRA,Woomera Test Range,-30.96,136.07,Royal Australian Air Force (Australia),1967,,"November 29, 1967",31.0°S,136.1°E
+SMTS,Shahroud Missile Test Site,36.22,55.36,Islamic Revolutionary Guard Corps (IRGC),2020,,"April 22, 2020",36.2°N,55.4°E
+RLLC,Rocket Lab Launch Complex,-39.26,177.87,Rocket Lab (United States / New Zealand),2018,,"January 21, 2018",39.3°S,177.9°E
