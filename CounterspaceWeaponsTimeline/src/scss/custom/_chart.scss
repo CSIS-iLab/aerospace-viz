@@ -6,38 +6,4 @@
 ============================*/
 
 #interactive__charts {
-  margin: 2rem auto;
-
-  .axis {
-    .domain {
-      display: none;
-    }
-
-    line {
-      stroke: $color__gray-300;
-    }
-
-    text {
-      @include font-size(14px);
-      fill: $color__gray-900;
-    }
-
-    &--x line {
-      stroke: transparent;
-    }
-  }
-
-  .label {
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-
-  rect {
-    fill: $color__light-blue;
-
-    &[data-iso='CHN'] {
-      fill: $color__red;
-    }
-  }
 }

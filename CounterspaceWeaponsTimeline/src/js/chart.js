@@ -1,8 +1,5 @@
 // import * as d3 from 'd3'
-const d3 = Object.assign(
-  {},
-  require('d3-selection')
-)
+const d3 = Object.assign({}, require('d3-selection'))
 
 const chart = drawChart()
 
@@ -19,17 +16,23 @@ function drawChart() {
    */
 
   function drawPlot({ container, data }) {
-    console.log(data)
     entries = container
       .selectAll('.timeline__entry')
       .data(data, (d) => d.id)
       .join('div')
       .attr('class', 'timeline__entry')
       .attr('data-id', (d) => d.id)
-      .text(d => d.id)
+      .html((d) => generateTimelineEntry(d))
+  }
 
+  function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+
+    return `
+      <h2>${d['Event Title']}</h2>
+      ${d['Start Date']} ${d.Country}
+    `
   }
 
   function chart(container) {

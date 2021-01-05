@@ -4,34 +4,25 @@
 $color__white: #fff;
 $color__black: #000;
 
-$color__gray-100: #f1f1f1;
-$color__gray-200: #d4d0cb;
-$color__gray-300: #c5c5c5;
-$color__gray-400: #808081;
-$color__gray-500: #d4d0cb;
-$color__gray-800: #555;
+$color__gray-100: #dedede;
+$color__gray-200: #b5bdc1;
+$color__gray-300: #4b5255;
 $color__gray-900: #333;
 
-$color__red: #ed392a; // Whenever possible, "China" data should be in this color.
-$color__dark-red: #c42d21;
-$color__green: #58a897;
-$color__bright-green: #8cb561;
-$color__light-blue: #83badc;
-$color__blue: #3b75bb;
-$color__purple: #a483a8;
-$color__dark-purple: #69518d;
-$color__orange: #f7890e;
-$color__yellow: #e7ae3f;
-$color__blue-gray-100: #728c99;
-$color__blue-gray-200: #455a64;
-$color__blue-gray-900: #303f46;
+$color__blue-100: #5db6d0;
+$color__blue-200: #196c95;
+$color__blue-300: #44545f;
+$color__yellow-100: #f9bc65;
+$color__orange-100: #d66e42;
+$color__green-100: #4f9793;
+$color__green-200: #3e7a82;
 
-$color__primary: $color__blue-gray-200;
+$color__primary: $color__orange-100;
 $color__primary-200: color.scale($color__primary, $lightness: -10%);
 
 /*----------  Fonts  ----------*/
-$font__hind: 'Hind', sans-serif;
-$font__roboto: 'Roboto', sans-serif;
+$font__abel: 'Abel', 'Arial', sans-serif;
+$font__source: 'Source Sans Pro', 'Arial', sans-serif;
 
 /*----------  Structural  ----------*/
 $breakpoints: (

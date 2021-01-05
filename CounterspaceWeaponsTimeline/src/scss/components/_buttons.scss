@@ -7,10 +7,10 @@
   margin: 0;
   padding: 0.25rem 0.75rem;
   color: $color__white;
-  font-family: $font__roboto;
-  @include font-size(13px);
-  line-height: 1.69;
-  letter-spacing: 0.7px;
+  font-family: $font__abel;
+  @include font-size(14px);
+  line-height: 1.4;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   border: 0;
   border-radius: 2px;
@@ -36,20 +36,6 @@
     }
   }
 
-  &.btn--select {
-    color: $color__black;
-    background-color: $color__gray-100;
-
-    &:hover {
-      background-color: darken($color__gray-100, 5%);
-    }
-
-    &.is-selected {
-      color: $color__white;
-      background-color: $color__blue-gray-200;
-    }
-  }
-
   &.btn--close {
     color: $color__black;
     background-color: transparent;
@@ -61,7 +47,7 @@
       top: 0;
       width: 2px;
       height: 1em;
-      background-color: $color__gray-400;
+      background-color: $color__gray-300;
       transition: background-color 0.3s ease-in-out;
     }
 

@@ -2,6 +2,7 @@ import { parseData } from './js/data'
 import Chart from './js/chart'
 import Dropdown from './js/dropdown'
 import Buttons from './js/buttons'
+import Checkbox from './js/checkbox'
 
 import './scss/main.scss'
 
@@ -14,11 +15,10 @@ const endYearSelector = '#filter-end-year'
 let startYear
 let endYear
 
-const categorySelector = '#filter-category'
-let currentCategory = ''
+const categorySelector = '.interactive__filters--category'
+let currentCategories = []
 
 function init() {
-  console.log('hello!')
   loadDataAndSetup()
 }
 
@@ -29,6 +29,7 @@ async function loadDataAndSetup() {
 
   startYear = data.years[0]
   endYear = data.years[1]
+  currentCategories = data.categories
 
   setupYearSelector()
   setupCategorySelector()
@@ -46,14 +47,12 @@ async function loadDataAndSetup() {
  */
 
 function setupYearSelector() {
-
   let options = []
   for (let i = startYear; i <= endYear; i++) {
     options.push({
-      'value': i,
-      'label': i
+      value: i,
+      label: i,
     })
-
   }
 
   Dropdown.setup({
@@ -61,7 +60,7 @@ function setupYearSelector() {
     name: 'filter-start-year',
     data: options,
     current: startYear,
-    onChange: (e) => { }, // Won't need if we have apply btn
+    onChange: (e) => {}, // Won't need if we have apply btn
   })
 
   Dropdown.setup({
@@ -69,7 +68,7 @@ function setupYearSelector() {
     name: 'filter-end-year',
     data: options,
     current: endYear,
-    onChange: (e) => { }, // Won't need if we have apply btn
+    onChange: (e) => {}, // Won't need if we have apply btn
   })
 }
 
@@ -80,23 +79,27 @@ function setupYearSelector() {
  */
 
 function setupFormButtons() {
-  document.getElementById('filter-apply').addEventListener('click', function () {
-    drawChart()
-  })
+  document
+    .getElementById('filter-apply')
+    .addEventListener('click', function () {
+      drawChart()
+    })
 }
 
 /**
  * Setup category filter.
  */
 function setupCategorySelector() {
-  const options = data.categories.map((category) => ({ value: category, label: category }))
+  const options = data.categories.map((category) => ({
+    value: category,
+    label: category,
+  }))
 
-  Dropdown.setup({
+  Checkbox.setup({
     selector: categorySelector,
     name: 'filter-category',
     data: options,
-    current: currentCategory,
-    onChange: (e) => { },
+    current: currentCategories,
   })
 }
 
@@ -109,10 +112,17 @@ function setupCategorySelector() {
 function drawChart() {
   startYear = Dropdown.getCurrent(startYearSelector)
   endYear = Dropdown.getCurrent(endYearSelector)
-  currentCategory = Dropdown.getCurrent(categorySelector)
+  currentCategories = Checkbox.getCurrent(categorySelector)
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
-  let dataset = data.values.filter(d => d.year >= startYear && d.year <= endYear && d['Counterspace Category'] === currentCategory)
+  let dataset = data.values.filter(
+    (d) =>
+      d.year >= startYear &&
+      d.year <= endYear &&
+      currentCategories.includes(d['Counterspace Category'])
+  )
+
+  console.log(dataset)
 
   Chart.init({
     data: dataset,

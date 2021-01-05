@@ -3365,15 +3365,19 @@ function drawChart() {
   function drawPlot(_ref) {
     var container = _ref.container,
         data = _ref.data;
-    console.log(data);
     entries = container.selectAll('.timeline__entry').data(data, function (d) {
       return d.id;
     }).join('div').attr('class', 'timeline__entry').attr('data-id', function (d) {
       return d.id;
-    }).text(function (d) {
-      return d.id;
-    }); // Update the contents of the timeline entry div
+    }).html(function (d) {
+      return generateTimelineEntry(d);
+    });
+  }
+
+  function generateTimelineEntry(d) {
+    // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+    return "\n      <h2>".concat(d['Event Title'], "</h2>\n      ").concat(d['Start Date'], " ").concat(d.Country, "\n    ");
   }
 
   function chart(container) {
@@ -3476,6 +3480,52 @@ var Buttons = {
 };
 var _default = Buttons;
 exports.default = _default;
+},{"d3-selection":"../node_modules/d3-selection/src/index.js"}],"js/checkbox.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var d3 = Object.assign({}, require('d3-selection'));
+var Checkbox = {
+  setup: function setup(_ref) {
+    var selector = _ref.selector,
+        name = _ref.name,
+        data = _ref.data,
+        current = _ref.current;
+    var selectEl = d3.select(selector).attr('name', name);
+    selectEl.selectAll('.checkbox-container').data(data).join(function (enter) {
+      return enter.append('div').attr('class', 'checkbox-container').each(generateCheckboxes);
+    }).each(function (d) {
+      d3.select(this).select('input').property('checked', current.includes(d.value));
+    });
+  },
+  getCurrent: function getCurrent(selector) {
+    var selected = [];
+    d3.selectAll("".concat(selector, " input:checked")).each(function (d) {
+      return selected.push(d.value);
+    });
+    return selected;
+  }
+};
+
+function generateCheckboxes(d, i, n) {
+  var container = d3.select(this);
+  container.append('input').attr('type', 'checkbox').attr('id', function (d) {
+    return d.value;
+  }).property('value', function (d) {
+    return d.value;
+  });
+  container.append('label').attr('for', function (d) {
+    return d.value;
+  }).text(function (d) {
+    return d.label;
+  });
+}
+
+var _default = Checkbox;
+exports.default = _default;
 },{"d3-selection":"../node_modules/d3-selection/src/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
@@ -3548,7 +3598,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../img/css-icons/arrow-down.svg":[["arrow-down.5a58f9ac.svg","img/css-icons/arrow-down.svg"],"img/css-icons/arrow-down.svg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
@@ -3563,6 +3613,8 @@ var _dropdown = _interopRequireDefault(require("./js/dropdown"));
 
 var _buttons = _interopRequireDefault(require("./js/buttons"));
 
+var _checkbox = _interopRequireDefault(require("./js/checkbox"));
+
 require("./scss/main.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -3573,11 +3625,10 @@ var startYearSelector = '#filter-start-year';
 var endYearSelector = '#filter-end-year';
 var startYear;
 var endYear;
-var categorySelector = '#filter-category';
-var currentCategory = '';
+var categorySelector = '.interactive__filters--category';
+var currentCategories = [];
 
 function init() {
-  console.log('hello!');
   loadDataAndSetup();
 }
 
@@ -3606,13 +3657,14 @@ function _loadDataAndSetup() {
             data = _context.sent;
             startYear = data.years[0];
             endYear = data.years[1];
+            currentCategories = data.categories;
             setupYearSelector();
             setupCategorySelector();
             setupFormButtons();
             drawChart();
             hideLoading();
 
-          case 10:
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -3627,8 +3679,8 @@ function setupYearSelector() {
 
   for (var i = startYear; i <= endYear; i++) {
     options.push({
-      'value': i,
-      'label': i
+      value: i,
+      label: i
     });
   }
 
@@ -3675,12 +3727,11 @@ function setupCategorySelector() {
     };
   });
 
-  _dropdown.default.setup({
+  _checkbox.default.setup({
     selector: categorySelector,
     name: 'filter-category',
     data: options,
-    current: currentCategory,
-    onChange: function onChange(e) {}
+    current: currentCategories
   });
 }
 /**
@@ -3693,11 +3744,12 @@ function setupCategorySelector() {
 function drawChart() {
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
-  currentCategory = _dropdown.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentCategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    return d.year >= startYear && d.year <= endYear && d['Counterspace Category'] === currentCategory;
+    return d.year >= startYear && d.year <= endYear && currentCategories.includes(d['Counterspace Category']);
   });
+  console.log(dataset);
 
   _chart.default.init({
     data: dataset,
@@ -3719,7 +3771,7 @@ function hideLoading() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./js/data":"js/data.js","./js/chart":"js/chart.js","./js/dropdown":"js/dropdown.js","./js/buttons":"js/buttons.js","./scss/main.scss":"scss/main.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./js/data":"js/data.js","./js/chart":"js/chart.js","./js/dropdown":"js/dropdown.js","./js/buttons":"js/buttons.js","./js/checkbox":"js/checkbox.js","./scss/main.scss":"scss/main.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3747,7 +3799,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57842" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57310" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
