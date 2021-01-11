@@ -1672,16 +1672,17 @@ function parseData(_ref) {
   return data;
 }
 
-var stringFields = ['element', 'country', 'iso', 'type', 'article'];
+var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'title', 'source'];
 
 function fetchCSV(src) {
   // return d3.csv(src)
   return d3.csv(src, function (d, i) {
-    // for (var i in d) {
-    //   if (!stringFields.includes(i)) {
-    //     d[i] = +d[i]
-    //   }
-    // }
+    for (var i in d) {
+      if (!stringFields.includes(i)) {
+        d[i] = +d[i];
+      }
+    }
+
     d.id = i;
     d.year = +d.startYear; // Use on whole integers
 

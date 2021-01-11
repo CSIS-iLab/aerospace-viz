@@ -29,16 +29,16 @@ function parseData({ src }) {
   return data
 }
 
-const stringFields = ['element', 'country', 'iso', 'type', 'article']
+const stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'title', 'source']
 
 function fetchCSV(src) {
   // return d3.csv(src)
   return d3.csv(src, (d, i) => {
-    // for (var i in d) {
-    //   if (!stringFields.includes(i)) {
-    //     d[i] = +d[i]
-    //   }
-    // }
+    for (var i in d) {
+      if (!stringFields.includes(i)) {
+        d[i] = +d[i]
+      }
+    }
 
     d.id = i
     d.year = +d.startYear // Use on whole integers
