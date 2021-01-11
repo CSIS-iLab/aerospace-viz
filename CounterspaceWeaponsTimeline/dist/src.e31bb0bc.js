@@ -1657,7 +1657,7 @@ function parseData(_ref) {
       return d.year;
     }).sort();
     var categories = (0, _toConsumableArray2.default)(new Set(valueData.map(function (d) {
-      return d['Counterspace Category'];
+      return d.category;
     }))).filter(function (d) {
       return d != "";
     }).sort();
@@ -1683,7 +1683,7 @@ function fetchCSV(src) {
     //   }
     // }
     d.id = i;
-    d.year = +d.year; // Use on whole integers
+    d.year = +d.startYear; // Use on whole integers
 
     return d;
   });
@@ -3377,7 +3377,7 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-    return "\n      <h2>".concat(d['Event Title'], "</h2>\n      ").concat(d['Start Date'], " ").concat(d.Country, "\n    ");
+    return "\n      <h2>".concat(d.title, "</h2>\n      ").concat(d.startDate, " ").concat(d.country, "\n    ");
   }
 
   function chart(container) {
@@ -3747,7 +3747,7 @@ function drawChart() {
   currentCategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    return d.year >= startYear && d.year <= endYear && currentCategories.includes(d['Counterspace Category']);
+    return d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category);
   });
   console.log(dataset);
 
@@ -3799,7 +3799,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57310" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52641" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

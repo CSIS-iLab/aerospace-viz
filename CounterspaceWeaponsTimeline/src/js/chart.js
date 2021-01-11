@@ -30,8 +30,8 @@ function drawChart() {
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
 
     return `
-      <h2>${d['Event Title']}</h2>
-      ${d['Start Date']} ${d.Country}
+      <h2>${d.title}</h2>
+      ${d.startDate} ${d.country}
     `
   }
 

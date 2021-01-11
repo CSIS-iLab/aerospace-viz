@@ -13,7 +13,7 @@ function parseData({ src }) {
       .map((d) => d.year)
       .sort()
 
-    const categories = [...new Set(valueData.map((d) => d['Counterspace Category']))].filter(d => d != "").sort()
+    const categories = [...new Set(valueData.map((d) => d.category))].filter(d => d != "").sort()
 
     let dataset = {
       years: [years[0], years[years.length - 1]],
@@ -41,7 +41,7 @@ function fetchCSV(src) {
     // }
 
     d.id = i
-    d.year = +d.year // Use on whole integers
+    d.year = +d.startYear // Use on whole integers
 
     return d
   })

@@ -60,7 +60,7 @@ function setupYearSelector() {
     name: 'filter-start-year',
     data: options,
     current: startYear,
-    onChange: (e) => {}, // Won't need if we have apply btn
+    onChange: (e) => { }, // Won't need if we have apply btn
   })
 
   Dropdown.setup({
@@ -68,7 +68,7 @@ function setupYearSelector() {
     name: 'filter-end-year',
     data: options,
     current: endYear,
-    onChange: (e) => {}, // Won't need if we have apply btn
+    onChange: (e) => { }, // Won't need if we have apply btn
   })
 }
 
@@ -119,7 +119,7 @@ function drawChart() {
     (d) =>
       d.year >= startYear &&
       d.year <= endYear &&
-      currentCategories.includes(d['Counterspace Category'])
+      currentCategories.includes(d.category)
   )
 
   console.log(dataset)
