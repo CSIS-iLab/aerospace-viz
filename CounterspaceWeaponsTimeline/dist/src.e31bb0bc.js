@@ -1672,7 +1672,7 @@ function parseData(_ref) {
   return data;
 }
 
-var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'title', 'source'];
+var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source'];
 
 function fetchCSV(src) {
   // return d3.csv(src)
@@ -3378,7 +3378,26 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-    return "\n      <h2>".concat(d.title, "</h2>\n      ").concat(d.startDate, " ").concat(d.country, "\n    ");
+    var actionDate;
+    var monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+
+    if (!d.startDate) {
+      actionDate = d.startYear;
+    } else {
+      var offDate = new Date(d.startDate);
+      var month = monthNames[offDate.getUTCMonth()];
+      var day = offDate.getUTCDate();
+      var year = offDate.getUTCFullYear();
+
+      if (day > 1) {
+        actionDate = month + " " + day + ", " + year;
+      } else {
+        actionDate = month + " " + year;
+      }
+    }
+
+    console.log(actionDate);
+    return "\n      <h2>".concat(d.title, "</h2>\n      ").concat(actionDate, " ").concat(d.country, "\n    ");
   }
 
   function chart(container) {

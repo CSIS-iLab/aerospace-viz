@@ -29,9 +29,30 @@ function drawChart() {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
 
+    let actionDate;
+    const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.",
+      "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."
+    ];
+
+    if (!d.startDate) {
+      actionDate = d.startYear
+    } else {
+      let offDate = new Date(d.startDate)
+      let month = monthNames[offDate.getUTCMonth()]
+      let day = offDate.getUTCDate()
+      let year = offDate.getUTCFullYear()
+      if (day > 1) {
+        actionDate = month + " " + day + ", " + year
+      } else {
+        actionDate = month + " " + year
+      }
+    }
+
+    console.log(actionDate)
+
     return `
       <h2>${d.title}</h2>
-      ${d.startDate} ${d.country}
+      ${actionDate} ${d.country}
     `
   }
 

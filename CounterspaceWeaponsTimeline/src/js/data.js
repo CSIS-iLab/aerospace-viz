@@ -29,7 +29,7 @@ function parseData({ src }) {
   return data
 }
 
-const stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'title', 'source']
+const stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source']
 
 function fetchCSV(src) {
   // return d3.csv(src)
