@@ -94,6 +94,7 @@ function setupCategorySelector() {
     value: category,
     label: category,
   }))
+  console.log(data)
 
   Checkbox.setup({
     selector: categorySelector,

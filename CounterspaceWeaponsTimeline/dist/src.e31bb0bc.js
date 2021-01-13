@@ -1660,11 +1660,27 @@ function parseData(_ref) {
       return d.category;
     }))).filter(function (d) {
       return d != "";
-    }).sort();
+    }).sort(); // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
+
+    var subcategories = [];
+    valueData.forEach(function (action) {
+      if (!action.category) {
+        return;
+      } // If this subcategory doesn't exist, make it
+
+
+      subcategories[action.category] = subcategories[action.category] || {
+        name: action.category,
+        types: []
+      }; // If this type doesn't exist within this subcategory, create it
+
+      subcategories[action.category].types[action.type] = subcategories[action.category].types[action.type] || subcategories[action.category].types.push(action.type);
+    });
     var dataset = {
       years: [years[0], years[years.length - 1]],
       values: valueData,
-      categories: categories
+      categories: categories,
+      subcategories: subcategories
     };
     console.log(dataset);
     return dataset;
@@ -3366,6 +3382,9 @@ function drawChart() {
   function drawPlot(_ref) {
     var container = _ref.container,
         data = _ref.data;
+    data.sort(function (a, b) {
+      return b.dates - a.dates;
+    });
     entries = container.selectAll('.timeline__entry').data(data, function (d) {
       return d.id;
     }).join('div').attr('class', 'timeline__entry').attr('data-id', function (d) {
@@ -3378,6 +3397,12 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+    if (!d.startDate) {
+      d.dates = new Date(d.startYear, 0, 1);
+    } else {
+      d.dates = new Date(d.startDate);
+    }
+
     var actionDate;
     var monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
 
@@ -3396,8 +3421,7 @@ function drawChart() {
       }
     }
 
-    console.log(actionDate);
-    return "\n      <h2>".concat(d.title, "</h2>\n      ").concat(actionDate, " ").concat(d.country, "\n    ");
+    return "\n    <span class=\"action-year\">".concat(actionDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
   }
 
   function chart(container) {
@@ -3746,6 +3770,7 @@ function setupCategorySelector() {
       label: category
     };
   });
+  console.log(data);
 
   _checkbox.default.setup({
     selector: categorySelector,

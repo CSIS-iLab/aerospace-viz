@@ -16,6 +16,11 @@ function drawChart() {
    */
 
   function drawPlot({ container, data }) {
+
+    data.sort(function (a, b) {
+      return b.dates - a.dates
+    })
+
     entries = container
       .selectAll('.timeline__entry')
       .data(data, (d) => d.id)
@@ -28,6 +33,13 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+
+    if (!d.startDate) {
+      d.dates = new Date(d.startYear, 0, 1)
+    } else {
+      d.dates = new Date(d.startDate)
+    }
+
 
     let actionDate;
     const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.",
@@ -48,11 +60,10 @@ function drawChart() {
       }
     }
 
-    console.log(actionDate)
-
     return `
-      <h2>${d.title}</h2>
-      ${actionDate} ${d.country}
+    <span class="action-year">${actionDate}</span><span class="action-country"> ${d.country}</span>
+    <h2 class="action-title">${d.title}</h2>
+    <p class="action-type">${d.type}</p>
     `
   }
 

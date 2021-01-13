@@ -14,11 +14,29 @@ function parseData({ src }) {
       .sort()
 
     const categories = [...new Set(valueData.map((d) => d.category))].filter(d => d != "").sort()
+    // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
+
+    let subcategories = []
+    valueData.forEach(action => {
+      if (!action.category) {
+        return
+      }
+
+      // If this subcategory doesn't exist, make it
+      subcategories[action.category] = subcategories[action.category] || {
+        name: action.category,
+        types: []
+      }
+
+      // If this type doesn't exist within this subcategory, create it
+      subcategories[action.category].types[action.type] = subcategories[action.category].types[action.type] || subcategories[action.category].types.push(action.type)
+    })
 
     let dataset = {
       years: [years[0], years[years.length - 1]],
       values: valueData,
-      categories
+      categories,
+      subcategories
     }
 
     console.log(dataset)
