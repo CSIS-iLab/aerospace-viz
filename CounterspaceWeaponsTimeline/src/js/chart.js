@@ -50,15 +50,7 @@ function drawChart() {
     if (!d.startDate) {
       actionDate = d.startYear
     } else {
-      let offDate = new Date(d.startDate)
-      let month = monthNames[offDate.getUTCMonth()]
-      let day = offDate.getUTCDate()
-      let year = offDate.getUTCFullYear()
-      if (day > 1) {
-        actionDate = month + " " + day + ", " + year
-      } else {
-        actionDate = month + " " + year
-      }
+      actionDate = formatDate(d.startDate)
     }
 
     if (!d.endDate && !d.endYear) {
@@ -66,14 +58,19 @@ function drawChart() {
     } else if (!d.endDate) {
       actionEndDate = " - " + d.endYear
     } else {
-      let offEndDate = new Date(d.endDate)
-      let month = monthNames[offEndDate.getUTCMonth()]
-      let day = offEndDate.getUTCDate()
-      let year = offEndDate.getUTCFullYear()
+      actionEndDate = " - " + formatDate(d.endDate)
+    }
+
+    function formatDate(dateIn) {
+      let offDate = new Date(dateIn)
+      let month = monthNames[offDate.getUTCMonth()]
+      let day = offDate.getUTCDate()
+      let year = offDate.getUTCFullYear()
+
       if (day > 1) {
-        actionEndDate = " - " + month + " " + day + ", " + year
+        return month + " " + day + ", " + year
       } else {
-        actionEndDate = " - " + month + " " + year
+        return month + " " + year
       }
     }
 

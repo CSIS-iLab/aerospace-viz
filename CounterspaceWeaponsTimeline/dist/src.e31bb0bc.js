@@ -3410,16 +3410,7 @@ function drawChart() {
     if (!d.startDate) {
       actionDate = d.startYear;
     } else {
-      var offDate = new Date(d.startDate);
-      var month = monthNames[offDate.getUTCMonth()];
-      var day = offDate.getUTCDate();
-      var year = offDate.getUTCFullYear();
-
-      if (day > 1) {
-        actionDate = month + " " + day + ", " + year;
-      } else {
-        actionDate = month + " " + year;
-      }
+      actionDate = formatDate(d.startDate);
     }
 
     if (!d.endDate && !d.endYear) {
@@ -3427,17 +3418,19 @@ function drawChart() {
     } else if (!d.endDate) {
       actionEndDate = " - " + d.endYear;
     } else {
-      var offEndDate = new Date(d.endDate);
-      var _month = monthNames[offEndDate.getUTCMonth()];
+      actionEndDate = " - " + formatDate(d.endDate);
+    }
 
-      var _day = offEndDate.getUTCDate();
+    function formatDate(dateIn) {
+      var offDate = new Date(dateIn);
+      var month = monthNames[offDate.getUTCMonth()];
+      var day = offDate.getUTCDate();
+      var year = offDate.getUTCFullYear();
 
-      var _year = offEndDate.getUTCFullYear();
-
-      if (_day > 1) {
-        actionEndDate = " - " + _month + " " + _day + ", " + _year;
+      if (day > 1) {
+        return month + " " + day + ", " + year;
       } else {
-        actionEndDate = " - " + _month + " " + _year;
+        return month + " " + year;
       }
     }
 
