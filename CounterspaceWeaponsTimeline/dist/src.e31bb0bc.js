@@ -3434,7 +3434,8 @@ function drawChart() {
       }
     }
 
-    return "\n    <span class=\"action-year\">".concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
+    var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
+    return "\n    <img src=\"../img/".concat(categoryIcon, ".svg\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
   }
 
   function chart(container) {

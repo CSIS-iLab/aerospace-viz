@@ -74,7 +74,10 @@ function drawChart() {
       }
     }
 
+    let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
+
     return `
+    <img src="../img/${categoryIcon}.svg" />
     <span class="action-year">${actionDate}${actionEndDate}</span><span class="action-country"> ${d.country}</span>
     <h2 class="action-title">${d.title}</h2>
     <p class="action-type">${d.type}</p>
