@@ -76,9 +76,11 @@ function drawChart() {
 
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
+    console.log(d.category)
     return `
     <img src="../img/${categoryIcon}.svg" />
     <span class="action-year">${actionDate}${actionEndDate}</span><span class="action-country"> ${d.country}</span>
+    <span class="action-category mobile-only">${d.category}</span>
     <h2 class="action-title">${d.title}</h2>
     <p class="action-type">${d.type}</p>
     `
