@@ -3404,6 +3404,7 @@ function drawChart() {
     }
 
     var actionDate;
+    var actionEndDate;
     var monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
 
     if (!d.startDate) {
@@ -3421,7 +3422,26 @@ function drawChart() {
       }
     }
 
-    return "\n    <span class=\"action-year\">".concat(actionDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
+    if (!d.endDate && !d.endYear) {
+      actionEndDate = "";
+    } else if (!d.endDate) {
+      actionEndDate = " - " + d.endYear;
+    } else {
+      var offEndDate = new Date(d.endDate);
+      var _month = monthNames[offEndDate.getUTCMonth()];
+
+      var _day = offEndDate.getUTCDate();
+
+      var _year = offEndDate.getUTCFullYear();
+
+      if (_day > 1) {
+        actionEndDate = " - " + _month + " " + _day + ", " + _year;
+      } else {
+        actionEndDate = " - " + _month + " " + _year;
+      }
+    }
+
+    return "\n    <span class=\"action-year\">".concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
   }
 
   function chart(container) {
