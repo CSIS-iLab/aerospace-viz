@@ -10,6 +10,9 @@ const dataSrc =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2JDQ4Sz-mqm1dsVfKT2vF9rINxli4Gm79FYFUZas7AzpgJwkW9jJ1ct7tuMHukwWJEH8qjAGIzfu8/pub?gid=892231861&single=true&output=csv'
 let data
 
+const countrySelector = '#filter-country'
+let currentCountry = []
+
 const startYearSelector = '#filter-start-year'
 const endYearSelector = '#filter-end-year'
 let startYear
@@ -27,10 +30,12 @@ async function loadDataAndSetup() {
     src: dataSrc,
   })
 
+  // currentCountry = data.countries
   startYear = data.years[0]
   endYear = data.years[1]
   currentCategories = data.categories
 
+  setupCountrySelector()
   setupYearSelector()
   setupCategorySelector()
   setupFormButtons()
@@ -38,6 +43,27 @@ async function loadDataAndSetup() {
   drawChart()
 
   hideLoading()
+}
+
+/**
+ *
+ * Setup Country Selector
+ *
+ */
+
+function setupCountrySelector() {
+  let options = data.countries.map((country) => ({
+    value: country,
+    label: country,
+  }))
+
+  Dropdown.setup({
+    selector: countrySelector,
+    name: 'filter-country',
+    data: options,
+    current: currentCountry,
+    onChange: (e) => { }, // Won't need if we have apply btn
+  })
 }
 
 /**
@@ -111,6 +137,7 @@ function setupCategorySelector() {
  */
 
 function drawChart() {
+  currentCountry = Dropdown.getCurrent(countrySelector)
   startYear = Dropdown.getCurrent(startYearSelector)
   endYear = Dropdown.getCurrent(endYearSelector)
   currentCategories = Checkbox.getCurrent(categorySelector)
@@ -118,6 +145,7 @@ function drawChart() {
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
     (d) =>
+      currentCountry.includes(d.country) &&
       d.year >= startYear &&
       d.year <= endYear &&
       currentCategories.includes(d.category)

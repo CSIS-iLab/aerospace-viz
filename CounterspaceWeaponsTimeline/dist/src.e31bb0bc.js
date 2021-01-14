@@ -1660,6 +1660,11 @@ function parseData(_ref) {
       return d.category;
     }))).filter(function (d) {
       return d != "";
+    }).sort();
+    var countries = (0, _toConsumableArray2.default)(new Set(valueData.map(function (d) {
+      return d.country;
+    }))).filter(function (d) {
+      return d != "";
     }).sort(); // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
 
     var subcategories = [];
@@ -1680,7 +1685,8 @@ function parseData(_ref) {
       years: [years[0], years[years.length - 1]],
       values: valueData,
       categories: categories,
-      subcategories: subcategories
+      subcategories: subcategories,
+      countries: countries
     };
     console.log(dataset);
     return dataset;
@@ -1688,7 +1694,10 @@ function parseData(_ref) {
   return data;
 }
 
-var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source'];
+var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source']; // const booleanFields = ['storyBool', 'learnMore']
+// function stringToBool(val) {
+//   return (val + '').toLowerCase() === 'true';
+// }
 
 function fetchCSV(src) {
   // return d3.csv(src)
@@ -3435,7 +3444,6 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    console.log(d.category);
     return "\n    <img src=\"../img/".concat(categoryIcon, ".svg\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
   }
 
@@ -3680,6 +3688,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var dataSrc = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2JDQ4Sz-mqm1dsVfKT2vF9rINxli4Gm79FYFUZas7AzpgJwkW9jJ1ct7tuMHukwWJEH8qjAGIzfu8/pub?gid=892231861&single=true&output=csv';
 var data;
+var countrySelector = '#filter-country';
+var currentCountry = [];
 var startYearSelector = '#filter-start-year';
 var endYearSelector = '#filter-end-year';
 var startYear;
@@ -3696,7 +3706,7 @@ function loadDataAndSetup() {
 }
 /**
  *
- * Setup Year Selectors
+ * Setup Country Selector
  *
  */
 
@@ -3714,16 +3724,18 @@ function _loadDataAndSetup() {
 
           case 2:
             data = _context.sent;
+            // currentCountry = data.countries
             startYear = data.years[0];
             endYear = data.years[1];
             currentCategories = data.categories;
+            setupCountrySelector();
             setupYearSelector();
             setupCategorySelector();
             setupFormButtons();
             drawChart();
             hideLoading();
 
-          case 11:
+          case 12:
           case "end":
             return _context.stop();
         }
@@ -3732,6 +3744,30 @@ function _loadDataAndSetup() {
   }));
   return _loadDataAndSetup.apply(this, arguments);
 }
+
+function setupCountrySelector() {
+  var options = data.countries.map(function (country) {
+    return {
+      value: country,
+      label: country
+    };
+  });
+
+  _dropdown.default.setup({
+    selector: countrySelector,
+    name: 'filter-country',
+    data: options,
+    current: currentCountry,
+    onChange: function onChange(e) {} // Won't need if we have apply btn
+
+  });
+}
+/**
+ *
+ * Setup Year Selectors
+ *
+ */
+
 
 function setupYearSelector() {
   var options = [];
@@ -3802,12 +3838,13 @@ function setupCategorySelector() {
 
 
 function drawChart() {
+  currentCountry = _dropdown.default.getCurrent(countrySelector);
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    return d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category);
+    return currentCountry.includes(d.country) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category);
   });
   console.log(dataset);
 
@@ -3859,7 +3896,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52641" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60732" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

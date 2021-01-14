@@ -14,6 +14,7 @@ function parseData({ src }) {
       .sort()
 
     const categories = [...new Set(valueData.map((d) => d.category))].filter(d => d != "").sort()
+    const countries = [...new Set(valueData.map((d) => d.country))].filter(d => d != "").sort()
     // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
 
     let subcategories = []
@@ -36,7 +37,8 @@ function parseData({ src }) {
       years: [years[0], years[years.length - 1]],
       values: valueData,
       categories,
-      subcategories
+      subcategories,
+      countries
     }
 
     console.log(dataset)
@@ -48,6 +50,11 @@ function parseData({ src }) {
 }
 
 const stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source']
+// const booleanFields = ['storyBool', 'learnMore']
+
+// function stringToBool(val) {
+//   return (val + '').toLowerCase() === 'true';
+// }
 
 function fetchCSV(src) {
   // return d3.csv(src)
