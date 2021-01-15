@@ -1659,12 +1659,12 @@ function parseData(_ref) {
     var categories = (0, _toConsumableArray2.default)(new Set(valueData.map(function (d) {
       return d.category;
     }))).filter(function (d) {
-      return d != "";
+      return d != '';
     }).sort();
     var countries = (0, _toConsumableArray2.default)(new Set(valueData.map(function (d) {
       return d.country;
     }))).filter(function (d) {
-      return d != "";
+      return d != '';
     }).sort(); // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
 
     var subcategories = [];
@@ -1701,14 +1701,14 @@ var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL'
 
 function fetchCSV(src) {
   // return d3.csv(src)
-  return d3.csv(src, function (d, i) {
+  return d3.csv(src, function (d, index) {
     for (var i in d) {
       if (!stringFields.includes(i)) {
         d[i] = +d[i];
       }
     }
 
-    d.id = i;
+    d.id = index;
     d.year = +d.startYear; // Use on whole integers
 
     return d;
@@ -3409,6 +3409,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
 var _ = _interopRequireDefault(require("../img/css-icons/*.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -3432,11 +3434,27 @@ function drawChart() {
         data = _ref.data;
     data.sort(function (a, b) {
       return b.dates - a.dates;
+    }); // Generates id of entries for first appearance of a year
+
+    var firstOfYearIds = {};
+    var years = (0, _toConsumableArray2.default)(new Set(data.map(function (d) {
+      return d.year;
+    }))).forEach(function (year) {
+      var entry = data.find(function (d) {
+        return d.year === year;
+      });
+      firstOfYearIds[entry.id] = true;
     });
+    console.log(years);
+    console.log(firstOfYearIds);
     entries = container.selectAll('.timeline__entry').data(data, function (d) {
       return d.id;
-    }).join('div').attr('class', 'timeline__entry').attr('data-id', function (d) {
+    }).join('div').attr('class', 'timeline__entry').classed('is-first-of-year', function (d) {
+      return firstOfYearIds[d.id];
+    }).attr('data-id', function (d) {
       return d.id;
+    }).attr('data-year', function (d) {
+      return d.year;
     }).html(function (d) {
       return generateTimelineEntry(d);
     });
@@ -3507,7 +3525,7 @@ var _default = {
   init: init
 };
 exports.default = _default;
-},{"d3-selection":"../node_modules/d3-selection/src/index.js","../img/css-icons/*.svg":"img/css-icons/*.svg"}],"js/dropdown.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/toConsumableArray":"../node_modules/@babel/runtime/helpers/toConsumableArray.js","d3-selection":"../node_modules/d3-selection/src/index.js","../img/css-icons/*.svg":"img/css-icons/*.svg"}],"js/dropdown.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

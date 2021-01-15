@@ -7,3 +7,10 @@
 
 #interactive__charts {
 }
+
+.timeline__entry {
+  &.is-first-of-year::before {
+    content: attr(data-year);
+    display: block;
+  }
+}

@@ -9,16 +9,20 @@ function parseData({ src }) {
     console.log(valueData)
 
     const years = valueData
-      .filter(d => d.year > 0)
+      .filter((d) => d.year > 0)
       .map((d) => d.year)
       .sort()
 
-    const categories = [...new Set(valueData.map((d) => d.category))].filter(d => d != "").sort()
-    const countries = [...new Set(valueData.map((d) => d.country))].filter(d => d != "").sort()
+    const categories = [...new Set(valueData.map((d) => d.category))]
+      .filter((d) => d != '')
+      .sort()
+    const countries = [...new Set(valueData.map((d) => d.country))]
+      .filter((d) => d != '')
+      .sort()
     // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
 
     let subcategories = []
-    valueData.forEach(action => {
+    valueData.forEach((action) => {
       if (!action.category) {
         return
       }
@@ -26,11 +30,13 @@ function parseData({ src }) {
       // If this subcategory doesn't exist, make it
       subcategories[action.category] = subcategories[action.category] || {
         name: action.category,
-        types: []
+        types: [],
       }
 
       // If this type doesn't exist within this subcategory, create it
-      subcategories[action.category].types[action.type] = subcategories[action.category].types[action.type] || subcategories[action.category].types.push(action.type)
+      subcategories[action.category].types[action.type] =
+        subcategories[action.category].types[action.type] ||
+        subcategories[action.category].types.push(action.type)
     })
 
     let dataset = {
@@ -38,7 +44,7 @@ function parseData({ src }) {
       values: valueData,
       categories,
       subcategories,
-      countries
+      countries,
     }
 
     console.log(dataset)
@@ -49,7 +55,18 @@ function parseData({ src }) {
   return data
 }
 
-const stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source']
+const stringFields = [
+  'category',
+  'type',
+  'storyBool',
+  'learnMore',
+  'learnMoreURL',
+  'country',
+  'startDate',
+  'endDate',
+  'title',
+  'source',
+]
 // const booleanFields = ['storyBool', 'learnMore']
 
 // function stringToBool(val) {
@@ -58,14 +75,14 @@ const stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreUR
 
 function fetchCSV(src) {
   // return d3.csv(src)
-  return d3.csv(src, (d, i) => {
-    for (var i in d) {
+  return d3.csv(src, (d, index) => {
+    for (let i in d) {
       if (!stringFields.includes(i)) {
         d[i] = +d[i]
       }
     }
 
-    d.id = i
+    d.id = index
     d.year = +d.startYear // Use on whole integers
 
     return d

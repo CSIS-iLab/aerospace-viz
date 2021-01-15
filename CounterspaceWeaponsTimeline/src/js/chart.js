@@ -23,12 +23,23 @@ function drawChart() {
       return b.dates - a.dates
     })
 
+    // Generates id of entries for first appearance of a year
+    let firstOfYearIds = {}
+    const years = [...new Set(data.map((d) => d.year))].forEach((year) => {
+      let entry = data.find((d) => d.year === year)
+      firstOfYearIds[entry.id] = true
+    })
+    console.log(years)
+    console.log(firstOfYearIds)
+
     entries = container
       .selectAll('.timeline__entry')
       .data(data, (d) => d.id)
       .join('div')
       .attr('class', 'timeline__entry')
+      .classed('is-first-of-year', (d) => firstOfYearIds[d.id])
       .attr('data-id', (d) => d.id)
+      .attr('data-year', (d) => d.year)
       .html((d) => generateTimelineEntry(d))
   }
 
