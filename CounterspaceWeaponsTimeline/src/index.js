@@ -11,7 +11,7 @@ const dataSrc =
 let data
 
 const countrySelector = '#filter-country'
-let currentCountry = []
+let currentCountry = ["all"]
 
 const startYearSelector = '#filter-start-year'
 const endYearSelector = '#filter-end-year'
@@ -30,7 +30,6 @@ async function loadDataAndSetup() {
     src: dataSrc,
   })
 
-  // currentCountry = data.countries
   startYear = data.years[0]
   endYear = data.years[1]
   currentCategories = data.categories
@@ -56,6 +55,11 @@ function setupCountrySelector() {
     value: country,
     label: country,
   }))
+
+  options.unshift({
+    value: "all",
+    label: "All countries"
+  })
 
   Dropdown.setup({
     selector: countrySelector,
@@ -144,11 +148,11 @@ function drawChart() {
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
-    (d) =>
-      currentCountry.includes(d.country) &&
-      d.year >= startYear &&
-      d.year <= endYear &&
-      currentCategories.includes(d.category)
+    (d) => {
+      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
+        return d
+      }
+    }
   )
 
   console.log(dataset)

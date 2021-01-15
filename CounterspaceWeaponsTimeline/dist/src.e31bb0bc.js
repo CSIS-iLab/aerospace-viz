@@ -3444,7 +3444,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <img src=\"../img/".concat(categoryIcon, ".svg\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
+    return "\n    <img src=\"../img/css-icons/".concat(categoryIcon, ".svg\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
   }
 
   function chart(container) {
@@ -3689,7 +3689,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var dataSrc = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2JDQ4Sz-mqm1dsVfKT2vF9rINxli4Gm79FYFUZas7AzpgJwkW9jJ1ct7tuMHukwWJEH8qjAGIzfu8/pub?gid=892231861&single=true&output=csv';
 var data;
 var countrySelector = '#filter-country';
-var currentCountry = [];
+var currentCountry = ["all"];
 var startYearSelector = '#filter-start-year';
 var endYearSelector = '#filter-end-year';
 var startYear;
@@ -3724,7 +3724,6 @@ function _loadDataAndSetup() {
 
           case 2:
             data = _context.sent;
-            // currentCountry = data.countries
             startYear = data.years[0];
             endYear = data.years[1];
             currentCategories = data.categories;
@@ -3751,6 +3750,10 @@ function setupCountrySelector() {
       value: country,
       label: country
     };
+  });
+  options.unshift({
+    value: "all",
+    label: "All countries"
   });
 
   _dropdown.default.setup({
@@ -3844,7 +3847,9 @@ function drawChart() {
   currentCategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    return currentCountry.includes(d.country) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category);
+    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
+      return d;
+    }
   });
   console.log(dataset);
 

@@ -78,7 +78,7 @@ function drawChart() {
 
 
     return `
-    <img src="../img/${categoryIcon}.svg" />
+    <img src="../img/css-icons/${categoryIcon}.svg" />
     <span class="action-year">${actionDate}${actionEndDate}</span><span class="action-country"> ${d.country}</span>
     <span class="action-category mobile-only">${d.category}</span>
     <h2 class="action-title">${d.title}</h2>
