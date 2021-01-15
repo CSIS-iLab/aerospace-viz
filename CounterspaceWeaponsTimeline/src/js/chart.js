@@ -2,7 +2,6 @@
 const d3 = Object.assign({}, require('d3-selection'))
 import Img from '../img/css-icons/*.svg'
 
-console.log(Img)
 
 const chart = drawChart()
 
@@ -20,7 +19,7 @@ function drawChart() {
 
   function drawPlot({ container, data }) {
     data.sort(function (a, b) {
-      return b.dates - a.dates
+      return a.dates - b.dates
     })
 
     // Generates id of entries for first appearance of a year
@@ -29,8 +28,6 @@ function drawChart() {
       let entry = data.find((d) => d.year === year)
       firstOfYearIds[entry.id] = true
     })
-    console.log(years)
-    console.log(firstOfYearIds)
 
     entries = container
       .selectAll('.timeline__entry')
@@ -46,12 +43,6 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-
-    if (!d.startDate) {
-      d.dates = new Date(d.startYear, 0, 1)
-    } else {
-      d.dates = new Date(d.startDate)
-    }
 
     let actionDate
     let actionEndDate

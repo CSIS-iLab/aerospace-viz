@@ -1708,6 +1708,12 @@ function fetchCSV(src) {
       }
     }
 
+    if (!d.startDate) {
+      d.dates = new Date(d.startYear, 0, 1);
+    } else {
+      d.dates = new Date(d.startDate);
+    }
+
     d.id = index;
     d.year = +d.startYear; // Use on whole integers
 
@@ -3417,7 +3423,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import * as d3 from 'd3'
 var d3 = Object.assign({}, require('d3-selection'));
-console.log(_.default);
 var chart = drawChart();
 var el; // If  needed, declare any globally accessible variables you might need here to optimize selections
 
@@ -3433,7 +3438,7 @@ function drawChart() {
     var container = _ref.container,
         data = _ref.data;
     data.sort(function (a, b) {
-      return b.dates - a.dates;
+      return a.dates - b.dates;
     }); // Generates id of entries for first appearance of a year
 
     var firstOfYearIds = {};
@@ -3445,8 +3450,6 @@ function drawChart() {
       });
       firstOfYearIds[entry.id] = true;
     });
-    console.log(years);
-    console.log(firstOfYearIds);
     entries = container.selectAll('.timeline__entry').data(data, function (d) {
       return d.id;
     }).join('div').attr('class', 'timeline__entry').classed('is-first-of-year', function (d) {
@@ -3463,12 +3466,6 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-    if (!d.startDate) {
-      d.dates = new Date(d.startYear, 0, 1);
-    } else {
-      d.dates = new Date(d.startDate);
-    }
-
     var actionDate;
     var actionEndDate;
     var monthNames = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
@@ -3958,7 +3955,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56302" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60732" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -82,6 +82,12 @@ function fetchCSV(src) {
       }
     }
 
+    if (!d.startDate) {
+      d.dates = new Date(d.startYear, 0, 1)
+    } else {
+      d.dates = new Date(d.startDate)
+    }
+
     d.id = index
     d.year = +d.startYear // Use on whole integers
 
