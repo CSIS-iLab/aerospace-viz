@@ -3368,15 +3368,54 @@ var _style = require("./selection/style.js");
 var _window = _interopRequireDefault(require("./window.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./create.js":"../node_modules/d3-selection/src/create.js","./creator.js":"../node_modules/d3-selection/src/creator.js","./local.js":"../node_modules/d3-selection/src/local.js","./matcher.js":"../node_modules/d3-selection/src/matcher.js","./namespace.js":"../node_modules/d3-selection/src/namespace.js","./namespaces.js":"../node_modules/d3-selection/src/namespaces.js","./pointer.js":"../node_modules/d3-selection/src/pointer.js","./pointers.js":"../node_modules/d3-selection/src/pointers.js","./select.js":"../node_modules/d3-selection/src/select.js","./selectAll.js":"../node_modules/d3-selection/src/selectAll.js","./selection/index.js":"../node_modules/d3-selection/src/selection/index.js","./selector.js":"../node_modules/d3-selection/src/selector.js","./selectorAll.js":"../node_modules/d3-selection/src/selectorAll.js","./selection/style.js":"../node_modules/d3-selection/src/selection/style.js","./window.js":"../node_modules/d3-selection/src/window.js"}],"js/chart.js":[function(require,module,exports) {
+},{"./create.js":"../node_modules/d3-selection/src/create.js","./creator.js":"../node_modules/d3-selection/src/creator.js","./local.js":"../node_modules/d3-selection/src/local.js","./matcher.js":"../node_modules/d3-selection/src/matcher.js","./namespace.js":"../node_modules/d3-selection/src/namespace.js","./namespaces.js":"../node_modules/d3-selection/src/namespaces.js","./pointer.js":"../node_modules/d3-selection/src/pointer.js","./pointers.js":"../node_modules/d3-selection/src/pointers.js","./select.js":"../node_modules/d3-selection/src/select.js","./selectAll.js":"../node_modules/d3-selection/src/selectAll.js","./selection/index.js":"../node_modules/d3-selection/src/selection/index.js","./selector.js":"../node_modules/d3-selection/src/selector.js","./selectorAll.js":"../node_modules/d3-selection/src/selectorAll.js","./selection/style.js":"../node_modules/d3-selection/src/selection/style.js","./window.js":"../node_modules/d3-selection/src/window.js"}],"img/css-icons/arrow-down-black.svg":[function(require,module,exports) {
+module.exports = "/arrow-down-black.5a275c38.svg";
+},{}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
+module.exports = "/arrow-down.5a58f9ac.svg";
+},{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/cyber-DetailsFlag.03fb2117.svg";
+},{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
+module.exports = "/cyber.90da9b39.svg";
+},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
+},{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
+module.exports = "/electronic.d04db2d8.svg";
+},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
+},{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical.ce64b425.svg";
+},{}],"img/css-icons/non-kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
+},{}],"img/css-icons/non-kinetic-physical.svg":[function(require,module,exports) {
+module.exports = "/non-kinetic-physical.63ae79f9.svg";
+},{}],"img/css-icons/*.svg":[function(require,module,exports) {
+module.exports = {
+  "arrow-down-black": require("./arrow-down-black.svg"),
+  "arrow-down": require("./arrow-down.svg"),
+  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
+  "cyber": require("./cyber.svg"),
+  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
+  "electronic": require("./electronic.svg"),
+  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
+  "kinetic-physical": require("./kinetic-physical.svg"),
+  "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
+  "non-kinetic-physical": require("./non-kinetic-physical.svg")
+};
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _ = _interopRequireDefault(require("../img/css-icons/*.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // import * as d3 from 'd3'
 var d3 = Object.assign({}, require('d3-selection'));
+console.log(_.default);
 var chart = drawChart();
 var el; // If  needed, declare any globally accessible variables you might need here to optimize selections
 
@@ -3414,7 +3453,7 @@ function drawChart() {
 
     var actionDate;
     var actionEndDate;
-    var monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+    var monthNames = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
 
     if (!d.startDate) {
       actionDate = d.startYear;
@@ -3423,11 +3462,11 @@ function drawChart() {
     }
 
     if (!d.endDate && !d.endYear) {
-      actionEndDate = "";
+      actionEndDate = '';
     } else if (!d.endDate) {
-      actionEndDate = " - " + d.endYear;
+      actionEndDate = ' - ' + d.endYear;
     } else {
-      actionEndDate = " - " + formatDate(d.endDate);
+      actionEndDate = ' - ' + formatDate(d.endDate);
     }
 
     function formatDate(dateIn) {
@@ -3437,14 +3476,14 @@ function drawChart() {
       var year = offDate.getUTCFullYear();
 
       if (day > 1) {
-        return month + " " + day + ", " + year;
+        return month + ' ' + day + ', ' + year;
       } else {
-        return month + " " + year;
+        return month + ' ' + year;
       }
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <img src=\"../img/css-icons/".concat(categoryIcon, ".svg\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
+    return "\n    <img src=\"".concat(_.default[categoryIcon], "\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
   }
 
   function chart(container) {
@@ -3468,7 +3507,7 @@ var _default = {
   init: init
 };
 exports.default = _default;
-},{"d3-selection":"../node_modules/d3-selection/src/index.js"}],"js/dropdown.js":[function(require,module,exports) {
+},{"d3-selection":"../node_modules/d3-selection/src/index.js","../img/css-icons/*.svg":"img/css-icons/*.svg"}],"js/dropdown.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3901,7 +3940,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60732" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56302" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

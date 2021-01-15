@@ -1,5 +1,8 @@
 // import * as d3 from 'd3'
 const d3 = Object.assign({}, require('d3-selection'))
+import Img from '../img/css-icons/*.svg'
+
+console.log(Img)
 
 const chart = drawChart()
 
@@ -16,7 +19,6 @@ function drawChart() {
    */
 
   function drawPlot({ container, data }) {
-
     data.sort(function (a, b) {
       return b.dates - a.dates
     })
@@ -40,12 +42,22 @@ function drawChart() {
       d.dates = new Date(d.startDate)
     }
 
-
-    let actionDate;
+    let actionDate
     let actionEndDate
-    const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.",
-      "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."
-    ];
+    const monthNames = [
+      'Jan.',
+      'Feb.',
+      'Mar.',
+      'Apr.',
+      'May',
+      'Jun.',
+      'Jul.',
+      'Aug.',
+      'Sep.',
+      'Oct.',
+      'Nov.',
+      'Dec.',
+    ]
 
     if (!d.startDate) {
       actionDate = d.startYear
@@ -54,11 +66,11 @@ function drawChart() {
     }
 
     if (!d.endDate && !d.endYear) {
-      actionEndDate = ""
+      actionEndDate = ''
     } else if (!d.endDate) {
-      actionEndDate = " - " + d.endYear
+      actionEndDate = ' - ' + d.endYear
     } else {
-      actionEndDate = " - " + formatDate(d.endDate)
+      actionEndDate = ' - ' + formatDate(d.endDate)
     }
 
     function formatDate(dateIn) {
@@ -68,17 +80,16 @@ function drawChart() {
       let year = offDate.getUTCFullYear()
 
       if (day > 1) {
-        return month + " " + day + ", " + year
+        return month + ' ' + day + ', ' + year
       } else {
-        return month + " " + year
+        return month + ' ' + year
       }
     }
 
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
-
     return `
-    <img src="../img/css-icons/${categoryIcon}.svg" />
+    <img src="${Img[categoryIcon]}" />
     <span class="action-year">${actionDate}${actionEndDate}</span><span class="action-country"> ${d.country}</span>
     <span class="action-category mobile-only">${d.category}</span>
     <h2 class="action-title">${d.title}</h2>
