@@ -8,11 +8,37 @@
 #interactive__charts {
 }
 
-.timeline__entry {
-  list-style-type: none;
+#interactive__timeline {
+  position: relative;
+  z-index: 2;
+
+  &::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: rem(65px);
+    border-left: 1px solid #e3e3e3;
+    height: 100%;
+  }
+
+  .timeline__entry {
+    z-index: 2;
+    background: none;
+    list-style-type: none;
   
-  &.is-first-of-year::before {
-    content: attr(data-year);
-    display: block;
+    &.is-first-of-year::before {
+      content: attr(data-year);
+      display: block;
+    }
+
+    .action {
+      &__icon {
+        z-index: 2;
+        opacity: 1;
+      }
+    }
   }
 }
+

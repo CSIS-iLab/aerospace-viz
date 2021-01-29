@@ -101,12 +101,12 @@ function drawChart() {
 
     return `
     <li>
-    <img src="${Img[categoryIcon]}" />
-    <span class="action-year">${actionDate}${actionEndDate}</span><span class="action-country"> ${d.country}</span>
-    <span class="action-category mobile-only">${d.category}</span>
-    <h2 class="action-title">${d.title}</h2>
-    <p class="action-type">${d.type}</p>
-    <details>${moreInfo}</details>
+    <img src="${Img[categoryIcon]}" class="action__icon" />
+    <span class="action__year">${actionDate}${actionEndDate}</span><span class="action__country"> ${d.country}</span>
+    <span class="action__category mobile-only">${d.category}</span>
+    <h2 class="action__title">${d.title}</h2>
+    <p class="action__type">${d.type}</p>
+    <details class="action__details">${moreInfo}</details>
     </li>
     `
   }

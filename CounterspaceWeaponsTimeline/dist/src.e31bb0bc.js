@@ -3503,7 +3503,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <li>\n    <img src=\"".concat(_.default[categoryIcon], "\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    <details>").concat(moreInfo, "</details>\n    </li>\n    ");
+    return "\n    <li>\n    <img src=\"".concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country\"> ").concat(d.country, "</span>\n    <span class=\"action__category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action__title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    </li>\n    ");
   }
 
   function chart(container) {
