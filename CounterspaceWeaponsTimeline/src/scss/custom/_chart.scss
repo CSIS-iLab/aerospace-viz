@@ -92,6 +92,7 @@
     &__type {
       grid-area: type;
       @extend %secondary__header;
+      color: $color__black-750;
     }
 
     &__details {
@@ -113,10 +114,21 @@
         @include font-size(18px);
         line-height: 1.6;
       }
+
+      &-link {
+        @extend %secondary__header;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        color: $color__primary;
+        box-shadow: none;
+      }
     }
     
     &__source-label {
       @extend %secondary__header;
+      color: $color__black-750;
+      text-transform: uppercase;
     }
 
     &__source {
