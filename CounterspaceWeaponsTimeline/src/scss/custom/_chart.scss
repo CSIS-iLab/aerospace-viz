@@ -23,6 +23,7 @@
   }
 
   .timeline__entry {
+    position: relative;
     z-index: 2;
     list-style-type: none;
     background: none;
@@ -34,6 +35,15 @@
 
     .action {
       &__icon {
+        z-index: 1;
+        width: rem(53px);
+        height: rem(53px);
+      }
+
+      &__details-icon {
+        position: absolute;
+        top: rem(-10px);
+        left: rem(-10px);
         z-index: 2;
       }
     }
