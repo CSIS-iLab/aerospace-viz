@@ -50,9 +50,9 @@ function drawChart() {
     let categoryDetailsIcon = d.category.replace(/\s+/g, '-').toLowerCase() + "-DetailsFlag"
 
     if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
-      moreInfo = `<summary>Source</summary><p class="source">${d.source}</p>`
+      moreInfo = `<summary>Source</summary><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p>`
     } else {
-      moreInfo = `<summary>Details</summary><p>STORY PLACEHOLDER Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod semper ante, eu bibendum ipsum feugiat nec. Quisque vel faucibus lectus. Nulla ultrices consequat mi non fermentum. Phasellus at placerat neque. Aliquam erat volutpat. Aenean magna urna, sodales semper dignissim non, pretium ut magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper tortor at est ultrices convallis. Aenean eu imperdiet felis. In pellentesque risus sed nulla mattis dignissim. Donec tincidunt, felis in auctor consequat, lorem purus vestibulum dui, vel euismod nisl dui sed enim. Vivamus eleifend, enim sed ultrices pellentesque, mi sapien pellentesque ante, feugiat porttitor odio erat finibus lacus. Nullam volutpat iaculis urna, nec fermentum nulla pretium a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p><a href="${d.learnMoreURL}">Explore &#8594;</a><p class="source">${d.source}</p>`
+      moreInfo = `<summary>Details</summary><p class="action__details-body">STORY PLACEHOLDER Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod semper ante, eu bibendum ipsum feugiat nec. Quisque vel faucibus lectus. Nulla ultrices consequat mi non fermentum. Phasellus at placerat neque. Aliquam erat volutpat. Aenean magna urna, sodales semper dignissim non, pretium ut magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper tortor at est ultrices convallis. Aenean eu imperdiet felis. In pellentesque risus sed nulla mattis dignissim. Donec tincidunt, felis in auctor consequat, lorem purus vestibulum dui, vel euismod nisl dui sed enim. Vivamus eleifend, enim sed ultrices pellentesque, mi sapien pellentesque ante, feugiat porttitor odio erat finibus lacus. Nullam volutpat iaculis urna, nec fermentum nulla pretium a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p><a href="${d.learnMoreURL}">Explore &#8594;</a><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p>`
       detailsIcon = `<img src="${Img[categoryDetailsIcon]}" class="action__details-icon" />`
     }
 
@@ -106,9 +106,9 @@ function drawChart() {
     return `
     ${detailsIcon}
     <img src="${Img[categoryIcon]}" class="action__icon" />
-    <span class="action__year">${actionDate}${actionEndDate}</span><span class="action__country"> ${d.country}</span>
+    <span class="action__year wp-caption-text">${actionDate}${actionEndDate}</span><span class="action__country wp-caption-text">${d.country}</span>
     <span class="action__category mobile-only">${d.category}</span>
-    <h2 class="action__title">${d.title}</h2>
+    <h2 class="action__title entry-highlights-title">${d.title}</h2>
     <p class="action__type">${d.type}</p>
     <details class="action__details">${moreInfo}</details>
     `

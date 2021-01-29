@@ -23,58 +23,99 @@
   }
 
   .timeline__entry {
-    display: grid;
-    grid-template-areas: 
-    "icon date country"
-    "icon title title"
-    "icon type type"
-    ". . details";
     position: relative;
     z-index: 2;
+    display: grid;
+    grid-template-areas: 
+      'icon date country'
+      'icon title title'
+      'icon type type'
+      '. . details';
+    margin-bottom: rem(52px);
     list-style-type: none;
     background: none;
   
     &.is-first-of-year::before {
-      display: block;
       position: absolute;
       top: rem(-40px);
+      display: block;
       content: attr(data-year);
     }
+  }
+  
+  .action {
+    &__icon {
+      z-index: 1;
+      grid-area: icon;
+      width: rem(53px);
+      height: rem(53px);
+    }
 
-    .action {
-      &__icon {
-        grid-area: icon;
-        z-index: 1;
-        width: rem(53px);
-        height: rem(53px);
+    &__details-icon {
+      position: absolute;
+      top: rem(-10px);
+      left: rem(-10px);
+      z-index: 2;
+    }
+
+    &__year,
+    &__country {
+      margin-top: 0;
+      padding-left: 0;
+      border-left: 0;
+
+    }
+
+    &__year {
+      grid-area: date;
+    }
+
+    &__country {
+      grid-area: country;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    &__title {
+      grid-area: title;
+      text-transform: initial;
+    }
+    
+    &__type {
+      grid-area: type;
+      @extend %secondary__header;
+    }
+
+    &__details {
+      grid-area: details;
+      
+      summary {
+        color: $color__black-600;
+        font-family: $font__source;
+        font-weight: 600;
+        @include font-size(14px);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
       }
 
-      &__details-icon {
-        position: absolute;
-        top: rem(-10px);
-        left: rem(-10px);
-        z-index: 2;
+      &-body {
+        color: $color__black;
+        font-family: $font__source;
+        @include font-size(18px);
+        line-height: 1.6;
       }
+    }
+    
+    &__source-label {
+      @extend %secondary__header;
+    }
 
-      &__date {
-        grid-area: date;
-      }
-
-      &__country {
-        grid-area: country;
-      }
-
-      &__title {
-        grid-area: title;
-      }
-
-      &__type {
-        grid-area: type;
-      }
-
-      &__details {
-        grid-area: details;
-      }
+    &__source {
+      color: $color__black;
+      font-family: $font__source;
+      @include font-size(16px);
+      line-height: 1.4;
     }
   }
 }

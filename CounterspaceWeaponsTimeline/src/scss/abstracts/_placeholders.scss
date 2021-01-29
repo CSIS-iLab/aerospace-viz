@@ -15,3 +15,11 @@
   @include font-size(14px);
   line-height: 1.4;
 }
+
+%secondary__header {
+  color: $color__black-750;
+  font-family: $font__abel;
+  font-weight: 400;
+  @include font-size(16px);
+  line-height: 1.25;
+}
