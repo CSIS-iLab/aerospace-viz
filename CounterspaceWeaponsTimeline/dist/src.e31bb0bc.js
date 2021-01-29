@@ -3449,7 +3449,7 @@ function drawChart() {
     });
     entries = container.selectAll('.timeline__entry').data(data, function (d) {
       return d.id;
-    }).join('div').attr('class', 'timeline__entry').classed('is-first-of-year', function (d) {
+    }).join('li').attr('class', 'timeline__entry').classed('is-first-of-year', function (d) {
       return firstOfYearIds[d.id];
     }).attr('data-id', function (d) {
       return d.id;
@@ -3506,7 +3506,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <li>\n    ".concat(detailsIcon, "\n    <img src=\"").concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country\"> ").concat(d.country, "</span>\n    <span class=\"action__category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action__title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    </li>\n    ");
+    return "\n    ".concat(detailsIcon, "\n    <img src=\"").concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country\"> ").concat(d.country, "</span>\n    <span class=\"action__category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action__title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    ");
   }
 
   function chart(container) {

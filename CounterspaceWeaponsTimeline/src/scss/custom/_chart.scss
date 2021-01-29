@@ -23,6 +23,12 @@
   }
 
   .timeline__entry {
+    display: grid;
+    grid-template-areas: 
+    "icon date country"
+    "icon title title"
+    "icon type type"
+    ". . details";
     position: relative;
     z-index: 2;
     list-style-type: none;
@@ -30,11 +36,14 @@
   
     &.is-first-of-year::before {
       display: block;
+      position: absolute;
+      top: rem(-40px);
       content: attr(data-year);
     }
 
     .action {
       &__icon {
+        grid-area: icon;
         z-index: 1;
         width: rem(53px);
         height: rem(53px);
@@ -45,6 +54,26 @@
         top: rem(-10px);
         left: rem(-10px);
         z-index: 2;
+      }
+
+      &__date {
+        grid-area: date;
+      }
+
+      &__country {
+        grid-area: country;
+      }
+
+      &__title {
+        grid-area: title;
+      }
+
+      &__type {
+        grid-area: type;
+      }
+
+      &__details {
+        grid-area: details;
       }
     }
   }

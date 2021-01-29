@@ -32,7 +32,7 @@ function drawChart() {
     entries = container
       .selectAll('.timeline__entry')
       .data(data, (d) => d.id)
-      .join('div')
+      .join('li')
       .attr('class', 'timeline__entry')
       .classed('is-first-of-year', (d) => firstOfYearIds[d.id])
       .attr('data-id', (d) => d.id)
@@ -104,7 +104,6 @@ function drawChart() {
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
     return `
-    <li>
     ${detailsIcon}
     <img src="${Img[categoryIcon]}" class="action__icon" />
     <span class="action__year">${actionDate}${actionEndDate}</span><span class="action__country"> ${d.country}</span>
@@ -112,7 +111,6 @@ function drawChart() {
     <h2 class="action__title">${d.title}</h2>
     <p class="action__type">${d.type}</p>
     <details class="action__details">${moreInfo}</details>
-    </li>
     `
   }
 
