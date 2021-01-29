@@ -108,6 +108,12 @@
         text-transform: uppercase;
       }
 
+      &-inner {
+        width: rem(506px);
+        padding: rem(36px) rem(50px) ;
+        background-color: $color__beige;
+      }
+
       &-body {
         color: $color__black;
         font-family: $font__source;
