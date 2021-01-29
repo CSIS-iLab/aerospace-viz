@@ -45,11 +45,15 @@ function drawChart() {
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
 
     let moreInfo
+    let detailsIcon = ""
+
+    let categoryDetailsIcon = d.category.replace(/\s+/g, '-').toLowerCase() + "-DetailsFlag"
 
     if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
       moreInfo = `<summary>Source</summary><p class="source">${d.source}</p>`
     } else {
       moreInfo = `<summary>Details</summary><p>STORY PLACEHOLDER Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod semper ante, eu bibendum ipsum feugiat nec. Quisque vel faucibus lectus. Nulla ultrices consequat mi non fermentum. Phasellus at placerat neque. Aliquam erat volutpat. Aenean magna urna, sodales semper dignissim non, pretium ut magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper tortor at est ultrices convallis. Aenean eu imperdiet felis. In pellentesque risus sed nulla mattis dignissim. Donec tincidunt, felis in auctor consequat, lorem purus vestibulum dui, vel euismod nisl dui sed enim. Vivamus eleifend, enim sed ultrices pellentesque, mi sapien pellentesque ante, feugiat porttitor odio erat finibus lacus. Nullam volutpat iaculis urna, nec fermentum nulla pretium a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p><a href="${d.learnMoreURL}">Explore &#8594;</a><p class="source">${d.source}</p>`
+      detailsIcon = `<img src="${Img[categoryDetailsIcon]}" class="action__icon" />`
     }
 
 
@@ -101,6 +105,7 @@ function drawChart() {
 
     return `
     <li>
+    ${detailsIcon}
     <img src="${Img[categoryIcon]}" class="action__icon" />
     <span class="action__year">${actionDate}${actionEndDate}</span><span class="action__country"> ${d.country}</span>
     <span class="action__category mobile-only">${d.category}</span>
