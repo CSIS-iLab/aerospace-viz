@@ -9,6 +9,8 @@
 }
 
 .timeline__entry {
+  list-style-type: none;
+  
   &.is-first-of-year::before {
     content: attr(data-year);
     display: block;

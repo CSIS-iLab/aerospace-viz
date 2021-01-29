@@ -47,9 +47,9 @@ function drawChart() {
     let moreInfo
 
     if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
-      moreInfo = `<summary>Source</summary><div>${d.source}</div>`
+      moreInfo = `<summary>Source</summary><p class="source">${d.source}</p>`
     } else {
-      moreInfo = `<summary>Details</summary><div>${d.source}</div>`
+      moreInfo = `<summary>Details</summary><p>STORY PLACEHOLDER Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod semper ante, eu bibendum ipsum feugiat nec. Quisque vel faucibus lectus. Nulla ultrices consequat mi non fermentum. Phasellus at placerat neque. Aliquam erat volutpat. Aenean magna urna, sodales semper dignissim non, pretium ut magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper tortor at est ultrices convallis. Aenean eu imperdiet felis. In pellentesque risus sed nulla mattis dignissim. Donec tincidunt, felis in auctor consequat, lorem purus vestibulum dui, vel euismod nisl dui sed enim. Vivamus eleifend, enim sed ultrices pellentesque, mi sapien pellentesque ante, feugiat porttitor odio erat finibus lacus. Nullam volutpat iaculis urna, nec fermentum nulla pretium a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p><a href="${d.learnMoreURL}">Explore &#8594;</a><p class="source">${d.source}</p>`
     }
 
 
@@ -100,12 +100,14 @@ function drawChart() {
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
     return `
+    <li>
     <img src="${Img[categoryIcon]}" />
     <span class="action-year">${actionDate}${actionEndDate}</span><span class="action-country"> ${d.country}</span>
     <span class="action-category mobile-only">${d.category}</span>
     <h2 class="action-title">${d.title}</h2>
     <p class="action-type">${d.type}</p>
     <details>${moreInfo}</details>
+    </li>
     `
   }
 

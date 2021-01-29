@@ -3466,9 +3466,9 @@ function drawChart() {
     var moreInfo;
 
     if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
-      moreInfo = "<summary>Source</summary><div>".concat(d.source, "</div>");
+      moreInfo = "<summary>Source</summary><p class=\"source\">".concat(d.source, "</p>");
     } else {
-      moreInfo = "<summary>Details</summary><div>".concat(d.source, "</div>");
+      moreInfo = "<summary>Details</summary><p>STORY PLACEHOLDER Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod semper ante, eu bibendum ipsum feugiat nec. Quisque vel faucibus lectus. Nulla ultrices consequat mi non fermentum. Phasellus at placerat neque. Aliquam erat volutpat. Aenean magna urna, sodales semper dignissim non, pretium ut magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper tortor at est ultrices convallis. Aenean eu imperdiet felis. In pellentesque risus sed nulla mattis dignissim. Donec tincidunt, felis in auctor consequat, lorem purus vestibulum dui, vel euismod nisl dui sed enim. Vivamus eleifend, enim sed ultrices pellentesque, mi sapien pellentesque ante, feugiat porttitor odio erat finibus lacus. Nullam volutpat iaculis urna, nec fermentum nulla pretium a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p><a href=\"".concat(d.learnMoreURL, "\">Explore &#8594;</a><p class=\"source\">").concat(d.source, "</p>");
     }
 
     var actionDate;
@@ -3503,7 +3503,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <img src=\"".concat(_.default[categoryIcon], "\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    <details>").concat(moreInfo, "</details>\n    ");
+    return "\n    <li>\n    <img src=\"".concat(_.default[categoryIcon], "\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    <details>").concat(moreInfo, "</details>\n    </li>\n    ");
   }
 
   function chart(container) {
