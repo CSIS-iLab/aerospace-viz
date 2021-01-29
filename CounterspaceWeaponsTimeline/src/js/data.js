@@ -67,11 +67,6 @@ const stringFields = [
   'title',
   'source',
 ]
-// const booleanFields = ['storyBool', 'learnMore']
-
-// function stringToBool(val) {
-//   return (val + '').toLowerCase() === 'true';
-// }
 
 function fetchCSV(src) {
   // return d3.csv(src)

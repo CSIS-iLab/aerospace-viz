@@ -1694,10 +1694,7 @@ function parseData(_ref) {
   return data;
 }
 
-var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source']; // const booleanFields = ['storyBool', 'learnMore']
-// function stringToBool(val) {
-//   return (val + '').toLowerCase() === 'true';
-// }
+var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source'];
 
 function fetchCSV(src) {
   // return d3.csv(src)
@@ -3466,6 +3463,14 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+    var moreInfo;
+
+    if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
+      moreInfo = "<summary>Source</summary><div>".concat(d.source, "</div>");
+    } else {
+      moreInfo = "<summary>Details</summary><div>".concat(d.source, "</div>");
+    }
+
     var actionDate;
     var actionEndDate;
     var monthNames = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
@@ -3498,7 +3503,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <img src=\"".concat(_.default[categoryIcon], "\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    ");
+    return "\n    <img src=\"".concat(_.default[categoryIcon], "\" />\n    <span class=\"action-year\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action-country\"> ").concat(d.country, "</span>\n    <span class=\"action-category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action-title\">").concat(d.title, "</h2>\n    <p class=\"action-type\">").concat(d.type, "</p>\n    <details>").concat(moreInfo, "</details>\n    ");
   }
 
   function chart(container) {

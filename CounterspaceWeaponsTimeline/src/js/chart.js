@@ -44,6 +44,15 @@ function drawChart() {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
 
+    let moreInfo
+
+    if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
+      moreInfo = `<summary>Source</summary><div>${d.source}</div>`
+    } else {
+      moreInfo = `<summary>Details</summary><div>${d.source}</div>`
+    }
+
+
     let actionDate
     let actionEndDate
     const monthNames = [
@@ -96,6 +105,7 @@ function drawChart() {
     <span class="action-category mobile-only">${d.category}</span>
     <h2 class="action-title">${d.title}</h2>
     <p class="action-type">${d.type}</p>
+    <details>${moreInfo}</details>
     `
   }
 
