@@ -14,14 +14,14 @@
 
   &::before {
     position: absolute;
-    top: 0;
+    top: rem(-45px);
     bottom: 0;
-    left: rem(65px);
+    left: rem(85px);
     z-index: -1;
     border-left: 1px solid #e3e3e3;
     content: '';
   }
-
+  
   .timeline__entry {
     position: relative;
     z-index: 2;
@@ -31,6 +31,8 @@
       'icon title title'
       'icon type type'
       '. . details';
+    grid-template-columns: rem(88px) min-content auto;
+    max-width: rem(467px);
     margin-bottom: rem(52px);
     list-style-type: none;
     background: none;
@@ -47,6 +49,7 @@
     &__icon {
       z-index: 1;
       grid-area: icon;
+      justify-self: center;
       width: rem(53px);
       height: rem(53px);
     }
@@ -54,7 +57,6 @@
     &__details-icon {
       position: absolute;
       top: rem(-10px);
-      left: rem(-10px);
       z-index: 2;
     }
 
@@ -68,6 +70,8 @@
 
     &__year {
       grid-area: date;
+      margin-right: rem(8px);
+      white-space: nowrap;
     }
 
     &__country {
@@ -79,6 +83,9 @@
 
     &__title {
       grid-area: title;
+      margin: rem(4px) 0;
+      padding: 0;
+      color: $color__black;
       text-transform: initial;
     }
     
@@ -89,6 +96,7 @@
 
     &__details {
       grid-area: details;
+      justify-self: end;
       
       summary {
         color: $color__black-600;
