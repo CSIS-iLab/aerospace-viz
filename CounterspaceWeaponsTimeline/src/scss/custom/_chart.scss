@@ -100,12 +100,22 @@
       justify-self: end;
       
       summary {
+        list-style: none;
         color: $color__black-600;
         font-family: $font__source;
         font-weight: 600;
         @include font-size(14px);
         letter-spacing: 0.03em;
         text-transform: uppercase;
+
+        &::after {
+          content: " +";
+          transition: all 0.3s ease-in-out;
+        }
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
       }
 
       &-inner {
@@ -129,6 +139,10 @@
         color: $color__primary;
         box-shadow: none;
       }
+    }
+
+    &__details[open] summary::after {
+      content: " -";
     }
     
     &__source-label {
