@@ -25,13 +25,6 @@
   .timeline__entry {
     position: relative;
     z-index: 2;
-    display: grid;
-    grid-template-areas: 
-      'icon date country'
-      'icon title title'
-      'icon type type'
-      '. . details';
-    grid-template-columns: rem(88px) min-content auto;
     max-width: rem(467px);
     margin-bottom: rem(52px);
     list-style-type: none;
@@ -42,6 +35,15 @@
       top: rem(-40px);
       display: block;
       content: attr(data-year);
+    }
+
+    &-grid {
+      display: grid;
+      grid-template-areas: 
+        'icon date country'
+        'icon title title'
+        'icon type type';
+      grid-template-columns: rem(88px) min-content auto;
     }
   }
   
@@ -96,21 +98,20 @@
     }
 
     &__details {
-      grid-area: details;
-      justify-self: end;
-      
       summary {
-        list-style: none;
+        color: $color__black-600;
         color: $color__black-600;
         font-family: $font__source;
         font-weight: 600;
-        @include font-size(14px);
         letter-spacing: 0.03em;
+        text-align: right;
         text-transform: uppercase;
+        list-style: none;
+        @include font-size(14px);
 
         &::after {
-          content: " +";
           transition: all 0.3s ease-in-out;
+          content: ' +';
         }
       }
 
@@ -120,7 +121,7 @@
 
       &-inner {
         width: rem(506px);
-        padding: rem(36px) rem(50px) ;
+        padding: rem(36px) rem(50px);
         background-color: $color__beige;
       }
 
@@ -142,9 +143,9 @@
     }
 
     &__details[open] summary::after {
-      content: " -";
+      content: ' -';
     }
-    
+
     &__source-label {
       @extend %secondary__header;
       color: $color__black-750;

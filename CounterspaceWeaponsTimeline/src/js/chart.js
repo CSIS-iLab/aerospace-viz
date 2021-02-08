@@ -104,12 +104,14 @@ function drawChart() {
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
     return `
+    <div class="timeline__entry-grid">
     ${detailsIcon}
     <img src="${Img[categoryIcon]}" class="action__icon" />
     <span class="action__year wp-caption-text">${actionDate}${actionEndDate}</span><span class="action__country wp-caption-text">${d.country}</span>
     <span class="action__category mobile-only">${d.category}</span>
     <h2 class="action__title entry-highlights-title">${d.title}</h2>
     <p class="action__type">${d.type}</p>
+    </div>
     <details class="action__details">${moreInfo}</details>
     `
   }
