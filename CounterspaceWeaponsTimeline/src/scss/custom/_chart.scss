@@ -27,9 +27,7 @@
     z-index: 2;
     max-width: rem(467px);
     margin-bottom: rem(52px);
-    padding: rem(18px) rem(20px) 0 0;
     list-style-type: none;
-    background: orange;
   
     &.is-first-of-year::before {
       position: absolute;
@@ -45,6 +43,9 @@
         'icon title title'
         'icon type type';
       grid-template-columns: rem(88px) min-content auto;
+      padding-top: rem(18px);
+      padding-bottom: rem(32px);
+      background: orange;
     }
   }
   
@@ -101,6 +102,9 @@
 
     &__details {
       summary {
+        position: relative;
+        right: rem(8px);
+        margin-top: rem(-24px);
         padding-bottom: rem(16px);
         color: $color__black-400;
         font-family: $font__source;
