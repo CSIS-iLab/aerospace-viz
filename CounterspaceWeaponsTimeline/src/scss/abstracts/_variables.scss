@@ -45,3 +45,22 @@ $size__content-max-width: 900px;
 
 /*----------  Custom  ----------*/
 // Any custom Sass variables for the project should go here.
+
+$category-colors: (
+  'non-kinetic-physical': (
+    color: rgba(249, 188, 101, 0.2),
+    corners: $color__yellow-100
+  ),
+  'kinetic-physical': (
+    color: rgba(214, 110, 66, 0.2),
+    corners: $color__orange-100
+  ),
+  'cyber': (
+    color: rgba(79, 151, 147, 0.2),
+    corners: $color__green-100
+  ),
+  'electronic': (
+    color: rgba(25, 108, 149, 0.2),
+    corners: $color__blue-200
+  )
+);

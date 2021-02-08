@@ -47,7 +47,9 @@ function drawChart() {
     let moreInfo
     let detailsIcon = ""
 
-    let categoryDetailsIcon = d.category.replace(/\s+/g, '-').toLowerCase() + "-DetailsFlag"
+    let categoryName = d.category.replace(/\s+/g, '-').toLowerCase()
+
+    let categoryDetailsIcon = categoryName + "-DetailsFlag"
 
     if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
       moreInfo = `<summary>Source</summary><div class="action__details-inner"><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
@@ -104,7 +106,7 @@ function drawChart() {
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
     return `
-    <div class="timeline__entry-grid">
+    <div class="timeline__entry-grid ${categoryName}">
     ${detailsIcon}
     <img src="${Img[categoryIcon]}" class="action__icon" />
     <span class="action__year wp-caption-text">${actionDate}${actionEndDate}</span><span class="action__country wp-caption-text">${d.country}</span>

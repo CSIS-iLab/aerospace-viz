@@ -45,7 +45,33 @@
       grid-template-columns: rem(88px) min-content auto;
       padding-top: rem(18px);
       padding-bottom: rem(32px);
-      background: orange;
+      background: none;
+      transition: all 0.3s ease-in-out;
+      
+      &:hover {
+        background: $color__beige;
+        // background: var(--category-color);
+      }
+    }
+
+    .non-kinetic-physical {
+      --category-color: var(--color-non-kinetic-physical);
+      --category-corner: var(--corner-non-kinetic-physical);
+    }
+
+    .kinetic-physical {
+      --category-color: var(--color-kinetic-physical);
+      --category-corner: var(--corner-kinetic-physical);
+    }
+
+    .cyber {
+      --category-color: var(--color-cyber);
+      --category-corner: var(--corner-cyber);
+    }
+
+    .electronic {
+      --category-color: var(--color-electronic);
+      --category-corner: var(--corner-electronic);
     }
   }
   

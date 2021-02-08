@@ -10,4 +10,9 @@
       --breakpoint: #{map-get($breakpoints, $size)};
     }
   }
+
+  @each $category, $values in $category-colors {
+    --color-#{$category}: #{map.get($values, 'color')};
+    --corner-#{$category}: #{map.get($values, 'corners')};
+  }
 }
