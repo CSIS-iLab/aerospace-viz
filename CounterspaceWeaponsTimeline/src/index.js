@@ -42,6 +42,20 @@ async function loadDataAndSetup() {
   drawChart()
 
   hideLoading()
+
+
+  let parentEl = document.querySelector('#interactive__timeline')
+
+  parentEl.addEventListener("click", colorBackground)
+
+  function colorBackground(e) {
+    if (e.target !== e.currentTarget) {
+      console.log(e.target.tagName)
+      if (e.target.tagName == 'SUMMARY') {
+        e.target.closest('.timeline__entry').classList.toggle("details-active")
+      }
+    }
+  }
 }
 
 /**

@@ -3776,16 +3776,27 @@ function loadDataAndSetup() {
 
 function _loadDataAndSetup() {
   _loadDataAndSetup = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+    var parentEl, colorBackground;
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            colorBackground = function _colorBackground(e) {
+              if (e.target !== e.currentTarget) {
+                console.log(e.target.tagName);
+
+                if (e.target.tagName == 'SUMMARY') {
+                  e.target.closest('.timeline__entry').classList.toggle("details-active");
+                }
+              }
+            };
+
+            _context.next = 3;
             return (0, _data.parseData)({
               src: dataSrc
             });
 
-          case 2:
+          case 3:
             data = _context.sent;
             startYear = data.years[0];
             endYear = data.years[1];
@@ -3796,8 +3807,10 @@ function _loadDataAndSetup() {
             setupFormButtons();
             drawChart();
             hideLoading();
+            parentEl = document.querySelector('#interactive__timeline');
+            parentEl.addEventListener("click", colorBackground);
 
-          case 12:
+          case 15:
           case "end":
             return _context.stop();
         }

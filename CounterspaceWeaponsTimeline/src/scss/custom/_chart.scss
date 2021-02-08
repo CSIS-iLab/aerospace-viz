@@ -54,6 +54,14 @@
       }
     }
 
+    &.details-active .timeline__entry-grid {
+      background-color: var(--category-color);
+      
+      &:hover {
+        background-color: var(--category-color);
+      }
+    }
+
     .non-kinetic-physical {
       --category-color: var(--color-non-kinetic-physical);
       --category-corner: var(--corner-non-kinetic-physical);
