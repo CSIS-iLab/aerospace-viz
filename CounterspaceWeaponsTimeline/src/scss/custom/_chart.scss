@@ -120,7 +120,9 @@
       }
 
       &-inner {
+        position: relative;
         width: rem(506px);
+        margin-left: rem(76px);
         padding: rem(36px) rem(50px);
         background-color: $color__beige;
       }
@@ -142,8 +144,22 @@
       }
     }
 
-    &__details[open] summary::after {
-      content: ' -';
+    &__details[open] {
+      summary::after {
+        content: ' -';
+      }
+
+      .action__details-inner::before {
+        position: absolute;
+        top: rem(-15px);
+        bottom: 50%;
+        left: rem(-16px);
+        width: rem(16px);
+        z-index: -1;
+        border-bottom: 1px solid #e3e3e3;
+        border-left: 1px solid #e3e3e3;
+        content: '';
+      }
     }
 
     &__source-label {
