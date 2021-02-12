@@ -184,6 +184,16 @@
       }
     }
 
+    // https://stackoverflow.com/a/38215801 For details transition
+    &__details[open] summary ~ * {
+      animation: sweep .3s ease-in-out;
+    }
+    
+    @keyframes sweep {
+      0%    {opacity: 0}
+      100%  {opacity: 1}
+    }
+
     &__details[open] {
       summary {
         color: $color__black-600;

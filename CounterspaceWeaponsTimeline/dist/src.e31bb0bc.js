@@ -3371,40 +3371,40 @@ var _style = require("./selection/style.js");
 var _window = _interopRequireDefault(require("./window.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./create.js":"../node_modules/d3-selection/src/create.js","./creator.js":"../node_modules/d3-selection/src/creator.js","./local.js":"../node_modules/d3-selection/src/local.js","./matcher.js":"../node_modules/d3-selection/src/matcher.js","./namespace.js":"../node_modules/d3-selection/src/namespace.js","./namespaces.js":"../node_modules/d3-selection/src/namespaces.js","./pointer.js":"../node_modules/d3-selection/src/pointer.js","./pointers.js":"../node_modules/d3-selection/src/pointers.js","./select.js":"../node_modules/d3-selection/src/select.js","./selectAll.js":"../node_modules/d3-selection/src/selectAll.js","./selection/index.js":"../node_modules/d3-selection/src/selection/index.js","./selector.js":"../node_modules/d3-selection/src/selector.js","./selectorAll.js":"../node_modules/d3-selection/src/selectorAll.js","./selection/style.js":"../node_modules/d3-selection/src/selection/style.js","./window.js":"../node_modules/d3-selection/src/window.js"}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
-module.exports = "/arrow-down.5a58f9ac.svg";
-},{}],"img/css-icons/arrow-down-black.svg":[function(require,module,exports) {
+},{"./create.js":"../node_modules/d3-selection/src/create.js","./creator.js":"../node_modules/d3-selection/src/creator.js","./local.js":"../node_modules/d3-selection/src/local.js","./matcher.js":"../node_modules/d3-selection/src/matcher.js","./namespace.js":"../node_modules/d3-selection/src/namespace.js","./namespaces.js":"../node_modules/d3-selection/src/namespaces.js","./pointer.js":"../node_modules/d3-selection/src/pointer.js","./pointers.js":"../node_modules/d3-selection/src/pointers.js","./select.js":"../node_modules/d3-selection/src/select.js","./selectAll.js":"../node_modules/d3-selection/src/selectAll.js","./selection/index.js":"../node_modules/d3-selection/src/selection/index.js","./selector.js":"../node_modules/d3-selection/src/selector.js","./selectorAll.js":"../node_modules/d3-selection/src/selectorAll.js","./selection/style.js":"../node_modules/d3-selection/src/selection/style.js","./window.js":"../node_modules/d3-selection/src/window.js"}],"img/css-icons/arrow-down-black.svg":[function(require,module,exports) {
 module.exports = "/arrow-down-black.5a275c38.svg";
-},{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
-module.exports = "/cyber.90da9b39.svg";
-},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
+},{}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
+module.exports = "/arrow-down.5a58f9ac.svg";
 },{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/cyber-DetailsFlag.03fb2117.svg";
-},{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
-module.exports = "/electronic.d04db2d8.svg";
 },{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
-},{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
-module.exports = "/kinetic-physical.ce64b425.svg";
 },{}],"img/css-icons/non-kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
+},{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical.ce64b425.svg";
 },{}],"img/css-icons/non-kinetic-physical.svg":[function(require,module,exports) {
 module.exports = "/non-kinetic-physical.63ae79f9.svg";
+},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
+},{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
+module.exports = "/cyber.90da9b39.svg";
+},{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
+module.exports = "/electronic.d04db2d8.svg";
 },{}],"img/css-icons/*.svg":[function(require,module,exports) {
 module.exports = {
-  "arrow-down": require("./arrow-down.svg"),
   "arrow-down-black": require("./arrow-down-black.svg"),
-  "cyber": require("./cyber.svg"),
-  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
+  "arrow-down": require("./arrow-down.svg"),
   "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
-  "electronic": require("./electronic.svg"),
   "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
-  "kinetic-physical": require("./kinetic-physical.svg"),
   "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
-  "non-kinetic-physical": require("./non-kinetic-physical.svg")
+  "kinetic-physical": require("./kinetic-physical.svg"),
+  "non-kinetic-physical": require("./non-kinetic-physical.svg"),
+  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
+  "cyber": require("./cyber.svg"),
+  "electronic": require("./electronic.svg")
 };
-},{"./arrow-down.svg":"img/css-icons/arrow-down.svg","./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic.svg":"img/css-icons/electronic.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3783,8 +3783,6 @@ function _loadDataAndSetup() {
           case 0:
             colorBackground = function _colorBackground(e) {
               if (e.target !== e.currentTarget) {
-                console.log(e.target.tagName);
-
                 if (e.target.tagName == 'SUMMARY') {
                   e.target.closest('.timeline__entry').classList.toggle("details-active");
                 }
@@ -3977,7 +3975,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62531" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55605" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
