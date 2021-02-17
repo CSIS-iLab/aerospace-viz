@@ -35,7 +35,7 @@ function generateCheckboxes(d, i, n) {
     .append('div')
     .attr('class', 'parent')
 
-  console.log(d.children)
+  console.log(d)
   parent
     .append('input')
     .attr('type', 'checkbox')

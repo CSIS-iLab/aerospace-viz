@@ -135,16 +135,16 @@ function setupFormButtons() {
 /**
  * Setup category filter.
  */
+
 function setupCategorySelector() {
-  const options = data.subcategories.map((category) => ({
-    value: category.name,
-    label: category.name,
-    children: [{
-      value: category.types,
-      label: category.types
-    }]
+  const options = Object.keys(data.subcategories).map((category) => ({
+    value: category,
+    label: category,
+    children: data.subcategories[category].map((subcat) => ({
+      value: subcat,
+      label: subcat
+    }))
   }))
-  console.log(data.subcategories)
 
   Checkbox.setup({
     selector: categorySelector,
@@ -170,7 +170,7 @@ function drawChart() {
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
     (d) => {
-      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category) && currentSubcategories.includes(d.type)) {
+      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
         return d
       }
     }

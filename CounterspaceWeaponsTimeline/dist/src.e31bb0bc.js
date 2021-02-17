@@ -1682,7 +1682,6 @@ function parseData(_ref) {
       subcategories[property] = (0, _toConsumableArray2.default)(subcategories[property]);
     }
 
-    console.log(subcategories);
     var dataset = {
       years: [years[0], years[years.length - 1]],
       values: valueData,
@@ -1690,7 +1689,6 @@ function parseData(_ref) {
       subcategories: subcategories,
       countries: countries
     };
-    console.log(categories);
     return dataset;
   });
   return data;
@@ -3645,7 +3643,7 @@ var Checkbox = {
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
   var parent = container.append('div').attr('class', 'parent');
-  console.log(d.children);
+  console.log(d);
   parent.append('input').attr('type', 'checkbox').attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
@@ -3915,17 +3913,18 @@ function setupFormButtons() {
 
 
 function setupCategorySelector() {
-  var options = data.subcategories.map(function (category) {
+  var options = Object.keys(data.subcategories).map(function (category) {
     return {
-      value: category.name,
-      label: category.name,
-      children: [{
-        value: category.types,
-        label: category.types
-      }]
+      value: category,
+      label: category,
+      children: data.subcategories[category].map(function (subcat) {
+        return {
+          value: subcat,
+          label: subcat
+        };
+      })
     };
   });
-  console.log(data.subcategories);
 
   _checkbox.default.setup({
     selector: categorySelector,
@@ -3949,7 +3948,7 @@ function drawChart() {
   currentSubcategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category) && currentSubcategories.includes(d.type)) {
+    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
       return d;
     }
   });

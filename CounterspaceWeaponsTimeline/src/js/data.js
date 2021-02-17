@@ -37,8 +37,6 @@ function parseData({ src }) {
       subcategories[property] = [...subcategories[property]]
     }
 
-    console.log(subcategories)
-
     let dataset = {
       years: [years[0], years[years.length - 1]],
       values: valueData,
@@ -46,8 +44,6 @@ function parseData({ src }) {
       subcategories,
       countries,
     }
-
-    console.log(categories)
 
     return dataset
   })
