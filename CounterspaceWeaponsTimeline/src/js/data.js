@@ -19,25 +19,25 @@ function parseData({ src }) {
     const countries = [...new Set(valueData.map((d) => d.country))]
       .filter((d) => d != '')
       .sort()
-    // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
 
-    let subcategories = []
+    let subcategories = {}
     valueData.forEach((action) => {
       if (!action.category) {
         return
       }
 
       // If this subcategory doesn't exist, make it
-      subcategories[action.category] = subcategories[action.category] || {
-        name: action.category,
-        types: [],
-      }
+      subcategories[action.category] = subcategories[action.category] || new Set()
 
       // If this type doesn't exist within this subcategory, create it
-      subcategories[action.category].types[action.type] =
-        subcategories[action.category].types[action.type] ||
-        subcategories[action.category].types.push(action.type)
+      subcategories[action.category].add(action.type)
     })
+
+    for (const property in subcategories) {
+      subcategories[property] = [...subcategories[property]]
+    }
+
+    console.log(subcategories)
 
     let dataset = {
       years: [years[0], years[years.length - 1]],
@@ -47,7 +47,7 @@ function parseData({ src }) {
       countries,
     }
 
-    console.log(dataset)
+    console.log(categories)
 
     return dataset
   })

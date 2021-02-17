@@ -35,32 +35,7 @@
       display: block;
       content: attr(data-year);
     }
-
-    &-grid {
-      display: grid;
-      grid-template-areas: 
-        'icon date country'
-        'icon title title'
-        'icon type type';
-      grid-template-columns: rem(88px) min-content auto;
-      padding-top: rem(18px);
-      padding-bottom: rem(32px);
-      background: none;
-      transition: all 0.3s ease-in-out;
-      
-      &:hover {
-        background: $color__beige;
-        // background: var(--category-color);
-      }
-    }
-
-    &.details-active .timeline__entry-grid {
-      background-color: var(--category-color);
-      
-      &:hover {
-        background-color: var(--category-color);
-      }
-    }
+    
 
     .non-kinetic-physical {
       --category-color: var(--color-non-kinetic-physical);
@@ -80,6 +55,75 @@
     .electronic {
       --category-color: var(--color-electronic);
       --category-corner: var(--corner-electronic);
+    }
+
+    &-grid {
+      display: grid;
+      grid-template-areas: 
+        'icon date country'
+        'icon title title'
+        'icon type type';
+      grid-template-columns: rem(88px) min-content auto;
+      padding-top: rem(18px);
+      padding-bottom: rem(32px);
+      background: none;
+      transition: all 0.3s ease-in-out;
+
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-color: var(--category-corner);
+        border-style: solid;
+        border-width: 0;
+        transition: all .5s cubic-bezier(1,.2,.26,.7);
+        transform: translate(0px, 0px) scale(.8);
+        opacity: 0;
+      }
+
+      &:before {
+        left: 0;
+        bottom: 0;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+      }
+
+      &:after {
+        top: 0;
+        right: 0;
+        border-top-width: 1px;
+        border-right-width: 1px;
+      }
+
+      &:hover {
+        background: $color__beige;
+
+        &:before, &:after {
+          transition: all 2s cubic-bezier(.14,1.13,0,.91);
+          opacity: 1;
+        }
+
+        &:before {
+          transform: translate(-30px, 20px) scale(1);
+          border-bottom-width: 3px;
+          border-left-width: 3px;
+        }
+
+        &:after {
+          transform: translate(30px, -20px) scale(1);
+          border-top-width: 3px;
+          border-right-width: 3px;
+        }
+      }
+    }
+
+    &.details-active .timeline__entry-grid {
+      background-color: var(--category-color);
+      
+      &:hover {
+        background-color: var(--category-color);
+      }
     }
   }
   

@@ -1665,22 +1665,24 @@ function parseData(_ref) {
       return d.country;
     }))).filter(function (d) {
       return d != '';
-    }).sort(); // const types = [...new Set(valueData.map((d) => d.type))].filter(d => d != "").sort()
-
-    var subcategories = [];
+    }).sort();
+    var subcategories = {};
     valueData.forEach(function (action) {
       if (!action.category) {
         return;
       } // If this subcategory doesn't exist, make it
 
 
-      subcategories[action.category] = subcategories[action.category] || {
-        name: action.category,
-        types: []
-      }; // If this type doesn't exist within this subcategory, create it
+      subcategories[action.category] = subcategories[action.category] || new Set(); // If this type doesn't exist within this subcategory, create it
 
-      subcategories[action.category].types[action.type] = subcategories[action.category].types[action.type] || subcategories[action.category].types.push(action.type);
+      subcategories[action.category].add(action.type);
     });
+
+    for (var property in subcategories) {
+      subcategories[property] = (0, _toConsumableArray2.default)(subcategories[property]);
+    }
+
+    console.log(subcategories);
     var dataset = {
       years: [years[0], years[years.length - 1]],
       values: valueData,
@@ -1688,7 +1690,7 @@ function parseData(_ref) {
       subcategories: subcategories,
       countries: countries
     };
-    console.log(dataset);
+    console.log(categories);
     return dataset;
   });
   return data;
@@ -3377,34 +3379,34 @@ module.exports = "/arrow-down-black.5a275c38.svg";
 module.exports = "/arrow-down.5a58f9ac.svg";
 },{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/cyber-DetailsFlag.03fb2117.svg";
-},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
-},{}],"img/css-icons/non-kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
-},{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
-module.exports = "/kinetic-physical.ce64b425.svg";
-},{}],"img/css-icons/non-kinetic-physical.svg":[function(require,module,exports) {
-module.exports = "/non-kinetic-physical.63ae79f9.svg";
-},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
 module.exports = "/cyber.90da9b39.svg";
+},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
 module.exports = "/electronic.d04db2d8.svg";
+},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
+},{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical.ce64b425.svg";
+},{}],"img/css-icons/non-kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
+},{}],"img/css-icons/non-kinetic-physical.svg":[function(require,module,exports) {
+module.exports = "/non-kinetic-physical.63ae79f9.svg";
 },{}],"img/css-icons/*.svg":[function(require,module,exports) {
 module.exports = {
   "arrow-down-black": require("./arrow-down-black.svg"),
   "arrow-down": require("./arrow-down.svg"),
   "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
-  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
-  "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
-  "kinetic-physical": require("./kinetic-physical.svg"),
-  "non-kinetic-physical": require("./non-kinetic-physical.svg"),
-  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
   "cyber": require("./cyber.svg"),
-  "electronic": require("./electronic.svg")
+  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
+  "electronic": require("./electronic.svg"),
+  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
+  "kinetic-physical": require("./kinetic-physical.svg"),
+  "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
+  "non-kinetic-physical": require("./non-kinetic-physical.svg")
 };
-},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic.svg":"img/css-icons/electronic.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3642,6 +3644,25 @@ var Checkbox = {
 
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
+  var parent = container.append('div').attr('class', 'parent');
+  console.log(d.children);
+  parent.append('input').attr('type', 'checkbox').attr('id', function (d) {
+    return d.value;
+  }).property('value', function (d) {
+    return d.value;
+  });
+  parent.append('label').attr('for', function (d) {
+    return d.value;
+  }).text(function (d) {
+    return d.label;
+  });
+  container.selectAll('.child').data(d.children).join(function (enter) {
+    return enter.append('div').attr('class', 'child').each(generateChildren);
+  });
+}
+
+function generateChildren(d, i, n) {
+  var container = d3.select(this);
   container.append('input').attr('type', 'checkbox').attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
@@ -3758,7 +3779,9 @@ var endYearSelector = '#filter-end-year';
 var startYear;
 var endYear;
 var categorySelector = '.interactive__filters--category';
-var currentCategories = [];
+var currentCategories = []; // const subcategorySelector = '.interactive__filters--category'
+
+var currentSubcategories = [];
 
 function init() {
   loadDataAndSetup();
@@ -3892,13 +3915,17 @@ function setupFormButtons() {
 
 
 function setupCategorySelector() {
-  var options = data.categories.map(function (category) {
+  var options = data.subcategories.map(function (category) {
     return {
-      value: category,
-      label: category
+      value: category.name,
+      label: category.name,
+      children: [{
+        value: category.types,
+        label: category.types
+      }]
     };
   });
-  console.log(data);
+  console.log(data.subcategories);
 
   _checkbox.default.setup({
     selector: categorySelector,
@@ -3918,10 +3945,11 @@ function drawChart() {
   currentCountry = _dropdown.default.getCurrent(countrySelector);
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
-  currentCategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentCategories = _checkbox.default.getCurrent(categorySelector);
+  currentSubcategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
+    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category) && currentSubcategories.includes(d.type)) {
       return d;
     }
   });
@@ -3975,7 +4003,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55605" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57898" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -31,6 +31,36 @@ const Checkbox = {
 function generateCheckboxes(d, i, n) {
   const container = d3.select(this)
 
+  const parent = container
+    .append('div')
+    .attr('class', 'parent')
+
+  console.log(d.children)
+  parent
+    .append('input')
+    .attr('type', 'checkbox')
+    .attr('id', (d) => d.value)
+    .property('value', (d) => d.value)
+
+  parent
+    .append('label')
+    .attr('for', (d) => d.value)
+    .text((d) => d.label)
+
+  container
+    .selectAll('.child')
+    .data(d.children)
+    .join((enter) =>
+      enter
+        .append('div')
+        .attr('class', 'child')
+        .each(generateChildren)
+    )
+}
+
+function generateChildren(d, i, n) {
+  const container = d3.select(this)
+
   container
     .append('input')
     .attr('type', 'checkbox')
