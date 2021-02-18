@@ -58,6 +58,7 @@
     }
 
     &-grid {
+      position: relative;
       display: grid;
       grid-template-areas: 
         'icon date country'
@@ -140,7 +141,8 @@
 
     &__details-icon {
       position: absolute;
-      top: rem(-10px);
+      top: rem(8px);
+      left: rem(3px);
       z-index: 2;
     }
 
