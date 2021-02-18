@@ -87,6 +87,17 @@
   input[type='checkbox']:checked:disabled + label::before {
     box-shadow: none;
   }
+
+  .child {
+    display: none;
+    margin-left: rem(16px);
+  }
+
+  &.isExpanded {
+    .child {
+      display: block;
+    }
+  }
 }
 
 .checkbox-expander {

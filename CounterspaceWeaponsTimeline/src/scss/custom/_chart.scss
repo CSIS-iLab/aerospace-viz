@@ -231,6 +231,7 @@
     }
 
     // https://stackoverflow.com/a/38215801 For details transition
+    /* stylelint-disable-next-line */
     &__details[open] summary ~ * {
       animation: sweep 0.3s ease-in-out;
     }

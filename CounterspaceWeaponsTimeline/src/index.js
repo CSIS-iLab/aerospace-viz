@@ -72,7 +72,6 @@ async function loadDataAndSetup() {
       return
     }
     e.target.parentElement.classList.toggle('isExpanded')
-
   }
 }
 
