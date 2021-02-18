@@ -21,7 +21,7 @@ let endYear
 const categorySelector = '.interactive__filters--category'
 let currentCategories = []
 
-// const subcategorySelector = '.interactive__filters--category'
+const subcategorySelector = '.interactive__filters--category'
 let currentSubcategories = []
 
 function init() {
@@ -33,9 +33,12 @@ async function loadDataAndSetup() {
     src: dataSrc,
   })
 
+  console.log(data)
+
   startYear = data.years[0]
   endYear = data.years[1]
   currentCategories = data.categories
+  // currentSubcategories = data.subcategories
 
   setupCountrySelector()
   setupYearSelector()
@@ -133,7 +136,9 @@ function setupFormButtons() {
 }
 
 /**
+ * 
  * Setup category filter.
+ * 
  */
 
 function setupCategorySelector() {
@@ -166,11 +171,12 @@ function drawChart() {
   endYear = Dropdown.getCurrent(endYearSelector)
   currentCategories = Checkbox.getCurrent(categorySelector)
   currentSubcategories = Checkbox.getCurrent(categorySelector)
+  console.log(currentCategories)
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
     (d) => {
-      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
+      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentCategories.includes(d.type))) {
         return d
       }
     }

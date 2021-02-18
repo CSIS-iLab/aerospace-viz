@@ -69,27 +69,28 @@
       background: none;
       transition: all 0.3s ease-in-out;
 
-      &:before, &:after {
-        content: '';
+      &::before,
+      &::after {
         position: absolute;
         width: 40px;
         height: 40px;
-        border-color: var(--category-corner);
-        border-style: solid;
         border-width: 0;
-        transition: all .5s cubic-bezier(1,.2,.26,.7);
-        transform: translate(0px, 0px) scale(.8);
+        border-style: solid;
+        border-color: var(--category-corner);
+        transform: translate(0, 0) scale(0.8);
         opacity: 0;
+        transition: all 0.5s cubic-bezier(1, 0.2, 0.26, 0.7);
+        content: '';
       }
 
-      &:before {
-        left: 0;
+      &::before {
         bottom: 0;
+        left: 0;
         border-bottom-width: 1px;
         border-left-width: 1px;
       }
 
-      &:after {
+      &::after {
         top: 0;
         right: 0;
         border-top-width: 1px;
@@ -99,21 +100,22 @@
       &:hover {
         background: $color__beige;
 
-        &:before, &:after {
-          transition: all 2s cubic-bezier(.14,1.13,0,.91);
+        &::before,
+        &::after {
           opacity: 1;
+          transition: all 2s cubic-bezier(0.14, 1.13, 0, 0.91);
         }
 
-        &:before {
-          transform: translate(-30px, 20px) scale(1);
+        &::before {
           border-bottom-width: 3px;
           border-left-width: 3px;
+          transform: translate(-30px, 20px) scale(1);
         }
 
-        &:after {
-          transform: translate(30px, -20px) scale(1);
+        &::after {
           border-top-width: 3px;
           border-right-width: 3px;
+          transform: translate(30px, -20px) scale(1);
         }
       }
     }
@@ -230,12 +232,12 @@
 
     // https://stackoverflow.com/a/38215801 For details transition
     &__details[open] summary ~ * {
-      animation: sweep .3s ease-in-out;
+      animation: sweep 0.3s ease-in-out;
     }
     
     @keyframes sweep {
-      0%    {opacity: 0}
-      100%  {opacity: 1}
+      0% {opacity: 0;}
+      100% {opacity: 1;}
     }
 
     &__details[open] {

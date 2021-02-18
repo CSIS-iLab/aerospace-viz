@@ -3626,8 +3626,11 @@ var Checkbox = {
         current = _ref.current;
     var selectEl = d3.select(selector).attr('name', name);
     selectEl.selectAll('.checkbox-container').data(data).join(function (enter) {
-      return enter.append('div').attr('class', 'checkbox-container').each(generateCheckboxes);
+      return enter.append('div').attr('class', 'checkbox-container').each(function (d) {
+        d3.select(this).append('span').attr('class', 'checkbox-expander').text('+');
+      }).each(generateCheckboxes);
     }).each(function (d) {
+      console.log(current);
       d3.select(this).select('input').property('checked', current.includes(d.value));
     });
   },
@@ -3643,7 +3646,7 @@ var Checkbox = {
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
   var parent = container.append('div').attr('class', 'parent');
-  console.log(d);
+  console.log(this);
   parent.append('input').attr('type', 'checkbox').attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
@@ -3777,8 +3780,8 @@ var endYearSelector = '#filter-end-year';
 var startYear;
 var endYear;
 var categorySelector = '.interactive__filters--category';
-var currentCategories = []; // const subcategorySelector = '.interactive__filters--category'
-
+var currentCategories = [];
+var subcategorySelector = '.interactive__filters--category';
 var currentSubcategories = [];
 
 function init() {
@@ -3817,9 +3820,11 @@ function _loadDataAndSetup() {
 
           case 3:
             data = _context.sent;
+            console.log(data);
             startYear = data.years[0];
             endYear = data.years[1];
-            currentCategories = data.categories;
+            currentCategories = data.categories; // currentSubcategories = data.subcategories
+
             setupCountrySelector();
             setupYearSelector();
             setupCategorySelector();
@@ -3829,7 +3834,7 @@ function _loadDataAndSetup() {
             parentEl = document.querySelector('#interactive__timeline');
             parentEl.addEventListener("click", colorBackground);
 
-          case 15:
+          case 16:
           case "end":
             return _context.stop();
         }
@@ -3908,7 +3913,9 @@ function setupFormButtons() {
   });
 }
 /**
+ * 
  * Setup category filter.
+ * 
  */
 
 
@@ -3945,10 +3952,11 @@ function drawChart() {
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector);
-  currentSubcategories = _checkbox.default.getCurrent(categorySelector); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentSubcategories = _checkbox.default.getCurrent(categorySelector);
+  console.log(currentCategories); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && currentCategories.includes(d.category)) {
+    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentCategories.includes(d.type))) {
       return d;
     }
   });

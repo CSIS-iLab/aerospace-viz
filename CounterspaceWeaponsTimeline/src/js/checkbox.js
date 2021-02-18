@@ -11,9 +11,16 @@ const Checkbox = {
         enter
           .append('div')
           .attr('class', 'checkbox-container')
+          .each(function (d) {
+            d3.select(this)
+              .append('span')
+              .attr('class', 'checkbox-expander')
+              .text('+')
+          })
           .each(generateCheckboxes)
       )
       .each(function (d) {
+        console.log(current)
         d3.select(this)
           .select('input')
           .property('checked', current.includes(d.value))
@@ -35,7 +42,7 @@ function generateCheckboxes(d, i, n) {
     .append('div')
     .attr('class', 'parent')
 
-  console.log(d)
+  console.log(this)
   parent
     .append('input')
     .attr('type', 'checkbox')

@@ -88,3 +88,10 @@
     box-shadow: none;
   }
 }
+
+.checkbox-expander {
+  position: absolute;
+  left: rem(-16px);
+  @include font-size(20px);
+  cursor: pointer;
+}
