@@ -61,6 +61,19 @@ async function loadDataAndSetup() {
       }
     }
   }
+
+  let categoryToggle = document.querySelector('.interactive__filters--category')
+
+  categoryToggle.addEventListener('click', toggleCategoryCheckboxes)
+
+  function toggleCategoryCheckboxes(e) {
+    const isToggle = e.target.classList.contains('checkbox-expander')
+    if (!isToggle) {
+      return
+    }
+    e.target.parentElement.classList.toggle('isExpanded')
+
+  }
 }
 
 /**

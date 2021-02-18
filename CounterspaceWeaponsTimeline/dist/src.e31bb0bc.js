@@ -3800,11 +3800,21 @@ function loadDataAndSetup() {
 
 function _loadDataAndSetup() {
   _loadDataAndSetup = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-    var parentEl, colorBackground;
+    var parentEl, colorBackground, categoryToggle, toggleCategoryCheckboxes;
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            toggleCategoryCheckboxes = function _toggleCategoryCheckb(e) {
+              var isToggle = e.target.classList.contains('checkbox-expander');
+
+              if (!isToggle) {
+                return;
+              }
+
+              e.target.parentElement.classList.toggle('isExpanded');
+            };
+
             colorBackground = function _colorBackground(e) {
               if (e.target !== e.currentTarget) {
                 if (e.target.tagName == 'SUMMARY') {
@@ -3813,12 +3823,12 @@ function _loadDataAndSetup() {
               }
             };
 
-            _context.next = 3;
+            _context.next = 4;
             return (0, _data.parseData)({
               src: dataSrc
             });
 
-          case 3:
+          case 4:
             data = _context.sent;
             console.log(data);
             startYear = data.years[0];
@@ -3833,8 +3843,10 @@ function _loadDataAndSetup() {
             hideLoading();
             parentEl = document.querySelector('#interactive__timeline');
             parentEl.addEventListener("click", colorBackground);
+            categoryToggle = document.querySelector('.interactive__filters--category');
+            categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 16:
+          case 19:
           case "end":
             return _context.stop();
         }
