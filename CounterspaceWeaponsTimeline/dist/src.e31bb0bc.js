@@ -3813,6 +3813,12 @@ function _loadDataAndSetup() {
               }
 
               e.target.parentElement.classList.toggle('isExpanded');
+
+              if (e.target.innerHTML == "+") {
+                e.target.innerHTML = "&#8722";
+              } else {
+                e.target.innerHTML = "+";
+              }
             };
 
             colorBackground = function _colorBackground(e) {

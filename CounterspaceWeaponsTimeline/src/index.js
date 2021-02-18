@@ -66,12 +66,21 @@ async function loadDataAndSetup() {
 
   categoryToggle.addEventListener('click', toggleCategoryCheckboxes)
 
+
   function toggleCategoryCheckboxes(e) {
     const isToggle = e.target.classList.contains('checkbox-expander')
+
     if (!isToggle) {
       return
     }
+
     e.target.parentElement.classList.toggle('isExpanded')
+
+    if (e.target.innerHTML == "+") {
+      e.target.innerHTML = "&#8722"
+    } else {
+      e.target.innerHTML = "+"
+    }
   }
 }
 
