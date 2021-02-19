@@ -3669,7 +3669,7 @@ function generateCheckboxes(d, i, n) {
 
 function parentSelection(e, d) {
   var isChecked = this.checked;
-  var children = d.children.map(function (c) {
+  d.children.map(function (c) {
     return document.getElementById(c.value + c.parent);
   }).forEach(function (el) {
     return el.checked = isChecked;
@@ -3677,17 +3677,42 @@ function parentSelection(e, d) {
 }
 
 function generateChildren(d, i, n) {
-  var container = d3.select(this);
+  var container = d3.select(this); // console.log(d, n)
+
   container.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
     return d.value + d.parent;
   }).property('value', function (d) {
     return d.value;
-  });
+  }).on('change', childSelection);
   container.append('label').attr('for', function (d) {
     return d.value;
   }).text(function (d) {
     return d.label;
   });
+}
+
+function childSelection(e, d) {
+  var parentE = document.getElementById(d.parent);
+  var nodes = Array.from(e.target.offsetParent.children);
+  var numberOfChildren = nodes.length - 2;
+  var counter = 0;
+  nodes.forEach(function (node) {
+    if (node.classList.contains("parent")) {
+      return;
+    } else {
+      Array.from(node.children).forEach(function (child) {
+        if (child.type == "checkbox" && child.checked == true) {
+          counter++;
+        }
+      });
+    }
+  });
+
+  if (counter === numberOfChildren) {
+    parentE.checked = true;
+  } else {
+    parentE.checked = false;
+  }
 }
 
 var _default = Checkbox;

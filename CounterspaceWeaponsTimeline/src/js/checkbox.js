@@ -72,13 +72,12 @@ function generateCheckboxes(d, i, n) {
 
 function parentSelection(e, d) {
   const isChecked = this.checked
-  const children = d.children.map((c) => document.getElementById(c.value + c.parent)).forEach((el) => el.checked = isChecked)
-
-
+  d.children.map((c) => document.getElementById(c.value + c.parent)).forEach((el) => el.checked = isChecked)
 }
 
 function generateChildren(d, i, n) {
   const container = d3.select(this)
+  // console.log(d, n)
 
   container
     .append('input')
@@ -86,11 +85,39 @@ function generateChildren(d, i, n) {
     .property("checked", true)
     .attr('id', (d) => d.value + d.parent)
     .property('value', (d) => d.value)
+    .on('change', childSelection)
 
   container
     .append('label')
     .attr('for', (d) => d.value)
     .text((d) => d.label)
+}
+
+function childSelection(e, d) {
+  const parentE = document.getElementById(d.parent)
+  const nodes = Array.from(e.target.offsetParent.children)
+  const numberOfChildren = nodes.length - 2
+
+  let counter = 0
+
+
+  nodes.forEach((node) => {
+    if (node.classList.contains("parent")) {
+      return
+    } else {
+      Array.from(node.children).forEach((child) => {
+        if (child.type == "checkbox" && child.checked == true) {
+          counter++
+        }
+      })
+    }
+  })
+
+  if (counter === numberOfChildren) {
+    parentE.checked = true
+  } else {
+    parentE.checked = false
+  }
 }
 
 export default Checkbox
