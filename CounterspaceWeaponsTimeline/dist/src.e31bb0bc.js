@@ -3639,7 +3639,11 @@ var Checkbox = {
   getCurrent: function getCurrent(selector, wrapperClass) {
     var selected = [];
     d3.selectAll("".concat(selector, " ").concat(wrapperClass, " input:checked")).each(function (d) {
-      return selected.push(d.value);
+      if (!d.parent) {
+        selected.push(d.value);
+      } else {
+        selected.push(d.value + d.parent);
+      }
     });
     return selected;
   }
@@ -3666,7 +3670,7 @@ function generateCheckboxes(d, i, n) {
 function parentSelection(e, d) {
   var isChecked = this.checked;
   var children = d.children.map(function (c) {
-    return document.getElementById(c.value);
+    return document.getElementById(c.value + c.parent);
   }).forEach(function (el) {
     return el.checked = isChecked;
   });
@@ -3675,7 +3679,7 @@ function parentSelection(e, d) {
 function generateChildren(d, i, n) {
   var container = d3.select(this);
   container.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
-    return d.value;
+    return d.value + d.parent;
   }).property('value', function (d) {
     return d.value;
   });
@@ -3968,7 +3972,8 @@ function setupCategorySelector() {
       children: data.subcategories[category].map(function (subcat) {
         return {
           value: subcat,
-          label: subcat
+          label: subcat,
+          parent: category
         };
       })
     };
@@ -3993,10 +3998,12 @@ function drawChart() {
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
-  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child'); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
+  console.log(currentCategories);
+  console.log(currentSubcategories); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type))) {
+    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type + d.category))) {
       return d;
     }
   });

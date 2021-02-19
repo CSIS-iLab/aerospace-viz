@@ -28,9 +28,13 @@ const Checkbox = {
   getCurrent: function (selector, wrapperClass) {
     let selected = []
     d3.selectAll(`${selector} ${wrapperClass} input:checked`)
-      .each((d) =>
-        selected.push(d.value)
-      )
+      .each((d) => {
+        if (!d.parent) {
+          selected.push(d.value)
+        } else {
+          selected.push(d.value + d.parent)
+        }
+      })
     return selected
   },
 }
@@ -68,7 +72,7 @@ function generateCheckboxes(d, i, n) {
 
 function parentSelection(e, d) {
   const isChecked = this.checked
-  const children = d.children.map((c) => document.getElementById(c.value)).forEach((el) => el.checked = isChecked)
+  const children = d.children.map((c) => document.getElementById(c.value + c.parent)).forEach((el) => el.checked = isChecked)
 
 
 }
@@ -80,7 +84,7 @@ function generateChildren(d, i, n) {
     .append('input')
     .attr('type', 'checkbox')
     .property("checked", true)
-    .attr('id', (d) => d.value)
+    .attr('id', (d) => d.value + d.parent)
     .property('value', (d) => d.value)
 
   container

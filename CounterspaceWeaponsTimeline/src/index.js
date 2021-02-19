@@ -184,7 +184,8 @@ function setupCategorySelector() {
     label: category,
     children: data.subcategories[category].map((subcat) => ({
       value: subcat,
-      label: subcat
+      label: subcat,
+      parent: category
     }))
   }))
 
@@ -209,10 +210,13 @@ function drawChart() {
   currentCategories = Checkbox.getCurrent(categorySelector, '.parent')
   currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
 
+  console.log(currentCategories)
+  console.log(currentSubcategories)
+
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
     (d) => {
-      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type))) {
+      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type + d.category))) {
         return d
       }
     }
