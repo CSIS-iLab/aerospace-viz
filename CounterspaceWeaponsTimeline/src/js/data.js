@@ -45,6 +45,8 @@ function parseData({ src }) {
       countries,
     }
 
+    console.log(dataset)
+
     return dataset
   })
 

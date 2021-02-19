@@ -1689,6 +1689,7 @@ function parseData(_ref) {
       subcategories: subcategories,
       countries: countries
     };
+    console.log(dataset);
     return dataset;
   });
   return data;
@@ -3629,14 +3630,15 @@ var Checkbox = {
       return enter.append('div').attr('class', 'checkbox-container').each(function (d) {
         d3.select(this).append('span').attr('class', 'checkbox-expander').text('+');
       }).each(generateCheckboxes);
-    }).each(function (d) {
-      console.log(current);
-      d3.select(this).select('input').property('checked', current.includes(d.value));
-    });
+    }); // .each(function (d) {
+    //   d3.select(this)
+    //     .select('input')
+    //     .property('checked', current.includes(d.value))
+    // })
   },
-  getCurrent: function getCurrent(selector) {
+  getCurrent: function getCurrent(selector, wrapperClass) {
     var selected = [];
-    d3.selectAll("".concat(selector, " input:checked")).each(function (d) {
+    d3.selectAll("".concat(selector, " ").concat(wrapperClass, " input:checked")).each(function (d) {
       return selected.push(d.value);
     });
     return selected;
@@ -3646,12 +3648,11 @@ var Checkbox = {
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
   var parent = container.append('div').attr('class', 'parent');
-  console.log(this);
-  parent.append('input').attr('type', 'checkbox').attr('id', function (d) {
+  parent.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
     return d.value;
-  });
+  }).on('change', parentSelection);
   parent.append('label').attr('for', function (d) {
     return d.value;
   }).text(function (d) {
@@ -3662,9 +3663,18 @@ function generateCheckboxes(d, i, n) {
   });
 }
 
+function parentSelection(e, d) {
+  var isChecked = this.checked;
+  var children = d.children.map(function (c) {
+    return document.getElementById(c.value);
+  }).forEach(function (el) {
+    return el.checked = isChecked;
+  });
+}
+
 function generateChildren(d, i, n) {
   var container = d3.select(this);
-  container.append('input').attr('type', 'checkbox').attr('id', function (d) {
+  container.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
     return d.value;
@@ -3791,12 +3801,6 @@ function init() {
 function loadDataAndSetup() {
   return _loadDataAndSetup.apply(this, arguments);
 }
-/**
- *
- * Setup Country Selector
- *
- */
-
 
 function _loadDataAndSetup() {
   _loadDataAndSetup = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
@@ -3836,15 +3840,16 @@ function _loadDataAndSetup() {
 
           case 4:
             data = _context.sent;
-            console.log(data);
             startYear = data.years[0];
             endYear = data.years[1];
             currentCategories = data.categories; // currentSubcategories = data.subcategories
 
+            console.log(data.subcategories);
             setupCountrySelector();
             setupYearSelector();
             setupCategorySelector();
             setupFormButtons();
+            checkSubcategories();
             drawChart();
             hideLoading();
             parentEl = document.querySelector('#interactive__timeline');
@@ -3852,7 +3857,7 @@ function _loadDataAndSetup() {
             categoryToggle = document.querySelector('.interactive__filters--category');
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 19:
+          case 20:
           case "end":
             return _context.stop();
         }
@@ -3861,6 +3866,24 @@ function _loadDataAndSetup() {
   }));
   return _loadDataAndSetup.apply(this, arguments);
 }
+
+function checkSubcategories() {
+  for (var category in data.subcategories) {
+    // console.log(`${category}: ${data.subcategories[category]}`)
+    var parentE = document.querySelectorAll('.parent');
+
+    if (parentE.checked == "checked") {
+      var children = document.querySelectorAll('.child');
+      children.checked = "checked";
+    }
+  }
+}
+/**
+ *
+ * Setup Country Selector
+ *
+ */
+
 
 function setupCountrySelector() {
   var options = data.countries.map(function (country) {
@@ -3969,16 +3992,14 @@ function drawChart() {
   currentCountry = _dropdown.default.getCurrent(countrySelector);
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
-  currentCategories = _checkbox.default.getCurrent(categorySelector);
-  currentSubcategories = _checkbox.default.getCurrent(categorySelector);
-  console.log(currentCategories); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
+  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child'); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentCategories.includes(d.type))) {
+    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type))) {
       return d;
     }
   });
-  console.log(dataset);
 
   _chart.default.init({
     data: dataset,
@@ -4028,7 +4049,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57898" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52624" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

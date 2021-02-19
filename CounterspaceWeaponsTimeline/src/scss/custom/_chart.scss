@@ -195,6 +195,7 @@
         text-align: right;
         text-transform: uppercase;
         list-style: none;
+        cursor: pointer;
         @include font-size(14px);
 
         &::after {

@@ -19,18 +19,18 @@ const Checkbox = {
           })
           .each(generateCheckboxes)
       )
-      .each(function (d) {
-        console.log(current)
-        d3.select(this)
-          .select('input')
-          .property('checked', current.includes(d.value))
-      })
+    // .each(function (d) {
+    //   d3.select(this)
+    //     .select('input')
+    //     .property('checked', current.includes(d.value))
+    // })
   },
-  getCurrent: function (selector) {
+  getCurrent: function (selector, wrapperClass) {
     let selected = []
-    d3.selectAll(`${selector} input:checked`).each((d) =>
-      selected.push(d.value)
-    )
+    d3.selectAll(`${selector} ${wrapperClass} input:checked`)
+      .each((d) =>
+        selected.push(d.value)
+      )
     return selected
   },
 }
@@ -42,12 +42,13 @@ function generateCheckboxes(d, i, n) {
     .append('div')
     .attr('class', 'parent')
 
-  console.log(this)
   parent
     .append('input')
     .attr('type', 'checkbox')
+    .property("checked", true)
     .attr('id', (d) => d.value)
     .property('value', (d) => d.value)
+    .on('change', parentSelection)
 
   parent
     .append('label')
@@ -65,12 +66,20 @@ function generateCheckboxes(d, i, n) {
     )
 }
 
+function parentSelection(e, d) {
+  const isChecked = this.checked
+  const children = d.children.map((c) => document.getElementById(c.value)).forEach((el) => el.checked = isChecked)
+
+
+}
+
 function generateChildren(d, i, n) {
   const container = d3.select(this)
 
   container
     .append('input')
     .attr('type', 'checkbox')
+    .property("checked", true)
     .attr('id', (d) => d.value)
     .property('value', (d) => d.value)
 

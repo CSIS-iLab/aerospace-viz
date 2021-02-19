@@ -33,17 +33,20 @@ async function loadDataAndSetup() {
     src: dataSrc,
   })
 
-  console.log(data)
 
   startYear = data.years[0]
   endYear = data.years[1]
   currentCategories = data.categories
   // currentSubcategories = data.subcategories
 
+  console.log(data.subcategories)
+
+
   setupCountrySelector()
   setupYearSelector()
   setupCategorySelector()
   setupFormButtons()
+  checkSubcategories()
 
   drawChart()
 
@@ -83,6 +86,19 @@ async function loadDataAndSetup() {
     }
   }
 }
+
+function checkSubcategories() {
+  for (const category in data.subcategories) {
+    // console.log(`${category}: ${data.subcategories[category]}`)
+    let parentE = document.querySelectorAll('.parent')
+
+    if (parentE.checked == "checked") {
+      let children = document.querySelectorAll('.child')
+      children.checked = "checked"
+    }
+  }
+}
+
 
 /**
  *
@@ -190,20 +206,18 @@ function drawChart() {
   currentCountry = Dropdown.getCurrent(countrySelector)
   startYear = Dropdown.getCurrent(startYearSelector)
   endYear = Dropdown.getCurrent(endYearSelector)
-  currentCategories = Checkbox.getCurrent(categorySelector)
-  currentSubcategories = Checkbox.getCurrent(categorySelector)
-  console.log(currentCategories)
+  currentCategories = Checkbox.getCurrent(categorySelector, '.parent')
+  currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
     (d) => {
-      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentCategories.includes(d.type))) {
+      if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type))) {
         return d
       }
     }
   )
 
-  console.log(dataset)
 
   Chart.init({
     data: dataset,
