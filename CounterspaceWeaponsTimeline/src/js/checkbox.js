@@ -11,6 +11,7 @@ const Checkbox = {
         enter
           .append('div')
           .attr('class', 'checkbox-container')
+          .attr('data-category', d => d.value)
           .each(function (d) {
             d3.select(this)
               .append('span')
@@ -77,7 +78,6 @@ function parentSelection(e, d) {
 
 function generateChildren(d, i, n) {
   const container = d3.select(this)
-  // console.log(d, n)
 
   container
     .append('input')
@@ -85,7 +85,9 @@ function generateChildren(d, i, n) {
     .property("checked", true)
     .attr('id', (d) => d.value + d.parent)
     .property('value', (d) => d.value)
-    .on('change', childSelection)
+    .on("change", function (event, d) {
+      childSelection(d, n);
+    })
 
   container
     .append('label')
@@ -93,27 +95,11 @@ function generateChildren(d, i, n) {
     .text((d) => d.label)
 }
 
-function childSelection(e, d) {
+function childSelection(d, childrenNodes) {
   const parentE = document.getElementById(d.parent)
-  const nodes = Array.from(e.target.offsetParent.children)
-  const numberOfChildren = nodes.length - 2
+  const numberOfCheckedChildren = childrenNodes.filter((node) => node.children[0].checked).length
 
-  let counter = 0
-
-
-  nodes.forEach((node) => {
-    if (node.classList.contains("parent")) {
-      return
-    } else {
-      Array.from(node.children).forEach((child) => {
-        if (child.type == "checkbox" && child.checked == true) {
-          counter++
-        }
-      })
-    }
-  })
-
-  if (counter === numberOfChildren) {
+  if (childrenNodes.length === numberOfCheckedChildren) {
     parentE.checked = true
   } else {
     parentE.checked = false

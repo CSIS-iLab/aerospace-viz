@@ -3627,7 +3627,9 @@ var Checkbox = {
         current = _ref.current;
     var selectEl = d3.select(selector).attr('name', name);
     selectEl.selectAll('.checkbox-container').data(data).join(function (enter) {
-      return enter.append('div').attr('class', 'checkbox-container').each(function (d) {
+      return enter.append('div').attr('class', 'checkbox-container').attr('data-category', function (d) {
+        return d.value;
+      }).each(function (d) {
         d3.select(this).append('span').attr('class', 'checkbox-expander').text('+');
       }).each(generateCheckboxes);
     }); // .each(function (d) {
@@ -3677,13 +3679,14 @@ function parentSelection(e, d) {
 }
 
 function generateChildren(d, i, n) {
-  var container = d3.select(this); // console.log(d, n)
-
+  var container = d3.select(this);
   container.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
     return d.value + d.parent;
   }).property('value', function (d) {
     return d.value;
-  }).on('change', childSelection);
+  }).on("change", function (event, d) {
+    childSelection(d, n);
+  });
   container.append('label').attr('for', function (d) {
     return d.value;
   }).text(function (d) {
@@ -3691,24 +3694,13 @@ function generateChildren(d, i, n) {
   });
 }
 
-function childSelection(e, d) {
+function childSelection(d, childrenNodes) {
   var parentE = document.getElementById(d.parent);
-  var nodes = Array.from(e.target.offsetParent.children);
-  var numberOfChildren = nodes.length - 2;
-  var counter = 0;
-  nodes.forEach(function (node) {
-    if (node.classList.contains("parent")) {
-      return;
-    } else {
-      Array.from(node.children).forEach(function (child) {
-        if (child.type == "checkbox" && child.checked == true) {
-          counter++;
-        }
-      });
-    }
-  });
+  var numberOfCheckedChildren = childrenNodes.filter(function (node) {
+    return node.children[0].checked;
+  }).length;
 
-  if (counter === numberOfChildren) {
+  if (childrenNodes.length === numberOfCheckedChildren) {
     parentE.checked = true;
   } else {
     parentE.checked = false;
