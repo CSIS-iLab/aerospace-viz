@@ -10,4 +10,8 @@
   @include breakpoint('medium') {
     justify-content: space-evenly;
   }
+
+  > * {
+    margin-top: rem(15px);
+  }
 }

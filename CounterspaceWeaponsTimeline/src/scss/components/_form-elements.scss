@@ -6,7 +6,9 @@
 
 .input__label {
   display: block;
-  margin: 0 0 5px;
+  margin: 0 rem(8px) rem(5px);
+  color: $color__black-500;
+  text-transform: uppercase;
   @extend %form__label;
 }
 

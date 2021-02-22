@@ -3378,12 +3378,12 @@ module.exports = "/arrow-down-black.5a275c38.svg";
 module.exports = "/arrow-down.5a58f9ac.svg";
 },{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/cyber-DetailsFlag.03fb2117.svg";
-},{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
-module.exports = "/cyber.90da9b39.svg";
-},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
 module.exports = "/electronic.d04db2d8.svg";
+},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
+},{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
+module.exports = "/cyber.90da9b39.svg";
 },{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
 },{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
@@ -3397,15 +3397,15 @@ module.exports = {
   "arrow-down-black": require("./arrow-down-black.svg"),
   "arrow-down": require("./arrow-down.svg"),
   "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
-  "cyber": require("./cyber.svg"),
-  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
   "electronic": require("./electronic.svg"),
+  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
+  "cyber": require("./cyber.svg"),
   "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
   "kinetic-physical": require("./kinetic-physical.svg"),
   "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
   "non-kinetic-physical": require("./non-kinetic-physical.svg")
 };
-},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4114,7 +4114,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52624" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53847" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
