@@ -21,8 +21,12 @@ let endYear
 const categorySelector = '.interactive__filters--category'
 let currentCategories = []
 
-const subcategorySelector = '.interactive__filters--category'
 let currentSubcategories = []
+
+const storySelector = '.interactive__filters--story'
+let currentStory = []
+
+let clearAllSelector = '.filter-clear'
 
 function init() {
   loadDataAndSetup()
@@ -37,14 +41,12 @@ async function loadDataAndSetup() {
   startYear = data.years[0]
   endYear = data.years[1]
   currentCategories = data.categories
-  // currentSubcategories = data.subcategories
-
-  console.log(data.subcategories)
 
 
   setupCountrySelector()
   setupYearSelector()
   setupCategorySelector()
+  // setupStorySelector()
   setupFormButtons()
   checkSubcategories()
 
@@ -89,7 +91,6 @@ async function loadDataAndSetup() {
 
 function checkSubcategories() {
   for (const category in data.subcategories) {
-    // console.log(`${category}: ${data.subcategories[category]}`)
     let parentE = document.querySelectorAll('.parent')
 
     if (parentE.checked == "checked") {
@@ -170,6 +171,13 @@ function setupFormButtons() {
     .addEventListener('click', function () {
       drawChart()
     })
+
+  // Buttons.setup({
+  //   selector: clearAllSelector,
+  //   data: "",
+  //   current: "",
+  //   onClick: drawChart()
+  // })
 }
 
 /**
@@ -195,6 +203,46 @@ function setupCategorySelector() {
     data: options,
     current: currentCategories,
   })
+
+  console.log(options)
+}
+
+/**
+ * 
+ * Setup story filter.
+ * 
+ */
+
+function setupStorySelector() {
+
+  // const options = {
+  //   value: "storyBool",
+  //   label: "Actions With Detailed Story Only"
+  // }
+
+  const container = document.querySelector('.interactive__filters--story')
+
+  let inputWrapper = document.createElement('div')
+  inputWrapper.className = 'filter-story'
+  let inputLabel = document.createElement('label')
+  inputLabel.innerHTML = "Actions With Detailed Story Only"
+  inputLabel.setAttribute('for', 'story-toggle')
+  inputLabel.setAttribute('class', 'input__label')
+  let inputEl = document.createElement('input')
+  inputEl.setAttribute('type', 'checkbox')
+  inputEl.setAttribute('value', 'storyBool')
+  inputEl.setAttribute('id', 'story-toggle')
+  inputWrapper.appendChild(inputLabel)
+  inputWrapper.appendChild(inputEl)
+
+  container.appendChild(inputWrapper)
+
+  // Checkbox.setup({
+  //   selector: storySelector,
+  //   name: 'filter-story',
+  //   data: options,
+  //   current: currentStory,
+  // })
 }
 
 /**
@@ -209,9 +257,10 @@ function drawChart() {
   endYear = Dropdown.getCurrent(endYearSelector)
   currentCategories = Checkbox.getCurrent(categorySelector, '.parent')
   currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
+  currentStory = Checkbox.getCurrent(storySelector, '.filter-story')
 
-  console.log(currentCategories)
-  console.log(currentSubcategories)
+  console.log(currentStory)
+
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(

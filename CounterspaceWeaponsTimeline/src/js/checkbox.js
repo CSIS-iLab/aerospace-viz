@@ -36,12 +36,16 @@ const Checkbox = {
           selected.push(d.value + d.parent)
         }
       })
+
+    console.log(selected)
     return selected
   },
 }
 
 function generateCheckboxes(d, i, n) {
   const container = d3.select(this)
+
+  console.log(container)
 
   const parent = container
     .append('div')

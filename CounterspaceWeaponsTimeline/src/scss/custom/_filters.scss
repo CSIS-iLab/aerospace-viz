@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   margin-right: auto;
   margin-left: auto;
+  background: $color__background;
 
   @include breakpoint('medium') {
     justify-content: space-evenly;
