@@ -23,8 +23,9 @@ let currentCategories = []
 
 let currentSubcategories = []
 
+
 const storySelector = '.interactive__filters--story'
-let currentStory = []
+let storiesOnly = ""
 
 let clearAllSelector = '.filter-clear'
 
@@ -46,6 +47,7 @@ async function loadDataAndSetup() {
   setupCountrySelector()
   setupYearSelector()
   setupCategorySelector()
+  filterByStory()
   // setupStorySelector()
   setupFormButtons()
   checkSubcategories()
@@ -245,6 +247,17 @@ function setupStorySelector() {
   // })
 }
 
+function filterByStory() {
+
+  let storyToggle = document.querySelector('#story-toggle')
+
+  if (storyToggle.checked == true) {
+    storiesOnly = "TRUE"
+  } else {
+    storiesOnly = ""
+  }
+}
+
 /**
  *
  * Calls the Chart function to draw the chart with the current dataset.
@@ -257,14 +270,17 @@ function drawChart() {
   endYear = Dropdown.getCurrent(endYearSelector)
   currentCategories = Checkbox.getCurrent(categorySelector, '.parent')
   currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
-  currentStory = Checkbox.getCurrent(storySelector, '.filter-story')
+  // currentStory = Checkbox.getCurrent(storySelector, '.filter-story')
 
-  console.log(currentStory)
+  console.log(storiesOnly)
+  console.log(currentCountry)
+  console.log(currentCategories)
 
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter(
     (d) => {
+      console.log(d)
       if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type + d.category))) {
         return d
       }

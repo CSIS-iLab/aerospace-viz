@@ -3647,14 +3647,12 @@ var Checkbox = {
         selected.push(d.value + d.parent);
       }
     });
-    console.log(selected);
     return selected;
   }
 };
 
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
-  console.log(container);
   var parent = container.append('div').attr('class', 'parent');
   parent.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
     return d.value;
@@ -3816,7 +3814,7 @@ var categorySelector = '.interactive__filters--category';
 var currentCategories = [];
 var currentSubcategories = [];
 var storySelector = '.interactive__filters--story';
-var currentStory = [];
+var storiesOnly = "";
 var clearAllSelector = '.filter-clear';
 
 function init() {
@@ -3870,7 +3868,8 @@ function _loadDataAndSetup() {
             currentCategories = data.categories;
             setupCountrySelector();
             setupYearSelector();
-            setupCategorySelector(); // setupStorySelector()
+            setupCategorySelector();
+            filterByStory(); // setupStorySelector()
 
             setupFormButtons();
             checkSubcategories();
@@ -3881,7 +3880,7 @@ function _loadDataAndSetup() {
             categoryToggle = document.querySelector('.interactive__filters--category');
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 19:
+          case 20:
           case "end":
             return _context.stop();
         }
@@ -4044,6 +4043,16 @@ function setupStorySelector() {
   //   current: currentStory,
   // })
 }
+
+function filterByStory() {
+  var storyToggle = document.querySelector('#story-toggle');
+
+  if (storyToggle.checked == true) {
+    storiesOnly = "TRUE";
+  } else {
+    storiesOnly = "";
+  }
+}
 /**
  *
  * Calls the Chart function to draw the chart with the current dataset.
@@ -4056,11 +4065,15 @@ function drawChart() {
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
-  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
-  currentStory = _checkbox.default.getCurrent(storySelector, '.filter-story');
-  console.log(currentStory); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child'); // currentStory = Checkbox.getCurrent(storySelector, '.filter-story')
+
+  console.log(storiesOnly);
+  console.log(currentCountry);
+  console.log(currentCategories); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
+    console.log(d);
+
     if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type + d.category))) {
       return d;
     }
