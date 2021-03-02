@@ -232,10 +232,24 @@ function drawChart() {
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter((d) => {
     console.log(d)
+    // Filter by date, taking into account items that span multiple years
+    let showBasedOnYear = false
+    if (d.endYear) {
+      if (
+        d.startYear >= startYear ||
+        (d.endYear >= startYear && d.endYear <= endYear)
+      ) {
+        showBasedOnYear = true
+      }
+    } else {
+      if (d.year >= startYear && d.year <= endYear) {
+        showBasedOnYear = true
+      }
+    }
+
     if (
       (currentCountry.includes(d.country) || currentCountry.includes('all')) &&
-      d.year >= startYear &&
-      d.year <= endYear &&
+      showBasedOnYear &&
       (currentCategories.includes(d.category) ||
         currentSubcategories.includes(d.type + d.category))
     ) {
