@@ -157,29 +157,3 @@
     transform: translateX(calc(100% + 2px));
   }
 }
-
-.toggle-container {
-  position: relative;
-  width: rem(28px);
-  height: rem(16px);
-  border: 2px solid $color__black;
-  border-radius: 50px;
-}
-
-.toggle-ball {
-  position: absolute;
-  width: rem(12px);
-  height: rem(12px);
-  background-color: $color__black;
-  border-radius: 50%;
-  transition: all 0.2s linear;
-}
-
-#story-toggle {
-  position: absolute;
-  opacity: 0;
-
-  &:checked + label .toggle-ball {
-    transform: translateX(rem(12px));
-  }
-}
