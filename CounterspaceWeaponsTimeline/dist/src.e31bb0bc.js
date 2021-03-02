@@ -1696,13 +1696,19 @@ function parseData(_ref) {
 }
 
 var stringFields = ['category', 'type', 'storyBool', 'learnMore', 'learnMoreURL', 'country', 'startDate', 'endDate', 'title', 'source'];
+var numFields = ['id'];
+var booleanFields = ['storyBool', 'learnMore'];
 
 function fetchCSV(src) {
   // return d3.csv(src)
   return d3.csv(src, function (d, index) {
     for (var i in d) {
-      if (!stringFields.includes(i)) {
+      if (numFields.includes(i)) {
         d[i] = +d[i];
+      }
+
+      if (booleanFields.includes(i)) {
+        d[i] = d[i] == 'TRUE' ? true : false;
       }
     }
 
@@ -3378,12 +3384,12 @@ module.exports = "/arrow-down-black.5a275c38.svg";
 module.exports = "/arrow-down.5a58f9ac.svg";
 },{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/cyber-DetailsFlag.03fb2117.svg";
-},{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
-module.exports = "/electronic.d04db2d8.svg";
-},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
 module.exports = "/cyber.90da9b39.svg";
+},{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
+},{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
+module.exports = "/electronic.d04db2d8.svg";
 },{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
 },{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
@@ -3397,15 +3403,15 @@ module.exports = {
   "arrow-down-black": require("./arrow-down-black.svg"),
   "arrow-down": require("./arrow-down.svg"),
   "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
-  "electronic": require("./electronic.svg"),
-  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
   "cyber": require("./cyber.svg"),
+  "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
+  "electronic": require("./electronic.svg"),
   "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
   "kinetic-physical": require("./kinetic-physical.svg"),
   "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
   "non-kinetic-physical": require("./non-kinetic-physical.svg")
 };
-},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3465,11 +3471,11 @@ function drawChart() {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
     var moreInfo;
-    var detailsIcon = "";
+    var detailsIcon = '';
     var categoryName = d.category.replace(/\s+/g, '-').toLowerCase();
-    var categoryDetailsIcon = categoryName + "-DetailsFlag";
+    var categoryDetailsIcon = categoryName + '-DetailsFlag';
 
-    if (d.storyBool.toLowerCase() == "false" && d.learnMore.toLowerCase() == "false") {
+    if (d.storyBool == false && d.learnMore == false) {
       moreInfo = "<summary>Source</summary><div class=\"action__details-inner\"><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">".concat(d.source, "</p></div>");
     } else {
       moreInfo = "<summary>Details</summary><div class=\"action__details-inner\"><p class=\"action__details-body\">STORY PLACEHOLDER Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod semper ante, eu bibendum ipsum feugiat nec. Quisque vel faucibus lectus. Nulla ultrices consequat mi non fermentum. Phasellus at placerat neque. Aliquam erat volutpat. Aenean magna urna, sodales semper dignissim non, pretium ut magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper tortor at est ultrices convallis. Aenean eu imperdiet felis. In pellentesque risus sed nulla mattis dignissim. Donec tincidunt, felis in auctor consequat, lorem purus vestibulum dui, vel euismod nisl dui sed enim. Vivamus eleifend, enim sed ultrices pellentesque, mi sapien pellentesque ante, feugiat porttitor odio erat finibus lacus. Nullam volutpat iaculis urna, nec fermentum nulla pretium a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p><a href=\"".concat(d.learnMoreURL, "\" class=\"action__details-link\">Explore &#8594;</a><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
@@ -3805,7 +3811,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var dataSrc = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2JDQ4Sz-mqm1dsVfKT2vF9rINxli4Gm79FYFUZas7AzpgJwkW9jJ1ct7tuMHukwWJEH8qjAGIzfu8/pub?gid=892231861&single=true&output=csv';
 var data;
 var countrySelector = '#filter-country';
-var currentCountry = ["all"];
+var currentCountry = ['all'];
 var startYearSelector = '#filter-start-year';
 var endYearSelector = '#filter-end-year';
 var startYear;
@@ -3813,8 +3819,8 @@ var endYear;
 var categorySelector = '.interactive__filters--category';
 var currentCategories = [];
 var currentSubcategories = [];
-var storySelector = '.interactive__filters--story';
-var storiesOnly = "";
+var storyToggle = document.querySelector('#story-toggle');
+var showStoriesOnly = false;
 var clearAllSelector = '.filter-clear';
 
 function init() {
@@ -3841,17 +3847,17 @@ function _loadDataAndSetup() {
 
               e.target.parentElement.classList.toggle('isExpanded');
 
-              if (e.target.innerHTML == "+") {
-                e.target.innerHTML = "&#8722";
+              if (e.target.innerHTML == '+') {
+                e.target.innerHTML = '&#8722';
               } else {
-                e.target.innerHTML = "+";
+                e.target.innerHTML = '+';
               }
             };
 
             colorBackground = function _colorBackground(e) {
               if (e.target !== e.currentTarget) {
                 if (e.target.tagName == 'SUMMARY') {
-                  e.target.closest('.timeline__entry').classList.toggle("details-active");
+                  e.target.closest('.timeline__entry').classList.toggle('details-active');
                 }
               }
             };
@@ -3869,18 +3875,16 @@ function _loadDataAndSetup() {
             setupCountrySelector();
             setupYearSelector();
             setupCategorySelector();
-            filterByStory(); // setupStorySelector()
-
             setupFormButtons();
             checkSubcategories();
             drawChart();
             hideLoading();
             parentEl = document.querySelector('#interactive__timeline');
-            parentEl.addEventListener("click", colorBackground);
+            parentEl.addEventListener('click', colorBackground);
             categoryToggle = document.querySelector('.interactive__filters--category');
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 20:
+          case 19:
           case "end":
             return _context.stop();
         }
@@ -3894,9 +3898,9 @@ function checkSubcategories() {
   for (var category in data.subcategories) {
     var parentE = document.querySelectorAll('.parent');
 
-    if (parentE.checked == "checked") {
+    if (parentE.checked == 'checked') {
       var children = document.querySelectorAll('.child');
-      children.checked = "checked";
+      children.checked = 'checked';
     }
   }
 }
@@ -3915,8 +3919,8 @@ function setupCountrySelector() {
     };
   });
   options.unshift({
-    value: "all",
-    label: "All countries"
+    value: 'all',
+    label: 'All countries'
   });
 
   _dropdown.default.setup({
@@ -3981,9 +3985,9 @@ function setupFormButtons() {
   // })
 }
 /**
- * 
+ *
  * Setup category filter.
- * 
+ *
  */
 
 
@@ -4012,46 +4016,14 @@ function setupCategorySelector() {
   console.log(options);
 }
 /**
- * 
+ *
  * Setup story filter.
- * 
+ *
  */
 
 
-function setupStorySelector() {
-  // const options = {
-  //   value: "storyBool",
-  //   label: "Actions With Detailed Story Only"
-  // }
-  var container = document.querySelector('.interactive__filters--story');
-  var inputWrapper = document.createElement('div');
-  inputWrapper.className = 'filter-story';
-  var inputLabel = document.createElement('label');
-  inputLabel.innerHTML = "Actions With Detailed Story Only";
-  inputLabel.setAttribute('for', 'story-toggle');
-  inputLabel.setAttribute('class', 'input__label');
-  var inputEl = document.createElement('input');
-  inputEl.setAttribute('type', 'checkbox');
-  inputEl.setAttribute('value', 'storyBool');
-  inputEl.setAttribute('id', 'story-toggle');
-  inputWrapper.appendChild(inputLabel);
-  inputWrapper.appendChild(inputEl);
-  container.appendChild(inputWrapper); // Checkbox.setup({
-  //   selector: storySelector,
-  //   name: 'filter-story',
-  //   data: options,
-  //   current: currentStory,
-  // })
-}
-
-function filterByStory() {
-  var storyToggle = document.querySelector('#story-toggle');
-
-  if (storyToggle.checked == true) {
-    storiesOnly = "TRUE";
-  } else {
-    storiesOnly = "";
-  }
+function getShowStoryValue() {
+  return storyToggle.checked;
 }
 /**
  *
@@ -4065,16 +4037,21 @@ function drawChart() {
   startYear = _dropdown.default.getCurrent(startYearSelector);
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
-  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child'); // currentStory = Checkbox.getCurrent(storySelector, '.filter-story')
-
-  console.log(storiesOnly);
-  console.log(currentCountry);
-  console.log(currentCategories); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
+  showStoriesOnly = getShowStoryValue();
+  console.log(showStoriesOnly); // console.log(currentCountry)
+  // console.log(currentCategories)
+  // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
     console.log(d);
 
     if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && d.year >= startYear && d.year <= endYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type + d.category))) {
+      // Only apply this conditional if showStoriesOnly = true
+      if (showStoriesOnly) {
+        return d.storyBool ? d : false;
+      }
+
       return d;
     }
   });
@@ -4127,7 +4104,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53847" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55707" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
