@@ -112,28 +112,48 @@
   cursor: pointer;
 }
 
-.toggle-container {
+.checkbox-toggle {
   position: relative;
-  width: rem(28px);
-  height: rem(16px);
-  border: 2px solid $color__black;
-  border-radius: 50px;
-}
 
-.toggle-ball {
-  position: absolute;
-  width: rem(12px);
-  height: rem(12px);
-  background-color: $color__black;
-  border-radius: 50%;
-  transition: all 0.2s linear;
-}
+  input[type='checkbox'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+  }
 
-#story-toggle {
-  position: absolute;
-  opacity: 0;
+  input[type='checkbox'] + label {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    color: $color__black;
+    font-weight: normal;
+  }
 
-  &:checked + label .toggle-ball {
-    transform: translateX(rem(12px));
+  input[type='checkbox'] + label::before {
+    content: '';
+    display: inline-block;
+    width: rem(28px);
+    height: rem(16px);
+    border: 2px solid $color__black;
+    border-radius: 50px;
+    transition: 0.2s;
+  }
+
+  input[type='checkbox'] + label::after {
+    content: '';
+    position: absolute;
+    bottom: rem(3px);
+    left: rem(3px);
+    width: rem(10px);
+    height: rem(10px);
+    background-color: $color__black;
+    border-radius: 50%;
+    transition: all 0.2s linear;
+  }
+
+  input[type='checkbox']:checked + label::after {
+    transform: translateX(calc(100% + 2px));
   }
 }

@@ -27,7 +27,8 @@ function parseData({ src }) {
       }
 
       // If this subcategory doesn't exist, make it
-      subcategories[action.category] = subcategories[action.category] || new Set()
+      subcategories[action.category] =
+        subcategories[action.category] || new Set()
 
       // If this type doesn't exist within this subcategory, create it
       subcategories[action.category].add(action.type)
@@ -66,12 +67,20 @@ const stringFields = [
   'source',
 ]
 
+const numFields = ['id']
+
+const booleanFields = ['storyBool', 'learnMore']
+
 function fetchCSV(src) {
   // return d3.csv(src)
   return d3.csv(src, (d, index) => {
     for (let i in d) {
-      if (!stringFields.includes(i)) {
+      if (numFields.includes(i)) {
         d[i] = +d[i]
+      }
+
+      if (booleanFields.includes(i)) {
+        d[i] = d[i] == 'TRUE' ? true : false
       }
     }
 
