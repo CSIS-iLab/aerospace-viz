@@ -9,7 +9,6 @@ $color__black-500: rgba(0, 0, 0, 0.5);
 $color__black-600: rgba(0, 0, 0, 0.6);
 $color__black-750: rgba(0, 0, 0, 0.75);
 
-
 $color__gray-100: #dedede;
 $color__gray-200: #b5bdc1;
 $color__gray-300: #4b5255;
@@ -26,6 +25,9 @@ $color__yellow-100: #f9bc65;
 $color__orange-100: #d66e42;
 $color__green-100: #4f9793;
 $color__green-200: #3e7a82;
+
+$color__orange-btn: #c8744c;
+$color__orange-btn-hover: #a7603e;
 
 $color__primary: $color__orange-100;
 $color__primary-200: color.scale($color__primary, $lightness: -10%);
@@ -51,18 +53,18 @@ $size__content-max-width: 900px;
 $category-colors: (
   'non-kinetic-physical': (
     color: rgba(249, 188, 101, 0.2),
-    corners: $color__yellow-100
+    corners: $color__yellow-100,
   ),
   'kinetic-physical': (
     color: rgba(214, 110, 66, 0.2),
-    corners: $color__orange-100
+    corners: $color__orange-100,
   ),
   'cyber': (
     color: rgba(79, 151, 147, 0.2),
-    corners: $color__green-100
+    corners: $color__green-100,
   ),
   'electronic': (
     color: rgba(25, 108, 149, 0.2),
-    corners: $color__blue-200
-  )
+    corners: $color__blue-200,
+  ),
 );
