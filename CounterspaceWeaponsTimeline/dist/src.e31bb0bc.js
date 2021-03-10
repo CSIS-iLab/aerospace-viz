@@ -3663,7 +3663,7 @@ var Checkbox = {
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
   var parent = container.append('div').attr('class', 'parent');
-  parent.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
+  parent.append('input').attr('type', 'checkbox').property('checked', true).attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
     return d.value;
@@ -3689,11 +3689,11 @@ function parentSelection(e, d) {
 
 function generateChildren(d, i, n) {
   var container = d3.select(this);
-  container.append('input').attr('type', 'checkbox').property("checked", true).attr('id', function (d) {
+  container.append('input').attr('type', 'checkbox').property('checked', true).attr('id', function (d) {
     return d.value + d.parent;
   }).property('value', function (d) {
     return d.value;
-  }).on("change", function (event, d) {
+  }).on('change', function (event, d) {
     childSelection(d, n);
   });
   container.append('label').attr('for', function (d) {
@@ -3880,7 +3880,6 @@ function _loadDataAndSetup() {
               showStoriesOnly: false,
               currentCountry: 'all'
             };
-            console.log(defaults);
             startYear = defaults.startYear;
             endYear = defaults.endYear;
             currentCategories = defaults.currentCategories;
@@ -3898,7 +3897,7 @@ function _loadDataAndSetup() {
             categoryToggle = document.querySelector('.interactive__filters--category');
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 23:
+          case 22:
           case "end":
             return _context.stop();
         }
@@ -4061,17 +4060,14 @@ function drawChart() {
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
   currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
-  showStoriesOnly = getShowStoryValue(); // console.log(showStoriesOnly)
-  // console.log(currentCountry)
-  // console.log(currentCategories)
-  // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  showStoriesOnly = getShowStoryValue(); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
     // Filter by date, taking into account items that span multiple years
     var showBasedOnYear = false;
 
     if (d.endYear) {
-      if (d.startYear >= startYear || d.endYear >= startYear && d.endYear <= endYear) {
+      if (d.startYear >= startYear && d.startYear <= endYear || d.endYear >= startYear && d.endYear <= endYear || d.startYear <= startYear && d.endYear >= endYear) {
         showBasedOnYear = true;
       }
     } else {

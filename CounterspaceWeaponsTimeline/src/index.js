@@ -47,8 +47,6 @@ async function loadDataAndSetup() {
     currentCountry: 'all',
   }
 
-  console.log(defaults)
-
   startYear = defaults.startYear
   endYear = defaults.endYear
   currentCategories = defaults.currentCategories
@@ -249,18 +247,15 @@ function drawChart() {
   currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
   showStoriesOnly = getShowStoryValue()
 
-  // console.log(showStoriesOnly)
-  // console.log(currentCountry)
-  // console.log(currentCategories)
-
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter((d) => {
     // Filter by date, taking into account items that span multiple years
     let showBasedOnYear = false
     if (d.endYear) {
       if (
-        d.startYear >= startYear ||
-        (d.endYear >= startYear && d.endYear <= endYear)
+        (d.startYear >= startYear && d.startYear <= endYear) ||
+        (d.endYear >= startYear && d.endYear <= endYear) ||
+        (d.startYear <= startYear && d.endYear >= endYear)
       ) {
         showBasedOnYear = true
       }
