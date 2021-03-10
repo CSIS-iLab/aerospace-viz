@@ -11,7 +11,7 @@ const dataSrc =
 let data
 
 const countrySelector = '#filter-country'
-let currentCountry = ['all']
+let currentCountry = []
 
 const startYearSelector = '#filter-start-year'
 const endYearSelector = '#filter-end-year'
@@ -24,9 +24,11 @@ let currentCategories = []
 let currentSubcategories = []
 
 const storyToggle = document.querySelector('#story-toggle')
-let showStoriesOnly = false
+let showStoriesOnly = ''
 
 let clearAllSelector = '.filter-clear'
+
+let defaults = {}
 
 function init() {
   loadDataAndSetup()
@@ -37,9 +39,21 @@ async function loadDataAndSetup() {
     src: dataSrc,
   })
 
-  startYear = data.years[0]
-  endYear = data.years[1]
-  currentCategories = data.categories
+  defaults = {
+    startYear: data.years[0],
+    endYear: data.years[1],
+    currentCategories: data.categories,
+    showStoriesOnly: false,
+    currentCountry: 'all',
+  }
+
+  console.log(defaults)
+
+  startYear = defaults.startYear
+  endYear = defaults.endYear
+  currentCategories = defaults.currentCategories
+  showStoriesOnly = defaults.showStoriesOnly
+  currentCountry = defaults.currentCountry
 
   setupCountrySelector()
   setupYearSelector()
@@ -166,12 +180,24 @@ function setupFormButtons() {
       drawChart()
     })
 
-  // Buttons.setup({
-  //   selector: clearAllSelector,
-  //   data: "",
-  //   current: "",
-  //   onClick: drawChart()
-  // })
+  document
+    .getElementById('filter-clear')
+    .addEventListener('click', function () {
+      let countryDropdown = document.querySelector(countrySelector)
+      countryDropdown.value = defaults.currentCountry
+      let startDropdown = document.querySelector(startYearSelector)
+      startDropdown.value = defaults.startYear
+      let endDropdown = document.querySelector(endYearSelector)
+      endDropdown.value = defaults.endYear
+      let categoryCheckboxes = document.querySelectorAll(
+        '.parent input[type=checkbox]'
+      )
+      for (let i = 0; i < categoryCheckboxes.length; i++) {
+        categoryCheckboxes[i].checked = true
+      }
+      storyToggle.checked = defaults.showStoriesOnly
+      drawChart()
+    })
 }
 
 /**
@@ -197,8 +223,6 @@ function setupCategorySelector() {
     data: options,
     current: currentCategories,
   })
-
-  console.log(options)
 }
 
 /**
@@ -225,13 +249,12 @@ function drawChart() {
   currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
   showStoriesOnly = getShowStoryValue()
 
-  console.log(showStoriesOnly)
+  // console.log(showStoriesOnly)
   // console.log(currentCountry)
   // console.log(currentCategories)
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter((d) => {
-    console.log(d)
     // Filter by date, taking into account items that span multiple years
     let showBasedOnYear = false
     if (d.endYear) {
@@ -242,7 +265,7 @@ function drawChart() {
         showBasedOnYear = true
       }
     } else {
-      if (d.year >= startYear && d.year <= endYear) {
+      if (d.startYear >= startYear && d.startYear <= endYear) {
         showBasedOnYear = true
       }
     }

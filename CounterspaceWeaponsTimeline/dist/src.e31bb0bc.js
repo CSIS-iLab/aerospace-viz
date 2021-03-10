@@ -3814,7 +3814,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var dataSrc = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2JDQ4Sz-mqm1dsVfKT2vF9rINxli4Gm79FYFUZas7AzpgJwkW9jJ1ct7tuMHukwWJEH8qjAGIzfu8/pub?gid=892231861&single=true&output=csv';
 var data;
 var countrySelector = '#filter-country';
-var currentCountry = ['all'];
+var currentCountry = [];
 var startYearSelector = '#filter-start-year';
 var endYearSelector = '#filter-end-year';
 var startYear;
@@ -3823,8 +3823,9 @@ var categorySelector = '.interactive__filters--category';
 var currentCategories = [];
 var currentSubcategories = [];
 var storyToggle = document.querySelector('#story-toggle');
-var showStoriesOnly = false;
+var showStoriesOnly = '';
 var clearAllSelector = '.filter-clear';
+var defaults = {};
 
 function init() {
   loadDataAndSetup();
@@ -3872,9 +3873,19 @@ function _loadDataAndSetup() {
 
           case 4:
             data = _context.sent;
-            startYear = data.years[0];
-            endYear = data.years[1];
-            currentCategories = data.categories;
+            defaults = {
+              startYear: data.years[0],
+              endYear: data.years[1],
+              currentCategories: data.categories,
+              showStoriesOnly: false,
+              currentCountry: 'all'
+            };
+            console.log(defaults);
+            startYear = defaults.startYear;
+            endYear = defaults.endYear;
+            currentCategories = defaults.currentCategories;
+            showStoriesOnly = defaults.showStoriesOnly;
+            currentCountry = defaults.currentCountry;
             setupCountrySelector();
             setupYearSelector();
             setupCategorySelector();
@@ -3887,7 +3898,7 @@ function _loadDataAndSetup() {
             categoryToggle = document.querySelector('.interactive__filters--category');
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 19:
+          case 23:
           case "end":
             return _context.stop();
         }
@@ -3980,12 +3991,23 @@ function setupYearSelector() {
 function setupFormButtons() {
   document.getElementById('filter-apply').addEventListener('click', function () {
     drawChart();
-  }); // Buttons.setup({
-  //   selector: clearAllSelector,
-  //   data: "",
-  //   current: "",
-  //   onClick: drawChart()
-  // })
+  });
+  document.getElementById('filter-clear').addEventListener('click', function () {
+    var countryDropdown = document.querySelector(countrySelector);
+    countryDropdown.value = defaults.currentCountry;
+    var startDropdown = document.querySelector(startYearSelector);
+    startDropdown.value = defaults.startYear;
+    var endDropdown = document.querySelector(endYearSelector);
+    endDropdown.value = defaults.endYear;
+    var categoryCheckboxes = document.querySelectorAll('.parent input[type=checkbox]');
+
+    for (var i = 0; i < categoryCheckboxes.length; i++) {
+      categoryCheckboxes[i].checked = true;
+    }
+
+    storyToggle.checked = defaults.showStoriesOnly;
+    drawChart();
+  });
 }
 /**
  *
@@ -4015,8 +4037,6 @@ function setupCategorySelector() {
     data: options,
     current: currentCategories
   });
-
-  console.log(options);
 }
 /**
  *
@@ -4041,14 +4061,13 @@ function drawChart() {
   endYear = _dropdown.default.getCurrent(endYearSelector);
   currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
   currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
-  showStoriesOnly = getShowStoryValue();
-  console.log(showStoriesOnly); // console.log(currentCountry)
+  showStoriesOnly = getShowStoryValue(); // console.log(showStoriesOnly)
+  // console.log(currentCountry)
   // console.log(currentCategories)
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
-    console.log(d); // Filter by date, taking into account items that span multiple years
-
+    // Filter by date, taking into account items that span multiple years
     var showBasedOnYear = false;
 
     if (d.endYear) {
@@ -4056,7 +4075,7 @@ function drawChart() {
         showBasedOnYear = true;
       }
     } else {
-      if (d.year >= startYear && d.year <= endYear) {
+      if (d.startYear >= startYear && d.startYear <= endYear) {
         showBasedOnYear = true;
       }
     }
