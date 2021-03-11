@@ -20,7 +20,7 @@
 }
 
 .mobile-only {
-  @include breakpoint('medium') {
+  @include breakpoint('large') {
     display: none;
   }
 }
@@ -28,7 +28,7 @@
 .desktop-only {
   display: none;
 
-  @include breakpoint('medium') {
+  @include breakpoint('large') {
     display: initial;
   }
 }

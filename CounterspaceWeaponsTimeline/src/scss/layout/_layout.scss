@@ -13,8 +13,12 @@
 }
 
 .interactive__header {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   max-width: $size__max-width;
-  margin: 0 auto 1.5rem;
+  margin-bottom: rem(36px);
 
   @include breakpoint('medium') {
     display: grid;

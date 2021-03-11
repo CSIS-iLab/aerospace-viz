@@ -2,16 +2,12 @@
 
 .interactive__filters {
   &-wrapper {
+    position: absolute;
+    left: 0;
     display: flex;
     flex-wrap: wrap;
-    margin-right: auto;
-    margin-left: auto;
-    background: $color__background;
-    position: absolute;
-    top: rem(72px);
     width: 100vw;
-    margin-left: -12px !important;
-    padding-bottom: rem(16px) !important;
+    background: $color__background;
     visibility: hidden;
     transition: clip-path 0.2s linear, visibility 0.2s linear;
     clip-path: inset(0 0 100% 0);
@@ -20,10 +16,6 @@
       z-index: 15;
       visibility: visible;
       clip-path: inset(0);
-    }
-
-    @include breakpoint('medium') {
-      justify-content: space-evenly;
     }
 
     @include breakpoint('large') {
@@ -56,7 +48,7 @@
   }
 
   > * {
-    margin-top: rem(15px);
+    // margin-top: rem(15px);
   }
 
   // Buttons
