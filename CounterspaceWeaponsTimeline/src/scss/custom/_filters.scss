@@ -1,14 +1,58 @@
 @use 'abstracts' as *;
 
 .interactive__filters {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: auto;
-  margin-left: auto;
-  background: $color__background;
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: auto;
+    margin-left: auto;
+    background: $color__background;
+    position: absolute;
+    top: rem(72px);
+    width: 100vw;
+    margin-left: -12px !important;
+    padding-bottom: rem(16px) !important;
+    visibility: hidden;
+    transition: clip-path 0.2s linear, visibility 0.2s linear;
+    clip-path: inset(0 0 100% 0);
 
-  @include breakpoint('medium') {
-    justify-content: space-evenly;
+    &.is-visible {
+      z-index: 15;
+      visibility: visible;
+      clip-path: inset(0);
+    }
+
+    @include breakpoint('medium') {
+      justify-content: space-evenly;
+    }
+
+    @include breakpoint('large') {
+      position: relative;
+      top: 0;
+      width: 100%;
+      margin-left: unset !important;
+      padding-bottom: 0 !important;
+      visibility: visible;
+      opacity: 1;
+      clip-path: inset(0);
+    }
+  }
+
+  .hamburger {
+    z-index: 15;
+    order: 1;
+    color: $color__black;
+    background: #f2f2f2;
+    border: 0;
+
+    &.is-invisible {
+      z-index: -1;
+      display: none;
+    }
+
+    @include breakpoint('large') {
+      display: none;
+    }
   }
 
   > * {

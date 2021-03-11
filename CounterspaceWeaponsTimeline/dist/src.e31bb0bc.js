@@ -3723,7 +3723,9 @@ function childSelection(d, childrenNodes) {
 
 var _default = Checkbox;
 exports.default = _default;
-},{"d3-selection":"../node_modules/d3-selection/src/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"d3-selection":"../node_modules/d3-selection/src/index.js"}],"../img/css-icons/*.svg":[function(require,module,exports) {
+module.exports = {};
+},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -3812,6 +3814,8 @@ var _buttons = _interopRequireDefault(require("./js/buttons"));
 
 var _checkbox = _interopRequireDefault(require("./js/checkbox"));
 
+var _ = _interopRequireDefault(require("../img/css-icons/*.svg"));
+
 require("./scss/main.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -3831,6 +3835,34 @@ var storyToggle = document.querySelector('#story-toggle');
 var showStoriesOnly = '';
 var clearAllSelector = '.filter-clear';
 var defaults = {};
+document.addEventListener('DOMContentLoaded', function () {
+  var hamburger = document.querySelector('.hamburger');
+  var menu = document.querySelector('.interactive__filters-wrapper');
+  var content = document.querySelector('#interactive__timeline');
+
+  function setAria() {
+    var isExpanded = hamburger.getAttribute('aria-expanded');
+
+    if (isExpanded == 'true') {
+      isExpanded = 'false';
+    } else {
+      isExpanded = 'true';
+    }
+
+    hamburger.setAttribute('aria-expanded', isExpanded);
+  }
+
+  hamburger.addEventListener('click', function () {
+    menu.classList.toggle('is-visible');
+    setAria();
+  });
+  content.addEventListener('click', function () {
+    if (menu.classList.contains('is-visible')) {
+      menu.classList.remove('is-visible');
+      setAria();
+    }
+  });
+});
 
 function init() {
   loadDataAndSetup();
@@ -4111,7 +4143,7 @@ function hideLoading() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
-},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./js/data":"js/data.js","./js/chart":"js/chart.js","./js/dropdown":"js/dropdown.js","./js/buttons":"js/buttons.js","./js/checkbox":"js/checkbox.js","./scss/main.scss":"scss/main.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js","./js/data":"js/data.js","./js/chart":"js/chart.js","./js/dropdown":"js/dropdown.js","./js/buttons":"js/buttons.js","./js/checkbox":"js/checkbox.js","../img/css-icons/*.svg":"../img/css-icons/*.svg","./scss/main.scss":"scss/main.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -4139,7 +4171,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51650" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65092" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -3,6 +3,7 @@ import Chart from './js/chart'
 import Dropdown from './js/dropdown'
 import Buttons from './js/buttons'
 import Checkbox from './js/checkbox'
+import Img from '../img/css-icons/*.svg'
 
 import './scss/main.scss'
 
@@ -29,6 +30,35 @@ let showStoriesOnly = ''
 let clearAllSelector = '.filter-clear'
 
 let defaults = {}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const hamburger = document.querySelector('.hamburger')
+  const menu = document.querySelector('.interactive__filters-wrapper')
+  const content = document.querySelector('#interactive__timeline')
+
+  function setAria() {
+    let isExpanded = hamburger.getAttribute('aria-expanded')
+
+    if (isExpanded == 'true') {
+      isExpanded = 'false'
+    } else {
+      isExpanded = 'true'
+    }
+    hamburger.setAttribute('aria-expanded', isExpanded)
+  }
+
+  hamburger.addEventListener('click', () => {
+    menu.classList.toggle('is-visible')
+    setAria()
+  })
+
+  content.addEventListener('click', () => {
+    if (menu.classList.contains('is-visible')) {
+      menu.classList.remove('is-visible')
+      setAria()
+    }
+  })
+})
 
 function init() {
   loadDataAndSetup()

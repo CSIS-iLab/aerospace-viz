@@ -19,6 +19,7 @@
       type="text/css"
       media="all"
     />
+    <script src="https://kit.fontawesome.com/e0bde54006.js" crossorigin="anonymous"></script>
   </head>
 
   <body
@@ -51,51 +52,49 @@
                       <div class="interactive__container hide-on-load">
                         <div class="interactive__legend">Legend</div>
                         <div class="interactive__filters">
-                          Side bar Filters
-                          <div class="interactive__filters--country">
-                            <label class="input__label" for="filter-country"
+                          <button class="hamburger" aria-label="Open the filters" aria-expanded="false">Filters <i class="fas fa-sliders-h"></i></button>
+                          <div class="interactive__filters-wrapper">
+                            Side bar Filters
+                            <div class="interactive__filters--country">
+                              <label class="input__label" for="filter-country"
                               >Filter by country of origin</label
-                            >
-                            <select
+                              >
+                              <select
                               class="input__select filter__country"
                               id="filter-country"
-                            ></select>
-                          </div>
-                          <div class="interactive__filters--category"></div>
-                          <div
-                            class="interactive__filters--story checkbox-toggle"
-                          >
-                            <input
+                              ></select>
+                            </div>
+                            <div class="interactive__filters--category"></div>
+                            <div class="interactive__filters--story checkbox-toggle">
+                              <input
                               type="checkbox"
                               name="showStoriesOnly"
                               id="story-toggle"
                               class="input__select"
-                            />
-                            <label for="story-toggle" class="input__label"
-                              >Actions With Detailed Story Only
-                            </label>
-                          </div>
-                          <div class="interactive__filters--years">
-                            <div class="interactive__filters--start-year">
-                              <label
+                              />
+                              <label for="story-toggle" class="input__label">Actions With Detailed Story Only</label>
+                            </div>
+                            <div class="interactive__filters--years">
+                              <div class="interactive__filters--start-year">
+                                <label
                                 class="input__label"
                                 for="filter-start-year"
                                 >Start</label
-                              >
-                              <select
+                                >
+                                <select
                                 class="input__select filter__year"
                                 id="filter-start-year"
-                              ></select>
-                            </div>
-
-                            <div class="interactive__filters--end-year">
-                              <label class="input__label" for="filter-end-year"
+                                ></select>
+                              </div>
+                              <div class="interactive__filters--end-year">
+                                <label class="input__label" for="filter-end-year"
                                 >End</label
-                              >
-                              <select
+                                >
+                                <select
                                 class="input__select filter__year"
                                 id="filter-end-year"
-                              ></select>
+                                ></select>
+                              </div>
                             </div>
                             <div class="interactive__filters--button-container">
                               <div class="interactive__filters--clear">
