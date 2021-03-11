@@ -3,10 +3,13 @@
 .interactive__filters {
   &-wrapper {
     position: absolute;
-    left: 0;
+    right: 0;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    width: 100vw;
+    align-content: center;
+    width: rem(300px);
+    padding: rem(12px);
     background: $color__background;
     visibility: hidden;
     transition: clip-path 0.2s linear, visibility 0.2s linear;
@@ -16,6 +19,10 @@
       z-index: 15;
       visibility: visible;
       clip-path: inset(0);
+    }
+
+    > * {
+      margin-top: rem(15px);
     }
 
     @include breakpoint('large') {
@@ -28,6 +35,31 @@
       opacity: 1;
       clip-path: inset(0);
     }
+  }
+
+  &--years {
+    display: flex;
+
+    .input__label {
+      color: $color__black-175;
+    }
+  }
+
+  .filter__year,
+  .filter__country {
+    @extend %label;
+    width: max-content;
+  }
+
+  .filter__year {
+    min-width: rem(64px);
+    font-weight: bold;
+    color: $color__black-175;
+  }
+
+  .filter__country {
+    min-width: rem(155px);
+    color: $color__black-150;
   }
 
   .hamburger {
@@ -45,10 +77,6 @@
     @include breakpoint('large') {
       display: none;
     }
-  }
-
-  > * {
-    // margin-top: rem(15px);
   }
 
   // Buttons
@@ -71,7 +99,7 @@
 
   #filter-clear {
     margin: 0;
-    color: $color__black-600;
+    color: $color__black-160;
     font-family: $font__source;
     line-height: 1.28;
     text-transform: capitalize;
@@ -84,7 +112,7 @@
     }
 
     &:disabled {
-      color: $color__black-400;
+      color: $color__black-140;
     }
   }
 }

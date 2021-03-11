@@ -37,8 +37,8 @@
                       </div>
                       <div class="interactive__container hide-on-load">
                         <div class="interactive__header">
-                          <div class="interactive__legend mobile-only"><img src="/non-kinetic-physical-DetailsFlag.e2b58b49.svg" alt="Detailed story icon"> : Story details available</div>
-                          <div class="interactive__legend desktop-only">
+                          <div class="interactive__legend interactive__legend-mobile mobile-only"><img src="/non-kinetic-physical-DetailsFlag.e2b58b49.svg" alt="Detailed story icon"> : Story details available</div>
+                          <div class="interactive__legend interactive__legend-desktop desktop-only">
                             <ul>
                               <li class="interactive__legend-item non-kinetic-physical"><img src="/non-kinetic-physical.63ae79f9.svg" alt="Non-kinetic physical icon">Non-kinetic Physical</li>
                               <li class="interactive__legend-item kinetic-physical"><img src="/kinetic-physical.ce64b425.svg" alt="Kinetic physical icon">Kinetic Physical</li>
@@ -50,12 +50,13 @@
                           <div class="interactive__filters">
                             <button class="hamburger" aria-label="Open the filters" aria-expanded="false">Filters <i class="fas fa-sliders-h"></i></button>
                             <div class="interactive__filters-wrapper">
-                              Side bar Filters
                               <div class="interactive__filters--country">
                                 <label class="input__label" for="filter-country">Filter by country of origin</label>
                                 <select class="input__select filter__country" id="filter-country"></select>
                               </div>
-                              <div class="interactive__filters--category"></div>
+                              <div class="interactive__filters--category">
+                                <label for="checkbox-container" class="input__label">Filter by type</label>
+                              </div>
                               <div class="interactive__filters--story checkbox-toggle">
                                 <input type="checkbox" name="showStoriesOnly" id="story-toggle" class="input__select">
                                 <label for="story-toggle" class="input__label">Actions With Detailed Story Only</label>

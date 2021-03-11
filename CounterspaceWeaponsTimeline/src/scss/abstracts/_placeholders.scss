@@ -2,7 +2,6 @@
 @use 'mixins' as *;
 
 %label {
-  color: $color__black;
   font-family: $font__source;
   @include font-size(14px);
   line-height: 1.4;

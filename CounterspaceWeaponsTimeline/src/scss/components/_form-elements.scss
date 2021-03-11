@@ -7,7 +7,7 @@
 .input__label {
   display: block;
   margin: 0 rem(8px) rem(5px);
-  color: $color__black-500;
+  color: $color__black-150;
   text-transform: uppercase;
   @extend %form__label;
 }
@@ -21,9 +21,7 @@
 
 // Select
 .input__select {
-  width: fit-content;
-  min-width: 200px;
-  padding: 0.2rem 0.6rem;
+  padding: rem(8px);
   background-color: #fff;
   background-image: url('data:image/svg+xml,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22512%22%20height%3D%22512%22%20viewBox%3D%220%200%20512%20512%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M256%2C298.3L256%2C298.3L256%2C298.3l174.2-167.2c4.3-4.2%2C11.4-4.1%2C15.8%2C0.2l30.6%2C29.9c4.4%2C4.3%2C4.5%2C11.3%2C0.2%2C15.5L264.1%2C380.9c-2.2%2C2.2-5.2%2C3.2-8.1%2C3c-3%2C0.1-5.9-0.9-8.1-3L35.2%2C176.7c-4.3-4.2-4.2-11.2%2C0.2-15.5L66%2C131.3c4.4-4.3%2C11.5-4.4%2C15.8-0.2L256%2C298.3z%22/%3E%3C/svg%3E');
   background-repeat: no-repeat;
@@ -51,9 +49,10 @@
   }
 
   input[type='checkbox'] + label {
+    @extend %label;
     display: inline-block;
     color: $color__black;
-    font-weight: normal;
+    font-weight: 600;
   }
 
   input[type='checkbox'] + label::before {
