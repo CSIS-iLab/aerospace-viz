@@ -75,7 +75,7 @@ async function loadDataAndSetup() {
     }
   }
 
-  let categoryToggle = document.querySelector('.interactive__filters--category')
+  let categoryToggle = document.querySelector(categorySelector)
 
   categoryToggle.addEventListener('click', toggleCategoryCheckboxes)
 
