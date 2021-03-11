@@ -26,14 +26,32 @@
     position: relative;
     z-index: 2;
     max-width: rem(467px);
-    margin-bottom: rem(52px);
+    margin-bottom: rem(24px);
     list-style-type: none;
 
-    &.is-first-of-year::before {
-      position: absolute;
-      top: rem(-40px);
-      display: block;
-      content: attr(data-year);
+    &.is-first-of-year:not(:first-child) {
+      padding-top: rem(40px);
+
+      &::before {
+        position: absolute;
+        top: rem(-15px);
+        left: rem(-50px);
+        display: block;
+        font-family: $font__abel;
+        @include font-size(24px);
+        line-height: 1.25;
+        content: attr(data-year);
+      }
+
+      &::after {
+        content: '';
+        width: rem(140px);
+        height: 1px;
+        background: #898989;
+        position: absolute;
+        top: 0;
+        left: rem(6px);
+      }
     }
 
     .non-kinetic-physical {
