@@ -8,7 +8,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
-    width: rem(300px);
+    width: rem(250px);
     padding: rem(12px);
     background: $color__background;
     visibility: hidden;
@@ -28,7 +28,6 @@
     @include breakpoint('large') {
       position: relative;
       top: 0;
-      width: 100%;
       margin-left: unset !important;
       padding-bottom: 0 !important;
       visibility: visible;
