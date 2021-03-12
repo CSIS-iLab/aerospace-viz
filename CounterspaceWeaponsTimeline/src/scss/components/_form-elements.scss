@@ -39,7 +39,7 @@
 // Checkbox
 .checkbox-container {
   position: relative;
-  margin-left: rem(24px);
+  margin-left: rem(26px);
 
   input[type='checkbox'] {
     position: absolute;
@@ -111,7 +111,8 @@
 
 .checkbox-expander {
   position: absolute;
-  left: rem(-16px);
+  left: rem(-18px);
+  top: rem(-4px);
   @include font-size(20px);
   cursor: pointer;
 }
