@@ -3382,36 +3382,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = "/arrow-down-black.5a275c38.svg";
 },{}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
 module.exports = "/arrow-down.5a58f9ac.svg";
-},{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/cyber-DetailsFlag.03fb2117.svg";
 },{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
 module.exports = "/cyber.90da9b39.svg";
 },{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
 module.exports = "/electronic.d04db2d8.svg";
-},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
 },{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
 module.exports = "/kinetic-physical.ce64b425.svg";
 },{}],"img/css-icons/non-kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
 },{}],"img/css-icons/non-kinetic-physical.svg":[function(require,module,exports) {
 module.exports = "/non-kinetic-physical.63ae79f9.svg";
+},{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/cyber-DetailsFlag.03fb2117.svg";
+},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
 },{}],"img/css-icons/*.svg":[function(require,module,exports) {
 module.exports = {
   "arrow-down-black": require("./arrow-down-black.svg"),
   "arrow-down": require("./arrow-down.svg"),
-  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
   "cyber": require("./cyber.svg"),
   "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
   "electronic": require("./electronic.svg"),
-  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
   "kinetic-physical": require("./kinetic-physical.svg"),
   "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
-  "non-kinetic-physical": require("./non-kinetic-physical.svg")
+  "non-kinetic-physical": require("./non-kinetic-physical.svg"),
+  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
+  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg")
 };
-},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4171,7 +4171,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65092" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61612" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
