@@ -3835,10 +3835,18 @@ var storyToggle = document.querySelector('#story-toggle');
 var showStoriesOnly = '';
 var clearAllSelector = '.filter-clear';
 var defaults = {};
+/**
+ *
+ * Filter menu functionality
+ *
+ */
+
 document.addEventListener('DOMContentLoaded', function () {
   var hamburger = document.querySelector('.hamburger');
   var menu = document.querySelector('.interactive__filters-wrapper');
   var content = document.querySelector('#interactive__timeline');
+  var header = document.querySelector('.interactive__header');
+  var description = document.querySelector('.interactive__description');
 
   function setAria() {
     var isExpanded = hamburger.getAttribute('aria-expanded');
@@ -3862,6 +3870,22 @@ document.addEventListener('DOMContentLoaded', function () {
       setAria();
     }
   });
+  var options = {// rootMargin: '-65px',
+  };
+  var observer = new IntersectionObserver(function (entries, observer) {
+    entries.forEach(function (entry) {
+      console.log(entry);
+
+      if (!entry.isIntersecting) {
+        header.classList.add('sticky');
+        content.classList.add('margin-top');
+      } else {
+        header.classList.remove('sticky');
+        content.classList.remove('margin-top');
+      }
+    });
+  }, options);
+  observer.observe(description);
 });
 
 function init() {

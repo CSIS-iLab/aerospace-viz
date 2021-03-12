@@ -31,10 +31,18 @@ let clearAllSelector = '.filter-clear'
 
 let defaults = {}
 
+/**
+ *
+ * Filter menu functionality
+ *
+ */
+
 document.addEventListener('DOMContentLoaded', function () {
   const hamburger = document.querySelector('.hamburger')
   const menu = document.querySelector('.interactive__filters-wrapper')
   const content = document.querySelector('#interactive__timeline')
+  const header = document.querySelector('.interactive__header')
+  const description = document.querySelector('.interactive__description')
 
   function setAria() {
     let isExpanded = hamburger.getAttribute('aria-expanded')
@@ -58,6 +66,25 @@ document.addEventListener('DOMContentLoaded', function () {
       setAria()
     }
   })
+
+  const options = {
+    // rootMargin: '-65px',
+  }
+
+  const observer = new IntersectionObserver(function (entries, observer) {
+    entries.forEach((entry) => {
+      console.log(entry)
+      if (!entry.isIntersecting) {
+        header.classList.add('sticky')
+        content.classList.add('margin-top')
+      } else {
+        header.classList.remove('sticky')
+        content.classList.remove('margin-top')
+      }
+    })
+  }, options)
+
+  observer.observe(description)
 })
 
 function init() {

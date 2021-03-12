@@ -6,19 +6,40 @@
 
 .interactive__container,
 .interactive__source {
-  display: grid;
   max-width: $size__content-max-width;
   margin-right: auto;
   margin-left: auto;
 }
 
+.interactive__container {
+  position: relative;
+  display: grid;
+  padding: 0;
+  text-align: left;
+  // grid-template-areas: ;
+}
+
+.interactive__description {
+  margin-bottom: rem(24px);
+}
+
 .interactive__header {
   position: relative;
+  z-index: 15;
   display: flex;
   justify-content: space-around;
   align-items: center;
   max-width: $size__max-width;
   margin-bottom: rem(36px);
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    background-color: $color__white;
+  }
 
   @include breakpoint('medium') {
     display: grid;
@@ -36,8 +57,6 @@
   }
 }
 
-.interactive__container {
-  position: relative;
-  padding: 0;
-  text-align: left;
+#interactive__timeline.margin-top {
+  margin-top: rem(85px);
 }
