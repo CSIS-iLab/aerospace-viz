@@ -13,10 +13,13 @@
 
 .interactive__container {
   position: relative;
-  display: grid;
   padding: 0;
   text-align: left;
-  // grid-template-areas: ;
+
+  @include breakpoint('large') {
+    display: grid;
+    grid-template-areas: 'sidebar meat meat';
+  }
 }
 
 .interactive__description {
@@ -29,34 +32,40 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: 100vw;
   max-width: $size__max-width;
+  margin-right: 1rem;
   margin-bottom: rem(36px);
+  margin-left: 1rem;
+  background-color: $color__white;
 
   &.sticky {
     position: fixed;
     top: 0;
-    width: 100vw;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    background-color: $color__white;
+
+    @include breakpoint('large') {
+      top: rem(110px);
+    }
   }
 
-  @include breakpoint('medium') {
-    display: grid;
-    grid-template-columns: auto min-content;
-    margin-bottom: 0;
-    column-gap: 1rem;
-
-    .interactive__title {
-      grid-column: 1 / -1;
-    }
-
-    p {
-      padding-left: 1.5rem;
-    }
+  @include breakpoint('large') {
+    display: inline;
+    grid-area: sidebar;
+    width: rem(297.66px);
   }
 }
 
-#interactive__timeline.margin-top {
-  margin-top: rem(85px);
+#interactive__timeline {
+  &.margin-top {
+    margin-top: rem(125px);
+
+    @include breakpoint('large') {
+      margin-top: 0;
+      margin-left: rem(297.66px);
+    }
+  }
+
+  @include breakpoint('large') {
+    grid-area: meat;
+  }
 }

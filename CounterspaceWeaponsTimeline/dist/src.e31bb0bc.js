@@ -3870,8 +3870,18 @@ document.addEventListener('DOMContentLoaded', function () {
       setAria();
     }
   });
-  var options = {// rootMargin: '-65px',
-  };
+  var options = {};
+
+  if (window.innerWidth >= 1024) {
+    options = {
+      rootMargin: '-85px'
+    };
+  } else {
+    options = {
+      rootMargin: '24px'
+    };
+  }
+
   var observer = new IntersectionObserver(function (entries, observer) {
     entries.forEach(function (entry) {
       console.log(entry);
@@ -3885,6 +3895,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }, options);
+  window.onresize;
   observer.observe(description);
 });
 

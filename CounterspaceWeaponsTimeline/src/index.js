@@ -67,8 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })
 
-  const options = {
-    // rootMargin: '-65px',
+  let options = {}
+
+  if (window.innerWidth >= 1024) {
+    options = {
+      rootMargin: '-85px',
+    }
+  } else {
+    options = {
+      rootMargin: '24px',
+    }
   }
 
   const observer = new IntersectionObserver(function (entries, observer) {
@@ -83,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   }, options)
+
+  window.onresize
 
   observer.observe(description)
 })

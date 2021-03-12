@@ -111,10 +111,10 @@
 
 .checkbox-expander {
   position: absolute;
-  left: rem(-18px);
   top: rem(-4px);
-  @include font-size(20px);
+  left: rem(-18px);
   cursor: pointer;
+  @include font-size(20px);
 }
 
 .checkbox-toggle {
