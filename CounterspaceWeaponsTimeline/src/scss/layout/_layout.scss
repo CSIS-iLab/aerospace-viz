@@ -55,6 +55,55 @@
   }
 }
 
+.interactive__legend {
+  .non-kinetic-physical {
+    --category-corner: var(--corner-non-kinetic-physical);
+  }
+
+  .kinetic-physical {
+    --category-corner: var(--corner-kinetic-physical);
+  }
+
+  .cyber {
+    --category-corner: var(--corner-cyber);
+  }
+
+  .electronic {
+    --category-corner: var(--corner-electronic);
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    @extend %label;
+    display: flex;
+    align-items: center;
+    color: var(--category-corner);
+  }
+
+  img {
+    width: rem(34px);
+    height: rem(34px);
+    margin-right: rem(8px);
+  }
+
+  .detailed-story {
+    margin-top: rem(38px);
+    color: $color__black-175;
+  }
+
+  &-mobile {
+    display: flex;
+    align-items: center;
+
+    @include breakpoint('large') {
+      display: none;
+    }
+  }
+}
+
 #interactive__timeline {
   &.margin-top {
     margin-top: rem(125px);
