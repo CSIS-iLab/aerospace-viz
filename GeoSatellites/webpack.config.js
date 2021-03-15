@@ -1,13 +1,9 @@
-// webpack v4
 const path = require('path')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
 const devMode = process.env.NODE_ENV !== 'production'
 
@@ -19,15 +15,16 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: devMode ? '[name].js' : '[name].[hash].js'
+    filename: devMode ? '[name].js' : '[name].[hash].js',
   },
   devtool: 'inline-source-map',
   devServer: {
-    compress: true,
     contentBase: './src',
     open: true,
     watchContentBase: true,
-    disableHostCheck: true
+    hot: true,
+    disableHostCheck: true,
+    host: '0.0.0.0',
   },
   module: {
     rules: [
@@ -35,60 +32,53 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader'
+        test: /\.(png|jpg|gif)$/,
+        loader: 'file-loader',
+      },
+      {
+        test: /\.(svg)$/,
+        exclude: /img\/css-icons/,
+        loader: 'svg-inline-loader',
+      },
+      {
+        test: /\.(svg)$/,
+        include: /img\/css-icons/,
+        loader: 'file-loader',
       },
       {
         test: /\.(css|sass|scss)$/,
         use: [
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader', options: { sourceMap: false } },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' }
-        ]
-      }
-    ]
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'sass-loader'
+          },
+        ],
+      },
+    ],
   },
   optimization: {
-    usedExports: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: devMode,
-        terserOptions: {
-          output: {
-            comments: false
-          }
-        }
-      }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessor: require('cssnano'),
-        cssProcessorOptions: {
-          discardDuplicates: { removeAll: true },
-          discardComments: { removeAll: true }
-        }
-      })
-    ]
+    minimize: true
   },
   plugins: [
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static'
-    // }),
-    new CleanWebpackPlugin('dist', {}),
-    new CopyWebpackPlugin([
-      {
-        from: './src/data',
-        to: './data'
-      }
-    ]),
+    // new BundleAnalyzerPlugin(),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: './src/data',
+          to: './data',
+        },
+      ]
+    }),
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new HtmlWebpackPlugin({
       inject: 'body',
@@ -110,6 +100,7 @@ module.exports = {
       template: './src/index.html',
       filename: 'russia.html',
       chunks: ['russia', 'styles']
-    })
-  ]
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 }
