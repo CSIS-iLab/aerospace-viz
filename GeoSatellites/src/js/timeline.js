@@ -10,7 +10,6 @@ const timeline = {
   transitionDuration: 0,
   endDate: 0,
   startDate: 0,
-  step: 24 * 60 * 60 * 1000,
   updateCurrentDate(date) {
     this.currentDateEl.innerHTML = `${this.formatDate(date)}`
   },
@@ -19,7 +18,10 @@ const timeline = {
     date = new Date(
       date.getUTCFullYear(),
       date.getUTCMonth(),
-      date.getUTCDate()
+      date.getUTCDate(),
+      0,
+      0,
+      0
     )
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
   },
@@ -34,7 +36,7 @@ const timeline = {
       start: [startDate],
       connect: true,
       behaviour: 'tap-drag',
-      // step: this.step,
+      // step: 24 * 60 * 60 * 1000,
       range: {
         min: startDate,
         max: endDate
@@ -61,8 +63,6 @@ const timeline = {
         tempDate.getUTCMonth(),
         tempDate.getUTCDate()
       ).getTime()
-      // console.log(values[handle])
-      // console.log(tempDate)
       timeline.el.noUiSlider.set(tempDate)
     })
 

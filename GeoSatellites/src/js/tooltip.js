@@ -1,12 +1,11 @@
-import { select, pointer } from 'd3-selection'
+import { select } from 'd3-selection'
 import { transition, duration, on } from 'd3-transition'
 const tooltipEl = select('.tooltip')
 
 export default {
   show: function(event, content) {
-    const pos = pointer(event)
-    let yPos = pos.pageY - 100
-    let xPos = pos.pageX
+    let yPos = event.pageY - 100
+    let xPos = event.pageX
     if (xPos + 10 > document.body.clientWidth - 115) {
       xPos = document.body.clientWidth + 5 - 175
     }

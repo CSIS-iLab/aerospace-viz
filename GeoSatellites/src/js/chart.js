@@ -191,7 +191,7 @@ function drawChart() {
 
   const interactions = {
     mouseover(event, d) {
-      interactions.showTooltip(d)
+      interactions.showTooltip(event, d)
       select(this).classed('is-active', true)
     },
     mouseleave() {
