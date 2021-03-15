@@ -32,22 +32,40 @@
       &::before {
         position: absolute;
         top: rem(-15px);
-        left: rem(-50px);
+        left: 37%;
+        z-index: 5;
+        width: rem(57px);
+        height: rem(27px);
+        background-color: $color__white;
         display: block;
         font-family: $font__abel;
         @include font-size(24px);
         line-height: 1.25;
+        text-align: center;
         content: attr(data-year);
+
+        @include breakpoint('large') {
+          left: rem(-50px);
+        }
       }
 
       &::after {
         content: '';
         position: absolute;
         top: 0;
-        left: rem(6px);
-        width: rem(140px);
+        left: 5%;
+        // width: rem(303px);
+        // margin-right: auto;
+        // margin-left: auto;
+        width: 80%;
         height: 1px;
         background: #898989;
+
+        @include breakpoint('large') {
+          text-align: center;
+          width: rem(140px);
+          left: rem(6px);
+        }
       }
     }
 
