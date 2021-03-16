@@ -217,8 +217,12 @@
     &__details-icon {
       position: absolute;
       top: rem(8px);
-      left: rem(3px);
+      left: rem(-3px);
       z-index: 2;
+
+      @include breakpoint('large') {
+        left: rem(3px);
+      }
     }
 
     &__year,
