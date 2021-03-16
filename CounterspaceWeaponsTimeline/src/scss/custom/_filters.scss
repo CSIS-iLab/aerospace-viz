@@ -3,7 +3,7 @@
 .interactive__filters {
   &-wrapper {
     position: absolute;
-    right: 0;
+    right: 0.5rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -21,15 +21,18 @@
       clip-path: inset(0);
     }
 
-    > * {
+    > *:not(.interactive__filters--years) {
       margin-top: rem(15px);
+    }
+
+    .input__label {
+      margin-left: 0;
     }
 
     @include breakpoint('large') {
       position: relative;
       top: 0;
       margin-left: unset !important;
-      padding-bottom: 0 !important;
       visibility: visible;
       opacity: 1;
       clip-path: inset(0);
@@ -38,9 +41,12 @@
 
   &--years {
     display: flex;
+    justify-content: space-between;
+    margin-top: rem(3px);
 
     .input__label {
       color: $color__black-175;
+      letter-spacing: 0.03em;
     }
   }
 
@@ -81,8 +87,8 @@
   // Buttons
   &--button-container {
     display: flex;
-    gap: rem(40px);
-    padding: rem(8px) rem(12px);
+    justify-content: space-between;
+    padding: 0 rem(12px) rem(15px);
   }
 
   #filter-apply {
