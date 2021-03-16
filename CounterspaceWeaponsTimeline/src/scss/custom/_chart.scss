@@ -135,8 +135,8 @@
       padding-right: rem(12px);
       padding-bottom: rem(32px);
       background: none;
-      transition: all 0.3s ease-in-out;
 
+      // Corner hover animation https://codepen.io/caraujo/pen/LVPzxO?editors=1101
       &::before,
       &::after {
         position: absolute;
@@ -171,19 +171,18 @@
         &::before,
         &::after {
           opacity: 1;
-          transition: all 0.6s cubic-bezier(0.14, 1.13, 0, 0.91);
         }
 
         &::before {
           border-bottom-width: 3px;
           border-left-width: 3px;
-          transform: translate(-30px, 20px) scale(1);
+          transform: translate(-20px, 15px) scale(1);
         }
 
         &::after {
           border-top-width: 3px;
           border-right-width: 3px;
-          transform: translate(30px, -20px) scale(1);
+          transform: translate(20px, -15px) scale(1);
         }
       }
 
