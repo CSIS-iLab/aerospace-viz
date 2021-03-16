@@ -3522,7 +3522,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <div class=\"timeline__entry-grid ".concat(categoryName, "\">\n    ").concat(detailsIcon, "\n    <img src=\"").concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year wp-caption-text\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country wp-caption-text\">").concat(d.country, "</span>\n    <span class=\"action__category mobile-only\">").concat(d.category, "</span>\n    <h2 class=\"action__title entry-highlights-title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    </div>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    ");
+    return "\n    <div class=\"timeline__entry-grid ".concat(categoryName, "\">\n    ").concat(detailsIcon, "\n    <img src=\"").concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year wp-caption-text\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country wp-caption-text\">").concat(d.country, "</span>\n    <span class=\"action__category mobile-only ").concat(categoryName, "\">").concat(d.category, "</span>\n    <h2 class=\"action__title entry-highlights-title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    </div>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    ");
   }
 
   function chart(container) {
