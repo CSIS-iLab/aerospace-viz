@@ -32,11 +32,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 89%;
   max-width: $size__max-width;
   margin-right: 1rem;
   margin-bottom: rem(36px);
-  margin-left: 1rem;
+  margin-left: 1.5rem;
   background-color: $color__white;
 
   &.sticky {
@@ -46,6 +46,11 @@
     @include breakpoint('large') {
       top: rem(110px);
     }
+  }
+
+  @include breakpoint('medium') {
+    width: 92%;
+    max-width: unset;
   }
 
   @include breakpoint('large') {
