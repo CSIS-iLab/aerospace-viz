@@ -11,6 +11,15 @@
   padding-right: 1.5rem;
   padding-left: 1.5rem;
 
+  @include breakpoint('medium') {
+    padding-right: 3rem;
+    padding-left: 5rem;
+  }
+
+  @include breakpoint('large') {
+    padding-left: 3rem;
+  }
+
   &::before {
     position: absolute;
     top: rem(-45px);
@@ -20,8 +29,12 @@
     border-left: 1px solid #e3e3e3;
     content: '';
 
+    @include breakpoint('medium') {
+      left: rem(116px);
+    }
+
     @include breakpoint('large') {
-      left: rem(68px);
+      left: rem(92px);
     }
   }
 
@@ -46,20 +59,25 @@
       &::before {
         position: absolute;
         top: rem(-15px);
-        left: 37%;
+        right: 0;
+        left: 0;
         z-index: 5;
+        display: block;
         width: rem(57px);
         height: rem(27px);
-        background-color: $color__white;
-        display: block;
+        margin-right: auto;
+        margin-left: auto;
         font-family: $font__abel;
         @include font-size(24px);
         line-height: 1.25;
         text-align: center;
+        background-color: $color__white;
         content: attr(data-year);
 
-        @include breakpoint('large') {
+        @include breakpoint('medium') {
           left: rem(-50px);
+          margin-right: unset;
+          margin-left: unset;
         }
       }
 
@@ -67,15 +85,19 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 5%;
-        width: 80%;
+        right: 0;
+        left: 0;
+        width: 90%;
         height: 1px;
+        margin-right: auto;
+        margin-left: auto;
         background: #898989;
 
-        @include breakpoint('large') {
-          text-align: center;
-          width: rem(140px);
+        @include breakpoint('medium') {
           left: rem(6px);
+          width: rem(140px);
+          margin-right: unset;
+          margin-left: unset;
         }
       }
     }
@@ -204,8 +226,8 @@
       @extend %label;
       margin-top: 0;
       padding-left: 0;
-      border-left: 0;
       color: $color__black-150;
+      border-left: 0;
     }
 
     &__year {
@@ -223,10 +245,10 @@
 
     &__category {
       @extend %label;
-      letter-spacing: 0.02em;
       grid-area: category;
       color: var(--category-corner);
       font-weight: bold;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
     }
 
@@ -279,10 +301,13 @@
         background-color: $color__beige;
         border: 1px solid #e3e3e3;
 
-        @include breakpoint('large') {
-          width: rem(480px);
+        @include breakpoint('medium') {
           margin-left: rem(76px);
           padding: rem(36px) rem(50px);
+        }
+
+        @include breakpoint('large') {
+          width: rem(480px);
         }
       }
 
@@ -338,6 +363,10 @@
         border-bottom: 1px solid #e3e3e3;
         border-left: 1px solid #e3e3e3;
         content: '';
+
+        @include breakpoint('medium') {
+          left: rem(-20px);
+        }
 
         @include breakpoint('large') {
           left: rem(-16px);
