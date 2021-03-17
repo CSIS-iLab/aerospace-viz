@@ -46,11 +46,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 89%;
+  width: 91vw;
   max-width: $size__max-width;
   margin-right: 1rem;
   margin-bottom: rem(36px);
-  margin-left: 1.5rem;
+  margin-left: 1rem;
   background-color: $color__white;
 
   &.sticky {
