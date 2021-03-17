@@ -21,8 +21,15 @@ function drawChart() {
       return a.dates - b.dates
     })
 
+    console.log(data)
+
+    for(let i = 0; i < data.length; i++) {
+      console.log(data[i].year)
+    }
+
     // Generates id of entries for first appearance of a year
     let firstOfYearIds = {}
+    let yearGapIds = {}
     const years = [...new Set(data.map((d) => d.year))].forEach((year) => {
       let entry = data.find((d) => d.year === year)
       firstOfYearIds[entry.id] = true
@@ -42,6 +49,16 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+
+    let firstOfYears = [...document.getElementsByClassName('is-first-of-year')]
+
+    // let yearsArr = []
+    
+    // firstOfYears.forEach((year) => {
+    //   console.log(year.getAttribute('data-year'))
+      
+    // })
+
 
     let moreInfo
     let detailsIcon = ''

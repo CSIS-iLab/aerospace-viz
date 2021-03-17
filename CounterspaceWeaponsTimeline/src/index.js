@@ -226,7 +226,7 @@ function setupYearSelector() {
   Dropdown.setup({
     selector: endYearSelector,
     name: 'filter-end-year',
-    data: options,
+    data: options.reverse(),
     current: endYear,
     onChange: (e) => {}, // Won't need if we have apply btn
   })

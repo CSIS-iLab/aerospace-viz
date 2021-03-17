@@ -3443,9 +3443,16 @@ function drawChart() {
         data = _ref.data;
     data.sort(function (a, b) {
       return a.dates - b.dates;
-    }); // Generates id of entries for first appearance of a year
+    });
+    console.log(data);
+
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].year);
+    } // Generates id of entries for first appearance of a year
+
 
     var firstOfYearIds = {};
+    var yearGapIds = {};
     var years = (0, _toConsumableArray2.default)(new Set(data.map(function (d) {
       return d.year;
     }))).forEach(function (year) {
@@ -3470,6 +3477,11 @@ function drawChart() {
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
+    var firstOfYears = (0, _toConsumableArray2.default)(document.getElementsByClassName('is-first-of-year')); // let yearsArr = []
+    // firstOfYears.forEach((year) => {
+    //   console.log(year.getAttribute('data-year'))
+    // })
+
     var moreInfo;
     var detailsIcon = '';
     var detailsImage = '';
@@ -4046,7 +4058,7 @@ function setupYearSelector() {
   _dropdown.default.setup({
     selector: endYearSelector,
     name: 'filter-end-year',
-    data: options,
+    data: options.reverse(),
     current: endYear,
     onChange: function onChange(e) {} // Won't need if we have apply btn
 
