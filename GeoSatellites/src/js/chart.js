@@ -1,9 +1,8 @@
 import { geoPath, geoOrthographic } from 'd3-geo'
 import { scaleLinear } from 'd3-scale'
 import { select, selectAll } from 'd3-selection'
-import { LightenDarkenColor } from './helpers'
 import tooltip from './tooltip'
-import * as topojson from 'topojson'
+import * as topojson from 'topojson-client'
 
 const chart = drawChart()
 
@@ -191,22 +190,22 @@ function drawChart() {
   }
 
   const interactions = {
-    mouseover(d) {
-      interactions.showTooltip(d)
+    mouseover(event, d) {
+      interactions.showTooltip(event, d)
       select(this).classed('is-active', true)
     },
     mouseleave() {
       tooltip.hide()
       select(this).classed('is-active', false)
     },
-    showTooltip(d) {
+    showTooltip(event, d) {
       let tooltipBody = [{ Date: d.timestamp }, { Longitude: d.long_string }]
 
       let tooltipContent = `
       <p class="tooltip-heading">
         ${d.sat_name}</p>
       ${tooltip.formatContent(tooltipBody, true)}`
-      tooltip.show(tooltipContent)
+      tooltip.show(event, tooltipContent)
     }
   }
 

@@ -38,7 +38,17 @@ async function getData(satelliteURL) {
 
         entries.push(result[0])
       })
-      dataset.perp.set(new Date(timestamp).getTime(), entries)
+      let tempDate = new Date(timestamp)
+      tempDate = new Date(
+        tempDate.getUTCFullYear(),
+        tempDate.getUTCMonth(),
+        tempDate.getUTCDate(),
+        0,
+        0,
+        0,
+        0
+      ).getTime()
+      dataset.perp.set(tempDate, entries)
     })
 
     dataset.perp = new Map(Array.from(dataset.perp).sort((a, b) => a[0] - b[0]))

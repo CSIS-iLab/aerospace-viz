@@ -49,6 +49,10 @@ function drawChart() {
   currentDate = timeline.getCurrentDate()
   let dataset = data.perp.get(currentDate)
 
+  if (!dataset) {
+    return
+  }
+
   Chart.init({
     data: dataset,
     transitionDuration,

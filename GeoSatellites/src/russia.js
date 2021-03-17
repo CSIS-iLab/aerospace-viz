@@ -2,7 +2,7 @@ import loadData from './index'
 
 const satellite = 'Luch'
 const satelliteCountry = 'Russian'
-const satelliteFile = './data/20200330-russia.csv'
+const satelliteFile = './data/data-russia.csv'
 
 const worldProjection = [0, -18]
 
