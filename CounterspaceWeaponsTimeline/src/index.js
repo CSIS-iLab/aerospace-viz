@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const observer = new IntersectionObserver(function (entries, observer) {
     entries.forEach((entry) => {
-      console.log(entry)
       if (!entry.isIntersecting) {
         header.classList.add('sticky')
         content.classList.add('margin-top')

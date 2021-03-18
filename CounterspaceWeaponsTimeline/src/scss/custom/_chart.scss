@@ -100,6 +100,26 @@
           margin-left: unset;
         }
       }
+
+      .year-gap {
+        position: absolute;
+        top: -70px;
+        left: rem(24px);
+        width: rem(24px);
+        height: rem(8px);
+        background-color: $color__white;
+        border-top: 1px solid #898989;
+        border-bottom: 1px solid #898989;
+        transform: rotate(-25deg);
+
+        @include breakpoint('large') {
+          left: rem(32px);
+        }
+      }
+
+      &.year-gap-margin {
+        margin-top: rem(90px);
+      }
     }
 
     .non-kinetic-physical {

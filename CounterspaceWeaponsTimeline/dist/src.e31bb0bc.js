@@ -3444,15 +3444,9 @@ function drawChart() {
     data.sort(function (a, b) {
       return a.dates - b.dates;
     });
-    console.log(data);
-
-    for (var i = 0; i < data.length; i++) {
-      console.log(data[i].year);
-    } // Generates id of entries for first appearance of a year
-
+    var previousYear = data[0].year; // Generates id of entries for first appearance of a year
 
     var firstOfYearIds = {};
-    var yearGapIds = {};
     var years = (0, _toConsumableArray2.default)(new Set(data.map(function (d) {
       return d.year;
     }))).forEach(function (year) {
@@ -3472,16 +3466,24 @@ function drawChart() {
     }).html(function (d) {
       return generateTimelineEntry(d);
     });
+    var actions = document.querySelectorAll('.timeline__entry');
+    actions.forEach(function (action) {
+      var actionYear = action.attributes['data-year'].value;
+
+      if (actionYear - previousYear > 1) {
+        var gapDiv = document.createElement('div');
+        gapDiv.className = 'year-gap';
+        action.appendChild(gapDiv);
+        action.classList.add('year-gap-margin');
+      }
+
+      previousYear = actionYear;
+    });
   }
 
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-    var firstOfYears = (0, _toConsumableArray2.default)(document.getElementsByClassName('is-first-of-year')); // let yearsArr = []
-    // firstOfYears.forEach((year) => {
-    //   console.log(year.getAttribute('data-year'))
-    // })
-
     var moreInfo;
     var detailsIcon = '';
     var detailsImage = '';
@@ -3896,8 +3898,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var observer = new IntersectionObserver(function (entries, observer) {
     entries.forEach(function (entry) {
-      console.log(entry);
-
       if (!entry.isIntersecting) {
         header.classList.add('sticky');
         content.classList.add('margin-top');

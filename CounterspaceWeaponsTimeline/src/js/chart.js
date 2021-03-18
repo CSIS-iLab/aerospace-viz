@@ -21,15 +21,10 @@ function drawChart() {
       return a.dates - b.dates
     })
 
-    console.log(data)
-
-    for(let i = 0; i < data.length; i++) {
-      console.log(data[i].year)
-    }
+    let previousYear = data[0].year
 
     // Generates id of entries for first appearance of a year
     let firstOfYearIds = {}
-    let yearGapIds = {}
     const years = [...new Set(data.map((d) => d.year))].forEach((year) => {
       let entry = data.find((d) => d.year === year)
       firstOfYearIds[entry.id] = true
@@ -44,22 +39,24 @@ function drawChart() {
       .attr('data-id', (d) => d.id)
       .attr('data-year', (d) => d.year)
       .html((d) => generateTimelineEntry(d))
+
+    let actions = document.querySelectorAll('.timeline__entry')
+
+    actions.forEach((action) => {
+      let actionYear = action.attributes['data-year'].value
+      if (actionYear - previousYear > 1) {
+        let gapDiv = document.createElement('div')
+        gapDiv.className = 'year-gap'
+        action.appendChild(gapDiv)
+        action.classList.add('year-gap-margin')
+      }
+      previousYear = actionYear
+    })
   }
 
   function generateTimelineEntry(d) {
     // Update the contents of the timeline entry div
     // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-
-    let firstOfYears = [...document.getElementsByClassName('is-first-of-year')]
-
-    // let yearsArr = []
-    
-    // firstOfYears.forEach((year) => {
-    //   console.log(year.getAttribute('data-year'))
-      
-    // })
-
-
     let moreInfo
     let detailsIcon = ''
     let detailsImage = ''
