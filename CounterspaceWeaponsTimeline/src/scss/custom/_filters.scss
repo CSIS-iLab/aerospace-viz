@@ -3,12 +3,12 @@
 .interactive__filters {
   &-wrapper {
     position: absolute;
-    right: 0.5rem;
+    left: 0;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
-    width: rem(250px);
+    width: 100vw;
     padding: rem(12px);
     background: $color__background;
     visibility: hidden;
@@ -32,6 +32,7 @@
     @include breakpoint('large') {
       position: relative;
       top: 0;
+      width: rem(250px);
       margin-left: unset !important;
       visibility: visible;
       opacity: 1;
