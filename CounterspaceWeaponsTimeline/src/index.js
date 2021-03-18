@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.innerWidth >= 1024) {
     options = {
-      rootMargin: '-85px',
+      rootMargin: '-55px',
     }
   } else {
     options = {
