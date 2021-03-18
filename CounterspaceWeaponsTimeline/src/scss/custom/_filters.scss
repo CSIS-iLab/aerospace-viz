@@ -7,8 +7,9 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-content: center;
+    align-content: flex-start;
     width: 100vw;
+    padding-left: rem(32px);
     background: $color__background;
     visibility: hidden;
     transition: clip-path 0.2s linear, visibility 0.2s linear;
@@ -28,9 +29,24 @@
       margin-left: 0;
     }
 
+    @include breakpoint('medium') {
+      display: grid;
+      grid-template-areas:
+        'type country'
+        'type date-label'
+        'type dates'
+        'type toggle'
+        'type buttons';
+      grid-template-rows: max-content max-content max-content max-content auto;
+      padding: rem(18px);
+      padding-left: rem(56px);
+    }
+
     @include breakpoint('large') {
       position: relative;
       top: 0;
+      display: flex;
+      align-content: space-around;
       width: rem(250px);
       margin-left: unset !important;
       padding: rem(12px);
@@ -42,8 +58,13 @@
 
   &--years {
     display: flex;
+    grid-area: dates;
     justify-content: space-between;
     margin-top: rem(3px);
+
+    @include breakpoint('medium') {
+      justify-content: start;
+    }
 
     .input__label {
       color: $color__black-175;
@@ -51,10 +72,41 @@
     }
   }
 
+  &--start-year,
+  &--clear {
+    @include breakpoint('medium') {
+      margin-right: rem(32px);
+    }
+
+    @include breakpoint('large') {
+      margin-right: initial;
+    }
+  }
+
+  &--country {
+    grid-area: country;
+  }
+
+  &--category {
+    grid-area: type;
+  }
+
+  &--story {
+    grid-area: toggle;
+  }
+
+  .interactive__label-dates {
+    grid-area: date-label;
+  }
+
   .filter__year,
   .filter__country {
     @extend %label;
-    width: max-content;
+    width: 100%;
+
+    @include breakpoint('medium') {
+      width: max-content;
+    }
   }
 
   .filter__year {
@@ -88,8 +140,17 @@
   // Buttons
   &--button-container {
     display: flex;
+    grid-area: buttons;
     justify-content: space-between;
     padding: 0 rem(12px) rem(15px);
+
+    @include breakpoint('medium') {
+      justify-content: start;
+    }
+
+    @include breakpoint('large') {
+      justify-content: space-between;
+    }
   }
 
   #filter-apply {
