@@ -41,6 +41,15 @@
   position: relative;
   margin-left: rem(26px);
 
+  .parent,
+  .child {
+    margin-bottom: rem(12px);
+
+    @include breakpoint('large') {
+      margin-bottom: initial;
+    }
+  }
+
   input[type='checkbox'] {
     position: absolute;
     top: rem(10px);
@@ -112,7 +121,7 @@
 .checkbox-expander {
   position: absolute;
   top: rem(-4px);
-  left: rem(-18px);
+  left: rem(-24px);
   cursor: pointer;
   @include font-size(20px);
 }

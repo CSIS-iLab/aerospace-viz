@@ -9,7 +9,6 @@
     flex-wrap: wrap;
     align-content: center;
     width: 100vw;
-    padding: rem(12px);
     background: $color__background;
     visibility: hidden;
     transition: clip-path 0.2s linear, visibility 0.2s linear;
@@ -34,6 +33,7 @@
       top: 0;
       width: rem(250px);
       margin-left: unset !important;
+      padding: rem(12px);
       visibility: visible;
       opacity: 1;
       clip-path: inset(0);
