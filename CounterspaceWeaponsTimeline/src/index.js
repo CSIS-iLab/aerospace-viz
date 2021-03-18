@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   } else {
     options = {
-      rootMargin: '24px',
+      rootMargin: '-26px',
     }
   }
 
