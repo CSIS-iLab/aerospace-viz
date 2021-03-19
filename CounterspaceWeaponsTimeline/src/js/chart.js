@@ -37,8 +37,6 @@ function drawChart() {
       }
     }
 
-    let previousYear = 1954
-
     // Generates id of entries for first appearance of a year
     let firstOfYearIds = {}
     const years = [...new Set(data.map((d) => d.year))].forEach((year) => {
@@ -58,16 +56,19 @@ function drawChart() {
 
     let actions = document.querySelectorAll('.timeline__entry')
 
-    actions.forEach((action) => {
-      let actionYear = action.attributes['data-year'].value
-      if (actionYear - previousYear > 1) {
-        let gapDiv = document.createElement('div')
-        gapDiv.className = 'year-gap'
-        action.appendChild(gapDiv)
-        action.classList.add('year-gap-margin')
-      }
-      previousYear = actionYear
-    })
+    if (data.length > 0) {
+      let previousYear = data[0].year
+      actions.forEach((action) => {
+        let actionYear = action.attributes['data-year'].value
+        if (actionYear - previousYear > 1) {
+          let gapDiv = document.createElement('div')
+          gapDiv.className = 'year-gap'
+          action.appendChild(gapDiv)
+          action.classList.add('year-gap-margin')
+        }
+        previousYear = actionYear
+      })
+    }
   }
 
   function generateTimelineEntry(d) {

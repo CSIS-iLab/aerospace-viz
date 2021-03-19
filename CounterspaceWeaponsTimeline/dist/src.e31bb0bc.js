@@ -3459,9 +3459,8 @@ function drawChart() {
         noResults.remove();
         timeline.classList.remove('interactive__timeline--no-results');
       }
-    }
+    } // Generates id of entries for first appearance of a year
 
-    var previousYear = 1954; // Generates id of entries for first appearance of a year
 
     var firstOfYearIds = {};
     var years = (0, _toConsumableArray2.default)(new Set(data.map(function (d) {
@@ -3484,18 +3483,22 @@ function drawChart() {
       return generateTimelineEntry(d);
     });
     var actions = document.querySelectorAll('.timeline__entry');
-    actions.forEach(function (action) {
-      var actionYear = action.attributes['data-year'].value;
 
-      if (actionYear - previousYear > 1) {
-        var gapDiv = document.createElement('div');
-        gapDiv.className = 'year-gap';
-        action.appendChild(gapDiv);
-        action.classList.add('year-gap-margin');
-      }
+    if (data.length > 0) {
+      var previousYear = data[0].year;
+      actions.forEach(function (action) {
+        var actionYear = action.attributes['data-year'].value;
 
-      previousYear = actionYear;
-    });
+        if (actionYear - previousYear > 1) {
+          var gapDiv = document.createElement('div');
+          gapDiv.className = 'year-gap';
+          action.appendChild(gapDiv);
+          action.classList.add('year-gap-margin');
+        }
+
+        previousYear = actionYear;
+      });
+    }
   }
 
   function generateTimelineEntry(d) {
@@ -3858,17 +3861,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var dataSrc = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2JDQ4Sz-mqm1dsVfKT2vF9rINxli4Gm79FYFUZas7AzpgJwkW9jJ1ct7tuMHukwWJEH8qjAGIzfu8/pub?gid=892231861&single=true&output=csv';
 var data;
 var countrySelector = '#filter-country';
-var currentCountry = [];
 var startYearSelector = '#filter-start-year';
 var endYearSelector = '#filter-end-year';
-var startYear;
-var endYear;
 var categorySelector = '.interactive__filters--category';
-var currentCategories = [];
-var currentSubcategories = [];
 var storyToggle = document.querySelector('#story-toggle');
-var showStoriesOnly = '';
-var clearAllSelector = '.filter-clear';
 var defaults = {};
 var currentValues = {};
 /**
@@ -4261,6 +4257,8 @@ function drawChart() {
       return d;
     }
   });
+  console.log(data);
+  console.log(dataset);
 
   _chart.default.init({
     data: dataset,

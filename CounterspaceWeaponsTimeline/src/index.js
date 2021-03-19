@@ -12,22 +12,13 @@ const dataSrc =
 let data
 
 const countrySelector = '#filter-country'
-let currentCountry = []
 
 const startYearSelector = '#filter-start-year'
 const endYearSelector = '#filter-end-year'
-let startYear
-let endYear
 
 const categorySelector = '.interactive__filters--category'
-let currentCategories = []
-
-let currentSubcategories = []
 
 const storyToggle = document.querySelector('#story-toggle')
-let showStoriesOnly = ''
-
-let clearAllSelector = '.filter-clear'
 
 let defaults = {}
 let currentValues = {}
@@ -421,7 +412,8 @@ function drawChart() {
     }
 
     if (
-      (currentValues.currentCountry.includes(d.country) || currentValues.currentCountry.includes('all')) &&
+      (currentValues.currentCountry.includes(d.country) ||
+        currentValues.currentCountry.includes('all')) &&
       showBasedOnYear &&
       (currentValues.currentCategories.includes(d.category) ||
         currentValues.currentSubcategories.includes(d.type + d.category))
@@ -433,6 +425,9 @@ function drawChart() {
       return d
     }
   })
+
+  console.log(data)
+  console.log(dataset)
 
   Chart.init({
     data: dataset,
