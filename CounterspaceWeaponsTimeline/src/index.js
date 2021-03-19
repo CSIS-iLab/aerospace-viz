@@ -198,7 +198,6 @@ async function loadDataAndSetup() {
 }
 
 function checkSubcategories() {
-  console.log(data)
   for (const category in data.subcategories) {
     let parentE = document.querySelectorAll('.parent')
 
@@ -294,6 +293,12 @@ function setupFormButtons() {
       )
       for (let i = 0; i < categoryCheckboxes.length; i++) {
         categoryCheckboxes[i].checked = true
+      }
+      let subcategoryCheckboxes = document.querySelectorAll(
+        '.child input[type=checkbox]'
+      )
+      for (let i = 0; i < subcategoryCheckboxes.length; i++) {
+        subcategoryCheckboxes[i].checked = true
       }
       storyToggle.checked = defaults.showStoriesOnly
 

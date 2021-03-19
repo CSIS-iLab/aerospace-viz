@@ -4050,8 +4050,6 @@ function _loadDataAndSetup() {
 }
 
 function checkSubcategories() {
-  console.log(data);
-
   for (var category in data.subcategories) {
     var parentE = document.querySelectorAll('.parent');
 
@@ -4146,6 +4144,12 @@ function setupFormButtons() {
 
     for (var i = 0; i < categoryCheckboxes.length; i++) {
       categoryCheckboxes[i].checked = true;
+    }
+
+    var subcategoryCheckboxes = document.querySelectorAll('.child input[type=checkbox]');
+
+    for (var _i = 0; _i < subcategoryCheckboxes.length; _i++) {
+      subcategoryCheckboxes[_i].checked = true;
     }
 
     storyToggle.checked = defaults.showStoriesOnly;
