@@ -38,6 +38,10 @@
     }
   }
 
+  &.interactive__timeline--no-results::before {
+    border-left: 0;
+  }
+
   .timeline__entry {
     position: relative;
     z-index: 2;

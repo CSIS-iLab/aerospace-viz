@@ -21,7 +21,23 @@ function drawChart() {
       return a.dates - b.dates
     })
 
-    let previousYear = data[0].year
+    let timeline = document.querySelector('#interactive__timeline')
+    if (data.length == 0) {
+      let div = document.createElement('div')
+      div.className = 'no-results'
+      div.innerHTML =
+        'No results found. Please change your selections and try again.'
+      timeline.appendChild(div)
+      timeline.classList.add('interactive__timeline--no-results')
+    } else {
+      let noResults = document.querySelector('.no-results')
+      if (noResults != null) {
+        noResults.remove()
+        timeline.classList.remove('interactive__timeline--no-results')
+      }
+    }
+
+    let previousYear = 1954
 
     // Generates id of entries for first appearance of a year
     let firstOfYearIds = {}

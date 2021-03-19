@@ -3382,36 +3382,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = "/arrow-down-black.5a275c38.svg";
 },{}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
 module.exports = "/arrow-down.5a58f9ac.svg";
+},{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/cyber-DetailsFlag.03fb2117.svg";
 },{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
 module.exports = "/cyber.90da9b39.svg";
 },{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
 module.exports = "/electronic.d04db2d8.svg";
+},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
+module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
 },{}],"img/css-icons/kinetic-physical.svg":[function(require,module,exports) {
 module.exports = "/kinetic-physical.ce64b425.svg";
 },{}],"img/css-icons/non-kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
 },{}],"img/css-icons/non-kinetic-physical.svg":[function(require,module,exports) {
 module.exports = "/non-kinetic-physical.63ae79f9.svg";
-},{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/cyber-DetailsFlag.03fb2117.svg";
-},{}],"img/css-icons/kinetic-physical-DetailsFlag.svg":[function(require,module,exports) {
-module.exports = "/kinetic-physical-DetailsFlag.ab31f91b.svg";
 },{}],"img/css-icons/*.svg":[function(require,module,exports) {
 module.exports = {
   "arrow-down-black": require("./arrow-down-black.svg"),
   "arrow-down": require("./arrow-down.svg"),
+  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
   "cyber": require("./cyber.svg"),
   "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
   "electronic": require("./electronic.svg"),
+  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
   "kinetic-physical": require("./kinetic-physical.svg"),
   "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
-  "non-kinetic-physical": require("./non-kinetic-physical.svg"),
-  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
-  "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg")
+  "non-kinetic-physical": require("./non-kinetic-physical.svg")
 };
-},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3444,7 +3444,24 @@ function drawChart() {
     data.sort(function (a, b) {
       return a.dates - b.dates;
     });
-    var previousYear = data[0].year; // Generates id of entries for first appearance of a year
+    var timeline = document.querySelector('#interactive__timeline');
+
+    if (data.length == 0) {
+      var div = document.createElement('div');
+      div.className = 'no-results';
+      div.innerHTML = 'No results found. Please change your selections and try again.';
+      timeline.appendChild(div);
+      timeline.classList.add('interactive__timeline--no-results');
+    } else {
+      var noResults = document.querySelector('.no-results');
+
+      if (noResults != null) {
+        noResults.remove();
+        timeline.classList.remove('interactive__timeline--no-results');
+      }
+    }
+
+    var previousYear = 1954; // Generates id of entries for first appearance of a year
 
     var firstOfYearIds = {};
     var years = (0, _toConsumableArray2.default)(new Set(data.map(function (d) {
@@ -3682,7 +3699,9 @@ var Checkbox = {
 function generateCheckboxes(d, i, n) {
   var container = d3.select(this);
   var parent = container.append('div').attr('class', 'parent');
-  parent.append('input').attr('type', 'checkbox').property('checked', true).attr('id', function (d) {
+  parent.append('input').attr('type', 'checkbox').property('checked', function (d) {
+    return d.checked;
+  }).attr('id', function (d) {
     return d.value;
   }).property('value', function (d) {
     return d.value;
@@ -3708,7 +3727,9 @@ function parentSelection(e, d) {
 
 function generateChildren(d, i, n) {
   var container = d3.select(this);
-  container.append('input').attr('type', 'checkbox').property('checked', true).attr('id', function (d) {
+  container.append('input').attr('type', 'checkbox').property('checked', function (d) {
+    return d.checked;
+  }).attr('id', function (d) {
     return d.value + d.parent;
   }).property('value', function (d) {
     return d.value;
@@ -3849,6 +3870,7 @@ var storyToggle = document.querySelector('#story-toggle');
 var showStoriesOnly = '';
 var clearAllSelector = '.filter-clear';
 var defaults = {};
+var currentValues = {};
 /**
  *
  * Filter menu functionality
@@ -3911,8 +3933,38 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(description);
 });
 
+function getURLParams() {
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+
+  if (urlParams.has('categories')) {
+    currentValues.currentCategories = urlParams.getAll('categories').toString().split(',');
+  }
+
+  if (urlParams.has('subcategories')) {
+    currentValues.currentSubcategories = urlParams.getAll('subcategories').toString().split(',');
+  }
+
+  if (urlParams.has('country')) {
+    currentValues.currentCountry = urlParams.get('country');
+  }
+
+  if (urlParams.has('startYear')) {
+    currentValues.startYear = +urlParams.get('startYear');
+  }
+
+  if (urlParams.has('endYear')) {
+    currentValues.endYear = +urlParams.get('endYear');
+  }
+
+  if (urlParams.has('showStories')) {
+    currentValues.showStoriesOnly = urlParams.get('showStories') == 'true';
+  }
+}
+
 function init() {
   loadDataAndSetup();
+  getURLParams();
 }
 
 function loadDataAndSetup() {
@@ -3921,7 +3973,7 @@ function loadDataAndSetup() {
 
 function _loadDataAndSetup() {
   _loadDataAndSetup = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-    var parentEl, colorBackground, categoryToggle, toggleCategoryCheckboxes;
+    var subcategoriesPlusParent, parentEl, colorBackground, categoryToggle, toggleCategoryCheckboxes;
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -3957,22 +4009,33 @@ function _loadDataAndSetup() {
 
           case 4:
             data = _context.sent;
+            subcategoriesPlusParent = [];
+            Object.keys(data.subcategories).forEach(function (category) {
+              data.subcategories[category].forEach(function (subcat) {
+                subcategoriesPlusParent.push(subcat + category);
+              });
+            });
             defaults = {
               startYear: data.years[0],
               endYear: data.years[1],
               currentCategories: data.categories,
               showStoriesOnly: false,
-              currentCountry: 'all'
+              currentCountry: 'all',
+              currentSubcategories: subcategoriesPlusParent
             };
-            startYear = defaults.startYear;
-            endYear = defaults.endYear;
-            currentCategories = defaults.currentCategories;
-            showStoriesOnly = defaults.showStoriesOnly;
-            currentCountry = defaults.currentCountry;
+            currentValues = {
+              startYear: currentValues.startYear || defaults.startYear,
+              endYear: currentValues.endYear || defaults.endYear,
+              currentCategories: currentValues.currentCategories || defaults.currentCategories,
+              currentSubcategories: currentValues.currentSubcategories || defaults.currentSubcategories,
+              showStoriesOnly: currentValues.showStoriesOnly || defaults.showStoriesOnly,
+              currentCountry: currentValues.currentCountry || defaults.currentCountry
+            };
             setupCountrySelector();
             setupYearSelector();
             setupCategorySelector();
             setupFormButtons();
+            setShowStoryValue();
             checkSubcategories();
             drawChart();
             hideLoading();
@@ -3981,7 +4044,7 @@ function _loadDataAndSetup() {
             categoryToggle = document.querySelector(categorySelector);
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 22:
+          case 21:
           case "end":
             return _context.stop();
         }
@@ -3992,6 +4055,8 @@ function _loadDataAndSetup() {
 }
 
 function checkSubcategories() {
+  console.log(data);
+
   for (var category in data.subcategories) {
     var parentE = document.querySelectorAll('.parent');
 
@@ -4024,7 +4089,7 @@ function setupCountrySelector() {
     selector: countrySelector,
     name: 'filter-country',
     data: options,
-    current: currentCountry,
+    current: currentValues.currentCountry,
     onChange: function onChange(e) {} // Won't need if we have apply btn
 
   });
@@ -4039,7 +4104,7 @@ function setupCountrySelector() {
 function setupYearSelector() {
   var options = [];
 
-  for (var i = startYear; i <= endYear; i++) {
+  for (var i = data.years[0]; i <= data.years[1]; i++) {
     options.push({
       value: i,
       label: i
@@ -4050,7 +4115,7 @@ function setupYearSelector() {
     selector: startYearSelector,
     name: 'filter-start-year',
     data: options,
-    current: startYear,
+    current: currentValues.startYear,
     onChange: function onChange(e) {} // Won't need if we have apply btn
 
   });
@@ -4059,7 +4124,7 @@ function setupYearSelector() {
     selector: endYearSelector,
     name: 'filter-end-year',
     data: options.reverse(),
-    current: endYear,
+    current: currentValues.endYear,
     onChange: function onChange(e) {} // Won't need if we have apply btn
 
   });
@@ -4104,11 +4169,13 @@ function setupCategorySelector() {
     return {
       value: category,
       label: category,
+      checked: currentValues.currentCategories.includes(category),
       children: data.subcategories[category].map(function (subcat) {
         return {
           value: subcat,
           label: subcat,
-          parent: category
+          parent: category,
+          checked: currentValues.currentSubcategories.includes(subcat + category)
         };
       })
     };
@@ -4118,7 +4185,7 @@ function setupCategorySelector() {
     selector: categorySelector,
     name: 'filter-category',
     data: options,
-    current: currentCategories
+    current: currentValues.currentCategories
   });
 }
 /**
@@ -4128,8 +4195,32 @@ function setupCategorySelector() {
  */
 
 
+function setShowStoryValue() {
+  storyToggle.checked = currentValues.showStoriesOnly;
+}
+
 function getShowStoryValue() {
   return storyToggle.checked;
+}
+/**
+ *
+ * Set URL parameters.
+ *
+ */
+
+
+function setURLParameters() {
+  if ('URLSearchParams' in window) {
+    var searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('startYear', currentValues.startYear);
+    searchParams.set('endYear', currentValues.endYear);
+    searchParams.set('country', currentValues.currentCountry);
+    searchParams.set('showStories', currentValues.showStoriesOnly);
+    searchParams.set('categories', currentValues.currentCategories);
+    searchParams.set('subcategories', currentValues.currentSubcategories);
+    var newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
+    history.replaceState(null, '', newRelativePathQuery);
+  }
 }
 /**
  *
@@ -4139,30 +4230,31 @@ function getShowStoryValue() {
 
 
 function drawChart() {
-  currentCountry = _dropdown.default.getCurrent(countrySelector);
-  startYear = _dropdown.default.getCurrent(startYearSelector);
-  endYear = _dropdown.default.getCurrent(endYearSelector);
-  currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
-  currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
-  showStoriesOnly = getShowStoryValue(); // Filter data based on selected filter functions (eg. year, category, type, etc.)
+  currentValues.currentCountry = _dropdown.default.getCurrent(countrySelector);
+  currentValues.startYear = _dropdown.default.getCurrent(startYearSelector);
+  currentValues.endYear = _dropdown.default.getCurrent(endYearSelector);
+  currentValues.currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
+  currentValues.currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
+  currentValues.showStoriesOnly = getShowStoryValue();
+  setURLParameters(); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
     // Filter by date, taking into account items that span multiple years
     var showBasedOnYear = false;
 
     if (d.endYear) {
-      if (d.startYear >= startYear && d.startYear <= endYear || d.endYear >= startYear && d.endYear <= endYear || d.startYear <= startYear && d.endYear >= endYear) {
+      if (d.startYear >= currentValues.startYear && d.startYear <= currentValues.endYear || d.endYear >= currentValues.startYear && d.endYear <= currentValues.endYear || d.startYear <= currentValues.startYear && d.endYear >= currentValues.endYear) {
         showBasedOnYear = true;
       }
     } else {
-      if (d.startYear >= startYear && d.startYear <= endYear) {
+      if (d.startYear >= currentValues.startYear && d.startYear <= currentValues.endYear) {
         showBasedOnYear = true;
       }
     }
 
-    if ((currentCountry.includes(d.country) || currentCountry.includes('all')) && showBasedOnYear && (currentCategories.includes(d.category) || currentSubcategories.includes(d.type + d.category))) {
+    if ((currentValues.currentCountry.includes(d.country) || currentValues.currentCountry.includes('all')) && showBasedOnYear && (currentValues.currentCategories.includes(d.category) || currentValues.currentSubcategories.includes(d.type + d.category))) {
       // Only apply this conditional if showStoriesOnly = true
-      if (showStoriesOnly) {
+      if (currentValues.showStoriesOnly) {
         return d.storyBool ? d : false;
       }
 
@@ -4218,7 +4310,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61612" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56548" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

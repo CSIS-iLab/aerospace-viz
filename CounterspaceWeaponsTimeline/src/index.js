@@ -30,6 +30,7 @@ let showStoriesOnly = ''
 let clearAllSelector = '.filter-clear'
 
 let defaults = {}
+let currentValues = {}
 
 /**
  *
@@ -96,13 +97,51 @@ document.addEventListener('DOMContentLoaded', function () {
   observer.observe(description)
 })
 
+function getURLParams() {
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+  if (urlParams.has('categories')) {
+    currentValues.currentCategories = urlParams
+      .getAll('categories')
+      .toString()
+      .split(',')
+  }
+  if (urlParams.has('subcategories')) {
+    currentValues.currentSubcategories = urlParams
+      .getAll('subcategories')
+      .toString()
+      .split(',')
+  }
+  if (urlParams.has('country')) {
+    currentValues.currentCountry = urlParams.get('country')
+  }
+  if (urlParams.has('startYear')) {
+    currentValues.startYear = +urlParams.get('startYear')
+  }
+  if (urlParams.has('endYear')) {
+    currentValues.endYear = +urlParams.get('endYear')
+  }
+  if (urlParams.has('showStories')) {
+    currentValues.showStoriesOnly = urlParams.get('showStories') == 'true'
+  }
+}
+
 function init() {
   loadDataAndSetup()
+  getURLParams()
 }
 
 async function loadDataAndSetup() {
   data = await parseData({
     src: dataSrc,
+  })
+
+  let subcategoriesPlusParent = []
+
+  Object.keys(data.subcategories).forEach((category) => {
+    data.subcategories[category].forEach((subcat) => {
+      subcategoriesPlusParent.push(subcat + category)
+    })
   })
 
   defaults = {
@@ -111,18 +150,25 @@ async function loadDataAndSetup() {
     currentCategories: data.categories,
     showStoriesOnly: false,
     currentCountry: 'all',
+    currentSubcategories: subcategoriesPlusParent,
   }
 
-  startYear = defaults.startYear
-  endYear = defaults.endYear
-  currentCategories = defaults.currentCategories
-  showStoriesOnly = defaults.showStoriesOnly
-  currentCountry = defaults.currentCountry
+  currentValues = {
+    startYear: currentValues.startYear || defaults.startYear,
+    endYear: currentValues.endYear || defaults.endYear,
+    currentCategories:
+      currentValues.currentCategories || defaults.currentCategories,
+    currentSubcategories:
+      currentValues.currentSubcategories || defaults.currentSubcategories,
+    showStoriesOnly: currentValues.showStoriesOnly || defaults.showStoriesOnly,
+    currentCountry: currentValues.currentCountry || defaults.currentCountry,
+  }
 
   setupCountrySelector()
   setupYearSelector()
   setupCategorySelector()
   setupFormButtons()
+  setShowStoryValue()
   checkSubcategories()
 
   drawChart()
@@ -163,6 +209,7 @@ async function loadDataAndSetup() {
 }
 
 function checkSubcategories() {
+  console.log(data)
   for (const category in data.subcategories) {
     let parentE = document.querySelectorAll('.parent')
 
@@ -194,7 +241,7 @@ function setupCountrySelector() {
     selector: countrySelector,
     name: 'filter-country',
     data: options,
-    current: currentCountry,
+    current: currentValues.currentCountry,
     onChange: (e) => {}, // Won't need if we have apply btn
   })
 }
@@ -207,7 +254,7 @@ function setupCountrySelector() {
 
 function setupYearSelector() {
   let options = []
-  for (let i = startYear; i <= endYear; i++) {
+  for (let i = data.years[0]; i <= data.years[1]; i++) {
     options.push({
       value: i,
       label: i,
@@ -218,7 +265,7 @@ function setupYearSelector() {
     selector: startYearSelector,
     name: 'filter-start-year',
     data: options,
-    current: startYear,
+    current: currentValues.startYear,
     onChange: (e) => {}, // Won't need if we have apply btn
   })
 
@@ -226,7 +273,7 @@ function setupYearSelector() {
     selector: endYearSelector,
     name: 'filter-end-year',
     data: options.reverse(),
-    current: endYear,
+    current: currentValues.endYear,
     onChange: (e) => {}, // Won't need if we have apply btn
   })
 }
@@ -260,6 +307,7 @@ function setupFormButtons() {
         categoryCheckboxes[i].checked = true
       }
       storyToggle.checked = defaults.showStoriesOnly
+
       drawChart()
     })
 }
@@ -274,10 +322,12 @@ function setupCategorySelector() {
   const options = Object.keys(data.subcategories).map((category) => ({
     value: category,
     label: category,
+    checked: currentValues.currentCategories.includes(category),
     children: data.subcategories[category].map((subcat) => ({
       value: subcat,
       label: subcat,
       parent: category,
+      checked: currentValues.currentSubcategories.includes(subcat + category),
     })),
   }))
 
@@ -285,7 +335,7 @@ function setupCategorySelector() {
     selector: categorySelector,
     name: 'filter-category',
     data: options,
-    current: currentCategories,
+    current: currentValues.currentCategories,
   })
 }
 
@@ -295,8 +345,33 @@ function setupCategorySelector() {
  *
  */
 
+function setShowStoryValue() {
+  storyToggle.checked = currentValues.showStoriesOnly
+}
+
 function getShowStoryValue() {
   return storyToggle.checked
+}
+
+/**
+ *
+ * Set URL parameters.
+ *
+ */
+
+function setURLParameters() {
+  if ('URLSearchParams' in window) {
+    var searchParams = new URLSearchParams(window.location.search)
+    searchParams.set('startYear', currentValues.startYear)
+    searchParams.set('endYear', currentValues.endYear)
+    searchParams.set('country', currentValues.currentCountry)
+    searchParams.set('showStories', currentValues.showStoriesOnly)
+    searchParams.set('categories', currentValues.currentCategories)
+    searchParams.set('subcategories', currentValues.currentSubcategories)
+    var newRelativePathQuery =
+      window.location.pathname + '?' + searchParams.toString()
+    history.replaceState(null, '', newRelativePathQuery)
+  }
 }
 
 /**
@@ -306,12 +381,20 @@ function getShowStoryValue() {
  */
 
 function drawChart() {
-  currentCountry = Dropdown.getCurrent(countrySelector)
-  startYear = Dropdown.getCurrent(startYearSelector)
-  endYear = Dropdown.getCurrent(endYearSelector)
-  currentCategories = Checkbox.getCurrent(categorySelector, '.parent')
-  currentSubcategories = Checkbox.getCurrent(categorySelector, '.child')
-  showStoriesOnly = getShowStoryValue()
+  currentValues.currentCountry = Dropdown.getCurrent(countrySelector)
+  currentValues.startYear = Dropdown.getCurrent(startYearSelector)
+  currentValues.endYear = Dropdown.getCurrent(endYearSelector)
+  currentValues.currentCategories = Checkbox.getCurrent(
+    categorySelector,
+    '.parent'
+  )
+  currentValues.currentSubcategories = Checkbox.getCurrent(
+    categorySelector,
+    '.child'
+  )
+  currentValues.showStoriesOnly = getShowStoryValue()
+
+  setURLParameters()
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
   let dataset = data.values.filter((d) => {
@@ -319,26 +402,32 @@ function drawChart() {
     let showBasedOnYear = false
     if (d.endYear) {
       if (
-        (d.startYear >= startYear && d.startYear <= endYear) ||
-        (d.endYear >= startYear && d.endYear <= endYear) ||
-        (d.startYear <= startYear && d.endYear >= endYear)
+        (d.startYear >= currentValues.startYear &&
+          d.startYear <= currentValues.endYear) ||
+        (d.endYear >= currentValues.startYear &&
+          d.endYear <= currentValues.endYear) ||
+        (d.startYear <= currentValues.startYear &&
+          d.endYear >= currentValues.endYear)
       ) {
         showBasedOnYear = true
       }
     } else {
-      if (d.startYear >= startYear && d.startYear <= endYear) {
+      if (
+        d.startYear >= currentValues.startYear &&
+        d.startYear <= currentValues.endYear
+      ) {
         showBasedOnYear = true
       }
     }
 
     if (
-      (currentCountry.includes(d.country) || currentCountry.includes('all')) &&
+      (currentValues.currentCountry.includes(d.country) || currentValues.currentCountry.includes('all')) &&
       showBasedOnYear &&
-      (currentCategories.includes(d.category) ||
-        currentSubcategories.includes(d.type + d.category))
+      (currentValues.currentCategories.includes(d.category) ||
+        currentValues.currentSubcategories.includes(d.type + d.category))
     ) {
       // Only apply this conditional if showStoriesOnly = true
-      if (showStoriesOnly) {
+      if (currentValues.showStoriesOnly) {
         return d.storyBool ? d : false
       }
       return d

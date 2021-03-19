@@ -47,7 +47,7 @@ function generateCheckboxes(d, i, n) {
   parent
     .append('input')
     .attr('type', 'checkbox')
-    .property('checked', true)
+    .property('checked', (d) => d.checked)
     .attr('id', (d) => d.value)
     .property('value', (d) => d.value)
     .on('change', parentSelection)
@@ -78,7 +78,7 @@ function generateChildren(d, i, n) {
   container
     .append('input')
     .attr('type', 'checkbox')
-    .property('checked', true)
+    .property('checked', (d) => d.checked)
     .attr('id', (d) => d.value + d.parent)
     .property('value', (d) => d.value)
     .on('change', function (event, d) {
