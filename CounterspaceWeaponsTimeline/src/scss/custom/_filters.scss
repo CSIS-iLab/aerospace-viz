@@ -4,11 +4,13 @@
   &-wrapper {
     position: absolute;
     left: 0;
-    display: flex;
+    display: block;
+    overflow: auto;
     flex-direction: column;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     align-content: flex-start;
     width: 100vw;
+    max-height: 65vh;
     padding-left: rem(32px);
     background: $color__background;
     visibility: hidden;

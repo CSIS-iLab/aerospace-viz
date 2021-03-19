@@ -41,6 +41,22 @@
   position: relative;
   margin-left: rem(26px);
 
+  &[data-category='Non-Kinetic Physical'] {
+    --category-corner: var(--corner-non-kinetic-physical);
+  }
+
+  &[data-category='Kinetic Physical'] {
+    --category-corner: var(--corner-kinetic-physical);
+  }
+
+  &[data-category='Cyber'] {
+    --category-corner: var(--corner-cyber);
+  }
+
+  &[data-category='Electronic'] {
+    --category-corner: var(--corner-electronic);
+  }
+
   .parent,
   .child {
     margin-bottom: rem(12px);
@@ -61,7 +77,8 @@
   input[type='checkbox'] + label {
     @extend %label;
     display: inline-block;
-    color: $color__black;
+    // color: $color__black;
+    color: var(--category-corner);
     font-weight: 600;
   }
 

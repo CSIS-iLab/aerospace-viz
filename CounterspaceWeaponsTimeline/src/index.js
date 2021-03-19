@@ -83,8 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }, options)
 
-  window.onresize
-
   observer.observe(description)
 })
 
