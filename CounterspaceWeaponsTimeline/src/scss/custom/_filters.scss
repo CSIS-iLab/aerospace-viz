@@ -66,6 +66,10 @@
       justify-content: start;
     }
 
+    @include breakpoint('large') {
+      justify-content: space-between;
+    }
+
     .input__label {
       color: $color__black-175;
       letter-spacing: 0.03em;
