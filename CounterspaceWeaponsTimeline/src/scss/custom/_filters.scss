@@ -5,11 +5,9 @@
     position: absolute;
     left: 0;
     display: block;
-    flex-direction: column;
-    // flex-wrap: wrap;
-    align-content: flex-start;
     width: 100vw;
     max-height: 65vh;
+    padding-right: rem(96px);
     padding-left: rem(32px);
     overflow: auto;
     background: $color__background;
@@ -41,13 +39,14 @@
         'type buttons';
       grid-template-rows: max-content max-content max-content max-content auto;
       padding: rem(18px);
-      padding-left: rem(56px);
+      padding-left: rem(40px);
     }
 
     @include breakpoint('large') {
       position: relative;
       top: 0;
       display: flex;
+      flex-direction: column;
       align-content: space-around;
       width: rem(250px);
       margin-left: unset !important;
@@ -61,7 +60,7 @@
   &--years {
     display: flex;
     grid-area: dates;
-    justify-content: space-between;
+    justify-content: start;
     margin-top: rem(3px);
 
     @include breakpoint('medium') {
@@ -69,7 +68,7 @@
     }
 
     @include breakpoint('large') {
-      justify-content: space-between;
+      justify-content: start;
     }
 
     .input__label {
@@ -80,12 +79,14 @@
 
   &--start-year,
   &--clear {
+    margin-right: rem(60px);
+
     @include breakpoint('medium') {
       margin-right: rem(32px);
     }
 
     @include breakpoint('large') {
-      margin-right: initial;
+      margin-right: rem(60px);
     }
   }
 
@@ -112,6 +113,10 @@
 
     @include breakpoint('medium') {
       width: max-content;
+    }
+
+    @include breakpoint('large') {
+      width: 100%;
     }
   }
 
@@ -147,16 +152,8 @@
   &--button-container {
     display: flex;
     grid-area: buttons;
-    justify-content: space-between;
+    justify-content: start;
     padding: 0 rem(12px) rem(15px);
-
-    @include breakpoint('medium') {
-      justify-content: start;
-    }
-
-    @include breakpoint('large') {
-      justify-content: space-between;
-    }
   }
 
   #filter-apply {
