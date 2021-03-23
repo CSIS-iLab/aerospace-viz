@@ -5,13 +5,13 @@
     position: absolute;
     left: 0;
     display: block;
-    overflow: auto;
     flex-direction: column;
     // flex-wrap: wrap;
     align-content: flex-start;
     width: 100vw;
     max-height: 65vh;
     padding-left: rem(32px);
+    overflow: auto;
     background: $color__background;
     visibility: hidden;
     transition: clip-path 0.2s linear, visibility 0.2s linear;
