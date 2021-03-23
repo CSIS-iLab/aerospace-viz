@@ -12,9 +12,10 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "rm -rf dist",
     "start": "parcel src/index.html -p 8080",
     "prebuild": "rm -rf dist",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --public-url ./",
     "stylelint-fix": "stylelint \"src/scss/**/*.scss\" --fix"
   },
   "devDependencies": {
