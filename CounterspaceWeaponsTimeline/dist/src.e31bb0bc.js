@@ -6481,9 +6481,11 @@ var timeline = {
   },
   setupTimeline: function setupTimeline(_ref) {
     var startDate = _ref.startDate,
-        endDate = _ref.endDate;
+        endDate = _ref.endDate,
+        startHandle = _ref.startHandle,
+        endHandle = _ref.endHandle;
     noUiSlider.create(this.el, {
-      start: [startDate, endDate],
+      start: [startHandle, endHandle],
       connect: true,
       behaviour: 'tap-drag',
       step: 1,
@@ -6506,8 +6508,10 @@ var timeline = {
       }
     });
   },
-  resetTimeline: function resetTimeline() {
-    this.el.noUiSlider.reset();
+  resetTimeline: function resetTimeline(_ref2) {
+    var startDate = _ref2.startDate,
+        endDate = _ref2.endDate;
+    this.el.noUiSlider.set([startDate, endDate]);
   }
 };
 var _default = timeline;
@@ -6787,8 +6791,8 @@ function _loadDataAndSetup() {
               showStoriesOnly: currentValues.showStoriesOnly || defaults.showStoriesOnly,
               currentCountry: currentValues.currentCountry || defaults.currentCountry
             };
-            setupCountrySelector();
-            setupYearSelector();
+            setupCountrySelector(); // setupYearSelector()
+
             setupTimeline();
             setupCategorySelector();
             setupFormButtons();
@@ -6801,7 +6805,7 @@ function _loadDataAndSetup() {
             categoryToggle = document.querySelector(categorySelector);
             categoryToggle.addEventListener('click', toggleCategoryCheckboxes);
 
-          case 22:
+          case 21:
           case "end":
             return _context.stop();
         }
@@ -6854,41 +6858,37 @@ function setupCountrySelector() {
  * Setup Year Selectors
  *
  */
+// function setupYearSelector() {
+//   let options = []
+//   for (let i = data.years[0]; i <= data.years[1]; i++) {
+//     options.push({
+//       value: i,
+//       label: i,
+//     })
+//   }
+//   Dropdown.setup({
+//     selector: startYearSelector,
+//     name: 'filter-start-year',
+//     data: options,
+//     current: currentValues.startYear,
+//     onChange: (e) => {}, // Won't need if we have apply btn
+//   })
+//   Dropdown.setup({
+//     selector: endYearSelector,
+//     name: 'filter-end-year',
+//     data: options.reverse(),
+//     current: currentValues.endYear,
+//     onChange: (e) => {}, // Won't need if we have apply btn
+//   })
+// }
 
-
-function setupYearSelector() {
-  var options = [];
-
-  for (var i = data.years[0]; i <= data.years[1]; i++) {
-    options.push({
-      value: i,
-      label: i
-    });
-  }
-
-  _dropdown.default.setup({
-    selector: startYearSelector,
-    name: 'filter-start-year',
-    data: options,
-    current: currentValues.startYear,
-    onChange: function onChange(e) {} // Won't need if we have apply btn
-
-  });
-
-  _dropdown.default.setup({
-    selector: endYearSelector,
-    name: 'filter-end-year',
-    data: options.reverse(),
-    current: currentValues.endYear,
-    onChange: function onChange(e) {} // Won't need if we have apply btn
-
-  });
-}
 
 function setupTimeline() {
   _timeline.default.setupTimeline({
     startDate: defaults.startYear,
-    endDate: defaults.endYear
+    endDate: defaults.endYear,
+    startHandle: currentValues.startYear,
+    endHandle: currentValues.endYear
   });
 }
 /**
@@ -6904,13 +6904,15 @@ function setupFormButtons() {
   });
   document.getElementById('filter-clear').addEventListener('click', function () {
     var countryDropdown = document.querySelector(countrySelector);
-    countryDropdown.value = defaults.currentCountry;
-    var startDropdown = document.querySelector(startYearSelector);
-    startDropdown.value = defaults.startYear;
-    var endDropdown = document.querySelector(endYearSelector);
-    endDropdown.value = defaults.endYear;
+    countryDropdown.value = defaults.currentCountry; // let startDropdown = document.querySelector(startYearSelector)
+    // startDropdown.value = defaults.startYear
+    // let endDropdown = document.querySelector(endYearSelector)
+    // endDropdown.value = defaults.endYear
 
-    _timeline.default.resetTimeline();
+    _timeline.default.resetTimeline({
+      startDate: defaults.startYear,
+      endDate: defaults.endYear
+    });
 
     var categoryCheckboxes = document.querySelectorAll('.parent input[type=checkbox]');
 

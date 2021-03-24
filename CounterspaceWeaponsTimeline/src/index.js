@@ -156,7 +156,7 @@ async function loadDataAndSetup() {
   }
 
   setupCountrySelector()
-  setupYearSelector()
+  // setupYearSelector()
   setupTimeline()
   setupCategorySelector()
   setupFormButtons()
@@ -243,36 +243,38 @@ function setupCountrySelector() {
  *
  */
 
-function setupYearSelector() {
-  let options = []
-  for (let i = data.years[0]; i <= data.years[1]; i++) {
-    options.push({
-      value: i,
-      label: i,
-    })
-  }
+// function setupYearSelector() {
+//   let options = []
+//   for (let i = data.years[0]; i <= data.years[1]; i++) {
+//     options.push({
+//       value: i,
+//       label: i,
+//     })
+//   }
 
-  Dropdown.setup({
-    selector: startYearSelector,
-    name: 'filter-start-year',
-    data: options,
-    current: currentValues.startYear,
-    onChange: (e) => {}, // Won't need if we have apply btn
-  })
+//   Dropdown.setup({
+//     selector: startYearSelector,
+//     name: 'filter-start-year',
+//     data: options,
+//     current: currentValues.startYear,
+//     onChange: (e) => {}, // Won't need if we have apply btn
+//   })
 
-  Dropdown.setup({
-    selector: endYearSelector,
-    name: 'filter-end-year',
-    data: options.reverse(),
-    current: currentValues.endYear,
-    onChange: (e) => {}, // Won't need if we have apply btn
-  })
-}
+//   Dropdown.setup({
+//     selector: endYearSelector,
+//     name: 'filter-end-year',
+//     data: options.reverse(),
+//     current: currentValues.endYear,
+//     onChange: (e) => {}, // Won't need if we have apply btn
+//   })
+// }
 
 function setupTimeline() {
   timeline.setupTimeline({
     startDate: defaults.startYear,
     endDate: defaults.endYear,
+    startHandle: currentValues.startYear,
+    endHandle: currentValues.endYear,
   })
 }
 
@@ -294,11 +296,14 @@ function setupFormButtons() {
     .addEventListener('click', function () {
       let countryDropdown = document.querySelector(countrySelector)
       countryDropdown.value = defaults.currentCountry
-      let startDropdown = document.querySelector(startYearSelector)
-      startDropdown.value = defaults.startYear
-      let endDropdown = document.querySelector(endYearSelector)
-      endDropdown.value = defaults.endYear
-      timeline.resetTimeline()
+      // let startDropdown = document.querySelector(startYearSelector)
+      // startDropdown.value = defaults.startYear
+      // let endDropdown = document.querySelector(endYearSelector)
+      // endDropdown.value = defaults.endYear
+      timeline.resetTimeline({
+        startDate: defaults.startYear,
+        endDate: defaults.endYear,
+      })
       let categoryCheckboxes = document.querySelectorAll(
         '.parent input[type=checkbox]'
       )

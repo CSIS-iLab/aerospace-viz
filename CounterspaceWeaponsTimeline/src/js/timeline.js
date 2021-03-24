@@ -8,9 +8,9 @@ const timeline = {
   getCurrentDate() {
     return this.el.noUiSlider.get()
   },
-  setupTimeline({ startDate, endDate }) {
+  setupTimeline({ startDate, endDate, startHandle, endHandle }) {
     noUiSlider.create(this.el, {
-      start: [startDate, endDate],
+      start: [startHandle, endHandle],
       connect: true,
       behaviour: 'tap-drag',
       step: 1,
@@ -29,8 +29,8 @@ const timeline = {
       }
     })
   },
-  resetTimeline() {
-    this.el.noUiSlider.reset()
+  resetTimeline({ startDate, endDate }) {
+    this.el.noUiSlider.set([startDate, endDate])
   },
 }
 
