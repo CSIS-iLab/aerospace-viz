@@ -29,6 +29,9 @@ const timeline = {
       }
     })
   },
+  resetTimeline() {
+    this.el.noUiSlider.reset()
+  },
 }
 
 export default timeline

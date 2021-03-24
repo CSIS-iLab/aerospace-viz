@@ -6505,6 +6505,9 @@ var timeline = {
         density: 15
       }
     });
+  },
+  resetTimeline: function resetTimeline() {
+    this.el.noUiSlider.reset();
   }
 };
 var _default = timeline;
@@ -6884,8 +6887,8 @@ function setupYearSelector() {
 
 function setupTimeline() {
   _timeline.default.setupTimeline({
-    startDate: currentValues.startYear,
-    endDate: currentValues.endYear
+    startDate: defaults.startYear,
+    endDate: defaults.endYear
   });
 }
 /**
@@ -6906,6 +6909,9 @@ function setupFormButtons() {
     startDropdown.value = defaults.startYear;
     var endDropdown = document.querySelector(endYearSelector);
     endDropdown.value = defaults.endYear;
+
+    _timeline.default.resetTimeline();
+
     var categoryCheckboxes = document.querySelectorAll('.parent input[type=checkbox]');
 
     for (var i = 0; i < categoryCheckboxes.length; i++) {
@@ -6997,19 +7003,18 @@ function setURLParameters() {
 function drawChart() {
   currentValues.currentCountry = _dropdown.default.getCurrent(countrySelector);
 
-  var currentYears = _timeline.default.getCurrentDate();
+  var currentYears = _timeline.default.getCurrentDate(); // currentValues.startYear = Dropdown.getCurrent(startYearSelector)
+  // currentValues.endYear = Dropdown.getCurrent(endYearSelector)
 
-  currentValues.startYear = _dropdown.default.getCurrent(startYearSelector);
-  currentValues.endYear = _dropdown.default.getCurrent(endYearSelector);
+
   currentValues.startYear = currentYears[0];
-  currentValues.endYear = currentYears;
+  currentValues.endYear = currentYears[1];
   currentValues.currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
   currentValues.currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
   currentValues.showStoriesOnly = getShowStoryValue();
-
-  var updatedYears = _timeline.default.getCurrentDate();
-
-  console.log(updatedYears);
+  console.log(currentYears);
+  console.log(currentValues.startYear);
+  console.log(currentValues.endYear);
   setURLParameters(); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {

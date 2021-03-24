@@ -271,8 +271,8 @@ function setupYearSelector() {
 
 function setupTimeline() {
   timeline.setupTimeline({
-    startDate: currentValues.startYear,
-    endDate: currentValues.endYear,
+    startDate: defaults.startYear,
+    endDate: defaults.endYear,
   })
 }
 
@@ -298,6 +298,7 @@ function setupFormButtons() {
       startDropdown.value = defaults.startYear
       let endDropdown = document.querySelector(endYearSelector)
       endDropdown.value = defaults.endYear
+      timeline.resetTimeline()
       let categoryCheckboxes = document.querySelectorAll(
         '.parent input[type=checkbox]'
       )
@@ -387,10 +388,10 @@ function setURLParameters() {
 function drawChart() {
   currentValues.currentCountry = Dropdown.getCurrent(countrySelector)
   const currentYears = timeline.getCurrentDate()
-  currentValues.startYear = Dropdown.getCurrent(startYearSelector)
-  currentValues.endYear = Dropdown.getCurrent(endYearSelector)
+  // currentValues.startYear = Dropdown.getCurrent(startYearSelector)
+  // currentValues.endYear = Dropdown.getCurrent(endYearSelector)
   currentValues.startYear = currentYears[0]
-  currentValues.endYear = currentYears
+  currentValues.endYear = currentYears[1]
   currentValues.currentCategories = Checkbox.getCurrent(
     categorySelector,
     '.parent'
@@ -401,8 +402,9 @@ function drawChart() {
   )
   currentValues.showStoriesOnly = getShowStoryValue()
 
-  const updatedYears = timeline.getCurrentDate()
-  console.log(updatedYears)
+  console.log(currentYears)
+  console.log(currentValues.startYear)
+  console.log(currentValues.endYear)
 
   setURLParameters()
 
