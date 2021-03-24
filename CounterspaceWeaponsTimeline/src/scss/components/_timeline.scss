@@ -1,0 +1,75 @@
+@use 'abstracts' as *;
+
+/*================================
+=            Timeline            =
+================================*/
+
+.timeline {
+  .noUi-target {
+    height: 3px;
+    background-color: $color__blue-200;
+    border: 0;
+    box-shadow: none;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -4px;
+      width: 3px;
+      height: 12px;
+      background-color: $color__blue-200;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+  }
+
+  .noUi-horizontal .noUi-handle {
+    right: -8px !important;
+  }
+
+  .noUi-handle {
+    width: 1rem;
+    height: 1rem;
+    background-color: $color__yellow-100;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: none;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .noUi-value {
+    top: 0;
+    font-family: $font__abel;
+    @include font-size(14px);
+    color: $color__blue-200;
+  }
+
+  .noUi-marker ~ .noUi-value {
+    left: 10% !important;
+
+    &:last-of-type {
+      left: 90% !important;
+    }
+  }
+
+  .noUi-marker-large {
+    display: none;
+  }
+
+  .noUi-marker-normal {
+    top: 0;
+    background-color: $color__blue-200;
+  }
+}

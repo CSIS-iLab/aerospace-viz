@@ -3,8 +3,10 @@ import Chart from './js/chart'
 import Dropdown from './js/dropdown'
 import Buttons from './js/buttons'
 import Checkbox from './js/checkbox'
+import timeline from './js/timeline'
 import Img from '../img/css-icons/*.svg'
 
+import 'nouislider/distribute/nouislider.min.css'
 import './scss/main.scss'
 
 const dataSrc =
@@ -155,6 +157,7 @@ async function loadDataAndSetup() {
 
   setupCountrySelector()
   setupYearSelector()
+  setupTimeline()
   setupCategorySelector()
   setupFormButtons()
   setShowStoryValue()
@@ -263,6 +266,13 @@ function setupYearSelector() {
     data: options.reverse(),
     current: currentValues.endYear,
     onChange: (e) => {}, // Won't need if we have apply btn
+  })
+}
+
+function setupTimeline() {
+  timeline.setupTimeline({
+    startDate: currentValues.startYear,
+    endDate: currentValues.endYear,
   })
 }
 
@@ -376,8 +386,11 @@ function setURLParameters() {
 
 function drawChart() {
   currentValues.currentCountry = Dropdown.getCurrent(countrySelector)
+  const currentYears = timeline.getCurrentDate()
   currentValues.startYear = Dropdown.getCurrent(startYearSelector)
   currentValues.endYear = Dropdown.getCurrent(endYearSelector)
+  currentValues.startYear = currentYears[0]
+  currentValues.endYear = currentYears
   currentValues.currentCategories = Checkbox.getCurrent(
     categorySelector,
     '.parent'
@@ -387,6 +400,9 @@ function drawChart() {
     '.child'
   )
   currentValues.showStoriesOnly = getShowStoryValue()
+
+  const updatedYears = timeline.getCurrentDate()
+  console.log(updatedYears)
 
   setURLParameters()
 

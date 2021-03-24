@@ -1,1 +1,107 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta content="width=device-width, initial-scale=1" name="viewport"><title>ASP Counterspace Weapons Timeline</title><link rel="stylesheet" id="wp-block-library-css" href="https://aerospace.csis.org/wp-includes/css/dist/block-library/style.min.css?ver=5.5.3" type="text/css" media="all"><link rel="stylesheet" id="aerospace-style-css" href="https://aerospace.csis.org/wp-content/themes/aerospace/style.css?ver=5.5.3" type="text/css" media="all"><script src="https://kit.fontawesome.com/e0bde54006.js" crossorigin="anonymous"></script><link rel="stylesheet" href="src.b8aa2d28.css"></head><body class="post-template post-template-single-longform post-template-single-longform-php single single-post postid-1417 single-format-standard"> <div id="content" class="site-content"> <div id="primary" class="content-area"> <main id="main" class="site-main content-wrapper"> <article class="post hentry"> <div class="entry-content content-padding"> <h1 class="interactive__title">Counterspace Activities Timeline</h1> <div class="entry-content-post-body"> <p class="interactive__description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p> <div class="fullWidthFeatureContent"> <div class="fullWidthInner">  <div id="interactive"> <div class="loading-container"> <div class="loading"></div> </div> <div class="interactive__container hide-on-load"> <div class="interactive__header"> <div class="interactive__legend interactive__legend-mobile mobile-only"><img src="non-kinetic-physical-DetailsFlag.1db2e3cb.svg" alt="Detailed story icon"> : Story details available</div> <div class="interactive__legend interactive__legend-desktop desktop-only">  <ul>  <li class="interactive__legend-item detailed-story"><img src="non-kinetic-physical-DetailsFlag.1db2e3cb.svg" alt="Detailed story icon">Detailed Story</li> </ul> </div> <div class="interactive__filters"> <button class="hamburger" aria-label="Open the filters" aria-expanded="false">Filters <i class="fas fa-sliders-h"></i></button> <div class="interactive__filters-wrapper"> <div class="interactive__filters--country"> <label class="input__label" for="filter-country">Filter by country of origin</label> <select class="input__select filter__country" id="filter-country"></select> </div> <div class="interactive__filters--category"> <label for="checkbox-container" class="input__label">Filter by type</label> </div> <p class="input__label input__label-dates">Date Range</p> <div class="interactive__filters--years"> <div class="interactive__filters--start-year"> <label class="input__label" for="filter-start-year">Start</label> <select class="input__select filter__year" id="filter-start-year"></select> </div> <div class="interactive__filters--end-year"> <label class="input__label" for="filter-end-year">End</label> <select class="input__select filter__year" id="filter-end-year"></select> </div> </div> <div class="interactive__filters--story checkbox-toggle"> <input type="checkbox" name="showStoriesOnly" id="story-toggle" class="input__select"> <label for="story-toggle" class="input__label">Show Only Actions With Detailed Story</label> </div> <div class="interactive__filters--button-container"> <div class="interactive__filters--clear"> <button id="filter-clear">Reset</button> </div> <div class="interactive__filters--apply"> <button id="filter-apply" class="btn">Apply</button> </div> </div> </div> </div> </div> <ol id="interactive__timeline"></ol> </div> </div> </div> </div> </div> </div> </article> </main> </div> </div>  <script src="src.39b289cc.js"></script> </body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>ASP Counterspace Weapons Timeline</title>
+    <!-- Include default ASP stylesheets to inherit site styles -->
+    <link rel="stylesheet" id="wp-block-library-css" href="https://aerospace.csis.org/wp-includes/css/dist/block-library/style.min.css?ver=5.5.3" type="text/css" media="all">
+    <link rel="stylesheet" id="aerospace-style-css" href="https://aerospace.csis.org/wp-content/themes/aerospace/style.css?ver=5.5.3" type="text/css" media="all">
+    <script src="https://kit.fontawesome.com/e0bde54006.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/src.e31bb0bc.css"></head>
+
+  <body class="post-template post-template-single-longform post-template-single-longform-php single single-post postid-1417 single-format-standard">
+    <div id="content" class="site-content">
+      <div id="primary" class="content-area">
+        <main id="main" class="site-main content-wrapper">
+          <article class="post hentry">
+            <div class="entry-content content-padding">
+              <h1 class="interactive__title">Counterspace Activities Timeline</h1>
+              <div class="entry-content-post-body">
+                <p class="interactive__description">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+                <div class="fullWidthFeatureContent">
+                  <div class="fullWidthInner">
+                    <!-- The #interactive div should be copied into the ASP post
+                    inside of the full width short code. -->
+                    <div id="interactive">
+                      <div class="loading-container">
+                        <div class="loading"></div>
+                      </div>
+                      <div class="interactive__container hide-on-load">
+                        <div class="interactive__header">
+                          <div class="interactive__legend interactive__legend-mobile mobile-only"><img src="/non-kinetic-physical-DetailsFlag.e2b58b49.svg" alt="Detailed story icon"> : Story details available</div>
+                          <div class="interactive__legend interactive__legend-desktop desktop-only">
+                            <!-- <p class="interactive__legend-label">Action type</p> -->
+                            <ul>
+                              <!-- <li class="interactive__legend-item non-kinetic-physical"><img src="img/css-icons/non-kinetic-physical.svg" alt="Non-kinetic physical icon">Non-kinetic Physical</li>
+                              <li class="interactive__legend-item kinetic-physical"><img src="img/css-icons/kinetic-physical.svg" alt="Kinetic physical icon">Kinetic Physical</li>
+                              <li class="interactive__legend-item cyber"><img src="img/css-icons/cyber.svg" alt="Cyber icon">Cyber</li>
+                              <li class="interactive__legend-item electronic"><img src="img/css-icons/electronic.svg" alt="Electronic icon">Electronic</li> -->
+                              <li class="interactive__legend-item detailed-story"><img src="/non-kinetic-physical-DetailsFlag.e2b58b49.svg" alt="Detailed story icon">Detailed Story</li>
+                            </ul>
+                          </div>
+                          <div class="interactive__filters">
+                            <button class="hamburger" aria-label="Open the filters" aria-expanded="false">Filters <i class="fas fa-sliders-h"></i></button>
+                            <div class="interactive__filters-wrapper">
+                              <div class="interactive__filters--country">
+                                <label class="input__label" for="filter-country">Filter by country of origin</label>
+                                <select class="input__select filter__country" id="filter-country"></select>
+                              </div>
+                              <div class="interactive__filters--category">
+                                <label for="checkbox-container" class="input__label">Filter by type</label>
+                              </div>
+                              <p class="input__label input__label-dates">Date Range</p>
+                              <div class="timeline">
+                                <div class="timeline-container">
+                                  <div class="timeline-bar"></div>
+                                </div>
+                              </div>
+                              <div class="interactive__filters--years">
+                                <div class="interactive__filters--start-year">
+                                  <label class="input__label" for="filter-start-year">Start</label>
+                                  <select class="input__select filter__year" id="filter-start-year"></select>
+                                </div>
+                                <div class="interactive__filters--end-year">
+                                  <label class="input__label" for="filter-end-year">End</label>
+                                  <select class="input__select filter__year" id="filter-end-year"></select>
+                                </div>
+                              </div>
+                              <div class="interactive__filters--story checkbox-toggle">
+                                <input type="checkbox" name="showStoriesOnly" id="story-toggle" class="input__select">
+                                <label for="story-toggle" class="input__label">Show Only Actions With Detailed Story</label>
+                              </div>
+                              <div class="interactive__filters--button-container">
+                                <div class="interactive__filters--clear">
+                                  <button id="filter-clear">Reset</button>
+                                </div>
+                                <div class="interactive__filters--apply">
+                                  <button id="filter-apply" class="btn">Apply</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <ol id="interactive__timeline"></ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </main>
+      </div>
+    </div>
+    <!-- Copy this URL into Styles & Scripts -->
+    <script src="/src.e31bb0bc.js"></script>
+  </body>
+</html>
