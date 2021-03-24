@@ -6904,10 +6904,7 @@ function setupFormButtons() {
   });
   document.getElementById('filter-clear').addEventListener('click', function () {
     var countryDropdown = document.querySelector(countrySelector);
-    countryDropdown.value = defaults.currentCountry; // let startDropdown = document.querySelector(startYearSelector)
-    // startDropdown.value = defaults.startYear
-    // let endDropdown = document.querySelector(endYearSelector)
-    // endDropdown.value = defaults.endYear
+    countryDropdown.value = defaults.currentCountry;
 
     _timeline.default.resetTimeline({
       startDate: defaults.startYear,
@@ -7014,9 +7011,6 @@ function drawChart() {
   currentValues.currentCategories = _checkbox.default.getCurrent(categorySelector, '.parent');
   currentValues.currentSubcategories = _checkbox.default.getCurrent(categorySelector, '.child');
   currentValues.showStoriesOnly = getShowStoryValue();
-  console.log(currentYears);
-  console.log(currentValues.startYear);
-  console.log(currentValues.endYear);
   setURLParameters(); // Filter data based on selected filter functions (eg. year, category, type, etc.)
 
   var dataset = data.values.filter(function (d) {
@@ -7042,8 +7036,6 @@ function drawChart() {
       return d;
     }
   });
-  console.log(data);
-  console.log(dataset);
 
   _chart.default.init({
     data: dataset,

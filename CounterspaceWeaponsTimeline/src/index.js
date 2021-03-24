@@ -296,10 +296,6 @@ function setupFormButtons() {
     .addEventListener('click', function () {
       let countryDropdown = document.querySelector(countrySelector)
       countryDropdown.value = defaults.currentCountry
-      // let startDropdown = document.querySelector(startYearSelector)
-      // startDropdown.value = defaults.startYear
-      // let endDropdown = document.querySelector(endYearSelector)
-      // endDropdown.value = defaults.endYear
       timeline.resetTimeline({
         startDate: defaults.startYear,
         endDate: defaults.endYear,
@@ -407,10 +403,6 @@ function drawChart() {
   )
   currentValues.showStoriesOnly = getShowStoryValue()
 
-  console.log(currentYears)
-  console.log(currentValues.startYear)
-  console.log(currentValues.endYear)
-
   setURLParameters()
 
   // Filter data based on selected filter functions (eg. year, category, type, etc.)
@@ -451,9 +443,6 @@ function drawChart() {
       return d
     }
   })
-
-  console.log(data)
-  console.log(dataset)
 
   Chart.init({
     data: dataset,

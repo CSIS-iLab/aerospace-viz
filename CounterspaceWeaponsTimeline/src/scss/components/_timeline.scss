@@ -5,9 +5,14 @@
 ================================*/
 
 .timeline {
+  &-container {
+    margin-bottom: rem(15px);
+    padding: 0.5rem 1rem;
+  }
+
   .noUi-target {
     height: 3px;
-    background-color: $color__blue-200;
+    background-color: $color__blue-300;
     border: 0;
     box-shadow: none;
 
@@ -19,7 +24,7 @@
       top: -4px;
       width: 3px;
       height: 12px;
-      background-color: $color__blue-200;
+      background-color: $color__blue-300;
     }
 
     &::before {
@@ -29,6 +34,10 @@
     &::after {
       right: 0;
     }
+  }
+
+  .noUi-connect {
+    background-color: $color__blue-300;
   }
 
   .noUi-horizontal .noUi-handle {
@@ -51,17 +60,9 @@
 
   .noUi-value {
     top: 0;
-    font-family: $font__abel;
-    @include font-size(14px);
-    color: $color__blue-200;
-  }
-
-  .noUi-marker ~ .noUi-value {
-    left: 10% !important;
-
-    &:last-of-type {
-      left: 90% !important;
-    }
+    @extend %form__label;
+    letter-spacing: 0.03em;
+    color: $color__black-175;
   }
 
   .noUi-marker-large {
@@ -70,6 +71,21 @@
 
   .noUi-marker-normal {
     top: 0;
-    background-color: $color__blue-200;
+    background-color: $color__blue-300;
   }
+
+  .noUi-tooltip {
+    display: block;
+    @extend %form__label;
+    background: transparent;
+    border: 0;
+    color: $color__black-140;
+    bottom: 80%;
+  }
+
+  // // .noUi-active .noUi-tooltip,
+  // [aria-valuenow='1962.0'] .noUi-tooltip,
+  // [aria-valuenow='1962.0'] .noUi-tooltip {
+  //   display: none;
+  // }
 }
