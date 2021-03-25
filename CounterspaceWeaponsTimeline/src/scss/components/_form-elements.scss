@@ -185,7 +185,7 @@
   }
 
   input[type='checkbox']:checked + label::after {
-    transform: translateX(calc(100% + 2px));
     background-color: $color__orange-btn;
+    transform: translateX(calc(100% + 2px));
   }
 }

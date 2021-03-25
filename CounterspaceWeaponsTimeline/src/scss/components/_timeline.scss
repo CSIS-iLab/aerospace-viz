@@ -18,13 +18,13 @@
 
     &::before,
     &::after {
-      content: '';
-      display: block;
       position: absolute;
       top: -4px;
+      display: block;
       width: 3px;
       height: 12px;
       background-color: $color__blue-300;
+      content: '';
     }
 
     &::before {
@@ -60,9 +60,9 @@
 
   .noUi-value {
     top: 0;
-    @extend %form__label;
-    letter-spacing: 0.03em;
     color: $color__black-175;
+    letter-spacing: 0.03em;
+    @extend %form__label;
   }
 
   .noUi-marker-large {
@@ -75,12 +75,12 @@
   }
 
   .noUi-tooltip {
+    bottom: 80%;
     display: block;
-    @extend %form__label;
+    color: $color__black-140;
     background: transparent;
     border: 0;
-    color: $color__black-140;
-    bottom: 80%;
+    @extend %form__label;
   }
 
   // // .noUi-active .noUi-tooltip,
