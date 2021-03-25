@@ -71,7 +71,7 @@
   @include breakpoint('large') {
     display: inline;
     grid-area: sidebar;
-    width: rem(297.66px);
+    width: rem(250px);
     margin-left: 1rem;
   }
 }
@@ -145,5 +145,6 @@
   @include breakpoint('large') {
     grid-area: meat;
     margin-top: rem(56px);
+    margin-left: rem(47.66px);
   }
 }
