@@ -38,8 +38,7 @@
         'type toggle'
         'type buttons';
       grid-template-rows: max-content max-content max-content max-content auto;
-      padding: rem(18px);
-      padding-left: rem(40px);
+      padding: rem(18px) rem(70px) rem(18px) rem(40px);
     }
 
     @include breakpoint('large') {
