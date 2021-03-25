@@ -21,7 +21,7 @@
       clip-path: inset(0);
     }
 
-    > *:not(.interactive__filters--years) {
+    > * {
       margin-top: rem(15px);
     }
 
@@ -99,6 +99,11 @@
 
   &--story {
     grid-area: toggle;
+    margin-top: rem(30px);
+
+    @include breakpoint('medium') {
+      margin-top: rem(15px);
+    }
   }
 
   .interactive__label-dates {
