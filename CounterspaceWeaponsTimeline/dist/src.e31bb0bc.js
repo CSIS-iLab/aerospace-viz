@@ -3475,6 +3475,8 @@ function drawChart() {
       return d.id;
     }).join('li').attr('class', 'timeline__entry').classed('is-first-of-year', function (d) {
       return firstOfYearIds[d.id];
+    }).classed('has-story', function (d) {
+      return d.storyBool;
     }).attr('data-id', function (d) {
       return d.id;
     }).attr('data-year', function (d) {
@@ -3517,10 +3519,10 @@ function drawChart() {
     if (d.storyBool == false && d.learnMore == false) {
       moreInfo = "<summary>Source</summary><div class=\"action__details-inner\"><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">".concat(d.source, "</p></div>");
     } else if (d.learnMore == false) {
-      moreInfo = "<summary>Details</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
+      moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
       detailsIcon = "<img src=\"".concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
     } else {
-      moreInfo = "<summary>Details</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<a href=\"").concat(d.learnMoreURL, "\" class=\"action__details-link\">Explore &#8594;</a><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
+      moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<a href=\"").concat(d.learnMoreURL, "\" class=\"action__details-link\">Explore &#8594;</a><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
       detailsIcon = "<img src=\"".concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
     }
 

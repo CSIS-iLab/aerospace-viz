@@ -50,6 +50,7 @@ function drawChart() {
       .join('li')
       .attr('class', 'timeline__entry')
       .classed('is-first-of-year', (d) => firstOfYearIds[d.id])
+      .classed('has-story', (d) => d.storyBool)
       .attr('data-id', (d) => d.id)
       .attr('data-year', (d) => d.year)
       .html((d) => generateTimelineEntry(d))
@@ -89,10 +90,10 @@ function drawChart() {
     if (d.storyBool == false && d.learnMore == false) {
       moreInfo = `<summary>Source</summary><div class="action__details-inner"><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
     } else if (d.learnMore == false) {
-      moreInfo = `<summary>Details</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
+      moreInfo = `<summary>Read More</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
       detailsIcon = `<img src="${Img[categoryDetailsIcon]}" class="action__details-icon" />`
     } else {
-      moreInfo = `<summary>Details</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<a href="${d.learnMoreURL}" class="action__details-link">Explore &#8594;</a><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
+      moreInfo = `<summary>Read More</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<a href="${d.learnMoreURL}" class="action__details-link">Explore &#8594;</a><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
       detailsIcon = `<img src="${Img[categoryDetailsIcon]}" class="action__details-icon" />`
     }
 
