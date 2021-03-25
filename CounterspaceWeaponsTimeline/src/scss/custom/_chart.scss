@@ -57,7 +57,7 @@
       max-width: rem(467px);
     }
 
-    &.is-first-of-year:not(:first-child) {
+    &.is-first-of-year {
       padding-top: rem(40px);
 
       &::before {
