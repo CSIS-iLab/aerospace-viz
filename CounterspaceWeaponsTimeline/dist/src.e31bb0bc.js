@@ -3522,7 +3522,7 @@ function drawChart() {
       moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
       detailsIcon = "<img src=\"".concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
     } else {
-      moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<a href=\"").concat(d.learnMoreURL, "\" class=\"action__details-link\">Explore &#8594;</a><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
+      moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<a href=\"").concat(d.learnMoreURL, "\" class=\"action__details-link\" target=\"_blank\">Explore &#8594;</a><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
       detailsIcon = "<img src=\"".concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
     }
 
