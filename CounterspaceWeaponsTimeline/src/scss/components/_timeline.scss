@@ -60,7 +60,7 @@
 
   .noUi-value {
     top: 0;
-    color: $color__black-175;
+    color: $color__black-140;
     letter-spacing: 0.03em;
     @extend %form__label;
   }
@@ -77,15 +77,9 @@
   .noUi-tooltip {
     bottom: 80%;
     display: block;
-    color: $color__black-140;
+    color: $color__black-175;
     background: transparent;
     border: 0;
     @extend %form__label;
   }
-
-  // // .noUi-active .noUi-tooltip,
-  // [aria-valuenow='1962.0'] .noUi-tooltip,
-  // [aria-valuenow='1962.0'] .noUi-tooltip {
-  //   display: none;
-  // }
 }
