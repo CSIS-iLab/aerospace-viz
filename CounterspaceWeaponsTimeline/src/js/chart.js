@@ -2,6 +2,14 @@
 const d3 = Object.assign({}, require('d3-selection'))
 import Img from '../img/css-icons/*.svg'
 
+let url = null
+
+if (window.location.href.indexOf('aerospace') != -1) {
+  url = 'http://localhost:8080'
+}
+
+console.log(url)
+
 const chart = drawChart()
 
 let el
@@ -84,17 +92,17 @@ function drawChart() {
     let categoryDetailsIcon = categoryName + '-DetailsFlag'
 
     if (d.imageURL) {
-      detailsImage = `<img src="${d.imageURL}" class="action__details-image" />`
+      detailsImage = `<img src="${url}${d.imageURL}" class="action__details-image" />`
     }
 
     if (d.storyBool == false && d.learnMore == false) {
       moreInfo = `<summary>Source</summary><div class="action__details-inner"><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
     } else if (d.learnMore == false) {
       moreInfo = `<summary>Read More</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
-      detailsIcon = `<img src="${Img[categoryDetailsIcon]}" class="action__details-icon" />`
+      detailsIcon = `<img src="${url}${Img[categoryDetailsIcon]}" class="action__details-icon" />`
     } else {
       moreInfo = `<summary>Read More</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<a href="${d.learnMoreURL}" class="action__details-link" target="_blank">Explore &#8594;</a><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
-      detailsIcon = `<img src="${Img[categoryDetailsIcon]}" class="action__details-icon" />`
+      detailsIcon = `<img src="${url}${Img[categoryDetailsIcon]}" class="action__details-icon" />`
     }
 
     let actionDate
@@ -146,7 +154,7 @@ function drawChart() {
     return `
     <div class="timeline__entry-grid ${categoryName}">
     ${detailsIcon}
-    <img src="${Img[categoryIcon]}" class="action__icon" />
+    <img src="${url}${Img[categoryIcon]}" class="action__icon" />
     <span class="action__year wp-caption-text">${actionDate}${actionEndDate}</span><span class="action__country wp-caption-text">${d.country}</span>
     <span class="action__category mobile-only ${categoryName}">${d.category}</span>
     <h2 class="action__title entry-highlights-title">${d.title}</h2>
