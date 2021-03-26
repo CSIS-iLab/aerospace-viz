@@ -3378,14 +3378,14 @@ var _style = require("./selection/style.js");
 var _window = _interopRequireDefault(require("./window.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./create.js":"../node_modules/d3-selection/src/create.js","./creator.js":"../node_modules/d3-selection/src/creator.js","./local.js":"../node_modules/d3-selection/src/local.js","./matcher.js":"../node_modules/d3-selection/src/matcher.js","./namespace.js":"../node_modules/d3-selection/src/namespace.js","./namespaces.js":"../node_modules/d3-selection/src/namespaces.js","./pointer.js":"../node_modules/d3-selection/src/pointer.js","./pointers.js":"../node_modules/d3-selection/src/pointers.js","./select.js":"../node_modules/d3-selection/src/select.js","./selectAll.js":"../node_modules/d3-selection/src/selectAll.js","./selection/index.js":"../node_modules/d3-selection/src/selection/index.js","./selector.js":"../node_modules/d3-selection/src/selector.js","./selectorAll.js":"../node_modules/d3-selection/src/selectorAll.js","./selection/style.js":"../node_modules/d3-selection/src/selection/style.js","./window.js":"../node_modules/d3-selection/src/window.js"}],"img/css-icons/arrow-down-black.svg":[function(require,module,exports) {
+},{"./create.js":"../node_modules/d3-selection/src/create.js","./creator.js":"../node_modules/d3-selection/src/creator.js","./local.js":"../node_modules/d3-selection/src/local.js","./matcher.js":"../node_modules/d3-selection/src/matcher.js","./namespace.js":"../node_modules/d3-selection/src/namespace.js","./namespaces.js":"../node_modules/d3-selection/src/namespaces.js","./pointer.js":"../node_modules/d3-selection/src/pointer.js","./pointers.js":"../node_modules/d3-selection/src/pointers.js","./select.js":"../node_modules/d3-selection/src/select.js","./selectAll.js":"../node_modules/d3-selection/src/selectAll.js","./selection/index.js":"../node_modules/d3-selection/src/selection/index.js","./selector.js":"../node_modules/d3-selection/src/selector.js","./selectorAll.js":"../node_modules/d3-selection/src/selectorAll.js","./selection/style.js":"../node_modules/d3-selection/src/selection/style.js","./window.js":"../node_modules/d3-selection/src/window.js"}],"img/css-icons/cyber.svg":[function(require,module,exports) {
+module.exports = "/cyber.90da9b39.svg";
+},{}],"img/css-icons/arrow-down-black.svg":[function(require,module,exports) {
 module.exports = "/arrow-down-black.5a275c38.svg";
-},{}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
-module.exports = "/arrow-down.5a58f9ac.svg";
 },{}],"img/css-icons/cyber-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/cyber-DetailsFlag.03fb2117.svg";
-},{}],"img/css-icons/cyber.svg":[function(require,module,exports) {
-module.exports = "/cyber.90da9b39.svg";
+},{}],"img/css-icons/arrow-down.svg":[function(require,module,exports) {
+module.exports = "/arrow-down.5a58f9ac.svg";
 },{}],"img/css-icons/electronic-DetailsFlag.svg":[function(require,module,exports) {
 module.exports = "/electronic-DetailsFlag.0d75a7fc.svg";
 },{}],"img/css-icons/electronic.svg":[function(require,module,exports) {
@@ -3400,10 +3400,10 @@ module.exports = "/non-kinetic-physical-DetailsFlag.e2b58b49.svg";
 module.exports = "/non-kinetic-physical.63ae79f9.svg";
 },{}],"img/css-icons/*.svg":[function(require,module,exports) {
 module.exports = {
-  "arrow-down-black": require("./arrow-down-black.svg"),
-  "arrow-down": require("./arrow-down.svg"),
-  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
   "cyber": require("./cyber.svg"),
+  "arrow-down-black": require("./arrow-down-black.svg"),
+  "cyber-DetailsFlag": require("./cyber-DetailsFlag.svg"),
+  "arrow-down": require("./arrow-down.svg"),
   "electronic-DetailsFlag": require("./electronic-DetailsFlag.svg"),
   "electronic": require("./electronic.svg"),
   "kinetic-physical-DetailsFlag": require("./kinetic-physical-DetailsFlag.svg"),
@@ -3411,7 +3411,7 @@ module.exports = {
   "non-kinetic-physical-DetailsFlag": require("./non-kinetic-physical-DetailsFlag.svg"),
   "non-kinetic-physical": require("./non-kinetic-physical.svg")
 };
-},{"./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./cyber.svg":"img/css-icons/cyber.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
+},{"./cyber.svg":"img/css-icons/cyber.svg","./arrow-down-black.svg":"img/css-icons/arrow-down-black.svg","./cyber-DetailsFlag.svg":"img/css-icons/cyber-DetailsFlag.svg","./arrow-down.svg":"img/css-icons/arrow-down.svg","./electronic-DetailsFlag.svg":"img/css-icons/electronic-DetailsFlag.svg","./electronic.svg":"img/css-icons/electronic.svg","./kinetic-physical-DetailsFlag.svg":"img/css-icons/kinetic-physical-DetailsFlag.svg","./kinetic-physical.svg":"img/css-icons/kinetic-physical.svg","./non-kinetic-physical-DetailsFlag.svg":"img/css-icons/non-kinetic-physical-DetailsFlag.svg","./non-kinetic-physical.svg":"img/css-icons/non-kinetic-physical.svg"}],"js/chart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3427,6 +3427,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import * as d3 from 'd3'
 var d3 = Object.assign({}, require('d3-selection'));
+var url = null;
+
+if (window.location.href.indexOf('aerospace') != -1) {
+  url = 'http://localhost:8080';
+}
+
+console.log(url);
 var chart = drawChart();
 var el; // If  needed, declare any globally accessible variables you might need here to optimize selections
 
@@ -3513,17 +3520,17 @@ function drawChart() {
     var categoryDetailsIcon = categoryName + '-DetailsFlag';
 
     if (d.imageURL) {
-      detailsImage = "<img src=\"".concat(d.imageURL, "\" class=\"action__details-image\" />");
+      detailsImage = "<img src=\"".concat(url).concat(d.imageURL, "\" class=\"action__details-image\" />");
     }
 
     if (d.storyBool == false && d.learnMore == false) {
       moreInfo = "<summary>Source</summary><div class=\"action__details-inner\"><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">".concat(d.source, "</p></div>");
     } else if (d.learnMore == false) {
       moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
-      detailsIcon = "<img src=\"".concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
+      detailsIcon = "<img src=\"".concat(url).concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
     } else {
       moreInfo = "<summary>Read More</summary><div class=\"action__details-inner\"><div class=\"action__details-body\">".concat(d.story, "</div>").concat(detailsImage, "<a href=\"").concat(d.learnMoreURL, "\" class=\"action__details-link\" target=\"_blank\">Explore &#8594;</a><h2 class=\"action__source-label\">Source</h2><p class=\"action__source\">").concat(d.source, "</p></div>");
-      detailsIcon = "<img src=\"".concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
+      detailsIcon = "<img src=\"".concat(url).concat(_.default[categoryDetailsIcon], "\" class=\"action__details-icon\" />");
     }
 
     var actionDate;
@@ -3558,7 +3565,7 @@ function drawChart() {
     }
 
     var categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase();
-    return "\n    <div class=\"timeline__entry-grid ".concat(categoryName, "\">\n    ").concat(detailsIcon, "\n    <img src=\"").concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year wp-caption-text\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country wp-caption-text\">").concat(d.country, "</span>\n    <span class=\"action__category mobile-only ").concat(categoryName, "\">").concat(d.category, "</span>\n    <h2 class=\"action__title entry-highlights-title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    </div>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    ");
+    return "\n    <div class=\"timeline__entry-grid ".concat(categoryName, "\">\n    ").concat(detailsIcon, "\n    <img src=\"").concat(url).concat(_.default[categoryIcon], "\" class=\"action__icon\" />\n    <span class=\"action__year wp-caption-text\">").concat(actionDate).concat(actionEndDate, "</span><span class=\"action__country wp-caption-text\">").concat(d.country, "</span>\n    <span class=\"action__category mobile-only ").concat(categoryName, "\">").concat(d.category, "</span>\n    <h2 class=\"action__title entry-highlights-title\">").concat(d.title, "</h2>\n    <p class=\"action__type\">").concat(d.type, "</p>\n    </div>\n    <details class=\"action__details\">").concat(moreInfo, "</details>\n    ");
   }
 
   function chart(container) {
@@ -7091,7 +7098,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52220" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54192" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
