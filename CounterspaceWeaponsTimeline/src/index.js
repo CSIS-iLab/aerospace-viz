@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const content = document.querySelector('#interactive__timeline')
   const header = document.querySelector('.interactive__header')
   const description = document.querySelector('.interactive__description')
+  const apply = document.querySelector('#filter-apply')
 
   function setAria() {
     let isExpanded = hamburger.getAttribute('aria-expanded')
@@ -49,17 +50,20 @@ document.addEventListener('DOMContentLoaded', function () {
     hamburger.setAttribute('aria-expanded', isExpanded)
   }
 
+  function closeMenu() {
+    if (menu.classList.contains('is-visible')) {
+      menu.classList.remove('is-visible')
+      setAria()
+    }
+  }
+
   hamburger.addEventListener('click', () => {
     menu.classList.toggle('is-visible')
     setAria()
   })
 
-  content.addEventListener('click', () => {
-    if (menu.classList.contains('is-visible')) {
-      menu.classList.remove('is-visible')
-      setAria()
-    }
-  })
+  content.addEventListener('click', closeMenu)
+  apply.addEventListener('click', closeMenu)
 
   let options = {}
 
