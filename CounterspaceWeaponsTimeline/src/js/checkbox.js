@@ -14,17 +14,12 @@ const Checkbox = {
           .attr('data-category', (d) => d.value)
           .each(function (d) {
             d3.select(this)
-              .append('span')
+              .append('button')
               .attr('class', 'checkbox-expander')
               .text('+')
           })
           .each(generateCheckboxes)
       )
-    // .each(function (d) {
-    //   d3.select(this)
-    //     .select('input')
-    //     .property('checked', current.includes(d.value))
-    // })
   },
   getCurrent: function (selector, wrapperClass) {
     let selected = []

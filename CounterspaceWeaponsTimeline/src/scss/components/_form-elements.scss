@@ -137,10 +137,16 @@
 
 .checkbox-expander {
   position: absolute;
-  top: rem(-4px);
+  top: rem(3px);
   left: rem(-24px);
-  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  color: inherit;
   @include font-size(20px);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  appearance: none;
 }
 
 .checkbox-toggle {
@@ -187,5 +193,9 @@
   input[type='checkbox']:checked + label::after {
     background-color: $color__orange-btn;
     transform: translateX(calc(100% + 2px));
+  }
+
+  input[type='checkbox']:focus + label::before {
+    box-shadow: 0 0 0 2px rgba(69, 90, 100, 0.5);
   }
 }
