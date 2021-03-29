@@ -159,6 +159,11 @@
     background: #f2f2f2;
     border: 0;
 
+    img {
+      position: relative;
+      top: rem(2px);
+    }
+
     &.is-invisible {
       z-index: -1;
       display: none;
