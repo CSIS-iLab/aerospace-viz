@@ -2,7 +2,7 @@
 const d3 = Object.assign({}, require('d3-selection'))
 import Img from '../img/css-icons/*.svg'
 
-let url = null
+let url = ''
 
 if (window.location.href.indexOf('aerospace') != -1) {
   url = 'http://localhost:8080'
@@ -81,46 +81,43 @@ function drawChart() {
   }
 
   function generateTimelineEntry(d) {
-    // Update the contents of the timeline entry div
-    // details + summary for the details/source info: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
-    let moreInfo
-    let detailsIcon = ''
-    let detailsImage = ''
-
     let categoryName = d.category.replace(/\s+/g, '-').toLowerCase()
-
     let categoryDetailsIcon = categoryName + '-DetailsFlag'
+    let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
+
+    let btnLabel = 'Source'
+    let learnMore
+    let storyInfo
+    let detailsIcon = ''
+    let detailsImage
 
     if (d.imageURL) {
       detailsImage = `<img src="${url}${d.imageURL}" class="action__details-image" />`
     }
 
-    if (d.storyBool == false && d.learnMore == false) {
-      moreInfo = `<summary>Source</summary><div class="action__details-inner"><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
-    } else if (d.learnMore == false) {
-      moreInfo = `<summary>Read More</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
+    if (d.storyBool) {
+      btnLabel = 'Read More'
       detailsIcon = `<img src="${url}${Img[categoryDetailsIcon]}" class="action__details-icon" />`
-    } else {
-      moreInfo = `<summary>Read More</summary><div class="action__details-inner"><div class="action__details-body">${d.story}</div>${detailsImage}<a href="${d.learnMoreURL}" class="action__details-link" target="_blank">Explore &#8594;</a><h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p></div>`
-      detailsIcon = `<img src="${url}${Img[categoryDetailsIcon]}" class="action__details-icon" />`
+      storyInfo = `<div class="action__details-body">${d.story}</div>${detailsImage}`
     }
+
+    if (d.learnMore) {
+      learnMore = `<a href="${d.learnMoreURL}" class="action__details-link" target="_blank">Explore &#8594;</a>`
+    }
+
+    const sourceInfo = `<h2 class="action__source-label">Source</h2><p class="action__source">${d.source}</p>`
+
+    const moreInfo = `
+      <summary><span class="sr-only">${btnLabel}</span></summary>
+      <div class="action__details-inner">
+        ${storyInfo}
+        ${learnMore}
+        ${sourceInfo}
+      </div>
+    `
 
     let actionDate
     let actionEndDate
-    const monthNames = [
-      'Jan.',
-      'Feb.',
-      'Mar.',
-      'Apr.',
-      'May',
-      'Jun.',
-      'Jul.',
-      'Aug.',
-      'Sep.',
-      'Oct.',
-      'Nov.',
-      'Dec.',
-    ]
 
     if (!d.startDate) {
       actionDate = d.startYear
@@ -136,32 +133,48 @@ function drawChart() {
       actionEndDate = ' - ' + formatDate(d.endDate)
     }
 
-    function formatDate(dateIn) {
-      let offDate = new Date(dateIn)
-      let month = monthNames[offDate.getUTCMonth()]
-      let day = offDate.getUTCDate()
-      let year = offDate.getUTCFullYear()
-
-      if (day > 1) {
-        return month + ' ' + day + ', ' + year
-      } else {
-        return month + ' ' + year
-      }
-    }
-
-    let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
-
     return `
-    <div class="timeline__entry-grid ${categoryName}">
-    ${detailsIcon}
-    <img src="${url}${Img[categoryIcon]}" class="action__icon" />
-    <span class="action__year wp-caption-text">${actionDate}${actionEndDate}</span><span class="action__country wp-caption-text">${d.country}</span>
-    <span class="action__category mobile-only ${categoryName}">${d.category}</span>
-    <h2 class="action__title entry-highlights-title">${d.title}</h2>
-    <p class="action__type">${d.type}</p>
+    <div class="timeline__entry-inner">
+      <div class="timeline__entry-grid ${categoryName}">
+        ${detailsIcon}
+        <img src="${url}${Img[categoryIcon]}" class="action__icon" />
+        <span class="action__year wp-caption-text">${actionDate}${actionEndDate}</span><span class="action__country wp-caption-text">${d.country}</span>
+        <span class="action__category mobile-only ${categoryName}">${d.category}</span>
+        <h2 class="action__title entry-highlights-title">${d.title}</h2>
+        <p class="action__type">${d.type}</p>
+        <div class="action__details-trigger" aria-hidden="true">${btnLabel}</div>
+      </div>
+      <details class="action__details">${moreInfo}</details>
     </div>
-    <details class="action__details">${moreInfo}</details>
     `
+  }
+
+  const monthNames = [
+    'Jan.',
+    'Feb.',
+    'Mar.',
+    'Apr.',
+    'May',
+    'Jun.',
+    'Jul.',
+    'Aug.',
+    'Sep.',
+    'Oct.',
+    'Nov.',
+    'Dec.',
+  ]
+
+  function formatDate(dateIn) {
+    let offDate = new Date(dateIn)
+    let month = monthNames[offDate.getUTCMonth()]
+    let day = offDate.getUTCDate()
+    let year = offDate.getUTCFullYear()
+
+    if (day > 1) {
+      return month + ' ' + day + ', ' + year
+    } else {
+      return month + ' ' + year
+    }
   }
 
   function chart(container) {
