@@ -7,7 +7,7 @@
     display: block;
     width: 95vw;
     max-height: 65vh;
-    padding-right: rem(96px);
+    padding-right: rem(40px);
     padding-left: rem(32px);
     overflow: auto;
     background: $color__background;
@@ -54,6 +54,7 @@
         'type toggle'
         'type buttons';
       grid-template-rows: max-content max-content max-content max-content auto;
+      width: 100vw;
       padding: rem(18px) rem(70px) rem(18px) rem(40px);
     }
 
