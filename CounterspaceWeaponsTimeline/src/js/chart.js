@@ -5,7 +5,7 @@ let url = ''
 
 if (window.location.href.indexOf('aerospace') != -1) {
   url =
-    'https://feat-counterspace-timeline--csis-aerospace-viz.netlify.app/counterspaceweaponstimeline/dist/'
+    'https://csis-ilab.github.io/aerospace-viz/counterspaceweaponstimeline/dist/'
 }
 
 const chart = drawChart()
