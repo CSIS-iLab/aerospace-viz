@@ -15,7 +15,7 @@
     "prestart": "rm -rf dist",
     "start": "parcel src/index.html -p 8080",
     "prebuild": "rm -rf dist",
-    "build": "parcel build src/index.html --public-url ./",
+    "build": "parcel build src/index.html --public-url ./ --no-content-hash",
     "stylelint-fix": "stylelint \"src/scss/**/*.scss\" --fix"
   },
   "devDependencies": {
