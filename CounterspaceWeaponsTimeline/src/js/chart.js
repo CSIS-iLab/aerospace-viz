@@ -86,10 +86,10 @@ function drawChart() {
     let categoryIcon = d.category.replace(/\s+/g, '-').toLowerCase()
 
     let btnLabel = 'Source'
-    let learnMore
-    let storyInfo
+    let learnMore = ''
+    let storyInfo = ''
     let detailsIcon = ''
-    let detailsImage
+    let detailsImage = ''
 
     if (d.imageURL) {
       detailsImage = `<img src="${url}${d.imageURL}" class="action__details-image" />`
