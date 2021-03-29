@@ -2,7 +2,7 @@
 const d3 = Object.assign({}, require('d3-selection'))
 import Img from '../img/css-icons/*.svg'
 
-let url = null
+let url = ''
 
 if (window.location.href.indexOf('aerospace') != -1) {
   url = 'http://localhost:8080'
@@ -88,7 +88,7 @@ function drawChart() {
     let btnLabel = 'Source'
     let learnMore
     let storyInfo
-    let detailsIcon
+    let detailsIcon = ''
     let detailsImage
 
     if (d.imageURL) {

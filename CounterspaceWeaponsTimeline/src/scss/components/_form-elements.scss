@@ -147,6 +147,10 @@
   border: 0;
   cursor: pointer;
   appearance: none;
+
+  &:hover {
+    background: transparent;
+  }
 }
 
 .checkbox-toggle {
