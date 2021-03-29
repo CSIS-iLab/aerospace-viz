@@ -1,0 +1,28 @@
+@use 'abstracts' as *;
+@use 'sass:map';
+
+:root {
+  --hundredvh: calc(100vh - var(--scrollbarY));
+
+  --breakpoint: #{map-get($breakpoints, 'small')};
+  @each $size in ('medium', 'large') {
+    @include breakpoint($size) {
+      --breakpoint: #{map-get($breakpoints, $size)};
+    }
+  }
+
+  @each $category, $values in $category-colors {
+    --color-#{$category}: #{map.get($values, 'color')};
+    --corner-#{$category}: #{map.get($values, 'corners')};
+  }
+}
+
+.sr-only:not(:focus):not(:active) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}

@@ -1,0 +1,144 @@
+@use 'abstracts' as *;
+
+/*===================================
+=            Page Layout            =
+===================================*/
+
+.interactive__container,
+.interactive__source {
+  max-width: $size__content-max-width;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.interactive__container {
+  position: relative;
+  padding: 0;
+  text-align: left;
+
+  @include breakpoint('large') {
+    display: grid;
+    grid-template-areas: 'sidebar meat meat';
+    align-items: start;
+  }
+}
+
+.interactive__title {
+  color: $color__black;
+  font-family: $font__abel;
+  line-height: 46px;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+  @include font-size(36px);
+}
+
+.no-results,
+.interactive__description {
+  margin-top: rem(10px);
+  margin-bottom: rem(24px);
+  font-family: $font__source;
+  @include font-size(16px);
+  line-height: 20px;
+}
+
+.interactive__header {
+  position: sticky;
+  top: rem(50px);
+  z-index: 15;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 91vw;
+  max-width: $size__max-width;
+  margin-right: 1rem;
+  margin-bottom: rem(36px);
+  margin-left: 1rem;
+  // background-color: $color__white;
+
+  @include breakpoint('medium') {
+    width: 92%;
+    max-width: unset;
+  }
+
+  @include breakpoint('large') {
+    top: rem(75px);
+    display: inline;
+    grid-area: sidebar;
+    width: rem(250px);
+    margin-left: 1rem;
+  }
+}
+
+.interactive__legend {
+  .non-kinetic-physical {
+    --category-corner: var(--corner-non-kinetic-physical);
+  }
+
+  .kinetic-physical {
+    --category-corner: var(--corner-kinetic-physical);
+  }
+
+  .cyber {
+    --category-corner: var(--corner-cyber);
+  }
+
+  .electronic {
+    --category-corner: var(--corner-electronic);
+  }
+
+  &-label {
+    @extend %label;
+    color: $color__black-175;
+    text-transform: uppercase;
+  }
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li {
+    @extend %label;
+    display: flex;
+    align-items: center;
+    color: var(--category-corner);
+  }
+
+  img {
+    width: rem(34px);
+    height: rem(34px);
+    margin-right: rem(8px);
+  }
+
+  .detailed-story {
+    margin-top: rem(38px);
+    color: $color__black-175;
+  }
+
+  &-mobile {
+    display: flex;
+    align-items: center;
+
+    @include breakpoint('large') {
+      display: none;
+    }
+  }
+}
+
+#interactive__timeline {
+  &.margin-top {
+    margin-top: rem(125px);
+
+    @include breakpoint('large') {
+      margin-top: rem(56px);
+      margin-left: rem(329.66px);
+    }
+  }
+
+  @include breakpoint('large') {
+    grid-area: meat;
+    margin-top: rem(56px);
+    margin-left: rem(47.66px);
+  }
+}

@@ -1,0 +1,70 @@
+@use 'sass:color';
+
+// Variables
+$color__white: #fff;
+$color__black: #000;
+
+$color__black-140: rgba(0, 0, 0, 0.4);
+$color__black-150: rgba(0, 0, 0, 0.5);
+$color__black-160: rgba(0, 0, 0, 0.6);
+$color__black-175: rgba(0, 0, 0, 0.75);
+
+$color__gray-100: #dedede;
+$color__gray-200: #b5bdc1;
+$color__gray-300: #4b5255;
+$color__gray-900: #333;
+
+$color__beige: #fbfbfb;
+
+$color__background: #f2f2f2;
+
+$color__blue-100: #5db6d0;
+$color__blue-200: #196c95;
+$color__blue-300: #44545f;
+$color__yellow-100: #f9bc65;
+$color__orange-100: #d66e42;
+$color__green-100: #4f9793;
+$color__green-200: #3e7a82;
+
+$color__orange-btn: #c8744c;
+$color__orange-btn-hover: #a7603e;
+
+$color__primary: $color__orange-100;
+$color__primary-200: color.scale($color__primary, $lightness: -10%);
+
+/*----------  Fonts  ----------*/
+$font__abel: 'Abel', 'Arial', sans-serif;
+$font__source: 'Source Sans Pro', 'Arial', sans-serif;
+
+/*----------  Structural  ----------*/
+$breakpoints: (
+  'small': 0,
+  'medium': 33em,
+  'large': 64em,
+  'xlarge': 90em,
+);
+
+$size__max-width: 700px;
+$size__content-max-width: 900px;
+
+/*----------  Custom  ----------*/
+// Any custom Sass variables for the project should go here.
+
+$category-colors: (
+  'non-kinetic-physical': (
+    color: rgba(249, 188, 101, 0.2),
+    corners: $color__yellow-100,
+  ),
+  'kinetic-physical': (
+    color: rgba(214, 110, 66, 0.2),
+    corners: $color__orange-100,
+  ),
+  'cyber': (
+    color: rgba(79, 151, 147, 0.2),
+    corners: $color__green-100,
+  ),
+  'electronic': (
+    color: rgba(25, 108, 149, 0.2),
+    corners: $color__blue-200,
+  ),
+);

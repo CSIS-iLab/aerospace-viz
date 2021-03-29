@@ -1,0 +1,32 @@
+@use 'abstracts' as *;
+
+/*==============================
+=            Source            =
+==============================*/
+.interactive__source {
+  max-width: $size__content-max-width;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  text-align: right;
+
+  a {
+    box-shadow: none;
+  }
+
+  img {
+    max-width: 250px;
+    height: auto;
+
+    @include breakpoint('medium') {
+      max-width: 300px;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: $color__gray-300;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    text-align: right;
+  }
+}
