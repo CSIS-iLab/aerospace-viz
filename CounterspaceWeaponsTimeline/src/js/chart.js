@@ -1,14 +1,12 @@
-// import * as d3 from 'd3'
 const d3 = Object.assign({}, require('d3-selection'))
 import Img from '../img/css-icons/*.svg'
 
 let url = ''
 
 if (window.location.href.indexOf('aerospace') != -1) {
-  url = 'http://localhost:8080'
+  url =
+    'https://feat-counterspace-timeline--csis-aerospace-viz.netlify.app/counterspaceweaponstimeline/dist'
 }
-
-console.log(url)
 
 const chart = drawChart()
 

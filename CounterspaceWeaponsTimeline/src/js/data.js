@@ -6,8 +6,6 @@ function parseData({ src }) {
   let data = Promise.all([valuePromise]).then((res) => {
     const [valueData] = res
 
-    console.log(valueData)
-
     const years = valueData
       .filter((d) => d.year > 0)
       .map((d) => d.year)
@@ -45,8 +43,6 @@ function parseData({ src }) {
       subcategories,
       countries,
     }
-
-    console.log(dataset)
 
     return dataset
   })

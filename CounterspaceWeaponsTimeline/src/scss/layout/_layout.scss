@@ -19,6 +19,7 @@
   @include breakpoint('large') {
     display: grid;
     grid-template-areas: 'sidebar meat meat';
+    align-items: start;
   }
 }
 
@@ -42,7 +43,8 @@
 }
 
 .interactive__header {
-  position: relative;
+  position: sticky;
+  top: rem(50px);
   z-index: 15;
   display: flex;
   justify-content: space-around;
@@ -54,21 +56,13 @@
   margin-left: 1rem;
   // background-color: $color__white;
 
-  &.sticky {
-    position: fixed;
-    top: 50px;
-
-    @include breakpoint('large') {
-      top: rem(75px);
-    }
-  }
-
   @include breakpoint('medium') {
     width: 92%;
     max-width: unset;
   }
 
   @include breakpoint('large') {
+    top: rem(75px);
     display: inline;
     grid-area: sidebar;
     width: rem(250px);

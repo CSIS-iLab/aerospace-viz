@@ -1,10 +1,8 @@
 import { parseData } from './js/data'
 import Chart from './js/chart'
 import Dropdown from './js/dropdown'
-import Buttons from './js/buttons'
 import Checkbox from './js/checkbox'
 import timeline from './js/timeline'
-import Img from '../img/css-icons/*.svg'
 
 import 'nouislider/distribute/nouislider.min.css'
 import './scss/main.scss'
@@ -14,9 +12,6 @@ const dataSrc =
 let data
 
 const countrySelector = '#filter-country'
-
-const startYearSelector = '#filter-start-year'
-const endYearSelector = '#filter-end-year'
 
 const categorySelector = '.interactive__filters--category'
 
@@ -35,8 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const hamburger = document.querySelector('.hamburger')
   const menu = document.querySelector('.interactive__filters-wrapper')
   const content = document.querySelector('#interactive__timeline')
-  const header = document.querySelector('.interactive__header')
-  const description = document.querySelector('.interactive__description')
   const apply = document.querySelector('#filter-apply')
 
   function setAria() {
@@ -47,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       isExpanded = 'true'
     }
-    hamburger.setAttribute('aria-expanded', isExpanded)
+    hamburger.setAttribute('aria-expanded', !isExpanded)
   }
 
   function closeMenu() {
@@ -64,32 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   content.addEventListener('click', closeMenu)
   apply.addEventListener('click', closeMenu)
-
-  let options = {}
-
-  if (window.innerWidth >= 1024) {
-    options = {
-      rootMargin: '-55px',
-    }
-  } else {
-    options = {
-      rootMargin: '-26px',
-    }
-  }
-
-  const observer = new IntersectionObserver(function (entries, observer) {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) {
-        header.classList.add('sticky')
-        content.classList.add('margin-top')
-      } else {
-        header.classList.remove('sticky')
-        content.classList.remove('margin-top')
-      }
-    })
-  }, options)
-
-  observer.observe(description)
 })
 
 function getURLParams() {
@@ -160,7 +127,6 @@ async function loadDataAndSetup() {
   }
 
   setupCountrySelector()
-  // setupYearSelector()
   setupTimeline()
   setupCategorySelector()
   setupFormButtons()
@@ -246,32 +212,6 @@ function setupCountrySelector() {
  * Setup Year Selectors
  *
  */
-
-// function setupYearSelector() {
-//   let options = []
-//   for (let i = data.years[0]; i <= data.years[1]; i++) {
-//     options.push({
-//       value: i,
-//       label: i,
-//     })
-//   }
-
-//   Dropdown.setup({
-//     selector: startYearSelector,
-//     name: 'filter-start-year',
-//     data: options,
-//     current: currentValues.startYear,
-//     onChange: (e) => {}, // Won't need if we have apply btn
-//   })
-
-//   Dropdown.setup({
-//     selector: endYearSelector,
-//     name: 'filter-end-year',
-//     data: options.reverse(),
-//     current: currentValues.endYear,
-//     onChange: (e) => {}, // Won't need if we have apply btn
-//   })
-// }
 
 function setupTimeline() {
   timeline.setupTimeline({
