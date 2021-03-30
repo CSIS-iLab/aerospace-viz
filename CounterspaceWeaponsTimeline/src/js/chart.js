@@ -90,7 +90,7 @@ function drawChart() {
     let detailsImage = ''
 
     if (d.imageURL) {
-      detailsImage = `<img src="${url}${d.imageURL}" class="action__details-image" />`
+      detailsImage = `<img src="${d.imageURL}" class="action__details-image" />`
     }
 
     if (d.storyBool) {
