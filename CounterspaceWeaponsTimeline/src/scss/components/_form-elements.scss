@@ -57,6 +57,10 @@
     --category-corner: var(--corner-electronic);
   }
 
+  &[data-category='Other'] {
+    --category-corner: var(--corner-other);
+  }
+
   .parent,
   .child {
     margin-bottom: rem(12px);
