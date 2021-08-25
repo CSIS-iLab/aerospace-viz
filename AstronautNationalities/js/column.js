@@ -9,6 +9,7 @@ $(function() {
   var yTitle = ''
 //hello paul
   Highcharts.data({
+    googleAPIKey: "AIzaSyCMZ7e8ujOnA5hVanuXSFOP5bJf9b6jBgg",
     googleSpreadsheetKey: '1GKIk9j34dFOIkPj-7Ao-tz0d1sFpre5FbczUl4vGusM',
       googleSpreadsheetWorksheet: 1,
       switchRowsAndColumns: true,
