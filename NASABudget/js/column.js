@@ -8,6 +8,7 @@ $(function() {
   var yTitle = "";
 
   Highcharts.data({
+    googleAPIKey: "AIzaSyCMZ7e8ujOnA5hVanuXSFOP5bJf9b6jBgg",
     googleSpreadsheetKey: "1TNgeonCjrQQKIc8keK4pGSHaZ70bH620RuCCwKW0V80",
     googleSpreadsheetWorksheet: 1,
     switchRowsAndColumns: true,

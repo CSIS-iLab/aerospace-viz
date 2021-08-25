@@ -2,7 +2,8 @@ $(function() {
   $('#hcContainer').highcharts({
     // Load Data in from Google Sheets
     data: {
-      googleSpreadsheetKey: '16oGMe7Ki23gPXmk4OG8sF7sZwTC4OfnOYo1UQjnibG0',
+      googleAPIKey: "AIzaSyCMZ7e8ujOnA5hVanuXSFOP5bJf9b6jBgg",
+    googleSpreadsheetKey: '16oGMe7Ki23gPXmk4OG8sF7sZwTC4OfnOYo1UQjnibG0',
       googleSpreadsheetWorksheet: 1
     },
     // General Chart Options

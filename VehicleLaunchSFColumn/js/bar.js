@@ -1,5 +1,6 @@
 Highcharts.chart("hcContainer", {
   data: {
+    googleAPIKey: "AIzaSyCMZ7e8ujOnA5hVanuXSFOP5bJf9b6jBgg",
     googleSpreadsheetKey: "11gJ3QuXf4_34uDomERHdO3FQNLZ2_6_t8dY_SZKaESo",
     googleSpreadsheetWorksheet: 1,
   },
