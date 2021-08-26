@@ -2,7 +2,7 @@ Highcharts.chart("hcContainer", {
   data: {
     googleAPIKey: "AIzaSyCMZ7e8ujOnA5hVanuXSFOP5bJf9b6jBgg",
     googleSpreadsheetKey: "11gJ3QuXf4_34uDomERHdO3FQNLZ2_6_t8dY_SZKaESo",
-    googleSpreadsheetWorksheet: 1,
+    googleSpreadsheetRange: "Sheet1",
   },
   chart: {
     type: "column",
@@ -13,7 +13,7 @@ Highcharts.chart("hcContainer", {
   },
 
   xAxis: {
-    tickInterval: 1
+    tickInterval: 1,
   },
 
   yAxis: {
@@ -28,8 +28,7 @@ Highcharts.chart("hcContainer", {
   credits: {
     enabled: true,
     href: false,
-    text:
-      "CSIS Aerospace Security | Gunter's Space Page, SpaceX, United Launch Alliance",
+    text: "CSIS Aerospace Security | Gunter's Space Page, SpaceX, United Launch Alliance",
   },
 
   plotOptions: {
