@@ -32,6 +32,10 @@ $(function() {
     },
     // Y Axis
     yAxis: {
+      type: "logarithmic",
+      tickPositions: [0, 10, 50, 250, 500, 1000, 2000].map((v) =>
+        Math.log10(v)
+      ),
       title: {
         text: "Total Payloads Launched per Year"
       },
