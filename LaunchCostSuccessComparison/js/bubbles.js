@@ -30,7 +30,7 @@ let currentChartData = [];
 
 Highcharts.data({
   googleAPIKey: "AIzaSyCMZ7e8ujOnA5hVanuXSFOP5bJf9b6jBgg",
-    googleSpreadsheetKey: "1FGdaphIbRjDpXsOdU3omWGRpH5DTImmzWW-H43lLOms",
+  googleSpreadsheetKey: "1vA1nKDX4Wt0tY9ufv8P8wXlOhpyCtoG2NwYNw-s0Uto",
   googleSpreadsheetWorksheet: 1,
   switchRowsAndColumns: true,
   parsed: function parsed(columns) {
@@ -58,7 +58,7 @@ Highcharts.data({
       let tags = row[12];
 
       if (tags) {
-      tags.split(",").forEach((tag) => searchItemsSet.add(tag.trim()));
+        tags.split(",").forEach((tag) => searchItemsSet.add(tag.trim()));
       }
 
       const data = {
@@ -100,32 +100,32 @@ function renderChart(data) {
   let chart = Highcharts.chart("hcContainer", {
     chart: {
       events: {
-        click: function() {
-          instructions.classList.add("is-visible")
-          details.classList.remove("is-visible"); 
-        }
+        click: function () {
+          instructions.classList.add("is-visible");
+          details.classList.remove("is-visible");
+        },
       },
       resetZoomButton: {
         theme: {
-          fill: '#b5bdc1',
+          fill: "#b5bdc1",
           style: {
-            fontFamily: 'Abel',
-            fontSize: '12px',
-            fontSize: '.75rem',
-            color: '#000',  
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
-            transition: 'all .3s ease-in-out'
+            fontFamily: "Abel",
+            fontSize: "12px",
+            fontSize: ".75rem",
+            color: "#000",
+            textTransform: "uppercase",
+            letterSpacing: "0.6px",
+            transition: "all .3s ease-in-out",
           },
           states: {
             hover: {
-              fill: '#c6ced2',
+              fill: "#c6ced2",
               style: {
-                transition: 'all .3s ease-in-out'
-              }
-            }
-          }
-        }
+                transition: "all .3s ease-in-out",
+              },
+            },
+          },
+        },
       },
       type: "bubble",
       plotBorderWidth: 1,
@@ -133,20 +133,20 @@ function renderChart(data) {
       backgroundColor: "rgba(0,0,0,0)",
       width: null,
       height: 490,
-      marginTop: 27
+      marginTop: 27,
     },
     exporting: {
-      enabled: false
+      enabled: false,
     },
     credits: {
       enabled: true,
-      text: 'CSIS Aerospace Security Project'
+      text: "CSIS Aerospace Security Project",
     },
     title: {
-      text: null
+      text: null,
     },
     legend: {
-      x: 35
+      x: 35,
     },
     xAxis: {
       endOnTick: true,
@@ -162,19 +162,21 @@ function renderChart(data) {
       },
       type: "logarithmic",
       tickInterval: 1,
-      tickPositions: [500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000].map((v) => Math.log10(v)),
+      tickPositions: [
+        500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000,
+      ].map((v) => Math.log10(v)),
       labels: {
         formatter: function () {
           if (this.value >= 1000000000) {
             return "$" + this.value / 1000000000 + "B";
           } else if (this.value >= 1000000) {
-            return "$" + (this.value / 1000000) + "M";
+            return "$" + this.value / 1000000 + "M";
           } else if (this.value >= 1000) {
-            return "$" + (this.value / 1000) + "K";
+            return "$" + this.value / 1000 + "K";
           } else {
             return "$" + this.value;
           }
-        }
+        },
       },
     },
     tooltip: {
@@ -182,7 +184,10 @@ function renderChart(data) {
       formatter: function () {
         let launchVehicle = this.point.launchVehicle;
         let firstSuccessfulLaunch = this.point.x;
-        let successfulLaunches = Highcharts.numberFormat(this.point.successfulLaunches, 0);
+        let successfulLaunches = Highcharts.numberFormat(
+          this.point.successfulLaunches,
+          0
+        );
         let successIncludingSimilarVehicles = this.point.z;
         let fy21CostPerKg = Highcharts.numberFormat(this.point.y, 0);
         let launchCost = this.point.launchCost;
@@ -210,7 +215,7 @@ function renderChart(data) {
           <span class="tooltip__value">$${launchCost} million</span> per launch. ${similarVehiclesRow}</p>
           <p class="tooltip__source">Source: ${source}</p>
         `;
-        document.getElementById('details').innerHTML = html;
+        document.getElementById("details").innerHTML = html;
         return false;
       },
       followPointer: true,
@@ -224,17 +229,17 @@ function renderChart(data) {
         },
         point: {
           events: {
-            mouseOver: function() {
-              const details = document.getElementById("details")
-              const instructions = document.getElementById("instructions")
+            mouseOver: function () {
+              const details = document.getElementById("details");
+              const instructions = document.getElementById("instructions");
               var chart = this.series.chart;
 
               if (chart) {
-                instructions.classList.remove("is-visible")
-                details.classList.add("is-visible");                
+                instructions.classList.remove("is-visible");
+                details.classList.add("is-visible");
               }
-            }
-          }
+            },
+          },
         },
       },
     },
@@ -321,11 +326,11 @@ function setupSearch(data) {
         const item = currentChartData[i];
 
         if (!item.tags) {
-          return
+          return;
         }
 
         if (item.tags.includes(selection)) {
-            item.graphic.attr({ opacity: 1, "stroke-width": 2 });
+          item.graphic.attr({ opacity: 1, "stroke-width": 2 });
         } else {
           item.graphic.attr({ opacity: 0.2, "stroke-width": 1 });
         }
@@ -347,10 +352,10 @@ function setupSearch(data) {
 
   // Toggle event for search input
   // showing & hidding results list onfocus / blur
-  ["focus", "blur"].forEach(function(eventType) {
+  ["focus", "blur"].forEach(function (eventType) {
     const resultsList = document.querySelector("#autoComplete_list");
 
-    input.addEventListener(eventType, function() {
+    input.addEventListener(eventType, function () {
       // Hide results list & show other elemennts
       if (eventType === "blur") {
         resultsList.style.display = "none";
