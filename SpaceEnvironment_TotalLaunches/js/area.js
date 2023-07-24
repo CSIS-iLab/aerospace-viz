@@ -42,7 +42,7 @@ $(function() {
       text: "Space Environment: Total Launches by Country"
     },
     subtitle: {
-      text: "Total Lauches from the United States, China, Russia, and All Other Space-faring Nations from 1957 to 2019"
+      text: "Total Lauches from the United States, China, Russia, and All Other Space-faring Nations from 1957 to 2022"
     },
     // Credits
     credits: {
