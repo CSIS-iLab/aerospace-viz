@@ -52,9 +52,9 @@
     "core-js": "^3.6.5",
     "d3-fetch": "^2.0.0",
     "d3-geo": "^2.0.1",
-    "d3-scale": "^3.0.0",
+    "d3-scale": "^4.0.2",
     "d3-selection": "^2.0.0",
-    "d3-transition": "^2.0.0",
+    "d3-transition": "^3.0.1",
     "nouislider": "^14.6.3",
     "topojson-client": "^3.1.0"
   }
